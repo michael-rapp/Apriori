@@ -30,6 +30,59 @@ import java.util.Set;
 public class Apriori {
 
     /**
+     * The support, which must be reached by the association rules, which are learned by the
+     * algorithm, at least.
+     */
+    private final double minSupport;
+
+    /**
+     * The confidence, which must be reached by the association rules, which are learned by the
+     * algorithm, at least.
+     */
+    private final double minConfidence;
+
+    /**
+     * Creates a new implementation of the Apriori association rule learning algorithm for mining
+     * frequent item sets.
+     *
+     * @param minSupport    The support, which should be reached by the association rules, which are
+     *                      learned by the algorithm, at least as a {@link Double} value. The
+     *                      support must be at least 0 and at maximum 1
+     * @param minConfidence The confidence, which should be reached by the association rules, which
+     *                      are learned by the algorithm, at least as a {@link Double} value. The
+     *                      confidence must be at least 0 and at maximum 1
+     */
+    public Apriori(final double minSupport, final double minConfidence) {
+        // TODO: Throw exceptions
+        this.minSupport = minSupport;
+        this.minConfidence = minConfidence;
+    }
+
+    /**
+     * Returns the support, which must be reached by the association rules, which are learned by the
+     * algorithm, at least.
+     *
+     * @return The support, which must be reached by the association rules, which are learned by the
+     * algorithm, at least as a {@link Double} value. The support must be at least 0 and at maximum
+     * 1
+     */
+    public final double getMinSupport() {
+        return minSupport;
+    }
+
+    /**
+     * Returns the confidence, which must be reached by the association rules, which are learned by
+     * the algorithm, at least.
+     *
+     * @return The confidence, which must be reached by the association rules, which are learned by
+     * the algorithm, at least as a {@link Double} value. The confidence must be at least 0 and at
+     * maximum 1
+     */
+    public final double getMinConfidence() {
+        return minConfidence;
+    }
+
+    /**
      * Executes the Apriori algorithm on a specific set of transactions in order to learn
      * association rules, which specify frequent item sets.
      *
