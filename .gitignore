@@ -22,5 +22,10 @@
 hs_err_pid*
 
 # IntelliJ files
-*.iml
 .idea
+*.iml
+
+# Gradle files
+.gradle
+*.ipr
+*.iws
