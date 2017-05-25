@@ -104,7 +104,7 @@ public class AssociationRule implements Serializable {
 
     /**
      * Returns the support of the association rule. By definition, "support" measures the percentage
-     * of transactions, among all available transactions, for which the rule is true.
+     * of transactions for which the body and head of the rule is true.
      *
      * @return The support of the association rule as a {@link Double} value. The support must be at
      * least 0 and at maximum 1
@@ -115,8 +115,8 @@ public class AssociationRule implements Serializable {
 
     /**
      * Returns the confidence of the association rule. By definition, "confidence" measures the
-     * percentage of transactions, among all available transactions, which include all items, which
-     * are contained by the rule's body, as well as by its head.
+     * percentage of transactions for which the head of the rule is true, among all transaction for
+     * which the body is true.
      *
      * @return The confidence of the association rule as a {@link Double} value. The confidence must
      * be at least 0 and at maximum 1
