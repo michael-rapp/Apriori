@@ -13,12 +13,14 @@
  */
 package de.mrapp.apriori;
 
+import java.io.Serializable;
+
 /**
  * Defines the interface, an item, which is part of a transaction, must implement.
  *
  * @author Michael Rapp
  * @since 1.0.0
  */
-public interface Item {
+public interface Item extends Serializable {
 
 }
