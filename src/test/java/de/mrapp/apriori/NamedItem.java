@@ -18,11 +18,12 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 
 /**
- * An implementation of the type {@link Item}, which is used for test purposes.
+ * An implementation of the type {@link Item}, which is used for test purposes. Each item can
+ * unambiguously be identified via its name.
  *
  * @author Michael Rapp
  */
-public class ItemImplementation implements Item, Serializable {
+public class NamedItem implements Item, Serializable {
 
     /**
      * The constant serial version UID.
@@ -40,7 +41,7 @@ public class ItemImplementation implements Item, Serializable {
      * @param name The name of the item as a {@link String}. The name may neither be null, nor
      *             empty
      */
-    public ItemImplementation(@NotNull final String name) {
+    public NamedItem(@NotNull final String name) {
         // TODO: Throw exceptions
         this.name = name;
     }
@@ -77,7 +78,7 @@ public class ItemImplementation implements Item, Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ItemImplementation other = (ItemImplementation) obj;
+        NamedItem other = (NamedItem) obj;
         return name.equals(other.name);
     }
 
