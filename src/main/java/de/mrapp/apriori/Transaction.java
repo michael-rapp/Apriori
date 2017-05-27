@@ -17,9 +17,10 @@ package de.mrapp.apriori;
  * Defines the interface, a transaction, which consists of multiple items, must implement. The
  * apriori algorithm processes a set of transactions in order to learn association rules.
  *
+ * @param <ItemType> The type of the items, the transaction consists of
  * @author Michael Rapp
  * @since 1.0.0
  */
-public interface Transaction extends Iterable<Item> {
+public interface Transaction<ItemType extends Item> extends Iterable<ItemType> {
 
 }

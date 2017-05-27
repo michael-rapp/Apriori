@@ -24,10 +24,11 @@ import java.util.Set;
  * sets. The algorithm processes a set of transactions, of which each one consists of multiple
  * items, in order to learn association rules.
  *
+ * @param <ItemType> The type of the items, which are processed by the algorithm
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class Apriori {
+public class Apriori<ItemType extends Item> {
 
     /**
      * The support, which must be reached by the association rules, which are learned by the
@@ -93,9 +94,10 @@ public class Apriori {
      * have been learned
      */
     @NotNull
-    public final Set<AssociationRule> execute(@NotNull final Iterator<Transaction> iterator) {
+    public final Set<AssociationRule<ItemType>> execute(
+            @NotNull final Iterator<Transaction<ItemType>> iterator) {
         // TODO: Throw exceptions
-        Set<AssociationRule> result = new HashSet<>();
+        Set<AssociationRule<ItemType>> result = new HashSet<>();
         // TODO: Implement
         return result;
     }

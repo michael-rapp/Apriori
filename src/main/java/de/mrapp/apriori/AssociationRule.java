@@ -25,10 +25,11 @@ import java.util.Set;
  * that if the items, which are contained by its body, occur in a transaction, the items, which are
  * given in its head, do also occur with a certain probability.
  *
+ * @param <ItemType> The type of the items, the association rule's body and head consist of
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class AssociationRule implements Serializable {
+public class AssociationRule<ItemType extends Item> implements Serializable {
 
     /**
      * The constant serial version UID.
@@ -38,12 +39,12 @@ public class AssociationRule implements Serializable {
     /**
      * The body of the association rule.
      */
-    private final Set<Item> body;
+    private final Set<ItemType> body;
 
     /**
      * The head of the association rule.
      */
-    private final Set<Item> head;
+    private final Set<ItemType> head;
 
     /**
      * The support of the association rule.
@@ -69,7 +70,7 @@ public class AssociationRule implements Serializable {
      * @param confidence The confidence of the association rule as a {@link Double} value. The
      *                   confidence must be at least 0 and at maximum 1
      */
-    public AssociationRule(@NotNull final Set<Item> body, @NotNull final Set<Item> head,
+    public AssociationRule(@NotNull final Set<ItemType> body, @NotNull final Set<ItemType> head,
                            final double support,
                            final double confidence) {
         // TODO: Throw exceptions
@@ -86,7 +87,7 @@ public class AssociationRule implements Serializable {
      * as an instance of the type {@link Set}. The set may neither be null, nor empty
      */
     @NotNull
-    public final Set<Item> getBody() {
+    public final Set<ItemType> getBody() {
         return body;
     }
 
@@ -97,7 +98,7 @@ public class AssociationRule implements Serializable {
      * as an instance of the type {@link Set}. The set may neither be null nor empty
      */
     @NotNull
-    public final Set<Item> getHead() {
+    public final Set<ItemType> getHead() {
         return head;
     }
 
