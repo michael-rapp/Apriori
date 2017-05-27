@@ -103,12 +103,12 @@ public class Apriori<ItemType extends Item> {
     @NotNull
     public final Set<AssociationRule<ItemType>> execute(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
-        LOGGER.info("Starting Apriori algorithm (minimum support = {}, minimum confidence = {}",
+        LOGGER.info("Starting Apriori algorithm (minimum support = {}, minimum confidence = {})",
                 minSupport, minConfidence);
         // TODO: Throw exceptions
-        Set<AssociationRule<ItemType>> result = new HashSet<>();
+        Set<AssociationRule<ItemType>> ruleSet = new HashSet<>();
         // TODO: Implement
-        return result;
+        return ruleSet;
     }
 
 }
