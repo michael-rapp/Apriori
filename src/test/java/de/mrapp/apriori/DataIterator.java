@@ -26,6 +26,23 @@ import java.util.StringTokenizer;
  */
 public class DataIterator implements Iterator<Transaction<NamedItem>> {
 
+    private class TransactionImpl implements Transaction<NamedItem> {
+
+        private final String line;
+
+        TransactionImpl(@NotNull final String line) {
+            // TODO: Throw exceptions
+            this.line = line;
+        }
+
+        @NotNull
+        @Override
+        public Iterator<NamedItem> iterator() {
+            return new LineIterator(line);
+        }
+
+    }
+
     /**
      * An iterator, which allows to iterate the items, which are contained by a single line of a
      * text file.
@@ -140,7 +157,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
 
     @Override
     public final Transaction<NamedItem> next() {
-        return hasNext() ? () -> new LineIterator(nextLine) : null;
+        return hasNext() ? new TransactionImpl(nextLine) : null;
     }
 
 }

@@ -16,11 +16,13 @@ package de.mrapp.apriori;
 /**
  * Defines the interface, an item, which is part of a transaction, must implement. The Apriori
  * algorithm relies on items to correctly implement the {@link Object#hashCode()} and {@link
- * Object#equals(Object)} methods to be able to compare items to each other.
+ * Object#equals(Object)} methods to be able to compare items to each other. Furthermore, the
+ * interface {@link Comparable} must be implemented. This allows to sort items (e.g. by their names)
+ * in order to find frequent item sets more efficiently.
  *
  * @author Michael Rapp
  * @since 1.0.0
  */
-public interface Item {
+public interface Item extends Comparable<Item> {
 
 }

@@ -13,13 +13,13 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * An implementation of the Apriori association rule learning algorithm for mining frequent item
@@ -31,6 +31,56 @@ import java.util.Set;
  * @since 1.0.0
  */
 public class Apriori<ItemType extends Item> {
+
+    private class ItemSet implements Iterable<Item> {
+
+        private final SortedSet<Item> items;
+
+        private Map<Integer, Transaction<ItemType>> transactions;
+
+        ItemSet() {
+            this.items = new TreeSet<>();
+            this.transactions = new HashMap<>();
+        }
+
+        ItemSet(@NotNull final ItemSet itemSet) {
+            // TODO: Throw exceptions
+            this.items = new TreeSet<>(itemSet.items);
+            this.transactions = new HashMap<>(itemSet.transactions);
+        }
+
+        @NotNull
+        @Override
+        public Iterator<Item> iterator() {
+            return items.iterator();
+        }
+
+        @Override
+        public String toString() {
+            return items.toString();
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + items.hashCode();
+            return result;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            ItemSet other = (ItemSet) obj;
+            return items.equals(other.items);
+        }
+
+    }
 
     /**
      * The SL4J logger, which is used by the algorithm.
@@ -48,6 +98,151 @@ public class Apriori<ItemType extends Item> {
      * algorithm, at least.
      */
     private final double minConfidence;
+
+    // TODO: Comment
+    private Collection<ItemSet> findFrequentItemSets(
+            @NotNull final Iterator<Transaction<ItemType>> iterator) {
+        Collection<ItemSet> frequentItemSets = new LinkedList<>();
+        int k = 1;
+        Pair<Collection<ItemSet>, Integer> pair = findInitialItemSets(iterator);
+        Collection<ItemSet> candidates = pair.first;
+        int transactionCount = pair.second;
+
+        LOGGER.trace("k = {}", k);
+        LOGGER.trace("C_{} = {}", k, candidates);
+
+        List<ItemSet> frequentCandidates = new ArrayList<>(candidates.size());
+
+        for (ItemSet candidate : candidates) {
+            if (Metrics.calculateSupport(transactionCount, candidate.transactions.size()) >=
+                    minSupport) {
+                frequentCandidates.add(candidate);
+            }
+        }
+
+        LOGGER.trace("S_{} = {}", k, frequentCandidates);
+        Collection<ItemSet> combinedItemSets = combineItemSets(frequentCandidates);
+
+        k++;
+        LOGGER.trace("k = {}", k);
+        LOGGER.trace("C_{} = {}", k, combinedItemSets);
+
+        List<ItemSet> frequentCandidates2 = filterFrequentItemSets(combinedItemSets,
+                transactionCount);
+
+        LOGGER.trace("S_{} = {}", k, frequentCandidates2);
+
+        return frequentItemSets;
+    }
+
+    // TODO: Comment
+    private Pair<Collection<ItemSet>, Integer> findInitialItemSets(
+            @NotNull final Iterator<Transaction<ItemType>> iterator) {
+        Map<Integer, ItemSet> itemSets = new HashMap<>();
+        int transactionCount = 0;
+        Transaction<ItemType> transaction;
+
+        while ((transaction = iterator.next()) != null) {
+            for (ItemType item : transaction) {
+                ItemSet itemSet = new ItemSet();
+                itemSet.items.add(item);
+                ItemSet previous = itemSets.putIfAbsent(itemSet.hashCode(), itemSet);
+
+                if (previous != null) {
+                    previous.transactions.put(transactionCount, transaction);
+                } else {
+                    itemSet.transactions.put(transactionCount, transaction);
+                }
+            }
+
+            transactionCount++;
+        }
+
+        return Pair.create(itemSets.values(), transactionCount);
+    }
+
+    // TODO: Comment
+    private Collection<ItemSet> combineItemSets(@NotNull final List<ItemSet> itemSets) {
+        Set<ItemSet> combinedItemSets = new HashSet<>(
+                IntStream.range(1, itemSets.size()).reduce(0, (x, y) -> (x + y)), 1);
+
+        for (int i = 0; i < itemSets.size(); i++) {
+            for (int j = i + 1; j < itemSets.size(); j++) {
+                ItemSet itemSet1 = itemSets.get(i);
+                ItemSet itemSet2 = itemSets.get(j);
+                ItemSet newItemSet = new ItemSet(itemSet1);
+                newItemSet.transactions.putAll(itemSet2.transactions);
+                boolean valid = false;
+
+                for (Item item2 : itemSet2) {
+                    boolean found = false;
+
+                    if (itemSet1.items.size() > 1) {
+                        Iterator<Item> iterator = itemSet1.iterator();
+                        iterator.next();
+
+                        while (iterator.hasNext()) {
+                            if (item2.equals(iterator.next())) {
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!found) {
+                        if (!valid) {
+                            newItemSet.items.add(item2);
+                            valid = true;
+                        } else {
+                            valid = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (valid) {
+                    combinedItemSets.add(newItemSet);
+                }
+            }
+        }
+
+        return combinedItemSets;
+    }
+
+    // TODO: Comment
+    private List<ItemSet> filterFrequentItemSets(@NotNull final Collection<ItemSet> itemSets,
+                                                 final int transactionCount) {
+        List<ItemSet> frequentCandidates = new ArrayList<>(itemSets.size());
+
+        for (ItemSet candidate : itemSets) {
+            Map<Integer, Transaction<ItemType>> transactions = new HashMap<>(
+                    candidate.transactions.size());
+
+            for (Map.Entry<Integer, Transaction<ItemType>> entry : candidate.transactions
+                    .entrySet()) {
+                Transaction<ItemType> transaction = entry.getValue();
+                int count = 0;
+
+                for (ItemType item : transaction) {
+                    // TODO: What if transaction contains the same item multiple times!?
+                    if (candidate.items.contains(item)) {
+                        count++;
+                    }
+                }
+
+                if (count >= candidate.items.size()) {
+                    transactions.put(entry.getKey(), transaction);
+                }
+            }
+
+            if (Metrics.calculateSupport(transactionCount, transactions.size()) >= minSupport) {
+                candidate.transactions = transactions;
+                frequentCandidates.add(candidate);
+            }
+        }
+
+        return frequentCandidates;
+    }
 
     /**
      * Creates a new implementation of the Apriori association rule learning algorithm for mining
@@ -103,11 +298,19 @@ public class Apriori<ItemType extends Item> {
     @NotNull
     public final Set<AssociationRule<ItemType>> execute(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
+        // TODO: Throw exceptions
         LOGGER.info("Starting Apriori algorithm (minimum support = {}, minimum confidence = {})",
                 minSupport, minConfidence);
-        // TODO: Throw exceptions
+        long startTime = System.currentTimeMillis();
         Set<AssociationRule<ItemType>> ruleSet = new HashSet<>();
         // TODO: Implement
+        findFrequentItemSets(iterator);
+
+        long runtime = System.currentTimeMillis() - startTime;
+        LOGGER.info(
+                "Apriori algorithm terminated after {} milliseconds. {} association rules learned",
+                runtime, ruleSet.size());
+        LOGGER.debug("Rule set = {}", ruleSet);
         return ruleSet;
     }
 

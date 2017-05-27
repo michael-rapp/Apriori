@@ -57,6 +57,11 @@ public class NamedItem implements Item, Serializable {
     }
 
     @Override
+    public final int compareTo(@NotNull final Item o) {
+        return toString().compareTo(o.toString());
+    }
+
+    @Override
     public final String toString() {
         return getName();
     }
