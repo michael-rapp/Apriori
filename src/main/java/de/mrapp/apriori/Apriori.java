@@ -14,6 +14,8 @@
 package de.mrapp.apriori;
 
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,6 +31,11 @@ import java.util.Set;
  * @since 1.0.0
  */
 public class Apriori<ItemType extends Item> {
+
+    /**
+     * The SL4J logger, which is used by the algorithm.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(Apriori.class);
 
     /**
      * The support, which must be reached by the association rules, which are learned by the
@@ -96,6 +103,8 @@ public class Apriori<ItemType extends Item> {
     @NotNull
     public final Set<AssociationRule<ItemType>> execute(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
+        LOGGER.info("Starting Apriori algorithm (minimum support = {}, minimum confidence = {}",
+                minSupport, minConfidence);
         // TODO: Throw exceptions
         Set<AssociationRule<ItemType>> result = new HashSet<>();
         // TODO: Implement
