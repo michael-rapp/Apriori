@@ -113,7 +113,7 @@ public class Apriori<ItemType extends Item> {
             LOGGER.trace("C_{} = {}", k, candidates);
             List<ItemSet> frequentCandidates = filterFrequentItemSets(candidates, transactionCount);
             LOGGER.trace("S_{} = {}", k, frequentCandidates);
-            candidates = combineItemSets(frequentCandidates);
+            candidates = combineItemSets(frequentCandidates, k);
             k++;
         }
 
@@ -147,7 +147,8 @@ public class Apriori<ItemType extends Item> {
     }
 
     // TODO: Comment
-    private Collection<ItemSet> combineItemSets(@NotNull final List<ItemSet> itemSets) {
+    private Collection<ItemSet> combineItemSets(@NotNull final List<ItemSet> itemSets,
+                                                final int k) {
         Set<ItemSet> combinedItemSets = new HashSet<>(
                 IntStream.range(1, itemSets.size()).reduce(0, (x, y) -> (x + y)), 1);
 
@@ -155,38 +156,28 @@ public class Apriori<ItemType extends Item> {
             for (int j = i + 1; j < itemSets.size(); j++) {
                 ItemSet itemSet1 = itemSets.get(i);
                 ItemSet itemSet2 = itemSets.get(j);
-                ItemSet newItemSet = new ItemSet(itemSet1);
-                newItemSet.transactions.putAll(itemSet2.transactions);
-                boolean valid = false;
+                Iterator<Item> iterator1 = itemSet1.iterator();
+                Iterator<Item> iterator2 = itemSet2.iterator();
+                int index = 0;
+                boolean valid = true;
 
-                for (Item item2 : itemSet2) {
-                    boolean found = false;
+                while (index < k - 1 && iterator1.hasNext() && iterator2.hasNext()) {
+                    Item item1 = iterator1.next();
+                    Item item2 = iterator2.next();
 
-                    if (itemSet1.items.size() > 1) {
-                        Iterator<Item> iterator = itemSet1.iterator();
-                        iterator.next();
-
-                        while (iterator.hasNext()) {
-                            if (item2.equals(iterator.next())) {
-                                found = true;
-                                break;
-                            }
-                        }
+                    if (!item1.equals(item2)) {
+                        valid = false;
+                        break;
                     }
 
-                    if (!found) {
-                        if (!valid) {
-                            newItemSet.items.add(item2);
-                            valid = true;
-                        } else {
-                            valid = false;
-                            break;
-                        }
-                    }
+                    index++;
                 }
 
                 if (valid) {
-                    combinedItemSets.add(newItemSet);
+                    ItemSet combinedItemSet = new ItemSet(itemSet1);
+                    combinedItemSet.items.addAll(itemSet2.items);
+                    combinedItemSet.transactions.putAll(itemSet2.transactions);
+                    combinedItemSets.add(combinedItemSet);
                 }
             }
         }
