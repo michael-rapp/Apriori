@@ -110,6 +110,21 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
     }
 
     /**
+     * Closes the reader, which is used to read the text file, if it is opened.
+     */
+    private void closeReader() {
+        if (reader != null) {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                // No need to handle
+            } finally {
+                reader = null;
+            }
+        }
+    }
+
+    /**
      * Reads the next line from the text file.
      *
      * @return The next line as a {@link String} or null, if the end of the file is reached
@@ -126,6 +141,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
                 }
             }
 
+            closeReader();
             return null;
         } catch (IOException e) {
             // TODO: Log message
