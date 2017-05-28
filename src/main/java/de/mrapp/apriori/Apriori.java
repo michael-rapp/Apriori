@@ -108,29 +108,14 @@ public class Apriori<ItemType extends Item> {
         Collection<ItemSet> candidates = pair.first;
         int transactionCount = pair.second;
 
-        LOGGER.trace("k = {}", k);
-        LOGGER.trace("C_{} = {}", k, candidates);
-
-        List<ItemSet> frequentCandidates = new ArrayList<>(candidates.size());
-
-        for (ItemSet candidate : candidates) {
-            if (Metrics.calculateSupport(transactionCount, candidate.transactions.size()) >=
-                    minSupport) {
-                frequentCandidates.add(candidate);
-            }
+        while (!candidates.isEmpty()) {
+            LOGGER.trace("k = {}", k);
+            LOGGER.trace("C_{} = {}", k, candidates);
+            List<ItemSet> frequentCandidates = filterFrequentItemSets(candidates, transactionCount);
+            LOGGER.trace("S_{} = {}", k, frequentCandidates);
+            candidates = combineItemSets(frequentCandidates);
+            k++;
         }
-
-        LOGGER.trace("S_{} = {}", k, frequentCandidates);
-        Collection<ItemSet> combinedItemSets = combineItemSets(frequentCandidates);
-
-        k++;
-        LOGGER.trace("k = {}", k);
-        LOGGER.trace("C_{} = {}", k, combinedItemSets);
-
-        List<ItemSet> frequentCandidates2 = filterFrequentItemSets(combinedItemSets,
-                transactionCount);
-
-        LOGGER.trace("S_{} = {}", k, frequentCandidates2);
 
         return frequentItemSets;
     }
