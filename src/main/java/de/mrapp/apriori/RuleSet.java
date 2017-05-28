@@ -83,6 +83,10 @@ public class RuleSet<ItemType extends Item> implements
             stringBuilder.append(decimalFormat.format(rule.getSupport()));
             stringBuilder.append(", confidence = ");
             stringBuilder.append(decimalFormat.format(rule.getConfidence()));
+            stringBuilder.append(", lift = ");
+            stringBuilder.append(decimalFormat.format(rule.getLift()));
+            stringBuilder.append(", leverage = ");
+            stringBuilder.append(decimalFormat.format(rule.getLeverage()));
             stringBuilder.append(")");
 
             if (iterator.hasNext()) {

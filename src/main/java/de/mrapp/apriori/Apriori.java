@@ -261,11 +261,15 @@ public class Apriori<ItemType extends Item> {
             ItemSet body = new ItemSet(bodyItemSet);
             body.items.remove(item);
             body.support = frequentItemSets.get(body.hashCode()).support;
-            double confidence = Metrics.calculateConfidence(body.support, itemSet.support);
+            double support = itemSet.support;
+            double confidence = Metrics.calculateConfidence(body.support, support);
 
             if (confidence >= minConfidence) {
+                head.support = frequentItemSets.get(head.hashCode()).support;
+                double lift = support / (body.support * head.support);
+                double leverage = support - (body.support * head.support);
                 AssociationRule<ItemType> rule = new AssociationRule<>(body.items,
-                        head.items, body.support, confidence);
+                        head.items, support, confidence, lift, leverage);
                 rules.add(rule);
 
                 if (body.items.size() > 1) {

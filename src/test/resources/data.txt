@@ -1,7 +1,7 @@
 # Test data for the Apriori algorithm
 # One transaction per line, items are separated with whitespaces
 
-beer    chips   wine
-beer    chips
-pizza   wine
-chips   pizza
+bread   butter  sugar
+coffee  milk    sugar
+bread   coffee  milk    sugar
+coffee  milk

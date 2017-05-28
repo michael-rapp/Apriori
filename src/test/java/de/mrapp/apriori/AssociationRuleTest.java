@@ -40,12 +40,16 @@ public class AssociationRuleTest {
         head.add(new NamedItem("d"));
         double support = 0.5;
         double confidence = 0.4;
+        double lift = 0.3;
+        double leverage = 0.2;
         AssociationRule<NamedItem> associationRule = new AssociationRule<>(body, head, support,
-                confidence);
+                confidence, lift, leverage);
         assertEquals(body, associationRule.getBody());
         assertEquals(head, associationRule.getHead());
         assertEquals(support, associationRule.getSupport(), 0);
         assertEquals(confidence, associationRule.getConfidence(), 0);
+        assertEquals(lift, associationRule.getLift(), 0);
+        assertEquals(leverage, associationRule.getLeverage(), 0);
     }
 
     /**
@@ -59,10 +63,8 @@ public class AssociationRuleTest {
         Set<NamedItem> head = new HashSet<>();
         head.add(new NamedItem("c"));
         head.add(new NamedItem("d"));
-        double support = 0.5;
-        double confidence = 0.4;
-        AssociationRule<NamedItem> associationRule = new AssociationRule<>(body, head, support,
-                confidence);
+        AssociationRule<NamedItem> associationRule = new AssociationRule<>(body, head, 0.5, 0.4,
+                0.3, 0.2);
         assertEquals("[a, b] -> [c, d]", associationRule.toString());
     }
 
@@ -79,17 +81,23 @@ public class AssociationRuleTest {
         head1.add(new NamedItem("b"));
         Set<NamedItem> head2 = new HashSet<>();
         head2.add(new NamedItem("d"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, head1, 0.5, 0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5);
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, head1, 0.5, 0.5,
+                0.5, 0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5,
+                0.5, 0.5);
         assertEquals(associationRule1.hashCode(), associationRule1.hashCode());
         assertEquals(associationRule1.hashCode(), associationRule2.hashCode());
-        associationRule2 = new AssociationRule<>(body2, head1, 0.5, 0.5);
+        associationRule2 = new AssociationRule<>(body2, head1, 0.5, 0.5, 0.5, 0.5);
         assertNotEquals(associationRule1.hashCode(), associationRule2.hashCode());
-        associationRule2 = new AssociationRule<>(body1, head2, 0.5, 0.5);
+        associationRule2 = new AssociationRule<>(body1, head2, 0.5, 0.5, 0.5, 0.5);
         assertNotEquals(associationRule1.hashCode(), associationRule2.hashCode());
-        associationRule2 = new AssociationRule<>(body1, head1, 0.6, 0.5);
+        associationRule2 = new AssociationRule<>(body1, head1, 0.6, 0.5, 0.5, 0.5);
         assertNotEquals(associationRule1.hashCode(), associationRule2.hashCode());
-        associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.6);
+        associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.6, 0.5, 0.5);
+        assertNotEquals(associationRule1.hashCode(), associationRule2.hashCode());
+        associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5, 0.6, 0.5);
+        assertNotEquals(associationRule1.hashCode(), associationRule2.hashCode());
+        associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5, 0.5, 0.6);
         assertNotEquals(associationRule1.hashCode(), associationRule2.hashCode());
     }
 
@@ -106,19 +114,23 @@ public class AssociationRuleTest {
         head1.add(new NamedItem("b"));
         Set<NamedItem> head2 = new HashSet<>();
         head2.add(new NamedItem("d"));
-        AssociationRule associationRule1 = new AssociationRule<>(body1, head1, 0.5, 0.5);
-        AssociationRule associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5);
+        AssociationRule associationRule1 = new AssociationRule<>(body1, head1, 0.5, 0.5, 0.5, 0.5);
+        AssociationRule associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5, 0.5, 0.5);
         assertFalse(associationRule1.equals(null));
         assertFalse(associationRule1.equals(new Object()));
         assertTrue(associationRule1.equals(associationRule1));
         assertTrue(associationRule1.equals(associationRule2));
-        associationRule2 = new AssociationRule<>(body2, head1, 0.5, 0.5);
+        associationRule2 = new AssociationRule<>(body2, head1, 0.5, 0.5, 0.5, 0.5);
         assertFalse(associationRule1.equals(associationRule2));
-        associationRule2 = new AssociationRule<>(body1, head2, 0.5, 0.5);
+        associationRule2 = new AssociationRule<>(body1, head2, 0.5, 0.5, 0.5, 0.5);
         assertFalse(associationRule1.equals(associationRule2));
-        associationRule2 = new AssociationRule<>(body1, head1, 0.6, 0.5);
+        associationRule2 = new AssociationRule<>(body1, head1, 0.6, 0.5, 0.5, 0.5);
         assertFalse(associationRule1.equals(associationRule2));
-        associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.6);
+        associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.6, 0.5, 0.5);
+        assertFalse(associationRule1.equals(associationRule2));
+        associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5, 0.6, 0.5);
+        assertFalse(associationRule1.equals(associationRule2));
+        associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5, 0.5, 0.6);
         assertFalse(associationRule1.equals(associationRule2));
     }
 

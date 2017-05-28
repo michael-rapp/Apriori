@@ -57,6 +57,16 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
     private final double confidence;
 
     /**
+     * The lift of the association rule.
+     */
+    private final double lift;
+
+    /**
+     * The leverage of the association rule.
+     */
+    private final double leverage;
+
+    /**
      * Creates a new association rule.
      *
      * @param body       A set, which contains the items, which are contained by the association
@@ -69,15 +79,21 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
      *                   must be at least 0 and at maximum 1
      * @param confidence The confidence of the association rule as a {@link Double} value. The
      *                   confidence must be at least 0 and at maximum 1
+     * @param lift       The list of the association rule as a {@link Double} value. The lift must
+     *                   be at least 0
+     * @param leverage   The leverage of the association rule as a {@link Double} value. The
+     *                   leverage must be at least 0 and at maximum 1
      */
     public AssociationRule(@NotNull final Set<ItemType> body, @NotNull final Set<ItemType> head,
-                           final double support,
-                           final double confidence) {
+                           final double support, final double confidence, final double lift,
+                           final double leverage) {
         // TODO: Throw exceptions
         this.body = body;
         this.head = head;
         this.support = support;
         this.confidence = confidence;
+        this.lift = lift;
+        this.leverage = leverage;
     }
 
     /**
@@ -125,6 +141,29 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
         return confidence;
     }
 
+    /**
+     * Returns the lift of the association rule. By definition, "lift" calculates as the ratio of
+     * the rule's confidence over a priori expectation for the rule's head.
+     *
+     * @return The lift of the association rule as a {@link Double} value. The lift must be at least
+     * 0
+     */
+    public final double getLift() {
+        return lift;
+    }
+
+    /**
+     * Returns the leverage of the association rule. By definition, "leverage" is the difference
+     * between the rule's support and the expected support for the body and head, if they were
+     * independent.
+     *
+     * @return The leverage of the association rule as a {@link Double} value. The leverage must be
+     * at least 0 and at maximum 1
+     */
+    public final double getLeverage() {
+        return leverage;
+    }
+
     @Override
     public final String toString() {
         return body.toString() + " -> " + head.toString();
@@ -140,6 +179,10 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
         result = prime * result + (int) (tempSupport ^ (tempSupport >>> 32));
         long tempConfidence = Double.doubleToLongBits(confidence);
         result = prime * result + (int) (tempConfidence ^ (tempConfidence >>> 32));
+        long tempLift = Double.doubleToLongBits(lift);
+        result = prime * result + (int) (tempLift ^ (tempLift >>> 32));
+        long tempLeverage = Double.doubleToLongBits(leverage);
+        result = prime * result + (int) (tempLeverage ^ (tempLeverage >>> 32));
         return result;
     }
 
@@ -153,7 +196,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
             return false;
         AssociationRule other = (AssociationRule) obj;
         return body.equals(other.body) && head.equals(other.head) && support == other.support &&
-                confidence == other.confidence;
+                confidence == other.confidence && lift == other.lift && leverage == other.leverage;
     }
 
 }
