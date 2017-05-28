@@ -32,9 +32,9 @@ import java.util.stream.IntStream;
  */
 public class Apriori<ItemType extends Item> {
 
-    private class ItemSet implements Iterable<Item> {
+    private class ItemSet implements Iterable<ItemType> {
 
-        private final SortedSet<Item> items;
+        private final SortedSet<ItemType> items;
 
         private Map<Integer, Transaction<ItemType>> transactions;
 
@@ -51,7 +51,7 @@ public class Apriori<ItemType extends Item> {
 
         @NotNull
         @Override
-        public Iterator<Item> iterator() {
+        public Iterator<ItemType> iterator() {
             return items.iterator();
         }
 
@@ -157,14 +157,14 @@ public class Apriori<ItemType extends Item> {
             for (int j = i + 1; j < itemSets.size(); j++) {
                 ItemSet itemSet1 = itemSets.get(i);
                 ItemSet itemSet2 = itemSets.get(j);
-                Iterator<Item> iterator1 = itemSet1.iterator();
-                Iterator<Item> iterator2 = itemSet2.iterator();
+                Iterator<ItemType> iterator1 = itemSet1.iterator();
+                Iterator<ItemType> iterator2 = itemSet2.iterator();
                 int index = 0;
                 boolean valid = true;
 
                 while (index < k - 1 && iterator1.hasNext() && iterator2.hasNext()) {
-                    Item item1 = iterator1.next();
-                    Item item2 = iterator2.next();
+                    ItemType item1 = iterator1.next();
+                    ItemType item2 = iterator2.next();
 
                     if (!item1.equals(item2)) {
                         valid = false;
@@ -219,6 +219,34 @@ public class Apriori<ItemType extends Item> {
         }
 
         return frequentCandidates;
+    }
+
+    // TODO: Comment
+    private Set<AssociationRule<ItemType>> generateAssociationRules(
+            @NotNull final Collection<ItemSet> frequentItemSets) {
+        Set<AssociationRule<ItemType>> ruleSet = new HashSet<>();
+
+        for (ItemSet itemSet : frequentItemSets) {
+            if (itemSet.items.size() > 1) {
+                for (ItemType item : itemSet.items) {
+                    Set<ItemType> head = new HashSet<>();
+                    head.add(item);
+                    Set<ItemType> body = new HashSet<>(itemSet.items);
+                    body.remove(item);
+                    double support = 0.5; // TODO: Retrieve from frequentItemSets
+                    double confidence = 0.5; // TODO: Calculate
+
+                    if (confidence >= minConfidence) {
+                        AssociationRule<ItemType> rule = new AssociationRule<>(body, head, support,
+                                confidence);
+                        ruleSet.add(rule);
+                        // TODO: Successively move items from body to head until minConfidence is not reached anymore
+                    }
+                }
+            }
+        }
+
+        return ruleSet;
     }
 
     /**
@@ -279,12 +307,15 @@ public class Apriori<ItemType extends Item> {
         LOGGER.info("Starting Apriori algorithm (minimum support = {}, minimum confidence = {})",
                 minSupport, minConfidence);
         long startTime = System.currentTimeMillis();
-        Set<AssociationRule<ItemType>> ruleSet = new HashSet<>();
         // TODO: Implement
         LOGGER.debug("Searching for frequent item sets");
         Collection<ItemSet> frequentItemSets = findFrequentItemSets(iterator);
         LOGGER.debug("Found {} frequent item sets", frequentItemSets.size());
         LOGGER.trace("Frequent item sets = {}", frequentItemSets);
+
+        LOGGER.debug("Generating association rules");
+        Set<AssociationRule<ItemType>> ruleSet = generateAssociationRules(
+                frequentItemSets);
 
         long runtime = System.currentTimeMillis() - startTime;
         LOGGER.info(
