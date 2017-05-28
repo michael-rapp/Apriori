@@ -16,7 +16,6 @@ package de.mrapp.apriori;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -47,7 +46,7 @@ public class AprioriTest extends AbstractDataTest {
         File inputFile = getInputFile();
         DataIterator dataIterator = new DataIterator(inputFile);
         Apriori<NamedItem> apriori = new Apriori<>(0.25, 0.6);
-        Set<AssociationRule<NamedItem>> ruleSet = apriori.execute(dataIterator);
+        RuleSet<NamedItem> ruleSet = apriori.execute(dataIterator);
     }
 
 }

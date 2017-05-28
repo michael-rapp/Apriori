@@ -15,9 +15,11 @@ package de.mrapp.apriori;
 
 import de.mrapp.apriori.util.Pair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -234,35 +236,68 @@ public class Apriori<ItemType extends Item> {
     }
 
     // TODO: Comment
-    private Set<AssociationRule<ItemType>> generateAssociationRules(
+    private RuleSet<ItemType> generateAssociationRules(
             @NotNull final Map<Integer, ItemSet> frequentItemSets) {
-        Set<AssociationRule<ItemType>> ruleSet = new HashSet<>();
+        Set<AssociationRule<ItemType>> rules = new HashSet<>();
 
         for (ItemSet itemSet : frequentItemSets.values()) {
             if (itemSet.items.size() > 1) {
-                for (ItemType item : itemSet.items) {
-                    ItemSet head = new ItemSet();
-                    head.items.add(item);
-                    ItemSet body = new ItemSet(itemSet);
-                    body.items.remove(item);
-                    ItemSet bodyItemSet = frequentItemSets.get(body.hashCode());
-                    assert bodyItemSet != null;
-                    ItemSet headItemSet = frequentItemSets.get(head.hashCode());
-                    assert headItemSet != null;
-                    double support = bodyItemSet.support;
-                    double confidence = itemSet.support / support;
-
-                    if (confidence >= minConfidence) {
-                        AssociationRule<ItemType> rule = new AssociationRule<>(body.items,
-                                head.items, support, confidence);
-                        ruleSet.add(rule);
-                        // TODO: Successively move items from body to head until minConfidence is not reached anymore
-                    }
-                }
+                refineRule(frequentItemSets, itemSet, rules, itemSet, null);
             }
         }
 
-        return ruleSet;
+        return new RuleSet<>(rules);
+    }
+
+    // TODO: Comment
+    private void refineRule(@NotNull final Map<Integer, ItemSet> frequentItemSets,
+                            @NotNull final ItemSet itemSet,
+                            @NotNull final Set<AssociationRule<ItemType>> rules,
+                            @NotNull final ItemSet bodyItemSet,
+                            @Nullable final ItemSet headItemSet) {
+        for (ItemType item : bodyItemSet.items) {
+            ItemSet head = headItemSet != null ? new ItemSet(headItemSet) : new ItemSet();
+            head.items.add(item);
+            ItemSet body = new ItemSet(bodyItemSet);
+            body.items.remove(item);
+            body.support = frequentItemSets.get(body.hashCode()).support;
+            double confidence = Metrics.calculateConfidence(body.support, itemSet.support);
+
+            if (confidence >= minConfidence) {
+                AssociationRule<ItemType> rule = new AssociationRule<>(body.items,
+                        head.items, body.support, confidence);
+                rules.add(rule);
+
+                if (body.items.size() > 1) {
+                    refineRule(frequentItemSets, itemSet, rules, body, head);
+                }
+            }
+        }
+    }
+
+    // TODO: Comment
+    private String printFrequentItemSets(@NotNull final Map<Integer, ItemSet> frequentItemSets) {
+        StringBuilder stringBuilder = new StringBuilder();
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setMinimumFractionDigits(1);
+        decimalFormat.setMaximumFractionDigits(2);
+        Iterator<ItemSet> iterator = frequentItemSets.values().iterator();
+        stringBuilder.append("[");
+
+        while (iterator.hasNext()) {
+            ItemSet itemSet = iterator.next();
+            stringBuilder.append(itemSet.toString());
+            stringBuilder.append(" (support = ");
+            stringBuilder.append(decimalFormat.format(itemSet.support));
+            stringBuilder.append(")");
+
+            if (iterator.hasNext()) {
+                stringBuilder.append(",\n");
+            }
+        }
+
+        stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 
     /**
@@ -312,32 +347,31 @@ public class Apriori<ItemType extends Item> {
      *
      * @param iterator An iterator, which allows to iterate the transactions, as an instance of the
      *                 type {@link Iterable}. The iterable may not be null
-     * @return A set, which contains the association rules, which have been learned by the
-     * algorithm, as an instance of the type {@link Set} or an empty set, if no association rules
-     * have been learned
+     * @return The rule set, which contains the association rules, which have been learned by the
+     * algorithm, as an instance of the class {@link RuleSet} or an empty rule set, if no
+     * association rules have been learned
      */
     @NotNull
-    public final Set<AssociationRule<ItemType>> execute(
+    public final RuleSet<ItemType> execute(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
         // TODO: Throw exceptions
         LOGGER.info("Starting Apriori algorithm (minimum support = {}, minimum confidence = {})",
                 minSupport, minConfidence);
         long startTime = System.currentTimeMillis();
-        // TODO: Implement
+
         LOGGER.debug("Searching for frequent item sets");
         Map<Integer, ItemSet> frequentItemSets = findFrequentItemSets(iterator);
         LOGGER.debug("Found {} frequent item sets", frequentItemSets.size());
-        LOGGER.trace("Frequent item sets = {}", frequentItemSets);
+        LOGGER.trace("Frequent item sets = {}", printFrequentItemSets(frequentItemSets));
 
         LOGGER.debug("Generating association rules");
-        Set<AssociationRule<ItemType>> ruleSet = generateAssociationRules(
+        RuleSet<ItemType> ruleSet = generateAssociationRules(
                 frequentItemSets);
+        LOGGER.debug("Generated {} association rules", ruleSet.size());
+        LOGGER.trace("Rule set = {}", ruleSet);
 
         long runtime = System.currentTimeMillis() - startTime;
-        LOGGER.info(
-                "Apriori algorithm terminated after {} milliseconds. {} association rules learned",
-                runtime, ruleSet.size());
-        LOGGER.debug("Rule set = {}", ruleSet);
+        LOGGER.info("Apriori algorithm terminated after {} milliseconds", runtime);
         return ruleSet;
     }
 

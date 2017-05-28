@@ -41,7 +41,25 @@ public final class Metrics {
      * be at least 0 and at maximum 1
      */
     public static double calculateSupport(final int transactions, final int occurrences) {
+        // TODO: Throw exceptions
         return transactions > 0 ? (double) occurrences / (double) transactions : 0;
+    }
+
+    /**
+     * Calculates and returns the confidence of an association rule.
+     *
+     * @param bodySupport    The support of the item set, the rule's body consists of, as a {@link
+     *                       Double} value. The support must be at least 0 and at maximum 1
+     * @param overallSupport The support of the item set, which contains all items, which are
+     *                       contained by the rule's body and head, as a {@link Double} value. The
+     *                       support must be at least 0 and at maximum 1
+     * @return The confidence, which has been calculated, as a {@link Double} value. The confidence
+     * must be at least 0 and at maximum 1
+     */
+    public static double calculateConfidence(final double bodySupport,
+                                             final double overallSupport) {
+        // TODO: Throw Exceptions
+        return bodySupport > 0 ? overallSupport / bodySupport : 0;
     }
 
 }
