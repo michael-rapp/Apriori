@@ -362,13 +362,13 @@ public class Apriori<ItemType extends Item> {
         LOGGER.debug("Searching for frequent item sets");
         Map<Integer, ItemSet> frequentItemSets = findFrequentItemSets(iterator);
         LOGGER.debug("Found {} frequent item sets", frequentItemSets.size());
-        LOGGER.trace("Frequent item sets = {}", printFrequentItemSets(frequentItemSets));
+        LOGGER.debug("Frequent item sets = {}", printFrequentItemSets(frequentItemSets));
 
         LOGGER.debug("Generating association rules");
         RuleSet<ItemType> ruleSet = generateAssociationRules(
                 frequentItemSets);
         LOGGER.debug("Generated {} association rules", ruleSet.size());
-        LOGGER.trace("Rule set = {}", ruleSet);
+        LOGGER.debug("Rule set = {}", ruleSet);
 
         long runtime = System.currentTimeMillis() - startTime;
         LOGGER.info("Apriori algorithm terminated after {} milliseconds", runtime);
