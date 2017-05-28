@@ -114,6 +114,7 @@ public class Apriori<ItemType extends Item> {
             List<ItemSet> frequentCandidates = filterFrequentItemSets(candidates, transactionCount);
             LOGGER.trace("S_{} = {}", k, frequentCandidates);
             candidates = combineItemSets(frequentCandidates, k);
+            frequentItemSets.addAll(frequentCandidates);
             k++;
         }
 
@@ -280,7 +281,10 @@ public class Apriori<ItemType extends Item> {
         long startTime = System.currentTimeMillis();
         Set<AssociationRule<ItemType>> ruleSet = new HashSet<>();
         // TODO: Implement
-        findFrequentItemSets(iterator);
+        LOGGER.debug("Searching for frequent item sets");
+        Collection<ItemSet> frequentItemSets = findFrequentItemSets(iterator);
+        LOGGER.debug("Found {} frequent item sets", frequentItemSets.size());
+        LOGGER.trace("Frequent item sets = {}", frequentItemSets);
 
         long runtime = System.currentTimeMillis() - startTime;
         LOGGER.info(
