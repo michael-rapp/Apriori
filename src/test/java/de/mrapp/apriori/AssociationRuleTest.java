@@ -63,7 +63,7 @@ public class AssociationRuleTest {
         double confidence = 0.4;
         AssociationRule<NamedItem> associationRule = new AssociationRule<>(body, head, support,
                 confidence);
-        assertEquals("[c, d] <- [a, b]", associationRule.toString());
+        assertEquals("[a, b] -> [c, d]", associationRule.toString());
     }
 
     /**

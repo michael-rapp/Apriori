@@ -127,7 +127,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
 
     @Override
     public final String toString() {
-        return head.toString() + " <- " + body.toString();
+        return body.toString() + " -> " + head.toString();
     }
 
     @Override

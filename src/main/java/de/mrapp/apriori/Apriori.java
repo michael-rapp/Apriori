@@ -38,15 +38,19 @@ public class Apriori<ItemType extends Item> {
 
         private Map<Integer, Transaction<ItemType>> transactions;
 
+        private double support;
+
         ItemSet() {
             this.items = new TreeSet<>();
             this.transactions = new HashMap<>();
+            this.support = -1;
         }
 
         ItemSet(@NotNull final ItemSet itemSet) {
             // TODO: Throw exceptions
             this.items = new TreeSet<>(itemSet.items);
             this.transactions = new HashMap<>(itemSet.transactions);
+            this.support = itemSet.support;
         }
 
         @NotNull
@@ -100,9 +104,9 @@ public class Apriori<ItemType extends Item> {
     private final double minConfidence;
 
     // TODO: Comment
-    private Collection<ItemSet> findFrequentItemSets(
+    private Map<Integer, ItemSet> findFrequentItemSets(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
-        Collection<ItemSet> frequentItemSets = new LinkedList<>();
+        Map<Integer, ItemSet> frequentItemSets = new HashMap<>();
         int k = 1;
         Pair<Collection<ItemSet>, Integer> pair = findInitialItemSets(iterator);
         Collection<ItemSet> candidates = pair.first;
@@ -111,10 +115,11 @@ public class Apriori<ItemType extends Item> {
         while (!candidates.isEmpty()) {
             LOGGER.trace("k = {}", k);
             LOGGER.trace("C_{} = {}", k, candidates);
-            List<ItemSet> frequentCandidates = filterFrequentItemSets(candidates, transactionCount);
+            List<ItemSet> frequentCandidates = filterFrequentItemSets(candidates, transactionCount,
+                    k);
             LOGGER.trace("S_{} = {}", k, frequentCandidates);
             candidates = combineItemSets(frequentCandidates, k);
-            frequentItemSets.addAll(frequentCandidates);
+            frequentCandidates.forEach(x -> frequentItemSets.put(x.hashCode(), x));
             k++;
         }
 
@@ -188,32 +193,39 @@ public class Apriori<ItemType extends Item> {
 
     // TODO: Comment
     private List<ItemSet> filterFrequentItemSets(@NotNull final Collection<ItemSet> itemSets,
-                                                 final int transactionCount) {
+                                                 final int transactionCount, final int k) {
         List<ItemSet> frequentCandidates = new ArrayList<>(itemSets.size());
 
         for (ItemSet candidate : itemSets) {
-            Map<Integer, Transaction<ItemType>> transactions = new HashMap<>(
-                    candidate.transactions.size());
+            if (k > 1) {
+                Map<Integer, Transaction<ItemType>> transactions = new HashMap<>(
+                        candidate.transactions.size());
 
-            for (Map.Entry<Integer, Transaction<ItemType>> entry : candidate.transactions
-                    .entrySet()) {
-                Transaction<ItemType> transaction = entry.getValue();
-                int count = 0;
+                for (Map.Entry<Integer, Transaction<ItemType>> entry : candidate.transactions
+                        .entrySet()) {
+                    Transaction<ItemType> transaction = entry.getValue();
+                    int count = 0;
 
-                for (ItemType item : transaction) {
-                    // TODO: What if transaction contains the same item multiple times!?
-                    if (candidate.items.contains(item)) {
-                        count++;
+                    for (ItemType item : transaction) {
+                        // TODO: What if transaction contains the same item multiple times!?
+                        if (candidate.items.contains(item)) {
+                            count++;
+                        }
+                    }
+
+                    if (count >= candidate.items.size()) {
+                        transactions.put(entry.getKey(), transaction);
                     }
                 }
 
-                if (count >= candidate.items.size()) {
-                    transactions.put(entry.getKey(), transaction);
-                }
+                candidate.transactions = transactions;
             }
 
-            if (Metrics.calculateSupport(transactionCount, transactions.size()) >= minSupport) {
-                candidate.transactions = transactions;
+            int occurrences = candidate.transactions.size();
+            double support = Metrics.calculateSupport(transactionCount, occurrences);
+            candidate.support = support;
+
+            if (support >= minSupport) {
                 frequentCandidates.add(candidate);
             }
         }
@@ -223,22 +235,26 @@ public class Apriori<ItemType extends Item> {
 
     // TODO: Comment
     private Set<AssociationRule<ItemType>> generateAssociationRules(
-            @NotNull final Collection<ItemSet> frequentItemSets) {
+            @NotNull final Map<Integer, ItemSet> frequentItemSets) {
         Set<AssociationRule<ItemType>> ruleSet = new HashSet<>();
 
-        for (ItemSet itemSet : frequentItemSets) {
+        for (ItemSet itemSet : frequentItemSets.values()) {
             if (itemSet.items.size() > 1) {
                 for (ItemType item : itemSet.items) {
-                    Set<ItemType> head = new HashSet<>();
-                    head.add(item);
-                    Set<ItemType> body = new HashSet<>(itemSet.items);
-                    body.remove(item);
-                    double support = 0.5; // TODO: Retrieve from frequentItemSets
-                    double confidence = 0.5; // TODO: Calculate
+                    ItemSet head = new ItemSet();
+                    head.items.add(item);
+                    ItemSet body = new ItemSet(itemSet);
+                    body.items.remove(item);
+                    ItemSet bodyItemSet = frequentItemSets.get(body.hashCode());
+                    assert bodyItemSet != null;
+                    ItemSet headItemSet = frequentItemSets.get(head.hashCode());
+                    assert headItemSet != null;
+                    double support = bodyItemSet.support;
+                    double confidence = itemSet.support / support;
 
                     if (confidence >= minConfidence) {
-                        AssociationRule<ItemType> rule = new AssociationRule<>(body, head, support,
-                                confidence);
+                        AssociationRule<ItemType> rule = new AssociationRule<>(body.items,
+                                head.items, support, confidence);
                         ruleSet.add(rule);
                         // TODO: Successively move items from body to head until minConfidence is not reached anymore
                     }
@@ -309,7 +325,7 @@ public class Apriori<ItemType extends Item> {
         long startTime = System.currentTimeMillis();
         // TODO: Implement
         LOGGER.debug("Searching for frequent item sets");
-        Collection<ItemSet> frequentItemSets = findFrequentItemSets(iterator);
+        Map<Integer, ItemSet> frequentItemSets = findFrequentItemSets(iterator);
         LOGGER.debug("Found {} frequent item sets", frequentItemSets.size());
         LOGGER.trace("Frequent item sets = {}", frequentItemSets);
 
