@@ -41,6 +41,17 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Serializable {
     private double support;
 
     /**
+     * Sets the support of the item set.
+     *
+     * @param support The support, which should be set, as a {@link Double} value. The support must
+     *                be at least 0 and at maximum 1
+     */
+    protected void setSupport(final double support) {
+        // TODO: Throw exceptions
+        this.support = support;
+    }
+
+    /**
      * Creates an empty item set.
      */
     public ItemSet() {
