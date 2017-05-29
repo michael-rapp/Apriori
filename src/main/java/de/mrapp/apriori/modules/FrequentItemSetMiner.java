@@ -60,7 +60,7 @@ public class FrequentItemSetMiner<ItemType extends Item> {
         /**
          * Creates an empty item set.
          */
-        public InternalItemSet() {
+        InternalItemSet() {
             super();
             this.transactions = new HashMap<>();
         }
@@ -71,7 +71,7 @@ public class FrequentItemSetMiner<ItemType extends Item> {
          * @param itemSet The item set, which should be copied, as an instance of the class {@link
          *                InternalItemSet}. The item set may not be null
          */
-        public InternalItemSet(@NotNull final InternalItemSet<T> itemSet) {
+        InternalItemSet(@NotNull final InternalItemSet<T> itemSet) {
             super(itemSet);
             this.transactions = new HashMap<>(itemSet.transactions);
         }
