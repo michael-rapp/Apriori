@@ -288,6 +288,16 @@ public class FrequentItemSetMiner<ItemType extends Item> {
     }
 
     /**
+     * Returns the support, which must at least be reached by item sets to be considered frequent.
+     *
+     * @return The support, which must at least be reached by item sets to be considered frequent,
+     * as a {@link Double} value. The support must be at least 0 and at maximum 1
+     */
+    public final double getMinSupport() {
+        return minSupport;
+    }
+
+    /**
      * Searches for frequent item sets.
      *
      * @param iterator An iterator, which allows to iterate the transactions of the data set, which
