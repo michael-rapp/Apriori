@@ -41,22 +41,11 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Serializable {
     private double support;
 
     /**
-     * Sets the support of the item set.
-     *
-     * @param support The support, which should be set, as a {@link Double} value. The support must
-     *                be at least 0 and at maximum 1
-     */
-    protected void setSupport(final double support) {
-        // TODO: Throw exceptions
-        this.support = support;
-    }
-
-    /**
      * Creates an empty item set.
      */
     public ItemSet() {
         this.items = new TreeSet<>();
-        this.support = 0;
+        setSupport(0);
     }
 
     /**
@@ -68,7 +57,7 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Serializable {
     public ItemSet(@NotNull final ItemSet<ItemType> itemSet) {
         // TODO: Throw exceptions
         this.items = new TreeSet<>(itemSet.items);
-        this.support = itemSet.support;
+        setSupport(itemSet.support);
     }
 
     /**
@@ -79,6 +68,17 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Serializable {
      */
     public final double getSupport() {
         return support;
+    }
+
+    /**
+     * Sets the support of the item set.
+     *
+     * @param support The support, which should be set, as a {@link Double} value. The support must
+     *                be at least 0 and at maximum 1
+     */
+    public final void setSupport(final double support) {
+        // TODO: Throw exceptions
+        this.support = support;
     }
 
     @Nullable

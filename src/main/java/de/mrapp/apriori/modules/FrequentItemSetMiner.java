@@ -76,11 +76,6 @@ public class FrequentItemSetMiner<ItemType extends Item> {
             this.transactions = new HashMap<>(itemSet.transactions);
         }
 
-        @Override
-        public final void setSupport(final double support) {
-            super.setSupport(support);
-        }
-
     }
 
     /**
