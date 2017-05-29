@@ -84,7 +84,7 @@ public class FrequentItemSetMiner<ItemType extends Item> {
     }
 
     /**
-     * The SLF4J logger, which is used by the algorithm.
+     * The SLF4J logger, which is used by the module.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(FrequentItemSetMiner.class);
 
