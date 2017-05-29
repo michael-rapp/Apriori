@@ -19,11 +19,11 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * An association rule of the form Y <- X, which consists of a body X and a head Y. Such rules are
- * given as the result of the Apriori algorithm. Both, the body and the head of an association rule
- * consist of one or several items. These item sets must be distinct. An association rule specifies,
- * that if the items, which are contained by its body, occur in a transaction, the items, which are
- * given in its head, do also occur with a certain probability.
+ * An association rule of the form Y <- X, which consists of a body X and a head Y. Both, the body
+ * and the head of an association rule consist of one or several items. These item sets must be
+ * distinct. An association rule specifies, that if the items, which are contained by its body,
+ * occur in a transaction, the items, which are given in its head, do also occur with a certain
+ * probability.
  *
  * @param <ItemType> The type of the items, the association rule's body and head consist of
  * @author Michael Rapp
