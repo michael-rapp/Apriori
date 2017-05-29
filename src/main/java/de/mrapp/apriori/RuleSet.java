@@ -13,6 +13,10 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.metrics.Confidence;
+import de.mrapp.apriori.metrics.Leverage;
+import de.mrapp.apriori.metrics.Lift;
+import de.mrapp.apriori.metrics.Support;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -80,13 +84,13 @@ public class RuleSet<ItemType extends Item> implements
             AssociationRule<ItemType> rule = iterator.next();
             stringBuilder.append(rule.toString());
             stringBuilder.append(" (support = ");
-            stringBuilder.append(decimalFormat.format(rule.getSupport()));
+            stringBuilder.append(decimalFormat.format(new Support().evaluate(rule)));
             stringBuilder.append(", confidence = ");
-            stringBuilder.append(decimalFormat.format(rule.getConfidence()));
+            stringBuilder.append(decimalFormat.format(new Confidence().evaluate(rule)));
             stringBuilder.append(", lift = ");
-            stringBuilder.append(decimalFormat.format(rule.getLift()));
+            stringBuilder.append(decimalFormat.format(new Lift().evaluate(rule)));
             stringBuilder.append(", leverage = ");
-            stringBuilder.append(decimalFormat.format(rule.getLeverage()));
+            stringBuilder.append(decimalFormat.format(new Leverage().evaluate(rule)));
             stringBuilder.append(")");
 
             if (iterator.hasNext()) {

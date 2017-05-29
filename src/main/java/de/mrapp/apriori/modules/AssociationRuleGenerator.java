@@ -13,7 +13,11 @@
  */
 package de.mrapp.apriori.modules;
 
-import de.mrapp.apriori.*;
+import de.mrapp.apriori.AssociationRule;
+import de.mrapp.apriori.Item;
+import de.mrapp.apriori.ItemSet;
+import de.mrapp.apriori.RuleSet;
+import de.mrapp.apriori.metrics.Confidence;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -105,15 +109,13 @@ public class AssociationRuleGenerator<ItemType extends Item> {
             ItemSet<ItemType> bodyItemSet = new ItemSet<>(body);
             bodyItemSet.remove(item);
             bodyItemSet.setSupport(frequentItemSets.get(bodyItemSet.hashCode()).getSupport());
+            headItemSet.setSupport(frequentItemSets.get(headItemSet.hashCode()).getSupport());
             double support = itemSet.getSupport();
-            double confidence = Metrics.calculateConfidence(bodyItemSet.getSupport(), support);
+            AssociationRule<ItemType> rule = new AssociationRule<>(bodyItemSet,
+                    headItemSet, support);
+            double confidence = new Confidence().evaluate(rule);
 
             if (confidence >= minConfidence) {
-                headItemSet.setSupport(frequentItemSets.get(headItemSet.hashCode()).getSupport());
-                double lift = support / (bodyItemSet.getSupport() * headItemSet.getSupport());
-                double leverage = support - (bodyItemSet.getSupport() * headItemSet.getSupport());
-                AssociationRule<ItemType> rule = new AssociationRule<>(bodyItemSet,
-                        headItemSet, support, confidence, lift, leverage);
                 rules.add(rule);
 
                 if (bodyItemSet.size() > 1) {

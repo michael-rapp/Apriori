@@ -51,49 +51,24 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
     private final double support;
 
     /**
-     * The confidence of the association rule.
-     */
-    private final double confidence;
-
-    /**
-     * The lift of the association rule.
-     */
-    private final double lift;
-
-    /**
-     * The leverage of the association rule.
-     */
-    private final double leverage;
-
-    /**
      * Creates a new association rule.
      *
-     * @param body       An item set, which contains the items, which are contained by the
-     *                   association rule's body, as an instance of the class {@link ItemSet}. The
-     *                   item set may not be null
-     * @param head       An item set, which contains the items, which are contained by the
-     *                   association rule's head, as an instance of the class {@link ItemSet}. The
-     *                   item set may neither be null, nor empty
-     * @param support    The support of the association rule as a {@link Double} value. The support
-     *                   must be at least 0 and at maximum 1
-     * @param confidence The confidence of the association rule as a {@link Double} value. The
-     *                   confidence must be at least 0 and at maximum 1
-     * @param lift       The list of the association rule as a {@link Double} value. The lift must
-     *                   be at least 0
-     * @param leverage   The leverage of the association rule as a {@link Double} value. The
-     *                   leverage must be at least 0 and at maximum 1
+     * @param body    An item set, which contains the items, which are contained by the association
+     *                rule's body, as an instance of the class {@link ItemSet}. The item set may not
+     *                be null
+     * @param head    An item set, which contains the items, which are contained by the association
+     *                rule's head, as an instance of the class {@link ItemSet}. The item set may
+     *                neither be null, nor empty
+     * @param support The support of the association rule as a {@link Double} value. The support
+     *                must be at least 0 and at maximum 1
      */
     public AssociationRule(@NotNull final ItemSet<ItemType> body,
                            @NotNull final ItemSet<ItemType> head,
-                           final double support, final double confidence, final double lift,
-                           final double leverage) {
+                           final double support) {
         // TODO: Throw exceptions
         this.body = body;
         this.head = head;
         this.support = support;
-        this.confidence = confidence;
-        this.lift = lift;
-        this.leverage = leverage;
     }
 
     /**
@@ -120,49 +95,13 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
     }
 
     /**
-     * Returns the support of the association rule. By definition, "support" measures the percentage
-     * of transactions for which the body and head of the rule is true.
+     * Returns the support of the association rule.
      *
      * @return The support of the association rule as a {@link Double} value. The support must be at
      * least 0 and at maximum 1
      */
     public final double getSupport() {
         return support;
-    }
-
-    /**
-     * Returns the confidence of the association rule. By definition, "confidence" measures the
-     * percentage of transactions for which the head of the rule is true, among all transaction for
-     * which the body is true.
-     *
-     * @return The confidence of the association rule as a {@link Double} value. The confidence must
-     * be at least 0 and at maximum 1
-     */
-    public final double getConfidence() {
-        return confidence;
-    }
-
-    /**
-     * Returns the lift of the association rule. By definition, "lift" calculates as the ratio of
-     * the rule's confidence over a priori expectation for the rule's head.
-     *
-     * @return The lift of the association rule as a {@link Double} value. The lift must be at least
-     * 0
-     */
-    public final double getLift() {
-        return lift;
-    }
-
-    /**
-     * Returns the leverage of the association rule. By definition, "leverage" is the difference
-     * between the rule's support and the expected support for the body and head, if they were
-     * independent.
-     *
-     * @return The leverage of the association rule as a {@link Double} value. The leverage must be
-     * at least 0 and at maximum 1
-     */
-    public final double getLeverage() {
-        return leverage;
     }
 
     @Override
