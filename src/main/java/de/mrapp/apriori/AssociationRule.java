@@ -16,7 +16,6 @@ package de.mrapp.apriori;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * An association rule of the form Y <- X, which consists of a body X and a head Y. Both, the body
@@ -39,12 +38,12 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
     /**
      * The body of the association rule.
      */
-    private final Set<ItemType> body;
+    private final ItemSet<ItemType> body;
 
     /**
      * The head of the association rule.
      */
-    private final Set<ItemType> head;
+    private final ItemSet<ItemType> head;
 
     /**
      * The support of the association rule.
@@ -69,12 +68,12 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
     /**
      * Creates a new association rule.
      *
-     * @param body       A set, which contains the items, which are contained by the association
-     *                   rule's body, as an instance of the type {@link Set}. The set may neither be
-     *                   null, nor empty
-     * @param head       A set, which contains the items, which are contained by the association
-     *                   rule's head, as an instance of the type {@link Set}. The set may neither be
-     *                   null, nor empty
+     * @param body       An item set, which contains the items, which are contained by the
+     *                   association rule's body, as an instance of the class {@link ItemSet}. The
+     *                   item set may not be null
+     * @param head       An item set, which contains the items, which are contained by the
+     *                   association rule's head, as an instance of the class {@link ItemSet}. The
+     *                   item set may neither be null, nor empty
      * @param support    The support of the association rule as a {@link Double} value. The support
      *                   must be at least 0 and at maximum 1
      * @param confidence The confidence of the association rule as a {@link Double} value. The
@@ -84,7 +83,8 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
      * @param leverage   The leverage of the association rule as a {@link Double} value. The
      *                   leverage must be at least 0 and at maximum 1
      */
-    public AssociationRule(@NotNull final Set<ItemType> body, @NotNull final Set<ItemType> head,
+    public AssociationRule(@NotNull final ItemSet<ItemType> body,
+                           @NotNull final ItemSet<ItemType> head,
                            final double support, final double confidence, final double lift,
                            final double leverage) {
         // TODO: Throw exceptions
@@ -99,22 +99,23 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
     /**
      * Returns the body of the association rule.
      *
-     * @return A set, which contains the items, which are contained by the association rule's body,
-     * as an instance of the type {@link Set}. The set may neither be null, nor empty
+     * @return An item set, which contains the items, which are contained by the association rule's
+     * body, as an instance of the class {@link ItemSet}. The item set may not be null
      */
     @NotNull
-    public final Set<ItemType> getBody() {
+    public final ItemSet<ItemType> getBody() {
         return body;
     }
 
     /**
      * Returns the head of the association rule.
      *
-     * @return A set, which contains the items, which are contained by the association rule's head,
-     * as an instance of the type {@link Set}. The set may neither be null nor empty
+     * @return An item set, which contains the items, which are contained by the association rule's
+     * head, as an instance of the class {@link ItemSet}. The item set may neither be null nor
+     * empty
      */
     @NotNull
-    public final Set<ItemType> getHead() {
+    public final ItemSet<ItemType> getHead() {
         return head;
     }
 

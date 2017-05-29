@@ -15,9 +15,6 @@ package de.mrapp.apriori;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import static org.junit.Assert.*;
 
 /**
@@ -32,10 +29,10 @@ public class AssociationRuleTest {
      */
     @Test
     public final void testConstructor() {
-        Set<NamedItem> body = new HashSet<>();
+        ItemSet<NamedItem> body = new ItemSet<>();
         body.add(new NamedItem("a"));
         body.add(new NamedItem("b"));
-        Set<NamedItem> head = new HashSet<>();
+        ItemSet<NamedItem> head = new ItemSet<>();
         head.add(new NamedItem("c"));
         head.add(new NamedItem("d"));
         double support = 0.5;
@@ -57,10 +54,10 @@ public class AssociationRuleTest {
      */
     @Test
     public final void testToString() {
-        Set<NamedItem> body = new HashSet<>();
+        ItemSet<NamedItem> body = new ItemSet<>();
         body.add(new NamedItem("a"));
         body.add(new NamedItem("b"));
-        Set<NamedItem> head = new HashSet<>();
+        ItemSet<NamedItem> head = new ItemSet<>();
         head.add(new NamedItem("c"));
         head.add(new NamedItem("d"));
         AssociationRule<NamedItem> associationRule = new AssociationRule<>(body, head, 0.5, 0.4,
@@ -73,13 +70,13 @@ public class AssociationRuleTest {
      */
     @Test
     public final void testHashCode() {
-        Set<NamedItem> body1 = new HashSet<>();
+        ItemSet<NamedItem> body1 = new ItemSet<>();
         body1.add(new NamedItem("a"));
-        Set<NamedItem> body2 = new HashSet<>();
+        ItemSet<NamedItem> body2 = new ItemSet<>();
         body2.add(new NamedItem("c"));
-        Set<NamedItem> head1 = new HashSet<>();
+        ItemSet<NamedItem> head1 = new ItemSet<>();
         head1.add(new NamedItem("b"));
-        Set<NamedItem> head2 = new HashSet<>();
+        ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("d"));
         AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, head1, 0.5, 0.5,
                 0.5, 0.5);
@@ -106,13 +103,13 @@ public class AssociationRuleTest {
      */
     @Test
     public final void testEquals() {
-        Set<NamedItem> body1 = new HashSet<>();
+        ItemSet<NamedItem> body1 = new ItemSet<>();
         body1.add(new NamedItem("a"));
-        Set<NamedItem> body2 = new HashSet<>();
+        ItemSet<NamedItem> body2 = new ItemSet<>();
         body2.add(new NamedItem("c"));
-        Set<NamedItem> head1 = new HashSet<>();
+        ItemSet<NamedItem> head1 = new ItemSet<>();
         head1.add(new NamedItem("b"));
-        Set<NamedItem> head2 = new HashSet<>();
+        ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("d"));
         AssociationRule associationRule1 = new AssociationRule<>(body1, head1, 0.5, 0.5, 0.5, 0.5);
         AssociationRule associationRule2 = new AssociationRule<>(body1, head1, 0.5, 0.5, 0.5, 0.5);
