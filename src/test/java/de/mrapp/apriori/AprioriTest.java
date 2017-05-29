@@ -42,7 +42,7 @@ public class AprioriTest extends AbstractDataTest {
      */
     @Test
     public final void testExecute() {
-        File inputFile = getInputFile();
+        File inputFile = getInputFile(INPUT_FILE_1);
         DataIterator dataIterator = new DataIterator(inputFile);
         Apriori<NamedItem> apriori = new Apriori<>(0.5, 1.0);
         RuleSet<NamedItem> ruleSet = apriori.execute(dataIterator);

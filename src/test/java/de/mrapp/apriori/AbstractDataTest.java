@@ -30,20 +30,29 @@ import static org.junit.Assert.assertTrue;
 public class AbstractDataTest {
 
     /**
-     * The name of the input file, which is used by the tests.
+     * The name of the first input file, which is used by the tests.
      */
-    private static final String INPUT_FILE = "data.txt";
+    protected static final String INPUT_FILE_1 = "data1.txt";
 
     /**
-     * Returns the input file, which can be used by the tests.
+     * The name of the second input file, which is used by the tests.
+     */
+    protected static final String INPUT_FILE_2 = "data2.txt";
+
+    /**
+     * Returns the input file, which corresponds to a specific file name.
      *
+     * @param fileName The file name, which corresponds to the input file, which should be returned,
+     *                 as a {@link String}. The string may neither be null, nor empty
      * @return The input file, which can be used by the tests, as an instance of the class {@link
      * File}. The file may not be null
      */
     @NotNull
-    protected final File getInputFile() {
+    protected final File getInputFile(@NotNull final String fileName) {
+        // TODO: Throw exceptions
+
         try {
-            URL url = getClass().getClassLoader().getResource(INPUT_FILE);
+            URL url = getClass().getClassLoader().getResource(fileName);
 
             if (url != null) {
                 File file = Paths.get(url.toURI()).toFile();
