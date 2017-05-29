@@ -26,11 +26,24 @@ import java.util.StringTokenizer;
  */
 public class DataIterator implements Iterator<Transaction<NamedItem>> {
 
-    private class TransactionImpl implements Transaction<NamedItem> {
+    /**
+     * An implementation of the interface {@link Transaction}. Each transaction corresponds to a
+     * single line of a text file.
+     */
+    private class TransactionImplementation implements Transaction<NamedItem> {
 
+        /**
+         * The line, the transaction corresponds to.
+         */
         private final String line;
 
-        TransactionImpl(@NotNull final String line) {
+        /**
+         * Creates a new implementation of the interface {@link Transaction}.
+         *
+         * @param line The line, the transaction corresponds to, as a {@link String}. The line may
+         *             neither be null, nor empty
+         */
+        TransactionImplementation(@NotNull final String line) {
             // TODO: Throw exceptions
             this.line = line;
         }
@@ -173,7 +186,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
 
     @Override
     public final Transaction<NamedItem> next() {
-        return hasNext() ? new TransactionImpl(nextLine) : null;
+        return hasNext() ? new TransactionImplementation(nextLine) : null;
     }
 
 }
