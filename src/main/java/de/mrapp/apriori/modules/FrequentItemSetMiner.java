@@ -15,7 +15,6 @@ package de.mrapp.apriori.modules;
 
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
-import de.mrapp.apriori.Metrics;
 import de.mrapp.apriori.Transaction;
 import de.mrapp.apriori.util.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -172,7 +171,7 @@ public class FrequentItemSetMiner<ItemType extends Item> {
             }
 
             int occurrences = candidate.transactions.size();
-            double support = Metrics.calculateSupport(transactionCount, occurrences);
+            double support = calculateSupport(transactionCount, occurrences);
             candidate.setSupport(support);
 
             if (support >= minSupport) {
@@ -273,6 +272,19 @@ public class FrequentItemSetMiner<ItemType extends Item> {
 
         stringBuilder.append("]");
         return stringBuilder.toString();
+    }
+
+    /**
+     * Calculates and returns the support of an item.
+     *
+     * @param transactions The total number of available transactions as an {@link Integer} value.
+     *                     The number of transactions must be at least 0
+     * @param occurrences  The number of transactions, the item occurs in, as an {@link Integer}
+     *                     value. The number of transactions must be at least 0
+     * @return The support, which has been calculated, as a {@link Double} value
+     */
+    private double calculateSupport(final int transactions, final int occurrences) {
+        return transactions > 0 ? (double) occurrences / (double) transactions : 0;
     }
 
     /**
