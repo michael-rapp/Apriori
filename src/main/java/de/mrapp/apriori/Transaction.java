@@ -15,7 +15,7 @@ package de.mrapp.apriori;
 
 /**
  * Defines the interface, a transaction, which consists of multiple items, must implement. The
- * apriori algorithm processes a set of transactions in order to learn association rules.
+ * Apriori algorithm processes a set of transactions in order to find frequent item sets.
  *
  * @param <ItemType> The type of the items, the transaction consists of
  * @author Michael Rapp
