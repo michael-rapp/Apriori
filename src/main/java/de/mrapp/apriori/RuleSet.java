@@ -21,8 +21,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * A rule set, which contains multiple association rules. Rule sets are returned as the result of
- * the Apriori algorithm. The rules, which are contained by a rule set, are unordered.
+ * A rule set, which contains multiple association rules. The rules, which are contained by a rule
+ * set, are unordered.
  *
  * @author Michael Rapp
  * @since 1.0.0
