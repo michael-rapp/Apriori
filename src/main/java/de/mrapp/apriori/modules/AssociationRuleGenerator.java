@@ -149,6 +149,7 @@ public class AssociationRuleGenerator<ItemType extends Item> {
     @NotNull
     public final RuleSet<ItemType> generateAssociationRules(
             @NotNull final Map<Integer, ItemSet<ItemType>> frequentItemSets) {
+        LOGGER.debug("Generating association rules");
         Set<AssociationRule<ItemType>> rules = new HashSet<>();
 
         for (ItemSet<ItemType> itemSet : frequentItemSets.values()) {
@@ -157,7 +158,10 @@ public class AssociationRuleGenerator<ItemType extends Item> {
             }
         }
 
-        return new RuleSet<>(rules);
+        RuleSet<ItemType> ruleSet = new RuleSet<>(rules);
+        LOGGER.debug("Generated {} association rules", ruleSet.size());
+        LOGGER.debug("Rule set = {}", ruleSet);
+        return ruleSet;
     }
 
 }
