@@ -37,6 +37,7 @@ public class DataIteratorTest extends AbstractDataTest {
      */
     private static final String[][] DATA_2 = {{"beer", "chips", "wine"}, {"beer", "chips"}, {"pizza", "wine"}, {"chips", "pizza"}};
 
+
     /**
      * Tests, if the data, which is contained by an input file, is iterated correctly.
      *

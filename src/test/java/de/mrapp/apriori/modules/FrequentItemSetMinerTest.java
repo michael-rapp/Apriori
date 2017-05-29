@@ -33,26 +33,6 @@ import static org.junit.Assert.assertEquals;
 public class FrequentItemSetMinerTest extends AbstractDataTest {
 
     /**
-     * The frequent item sets, which are contained by the first input file.
-     */
-    private static String[][] FREQUENT_ITEM_SETS_1 = {{"milk", "sugar"}, {"coffee"}, {"coffee", "milk", "sugar"}, {"coffee", "sugar"}, {"milk"}, {"coffee", "milk"}, {"bread"}, {"bread", "sugar"}, {"sugar"}};
-
-    /**
-     * The supports of the frequent item sets, which are contained by the first input file.
-     */
-    private static double[] SUPPORTS_1 = {0.5, 0.75, 0.5, 0.5, 0.75, 0.75, 0.5, 0.5, 0.75};
-
-    /**
-     * The frequent item sets, which are contained by the second input file.
-     */
-    private static String[][] FREQUENT_ITEM_SETS_2 = {{"beer"}, {"wine"}, {"beer", "wine"}, {"chips", "pizza"}, {"beer", "chips", "wine"}, {"chips"}, {"beer", "chips"}, {"chips", "wine"}, {"pizza"}, {"pizza", "wine"}};
-
-    /**
-     * The supports of the frequent item sets, which are contained by the second input file.
-     */
-    private static double[] SUPPORTS_2 = {0.5, 0.5, 0.25, 0.25, 0.25, 0.75, 0.5, 0.25, 0.5, 0.25};
-
-    /**
      * Tests the functionality of the method, which allows to find frequent item sets, when using a
      * specific input file.
      *

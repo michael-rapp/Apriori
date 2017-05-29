@@ -138,6 +138,17 @@ public class AssociationRuleGenerator<ItemType extends Item> {
     }
 
     /**
+     * Returns the confidence, which must at least be reached by association rules to be considered
+     * "interesting".
+     *
+     * @return The confidence, which must at least be reached by association rules to be considered
+     * "interesting as a {@link Double} value. The confidence must at least be 0 and at maximum 1
+     */
+    public final double getMinConfidence() {
+        return minConfidence;
+    }
+
+    /**
      * Generates association rules from frequent item sets.
      *
      * @param frequentItemSets A map, which contains all available frequent item sets, as an
