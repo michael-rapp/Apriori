@@ -176,14 +176,6 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
         int result = 1;
         result = prime * result + body.hashCode();
         result = prime * result + head.hashCode();
-        long tempSupport = Double.doubleToLongBits(support);
-        result = prime * result + (int) (tempSupport ^ (tempSupport >>> 32));
-        long tempConfidence = Double.doubleToLongBits(confidence);
-        result = prime * result + (int) (tempConfidence ^ (tempConfidence >>> 32));
-        long tempLift = Double.doubleToLongBits(lift);
-        result = prime * result + (int) (tempLift ^ (tempLift >>> 32));
-        long tempLeverage = Double.doubleToLongBits(leverage);
-        result = prime * result + (int) (tempLeverage ^ (tempLeverage >>> 32));
         return result;
     }
 
@@ -196,8 +188,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         AssociationRule other = (AssociationRule) obj;
-        return body.equals(other.body) && head.equals(other.head) && support == other.support &&
-                confidence == other.confidence && lift == other.lift && leverage == other.leverage;
+        return body.equals(other.body) && head.equals(other.head);
     }
 
 }
