@@ -32,10 +32,10 @@ import java.util.stream.IntStream;
  * considered frequent, if their support is greater or equal than a specific threshold.
  *
  * In order to search for frequent item sets efficiently, the algorithm exploits the
- * anti-monotonicity of the support metric, which states, that an item set can only be frequent, if
- * all of its subsets are frequent as well. The other way around, the supersets of an infrequent
- * item set are also infrequent. Furthermore, the items must be sortable (e.g. by their names) in
- * order to generate possible candidates in an efficient way.
+ * anti-monotonicity property of the support metric, which states, that an item set can only be
+ * frequent, if all of its subsets are frequent as well. The other way around, the supersets of an
+ * infrequent item set are also infrequent. Furthermore, the items must be sortable (e.g. by their
+ * names) in order to generate possible candidates in an efficient way.
  *
  * @param <ItemType> The type of the items, which are processed by the algorithm
  * @author Michael Rapp
