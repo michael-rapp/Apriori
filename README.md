@@ -76,7 +76,7 @@ As only one frequent item set is contained by S3, no more candidates can be crea
 
 ### Searching for frequent item sets using a minimum support
 
-To use the implementation of the Apriori algorithm, which is provided by this library, for finding frequent item sets, an instance of the class `Apriori` must be created. It can be configured by using the builder pattern as shown below. The generic type argument `NamedItem` corresponds to the class used in the library's JUnit tests as mentioned above. The iterator `DataIterator` can be found in the test resources as well. In order to use custom data sources, it must be replaced by an custom implementation. The value `0.5`, which is passed to the builder as a constructor argument, corresponds to the minimum support, which should be used by the algorithm as described in the example above. By invoking the `execute`-method the execution of the algorithm is started. It results in an instance of the class `Output` to be returned. Such an output contains various information about the executed algorithm. By calling the `getFrequentItemSets`-method, the frequent item sets, which have been found by the algorithm, can be obtained. They are sorted by their support in decreasing order.
+To use the implementation of the Apriori algorithm, which is provided by this library, for finding frequent item sets, an instance of the class `Apriori` must be created. It can be configured by using the builder pattern as shown below. The generic type argument `NamedItem` corresponds to the class used in the library's JUnit tests as mentioned above. The iterator `DataIterator` can be found in the test resources as well. In order to use custom data sources, it must be replaced by an custom implementation. The value `0.5`, which is passed to the builder as a constructor argument, corresponds to the minimum support, which should be used by the algorithm as described in the example above.
 
 ```java
 double minSupport = 0.5;
@@ -85,6 +85,8 @@ Iterator<Transaction<NamedItem>> iterator = new DataIterator(inputFile);
 Output<NamedItem> output = apriori.execute(iterator);
 SortedSet<ItemSet<NamedItem>> frequentItemSets = output.getFrequentItemSets();
 ```
+
+By invoking the `execute`-method of the class `Apriori` the execution of the algorithm is started. It results in an instance of the class `Output` to be returned. Such an output contains various information about the executed algorithm. By calling the `getFrequentItemSets`-method, the frequent item sets, which have been found by the algorithm, can be obtained. They are given as instances of the class `ItemSet` and are sorted by their support in decreasing order. The class `ItemSet` can be used like a regular `java.util.SortedSet` and additionally provides the `getSupport`-method, which allows to retrieve the support of an item set.
 
 ### Trying to find a specific number of frequent item sets
 
