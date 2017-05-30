@@ -83,7 +83,7 @@ double minSupport = 0.5;
 Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(minSupport).create();
 Iterator<Transaction<NamedItem>> iterator = new DataIterator(inputFile);
 Output<NamedItem> output = apriori.execute(iterator);
-Set<ItemSet<NamedItem>> frequentItemSets = output.getFrequentItemSets();
+SortedSet<ItemSet<NamedItem>> frequentItemSets = output.getFrequentItemSets();
 ```
 
 ### Trying to find a specific number of frequent item sets
@@ -100,7 +100,7 @@ The `count` variable, which is passed to the constructor of the builder in the e
 
 ## Generating Association Rules
 
-This library also allows to generate association rules from frequent item sets. An association rule consists of a head Y and a body X and is denoted as X -> Y. It specifies, that if certain items take part in a transaction, other items occur as well with a certain probability.
+This library also allows to generate association rules from frequent item sets. An association rule consists of a head Y and a body X and is denoted as X -> Y. It specifies, that if the items in the body take part in a transaction, the items in the head occur as well with a certain probability. That probability is measured by using the confidence metric. It measures the proportion of transactions for which the head is true among those transactions for which the body is true.
 
 ### Example
 
@@ -125,6 +125,34 @@ After testing all candidate rules, the algorithm results in the following rule s
 {milk, sugar} -> {coffee}
 {sugar, coffee} -> {milk}
 ```
+
+### Generating all association rules with a minimum confidence
+
+In order to configure the algorithm, which is provided by this library, to generate association rules, the builder pattern must be used as follows. As the generation of association rules requires to identify frequent item sets beforehand, the builder must be configured as shown above at first. In addition, the builder's `generateRules`-method can be used to specify, that association rules, which reach a certain minimum confidence, should be generated. The induced rules can be obtained from the resulting `Output` instance by calling the `getRuleSet`-method. They are contained by an instance of the class `RuleSet` in the order of their induction.
+
+```java
+double minSupport = 0.5;
+double minConfidence = 1.0;
+Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(minSupport).generateRules(minConfidence).create();
+Iterator<Transaction<NamedItem>> iterator = new DataIterator(inputFile);
+Output<NamedItem> output = apriori.execute(iterator);
+RuleSet<NamedItem> ruleSet = output.getRuleSet();
+```
+
+### Trying to generate a specific number of association rules
+
+In addition to generating all rules, which reach a certain minimum confidence, the algorithm can be configured to try to generate a specific number of rules. The sample code below illustrates how a `Apriori` instance can be created to meet this requirement:
+
+```java
+double minSupport = 0.5;
+int ruleCount = 5;
+Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(minSupport).generateRules(ruleCount).confidenceDelta(0.1).maxConfidence(1.0).minConfidence(0.0).create();
+// ...
+```
+
+When configuring the builder that way, the semantics of the `confidenceDelta`-, `minConfidence`- and `maxConfidence`-method calls are similar to those of the `supportDelta`-, `maxSupport`- and `minSupport`-method calls discussed above.
+
+### Sorting and filtering association rules
 
 ## Contact information
 
