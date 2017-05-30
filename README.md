@@ -12,6 +12,12 @@ To be able to apply the Apriori algorithm to a data set, the data must be availa
 
 An exemplary implementation of the interface `Item` can be found in the class `NamedItem`, which is part of the library's JUnit tests. It implements an item, which consists of a text. Furthermore, the library's test resources include the class `DataIterator`, which implements a `java.util.iterator`, which reads items from text files and provides them as transactions. In practice, by creating custom iterator and transaction implementations, the library can flexibly be used to process data from various data sources, such as databases, files, or network resources.
 
+## Finding Frequent Item Sets
+
+The search for frequent item sets aims at finding items, which often occur collectively in a transaction. The probability of an item set to be part of a transaction is measured by the "support" metric. It calculates as the fraction of transactions, all of the item set's items occur in.
+
+## Generating Association Rules
+
 ## References
 
 [1] Rakesh Agrawal and Ramakrishnan Srikant [Fast algorithms for mining association rules in large databases](http://rakesh.agrawal-family.com/papers/vldb94apriori.pdf). Proceedings of the 20th International Conference on Very Large Data Bases, VLDB, pages 487-499, Santiago, Chile, September 1994.
