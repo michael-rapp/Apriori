@@ -1,6 +1,6 @@
 # Apriori - README
 
-This is a Java library, which provides an implementation of the Apriori association rule learning algorithm [1] for mining frequent item sets.
+This is a Java library, which provides an implementation of the Apriori algorithm [1]. It can be used to efficiently find frequent item sets in large data sets and (optionally) allows to generate association rules.
 
 ## The Algorithm
 
