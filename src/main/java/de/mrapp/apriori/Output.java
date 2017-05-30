@@ -18,10 +18,11 @@ import java.io.Serializable;
 /**
  * An output of the Apriori algorithm.
  *
+ * @param <ItemType> The type of the items, which have been processed by the Apriori algorithm
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class Output implements Serializable {
+public class Output<ItemType extends Item> implements Serializable {
 
     /**
      * The constant serial version UID.
