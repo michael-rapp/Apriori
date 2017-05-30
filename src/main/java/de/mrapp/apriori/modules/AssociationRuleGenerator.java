@@ -13,10 +13,7 @@
  */
 package de.mrapp.apriori.modules;
 
-import de.mrapp.apriori.AssociationRule;
-import de.mrapp.apriori.Item;
-import de.mrapp.apriori.ItemSet;
-import de.mrapp.apriori.RuleSet;
+import de.mrapp.apriori.*;
 import de.mrapp.apriori.metrics.Confidence;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,6 +44,39 @@ import java.util.Set;
  * @since 1.0.0
  */
 public class AssociationRuleGenerator<ItemType extends Item> {
+
+    /**
+     * A filter, which allows to filter association rules, if their "interestingly" according to a
+     * certain metric is less than a threshold.
+     */
+    public static class Filter {
+
+        /**
+         * The metric.
+         */
+        private final Metric metric;
+
+        /**
+         * The threshold.
+         */
+        private final double threshold;
+
+        /**
+         * Creates a new filter, which allows to filter association rules, if their "interestingly"
+         * according to a certain metric is less than a threshold.
+         *
+         * @param metric    The metric as an instance of the type {@link Metric}. The metric may not
+         *                  be null
+         * @param threshold The threshold as a {@link Double} value. The threshold must be greater
+         *                  than 0
+         */
+        public Filter(@NotNull final Metric metric, final double threshold) {
+            // TODO: Throw exceptions
+            this.metric = metric;
+            this.threshold = threshold;
+        }
+
+    }
 
     /**
      * The SLF4J logger, which is used by the module.

@@ -13,6 +13,8 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.metrics.Lift;
+import de.mrapp.apriori.metrics.Support;
 import org.junit.Test;
 
 import java.io.File;
@@ -25,27 +27,16 @@ import java.io.File;
 public class AprioriTest extends AbstractDataTest {
 
     /**
-     * Tests, if all class members are set correctly by the constructor.
-     */
-    @Test
-    public final void testConstructor() {
-        double minSupport = 0.5;
-        double minConfidence = 0.6;
-        Apriori<NamedItem> apriori = new Apriori<>(minSupport, minConfidence);
-        // TODO: Check actual properties
-        // assertEquals(minSupport, apriori.getMinSupport(), 0);
-        // assertEquals(minConfidence, apriori.getMinConfidence(), 0);
-    }
-
-    /**
      * Tests the functionality of the execute-method.
      */
     @Test
     public final void testExecute() {
         File inputFile = getInputFile(INPUT_FILE_2);
         DataIterator dataIterator = new DataIterator(inputFile);
-        Apriori<NamedItem> apriori = new Apriori<>(0.25, 1.0);
-        RuleSet<NamedItem> ruleSet = apriori.execute(dataIterator);
+
+        Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(0.5).frequentItemSetCount(0)
+                .generateRules(0.5).supportDelta(0.1).sortRules(new Support())
+                .filterRules(new Lift(), 0.5).create();
     }
 
 }
