@@ -176,9 +176,33 @@ double leverage = new Leverage().evaluate(rule); // between 0 and 1
 
 ### Sorting and filtering association rules
 
+In order to sort the association rules, which are returned by the library's Apriori algorithm, the `sort`-method of the class RuleSet` can be used. It returns a copy of the rule set, which contains the rules sorted by their support, confidence, lift or leverage in decreasing order, depending on whether an instance of the class `Support`, `Confidence`, `Lift` or `Leverage` is passed as an argument. The following code illustrates this functionality:
+
+```java
+Metric metric = new Leverage();
+RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(metric);
+```
+
+In addition, the `filter`-method of the class `RuleSet` enables to filter the rules based on one of the available metrics. It causes the rules to be sorted in decreasing order and returns a rule set, which only contains those rules, whose heuristic value is greater or equal than a certain threshold.
+
+```java
+Metric metric = new Leverage();
+double threshold = 0.5;
+RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(metric, threshold);
+```
+
+If the rules should be filtered depending on more than one metric, there is an additional `filter`-method, which expects an instance of the type `Operator` as an argument. Available implementations of said interface are the classes `ArithmeticMean` and `HarmonicMean`. They allow to average two or more heuristic values, which have been calculated by using one of above metrics. Optionally, the individual heuristic values can be weighted differently. The following sample code illustrates the use of these averaging operators:
+
+```java
+Operator operator = new HarmonicMean().add(new Leverage()).add(new Lift());
+// use new HarmonicMean().add(new Leverage(), 1.0).add(new Lift(), 2.0) to weight metrics differently
+double threshold = 0.5;
+RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(operator, threshold);
+```
+
 ## Logging
 
-The library uses the [SLF4J](https://www.slf4j.org/) logging facade for writing log messages at different granularities. By adding a logging framework such as [Log4J](https://logging.apache.org/log4j/) or [Logback](https://logback.qos.ch/) to your project and creating a respective configuration files, the Apriori algorithm's log messages can be written to different outputs such as files, databases or the console.
+The library uses the [SLF4J](https://www.slf4j.org/) logging facade for writing log messages at different granularities. By adding a logging framework such as [Log4J](https://logging.apache.org/log4j/) or [Logback](https://logback.qos.ch/) to your project and creating a respective configuration file, the Apriori algorithm's log messages can be written to different outputs such as files, databases or the console.
 
 ## Contact information
 
