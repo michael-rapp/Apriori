@@ -1,6 +1,31 @@
 # Apriori - README
 
-This is a Java library, which provides an implementation of the Apriori algorithm [1]. It can be used to efficiently find frequent item sets in large data sets and (optionally) allows to generate association rules. A famous use-case of the Apriori algorithm is to create recommendations of relevant articles in online shops by learning association rules from the purchases customers made in the past.
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X75YSLEJV3DWE)
+
+This is a Java library, which provides an implementation of the Apriori algorithm [1]. It can be used to efficiently find frequent item sets in large data sets and (optionally) allows to generate association rules. A famous use-case of the Apriori algorithm is to create recommendations of relevant articles in online shops by learning association rules from the purchases customers made in the past. The library provides the following features:
+
+* Searching for frequent item sets, which fulfill a certain minimum support
+* Trying to find a specific number of frequent items sets by starting with a great minimum support and iteratively decreasing it until enough item sets are found
+* Generating association rules, which reach a minimum confidence, from frequent item sets
+* Trying to generate a specific number of association rules by starting with a great minimum confidence and decreasing it until enough rules can be generated
+* Association rules can be sorted by their support, confidence, lift or leverage
+* Association rules can be filtered to ensure that they reach a certain support, confidence, lift or leverage
+
+## License Agreement
+
+This project is distributed under the Apache License version 2.0. For further information about this license agreement's content please refer to its full version, which is available at http://www.apache.org/licenses/LICENSE-2.0.txt.
+
+## Download
+
+The latest release of this library can be downloaded as a zip archive from the download section of the project's Github page, which is available [here](https://github.com/michael-rapp/Apriori/releases). Furthermore, the library's source code is available as a Git repository, which can be cloned using the URL https://github.com/michael-rapp/Apriori.git.
+
+Alternatively, the library can be added to your project as a Gradle dependency by adding the following dependency to the `build.gradle` file:
+
+```groovy
+dependencies {
+    compile 'com.github.michael-rapp:apriori:1.0.0'
+}
+```
 
 ## Preliminaries
 
@@ -74,6 +99,10 @@ Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(count).supportDelta(
 The `count` variable, which is passed to the constructor of the builder in the example above, specifies the number of frequent item sets, which should be found. In addition, the `supportDelta`-method call allows to specify the value, the minimum support should successively be decreased by, starting with the value given by the ``maxSupport``-method. If not enough rules can be found until the support, which is specified by calling the ``minSupport``-method,  is reached, the search for frequent item sets is aborted.
 
 ## Generating Association Rules
+
+## Contact information
+
+For personal feedback or questions feel free to contact me via the mail address, which is mentioned on my [Github profile](https://github.com/michael-rapp). If you have found any bugs or want to post a feature request please use the [bugtracker](https://github.com/michael-rapp/Apriori/issues) to report them.
 
 ## References
 
