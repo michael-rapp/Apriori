@@ -176,6 +176,10 @@ double leverage = new Leverage().evaluate(rule); // between 0 and 1
 
 ### Sorting and filtering association rules
 
+## Logging
+
+The library uses the [SLF4J](https://www.slf4j.org/) logging facade for writing log messages at different granularities. By adding a logging framework such as [Log4J](https://logging.apache.org/log4j/) or [Logback](https://logback.qos.ch/) to your project and creating a respective configuration files, the Apriori algorithm's log messages can be written to different outputs such as files, databases or the console.
+
 ## Contact information
 
 For personal feedback or questions feel free to contact me via the mail address, which is mentioned on my [Github profile](https://github.com/michael-rapp). If you have found any bugs or want to post a feature request please use the [bugtracker](https://github.com/michael-rapp/Apriori/issues) to report them.
