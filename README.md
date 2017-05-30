@@ -130,7 +130,7 @@ After testing all candidate rules, the algorithm results in the following rule s
 
 ### Generating all association rules with a minimum confidence
 
-In order to configure the algorithm, which is provided by this library, to generate association rules, the builder pattern must be used as follows. As the generation of association rules requires to identify frequent item sets beforehand, the builder must be configured as shown above at first. In addition, the builder's `generateRules`-method can be used to specify, that association rules, which reach a certain minimum confidence, should be generated. The induced rules can be obtained from the resulting `Output` instance by calling the `getRuleSet`-method. They are contained by an instance of the class `RuleSet` in the order of their induction.
+In order to configure the algorithm, which is provided by this library, to generate association rules, the builder pattern must be used as follows. As the generation of association rules requires to identify frequent item sets beforehand, the builder must be configured as shown above at first. In addition, the builder's `generateRules`-method can be used to specify, that association rules, which reach a certain minimum confidence, should be generated.
 
 ```java
 double minSupport = 0.5;
@@ -140,6 +140,8 @@ Iterator<Transaction<NamedItem>> iterator = new DataIterator(inputFile);
 Output<NamedItem> output = apriori.execute(iterator);
 RuleSet<NamedItem> ruleSet = output.getRuleSet();
 ```
+
+The induced rules can be obtained from the resulting `Output` instance by calling the `getRuleSet`-method. They are contained by an instance of the class `RuleSet`, which implements the interface `java.util.SortedSet`. By default, the rules of a rule set are sorted by their confidence in decreasing order. The individual rules are given as instances of the class `AssociationRule`. It provides `getBody`- and `getHead`-methods, which return the rule's body and head as `ItemSet` instances.
 
 ### Trying to generate a specific number of association rules
 
@@ -153,6 +155,24 @@ Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(minSupport).generate
 ```
 
 When configuring the builder that way, the semantics of the `confidenceDelta`-, `minConfidence`- and `maxConfidence`-method calls are similar to those of the `supportDelta`-, `maxSupport`- and `minSupport`-method calls discussed above.
+
+### Measuring the "interestingly" of association rules
+
+The Apriori algorithm usually results in many association rules being learned. This requires to filter the rules by "interestingly". However, it is not easy to determine, whether a rule is interesting, or not. To measure the interestingly of rules additional metrics beside support and confidence - namely lift and leverage - can be used. They are defined as follows:
+
+* **Lift:** The ratio of a rule's confidence over a priori expectation for the head.
+* **Leverage:** The difference between support and expected support, if the rule's body and head were independent.
+
+Leverage is a lower bound for support and high leverage implies, that the support is also high. In contrast to optimizing the confidence or lift of a rule, optimizing the leverage guarantees, that a certain minimum support is reached.
+
+To measure the support, confidence, lift or leverage of an `AssociationRule`, the following code can be used.
+
+```java
+double support = new Support().evaluate(rule); // between 0 and 1
+double confidence = new Confidence().evaluate(rule); // between 0 and 1
+double lift = new Lift().evaluate(rule); // may be greater than 1
+double leverage = new Leverage().evaluate(rule); // between 0 and 1
+```
 
 ### Sorting and filtering association rules
 
