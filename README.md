@@ -19,7 +19,7 @@ The search for frequent item sets aims at finding items, which often occur colle
 In order to illustrate the operation of the Apriori algorithm, in the table below an exemplary data set, where each column corresponds to an item and each row denotes a transaction, is given.
 
 |            | bread | butter | coffee | milk | sugar |
-| ---------- |:-----:| ------:| ------:| ----:| -----:|
+| ---------- |:-----:|:------:|:------:|:----:|:-----:|
 | customer 1 | 1     | 1      | 0      | 0    | 1     |
 | customer 2 | 0     | 0      | 1      | 1    | 1     |
 | customer 3 | 1     | 0      | 1      | 1    | 1     |
