@@ -6,7 +6,7 @@ This is a Java library, which provides an implementation of the Apriori algorith
 
 To be able to apply the Apriori algorithm to a data set, the data must be available in the following form:
 
-* The data set must consist of a finite set of "items" (e.g. groceries). This library provides the interface `Item`, which must be implemented in order to specify the properties of an item. It is important to correctly override the `hashCode`- and `equals`-methods and to implement the `compareTo`-method of the interface `java.lang.Comparable`.
+* The data set must consist of a finite set of "items" (e.g. the articles available in an online shop). The library provides the interface `Item`, which must be implemented in order to specify the properties of an item. It is important to correctly override the `hashCode`- and `equals`-methods and to implement the `compareTo`-method of the interface `java.lang.Comparable`.
 * A data set consists of multiple "transactions" (e.g. the purchases of individual customers). Each transaction contains one or several items. The library provides the interface `Transaction`, which must be implemented in order to provide a `java.util.Ìterator`, which allows to traverse a transaction's items.
 * To execute the Apriori algorithm, a `java.util.Iterator`, which allows to traverse all available transactions, must be passed to the libary's `Apriori` class.
 
