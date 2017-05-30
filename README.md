@@ -100,6 +100,32 @@ The `count` variable, which is passed to the constructor of the builder in the e
 
 ## Generating Association Rules
 
+This library also allows to generate association rules from frequent item sets. An association rule consists of a head Y and a body X and is denoted as X -> Y. It specifies, that if certain items take part in a transaction, other items occur as well with a certain probability.
+
+### Example
+
+In order to illustrate how association rules are generated according to the Apriori algorithm, the frequent item sets, which have been determined in the example above, are used. They are listed in the following:
+
+```
+{{bread}, {coffee}, {milk}, {sugar}, {bread, sugar}, {coffee, milk}, {coffee, sugar}, {milk, sugar}, {coffee, milk, sugar}}
+```
+
+The search for association rules, which reach a certain minimum confidence, is pruned by exploiting the anti-monotonicity property of the confidence metric. According to said property, the confidence of a rule A,B -> C is an upper bound to the confidence of a rule A -> B,C. Consequently, the algorithm starts by generating rules, which contain a single item in there heads. Based on those rules, which reach the given minimum confidence, additional rules are created by moving items from their bodies to the heads. For each rule said process is continued until the minimum threshold cannot be reached anymore. As an example, it is shown in the following how association rules are generated from the item set `{coffee, milk, sugar}` when using a minimum confidence of 1.0:
+
+1. Three rules with a single item in their head can be created: `{coffee, milk} - > {sugar}`, `{sugar, coffee} -> {milk}` and `{milk, sugar} -> {coffee}`
+2. The last two rules reach the minimum confidence of 1.0 and therefore the algorithm tries to create new rules from them by moving each of the items in the body to the head. In case of the last rule, this result in the rules `{milk} -> {sugar, coffee}` and `{sugar} -> {milk, coffee}` to be created.
+3. As the confidence of both rules, which have been created in step 2, is less than 1.0, they are not taken into account and no more rules are derived from them
+
+After testing all candidate rules, the algorithm results in the following rule set being learned:
+
+```
+{bread} -> {sugar}
+{milk -> {coffee}
+{coffee -> {milk}
+{milk, sugar} -> {coffee}
+{sugar, coffee} -> {milk}
+```
+
 ## Contact information
 
 For personal feedback or questions feel free to contact me via the mail address, which is mentioned on my [Github profile](https://github.com/michael-rapp). If you have found any bugs or want to post a feature request please use the [bugtracker](https://github.com/michael-rapp/Apriori/issues) to report them.
