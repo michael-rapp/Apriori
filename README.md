@@ -176,7 +176,7 @@ double leverage = new Leverage().evaluate(rule); // between 0 and 1
 
 ### Sorting and filtering association rules
 
-In order to sort the association rules, which are returned by the library's Apriori algorithm, the `sort`-method of the class RuleSet` can be used. It returns a copy of the rule set, which contains the rules sorted by their support, confidence, lift or leverage in decreasing order, depending on whether an instance of the class `Support`, `Confidence`, `Lift` or `Leverage` is passed as an argument. The following code illustrates this functionality:
+In order to sort the association rules, which are returned by the library's Apriori algorithm, the `sort`-method of the class `RuleSet` can be used. It returns a copy of the rule set, which contains the rules sorted by their support, confidence, lift or leverage in decreasing order, depending on whether an instance of the class `Support`, `Confidence`, `Lift` or `Leverage` is passed as an argument. The following code illustrates this functionality:
 
 ```java
 Metric metric = new Leverage();
