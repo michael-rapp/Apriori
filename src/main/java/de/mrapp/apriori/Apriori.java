@@ -367,7 +367,6 @@ public class Apriori<ItemType extends Item> {
         sortedItemSets.addAll(frequentItemSets.values());
         long endTime = System.currentTimeMillis();
         Output<ItemType> output = new Output<>(startTime, endTime, sortedItemSets, ruleSet);
-        // TODO: Add frequent item sets and rule set to output
         LOGGER.info("Apriori algorithm terminated after {} milliseconds", output.getRuntime());
         return output;
     }
