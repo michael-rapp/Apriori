@@ -18,11 +18,11 @@ import de.mrapp.apriori.metrics.Leverage;
 import de.mrapp.apriori.metrics.Lift;
 import de.mrapp.apriori.metrics.Support;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A rule set, which contains multiple association rules. The rules, which are contained by a rule
@@ -31,8 +31,8 @@ import java.util.Set;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class RuleSet<ItemType extends Item> implements
-        Iterable<AssociationRule<ItemType>>, Serializable {
+public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule<ItemType>>,
+        Serializable {
 
     /**
      * The constant serial version UID.
@@ -40,35 +40,124 @@ public class RuleSet<ItemType extends Item> implements
     private static final long serialVersionUID = 1L;
 
     /**
-     * A set, which contains the rules, the rule set consists of.
+     * A sorted set, which contains the rules, the rule set consists of.
      */
-    private final Set<AssociationRule<ItemType>> rules;
+    private final SortedSet<AssociationRule<ItemType>> rules;
 
     /**
-     * Creates a new rule set.
-     *
-     * @param rules A set, which contains the rules, which should be contained by the rule set, as
-     *              an instance of the type {@link Set} or an empty set, if the rule set should not
-     *              contain any rules
+     * Creates an empty rule set.
      */
-    public RuleSet(@NotNull final Set<AssociationRule<ItemType>> rules) {
+    public RuleSet() {
         // TODO: Throw exceptions
-        this.rules = rules;
+        this.rules = new TreeSet<>(
+                new AssociationRule.Comparator<ItemType>(new Confidence()).reversed());
     }
 
-    /**
-     * Returns the number of rules, which are contained by the rule set.
-     *
-     * @return The number of rules, which are contained by the rule set, as an {@link Integer} value
-     */
+    @Nullable
+    @Override
+    public final Comparator<? super AssociationRule<ItemType>> comparator() {
+        return rules.comparator();
+    }
+
+    @NotNull
+    @Override
+    public final SortedSet<AssociationRule<ItemType>> subSet(
+            final AssociationRule<ItemType> fromElement,
+            final AssociationRule<ItemType> toElement) {
+        return rules.subSet(fromElement, toElement);
+    }
+
+    @NotNull
+    @Override
+    public final SortedSet<AssociationRule<ItemType>> headSet(
+            final AssociationRule<ItemType> toElement) {
+        return rules.headSet(toElement);
+    }
+
+    @NotNull
+    @Override
+    public final SortedSet<AssociationRule<ItemType>> tailSet(
+            final AssociationRule<ItemType> fromElement) {
+        return rules.tailSet(fromElement);
+    }
+
+    @Override
+    public final AssociationRule<ItemType> first() {
+        return rules.first();
+    }
+
+    @Override
+    public final AssociationRule<ItemType> last() {
+        return rules.last();
+    }
+
+    @Override
     public final int size() {
         return rules.size();
+    }
+
+    @Override
+    public final boolean isEmpty() {
+        return rules.isEmpty();
+    }
+
+    @Override
+    public final boolean contains(final Object o) {
+        return rules.contains(o);
     }
 
     @NotNull
     @Override
     public final Iterator<AssociationRule<ItemType>> iterator() {
         return rules.iterator();
+    }
+
+    @NotNull
+    @Override
+    public final Object[] toArray() {
+        return rules.toArray();
+    }
+
+    @SuppressWarnings("SuspiciousToArrayCall")
+    @NotNull
+    @Override
+    public final <T> T[] toArray(@NotNull final T[] a) {
+        return rules.toArray(a);
+    }
+
+    @Override
+    public final boolean add(final AssociationRule<ItemType> rule) {
+        return rules.add(rule);
+    }
+
+    @Override
+    public final boolean remove(final Object o) {
+        return rules.remove(o);
+    }
+
+    @Override
+    public final boolean containsAll(@NotNull final Collection<?> c) {
+        return rules.containsAll(c);
+    }
+
+    @Override
+    public final boolean addAll(@NotNull final Collection<? extends AssociationRule<ItemType>> c) {
+        return rules.addAll(c);
+    }
+
+    @Override
+    public final boolean retainAll(@NotNull final Collection<?> c) {
+        return rules.retainAll(c);
+    }
+
+    @Override
+    public final boolean removeAll(@NotNull final Collection<?> c) {
+        return rules.removeAll(c);
+    }
+
+    @Override
+    public final void clear() {
+        rules.clear();
     }
 
     @Override

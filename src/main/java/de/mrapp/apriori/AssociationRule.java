@@ -31,6 +31,65 @@ import java.io.Serializable;
 public class AssociationRule<ItemType extends Item> implements Serializable {
 
     /**
+     * A comparator, which allows to compare the "interestingly" of two association rules according
+     * to a certain metric or a certain operator.
+     *
+     * @param <ItemType> The type of the items, the association rules' bodies and heads consist of
+     */
+    public static class Comparator<ItemType extends Item> implements
+            java.util.Comparator<AssociationRule<ItemType>> {
+
+        /**
+         * The metric, which is used to measure the "interestingly" of the rules.
+         */
+        private final Metric metric;
+
+        /**
+         * The operator, which is used to average the "interestingly" of the rules according to
+         * multiple metrics.
+         */
+        private final Operator operator;
+
+        /**
+         * Creates a new comparator, which allows to compare the "interestingly" of two association
+         * rules according to a certain metric.
+         *
+         * @param metric The metric, which should be used to measure the "interestingly" of the
+         *               rules, as an instance of the type {@link Metric}. The metric may not be
+         *               null
+         */
+        public Comparator(@NotNull final Metric metric) {
+            // TODO: Throw exceptions
+            this.metric = metric;
+            this.operator = null;
+        }
+
+        /**
+         * Creates a new comparator, which allows to compare the "interestingly" of two association
+         * rules according to a certain operator.
+         *
+         * @param operator The operator, which should be used to average the "interestingly" of the
+         *                 rules according to multiple metrics, as an instance of the type {@link
+         *                 Operator}. The operator may not be null
+         */
+        public Comparator(@NotNull final Operator operator) {
+            // TODO: Throw exceptions
+            this.metric = null;
+            this.operator = operator;
+        }
+
+        @Override
+        public final int compare(final AssociationRule<ItemType> o1,
+                                 final AssociationRule<ItemType> o2) {
+            double heuristicValue1 = metric != null ? metric.evaluate(o1) : operator.average(o1);
+            double heuristicValue2 = metric != null ? metric.evaluate(o2) : operator.average(o2);
+            return heuristicValue1 > heuristicValue2 ? 1 :
+                    (heuristicValue1 < heuristicValue2 ? -1 : 0);
+        }
+
+    }
+
+    /**
      * The constant serial version UID.
      */
     private static final long serialVersionUID = 1L;

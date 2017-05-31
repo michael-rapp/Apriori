@@ -13,17 +13,17 @@
  */
 package de.mrapp.apriori.modules;
 
-import de.mrapp.apriori.*;
+import de.mrapp.apriori.AssociationRule;
+import de.mrapp.apriori.Item;
+import de.mrapp.apriori.ItemSet;
+import de.mrapp.apriori.RuleSet;
 import de.mrapp.apriori.metrics.Confidence;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
 
 /**
  * A module, which allows to generate association rules from frequent item sets. An association rule
@@ -47,39 +47,6 @@ import java.util.SortedSet;
 public class AssociationRuleGenerator<ItemType extends Item> {
 
     /**
-     * A filter, which allows to filter association rules, if their "interestingly" according to a
-     * certain metric is less than a threshold.
-     */
-    public static class Filter {
-
-        /**
-         * The metric.
-         */
-        private final Metric metric;
-
-        /**
-         * The threshold.
-         */
-        private final double threshold;
-
-        /**
-         * Creates a new filter, which allows to filter association rules, if their "interestingly"
-         * according to a certain metric is less than a threshold.
-         *
-         * @param metric    The metric as an instance of the type {@link Metric}. The metric may not
-         *                  be null
-         * @param threshold The threshold as a {@link Double} value. The threshold must be greater
-         *                  than 0
-         */
-        public Filter(@NotNull final Metric metric, final double threshold) {
-            // TODO: Throw exceptions
-            this.metric = metric;
-            this.threshold = threshold;
-        }
-
-    }
-
-    /**
      * The SLF4J logger, which is used by the module.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(AssociationRuleGenerator.class);
@@ -99,13 +66,13 @@ public class AssociationRuleGenerator<ItemType extends Item> {
      *                         instance of the type {@link Map} or an empty map, if no frequent item
      *                         sets are available. The map must store the frequent item sets as
      *                         values and their hash codes as the corresponding keys
-     * @param rules            The set, the generated rules should be added to, as an instance of
-     *                         the type {@link Set}. The set may not be null
+     * @param ruleSet          The rule set, the generated rules should be added to, as an instance
+     *                         of the class {@link RuleSet}. The rule set may not be null
      */
     private void generateRules(@NotNull final ItemSet<ItemType> itemSet,
                                @NotNull final Map<Integer, ItemSet<ItemType>> frequentItemSets,
-                               @NotNull final Set<AssociationRule<ItemType>> rules) {
-        generateRules(itemSet, frequentItemSets, rules, itemSet, null);
+                               @NotNull final RuleSet<ItemType> ruleSet) {
+        generateRules(itemSet, frequentItemSets, ruleSet, itemSet, null);
     }
 
     /**
@@ -119,8 +86,8 @@ public class AssociationRuleGenerator<ItemType extends Item> {
      *                         instance of the type {@link Map} or an empty map, if no frequent item
      *                         sets are available. The map must store the frequent item sets as
      *                         values and their hash codes as the corresponding keys
-     * @param rules            The set, the generated rules should be added to, as an instance of
-     *                         the type {@link Set}. The set may not be null
+     * @param ruleSet          The rule set, the generated rules should be added to, as an instance
+     *                         of the class {@link RuleSet}. The rule set may not be null
      * @param body             The body, the items, which should be moved to the head, should be
      *                         taken from, as an instance of the class {@link ItemSet}. The body may
      *                         not be null
@@ -130,7 +97,7 @@ public class AssociationRuleGenerator<ItemType extends Item> {
      */
     private void generateRules(@NotNull final ItemSet<ItemType> itemSet,
                                @NotNull final Map<Integer, ItemSet<ItemType>> frequentItemSets,
-                               @NotNull final Set<AssociationRule<ItemType>> rules,
+                               @NotNull final RuleSet<ItemType> ruleSet,
                                @NotNull final ItemSet<ItemType> body,
                                @Nullable final ItemSet<ItemType> head) {
         for (ItemType item : body) {
@@ -147,10 +114,10 @@ public class AssociationRuleGenerator<ItemType extends Item> {
             double confidence = new Confidence().evaluate(rule);
 
             if (confidence >= minConfidence) {
-                rules.add(rule);
+                ruleSet.add(rule);
 
                 if (bodyItemSet.size() > 1) {
-                    generateRules(itemSet, frequentItemSets, rules, bodyItemSet, headItemSet);
+                    generateRules(itemSet, frequentItemSets, ruleSet, bodyItemSet, headItemSet);
                 }
             }
         }
@@ -194,15 +161,14 @@ public class AssociationRuleGenerator<ItemType extends Item> {
     public final RuleSet<ItemType> generateAssociationRules(
             @NotNull final Map<Integer, ItemSet<ItemType>> frequentItemSets) {
         LOGGER.debug("Generating association rules");
-        Set<AssociationRule<ItemType>> rules = new HashSet<>();
+        RuleSet<ItemType> ruleSet = new RuleSet<>();
 
         for (ItemSet<ItemType> itemSet : frequentItemSets.values()) {
             if (itemSet.size() > 1) {
-                generateRules(itemSet, frequentItemSets, rules);
+                generateRules(itemSet, frequentItemSets, ruleSet);
             }
         }
 
-        RuleSet<ItemType> ruleSet = new RuleSet<>(rules);
         LOGGER.debug("Generated {} association rules", ruleSet.size());
         LOGGER.debug("Rule set = {}", ruleSet);
         return ruleSet;

@@ -13,8 +13,6 @@
  */
 package de.mrapp.apriori;
 
-import de.mrapp.apriori.metrics.Lift;
-import de.mrapp.apriori.metrics.Support;
 import org.junit.Test;
 
 import java.io.File;
@@ -35,8 +33,7 @@ public class AprioriTest extends AbstractDataTest {
         DataIterator dataIterator = new DataIterator(inputFile);
 
         Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(0.5).frequentItemSetCount(0)
-                .generateRules(0.5).supportDelta(0.1).sortRules(new Support())
-                .filterRules(new Lift(), 0.5).create();
+                .generateRules(0.5).supportDelta(0.1).create();
     }
 
 }
