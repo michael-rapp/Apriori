@@ -45,12 +45,39 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     private final SortedSet<AssociationRule<ItemType>> rules;
 
     /**
+     * Creates a new rule set from a sorted set.
+     *
+     * @param rules The sorted set, the rule set should be created from, as an instance of the type
+     *              {@link SortedSet}. The sorted set may not be null
+     */
+    private RuleSet(@NotNull final SortedSet<AssociationRule<ItemType>> rules) {
+        // TODO: Throw exceptions
+        this.rules = rules;
+    }
+
+    /**
      * Creates an empty rule set.
      */
     public RuleSet() {
         // TODO: Throw exceptions
         this.rules = new TreeSet<>(
                 new AssociationRule.Comparator<ItemType>(new Confidence()).reversed());
+    }
+
+    @NotNull
+    public final RuleSet<ItemType> sort(@NotNull final Metric metric) {
+        SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
+                new AssociationRule.Comparator<ItemType>(metric).reversed());
+        rules.addAll(this);
+        return new RuleSet<>(rules);
+    }
+
+    @NotNull
+    public final RuleSet<ItemType> sort(@NotNull final Operator operator) {
+        SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
+                new AssociationRule.Comparator<ItemType>(operator).reversed());
+        rules.addAll(this);
+        return new RuleSet<>(rules);
     }
 
     @Nullable
