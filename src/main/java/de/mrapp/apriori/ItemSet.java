@@ -32,6 +32,11 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSe
         Serializable {
 
     /**
+     * The constant serial version UID.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * A sorted set, which contains the items, which are contained by the item set.
      */
     private final SortedSet<ItemType> items;
