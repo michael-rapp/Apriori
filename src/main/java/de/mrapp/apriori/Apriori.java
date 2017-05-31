@@ -131,6 +131,11 @@ public class Apriori<ItemType extends Item> {
         }
 
         @NotNull
+        public final RuleGeneratorBuilder<ItemType> generateRules(final int ruleCount) {
+            return new RuleGeneratorBuilder<ItemType>(this, ruleCount);
+        }
+
+        @NotNull
         @Override
         public final Apriori<ItemType> create() {
             return new Apriori<>(minSupport, maxSupport, supportDelta, frequentItemSetCount);
