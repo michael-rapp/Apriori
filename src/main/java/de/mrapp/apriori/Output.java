@@ -13,6 +13,7 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.Apriori.Configuration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +33,11 @@ public class Output<ItemType extends Item> implements Serializable {
      * The constant serial version UID.
      */
     private static final long serialVersionUID = 1L;
+
+    /**
+     * The configuration of the Apriori algorithm.
+     */
+    private final Configuration configuration;
 
     /**
      * The time, the Apriori algorithm has been started, in milliseconds.
@@ -57,6 +63,8 @@ public class Output<ItemType extends Item> implements Serializable {
     /**
      * Creates a new output of the Apriori algorithm.
      *
+     * @param configuration    The configuration of the Apriori algorithm as an instance of the
+     *                         class {@link Configuration}. The configuration may not be null
      * @param startTime        The time, the Apriori algorithm has been started, in milliseconds as
      *                         a {@link Long} value. The time must be at least 0
      * @param endTime          The time, the Apriori algorithm has been ended, in milliseconds as a
@@ -69,14 +77,26 @@ public class Output<ItemType extends Item> implements Serializable {
      *                         {@link RuleSet} or null, if the algorithm has not been configured to
      *                         generate any rules
      */
-    public Output(final long startTime, final long endTime,
-                  @NotNull final SortedSet<ItemSet<ItemType>> frequentItemSets,
+    public Output(@NotNull final Configuration configuration, final long startTime,
+                  final long endTime, @NotNull final SortedSet<ItemSet<ItemType>> frequentItemSets,
                   @Nullable final RuleSet<ItemType> ruleSet) {
         // TODO: Throw exceptions
+        this.configuration = configuration;
         this.startTime = startTime;
         this.endTime = endTime;
         this.frequentItemSets = frequentItemSets;
         this.ruleSet = ruleSet;
+    }
+
+    /**
+     * Returns the configuration of the Apriori algorithm.
+     *
+     * @return The configuration of the Apriori algorithm as an instance of the class {@link
+     * Configuration}. The configuration may not be null
+     */
+    @NotNull
+    public final Configuration getConfiguration() {
+        return configuration;
     }
 
     /**
