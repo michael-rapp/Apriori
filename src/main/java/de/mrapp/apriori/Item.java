@@ -13,6 +13,8 @@
  */
 package de.mrapp.apriori;
 
+import java.io.Serializable;
+
 /**
  * Defines the interface, an item, which is part of a transaction, must implement. The Apriori
  * algorithm relies on items to correctly implement the {@link Object#hashCode()} and {@link
@@ -23,6 +25,6 @@ package de.mrapp.apriori;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public interface Item extends Comparable<Item> {
+public interface Item extends Comparable<Item>, Serializable {
 
 }

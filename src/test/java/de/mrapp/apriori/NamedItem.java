@@ -15,15 +15,13 @@ package de.mrapp.apriori;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
-
 /**
  * An implementation of the type {@link Item}, which is used for test purposes. Each item can
  * unambiguously be identified via its name.
  *
  * @author Michael Rapp
  */
-public class NamedItem implements Item, Serializable {
+public class NamedItem implements Item {
 
     /**
      * The constant serial version UID.
