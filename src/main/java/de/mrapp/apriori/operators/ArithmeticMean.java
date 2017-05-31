@@ -45,7 +45,7 @@ public class ArithmeticMean implements Operator {
     }
 
     /**
-     * Adds a new metric to the arithmetic operator.
+     * Adds a new metric to the arithmetic mean operator.
      *
      * @param metric The metric, which should be added, as an instance of the type {@link Metric}.
      *               The metric may not be null
