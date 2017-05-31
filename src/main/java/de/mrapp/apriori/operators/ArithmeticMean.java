@@ -24,7 +24,7 @@ import java.util.LinkedList;
 
 /**
  * An operator, which allows to average the heuristic values, which are calculated by applying
- * multiple metrics, according to the arithmetic mean operation.
+ * multiple metrics to a rule, according to the arithmetic mean operation.
  *
  * @author Michael Rapp
  * @since 1.0.0
@@ -32,7 +32,8 @@ import java.util.LinkedList;
 public class ArithmeticMean implements Operator {
 
     /**
-     * A collection, which contains the metrics, which have been added to the operator.
+     * A collection, which contains the metrics, which have been added to the arithmetic mean
+     * operator.
      */
     private final Collection<Pair<Metric, Integer>> metrics;
 
@@ -44,12 +45,12 @@ public class ArithmeticMean implements Operator {
     }
 
     /**
-     * Adds a new metric to the operator.
+     * Adds a new metric to the arithmetic operator.
      *
      * @param metric The metric, which should be added, as an instance of the type {@link Metric}.
      *               The metric may not be null
-     * @return The operator, this method has been called upon, as an instance of the class {@link
-     * ArithmeticMean}. The operator may not be null
+     * @return The arithmetic mean operator, this method has been called upon, as an instance of the
+     * class {@link ArithmeticMean}. The operator may not be null
      */
     @NotNull
     public final ArithmeticMean add(@NotNull final Metric metric) {
@@ -57,14 +58,14 @@ public class ArithmeticMean implements Operator {
     }
 
     /**
-     * Adds a new metric to the operator.
+     * Adds a new metric to the arithmetic mean operator.
      *
      * @param metric The metric, which should be added, as an instance of the type {@link Metric}.
      *               The metric may not be null
      * @param weight The weight of the metric, which should be added, as an {@link Integer} value.
      *               The weight must be at least 1
-     * @return The operator, this method has been called upon, as an instance of the class {@link
-     * ArithmeticMean}. The operator may not be null
+     * @return The arithmetic mean operator, this method has been called upon, as an instance of the
+     * class {@link ArithmeticMean}. The operator may not be null
      */
     @NotNull
     public final ArithmeticMean add(@NotNull final Metric metric, final int weight) {
@@ -75,7 +76,7 @@ public class ArithmeticMean implements Operator {
 
     @Override
     public final double average(@NotNull final AssociationRule<?> rule) {
-        // TODO: Throw exception is no metric has been added
+        // TODO: Throw exception if no metric has been added
         double result = 0;
         int sumOfWeights = metrics.stream().mapToInt(x -> x.second).sum();
 
