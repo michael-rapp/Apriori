@@ -36,4 +36,14 @@ public class Leverage implements Metric {
         return rule.getSupport() - (bodySupport * headSupport);
     }
 
+    @Override
+    public final double minValue() {
+        return 0;
+    }
+
+    @Override
+    public final double maxValue() {
+        return 1;
+    }
+
 }

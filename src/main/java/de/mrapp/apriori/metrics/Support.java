@@ -31,4 +31,14 @@ public class Support implements Metric {
         return rule.getSupport();
     }
 
+    @Override
+    public final double minValue() {
+        return 0;
+    }
+
+    @Override
+    public final double maxValue() {
+        return 1;
+    }
+
 }

@@ -59,4 +59,20 @@ public class LiftTest {
         assertEquals(0, new Lift().evaluate(rule), 0);
     }
 
+    /**
+     * Tests the functionality of the minValue-method.
+     */
+    @Test
+    public final void testMinValue() {
+        assertEquals(0, new Lift().minValue(), 0);
+    }
+
+    /**
+     * Tests the functionality of the maxValue-method.
+     */
+    @Test
+    public final void testMaxValue() {
+        assertEquals(Double.MAX_VALUE, new Lift().maxValue(), 0);
+    }
+
 }

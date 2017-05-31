@@ -31,4 +31,18 @@ public interface Metric {
      */
     double evaluate(@NotNull AssociationRule<?> rule);
 
+    /**
+     * Returns the minimum heuristic value of the metric.
+     *
+     * @return The minimum heuristic value of the metric as a {@link Double} value
+     */
+    double minValue();
+
+    /**
+     * Returns the maximum heuristic value of the metric.
+     *
+     * @return The maximum heuristic value of the metric as a {@link Double} value
+     */
+    double maxValue();
+
 }

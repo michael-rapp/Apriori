@@ -56,4 +56,20 @@ public class ConfidenceTest {
         assertEquals(0, new Confidence().evaluate(rule), 0);
     }
 
+    /**
+     * Tests the functionality of the minValue-method.
+     */
+    @Test
+    public final void testMinValue() {
+        assertEquals(0, new Confidence().minValue(), 0);
+    }
+
+    /**
+     * Tests the functionality of the maxValue-method.
+     */
+    @Test
+    public final void testMaxValue() {
+        assertEquals(1, new Confidence().maxValue(), 0);
+    }
+
 }

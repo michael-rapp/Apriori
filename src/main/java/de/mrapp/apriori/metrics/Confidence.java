@@ -34,4 +34,14 @@ public class Confidence implements Metric {
         return bodySupport > 0 ? rule.getSupport() / bodySupport : 0;
     }
 
+    @Override
+    public final double minValue() {
+        return 0;
+    }
+
+    @Override
+    public final double maxValue() {
+        return 1;
+    }
+
 }

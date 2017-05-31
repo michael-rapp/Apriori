@@ -34,4 +34,14 @@ public class Lift implements Metric {
         return product > 0 ? rule.getSupport() / product : 0;
     }
 
+    @Override
+    public final double minValue() {
+        return 0;
+    }
+
+    @Override
+    public final double maxValue() {
+        return Double.MAX_VALUE;
+    }
+
 }
