@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * A module, which allows to generate association rules from frequent item sets. An association rule

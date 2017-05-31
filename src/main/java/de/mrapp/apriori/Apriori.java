@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * An implementation of the Apriori algorithm for mining frequent item sets and (optionally)
@@ -364,8 +363,10 @@ public class Apriori<ItemType extends Item> {
                     .generateAssociationRules(frequentItemSets);
         }
 
+        SortedSet<ItemSet<ItemType>> sortedItemSets = new TreeSet<>(Comparator.reverseOrder());
+        sortedItemSets.addAll(frequentItemSets.values());
         long endTime = System.currentTimeMillis();
-        Output<ItemType> output = new Output<>(startTime, endTime);
+        Output<ItemType> output = new Output<>(startTime, endTime, sortedItemSets, ruleSet);
         // TODO: Add frequent item sets and rule set to output
         LOGGER.info("Apriori algorithm terminated after {} milliseconds", output.getRuntime());
         return output;

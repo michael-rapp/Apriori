@@ -28,7 +28,8 @@ import java.util.*;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class ItemSet<ItemType> implements SortedSet<ItemType>, Serializable {
+public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSet<ItemType>>,
+        Serializable {
 
     /**
      * A sorted set, which contains the items, which are contained by the item set.
@@ -182,6 +183,11 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Serializable {
     @Override
     public final void clear() {
         items.clear();
+    }
+
+    @Override
+    public final int compareTo(@NotNull final ItemSet<ItemType> o) {
+        return support > o.getSupport() ? 1 : (support < o.getSupport() ? -1 : 0);
     }
 
     @Override

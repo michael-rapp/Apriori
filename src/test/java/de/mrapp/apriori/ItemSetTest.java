@@ -125,6 +125,22 @@ public class ItemSetTest {
     }
 
     /**
+     * Tests the functionality of the compareTo-method.
+     */
+    @Test
+    public final void testCompareTo() {
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        itemSet1.setSupport(0.5);
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
+        itemSet2.setSupport(0.5);
+        assertEquals(0, itemSet1.compareTo(itemSet2));
+        itemSet1.setSupport(0.3);
+        assertEquals(-1, itemSet1.compareTo(itemSet2));
+        itemSet1.setSupport(0.6);
+        assertEquals(1, itemSet1.compareTo(itemSet2));
+    }
+
+    /**
      * Tests the functionality of the toString-method.
      */
     @Test
