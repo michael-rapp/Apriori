@@ -195,7 +195,7 @@ If the rules should be filtered depending on more than one metric, there is an a
 
 ```java
 Operator operator = new HarmonicMean().add(new Leverage()).add(new Lift());
-// use new HarmonicMean().add(new Leverage(), 1.0).add(new Lift(), 2.0) to weight metrics differently
+// use new HarmonicMean().add(new Leverage(), 1).add(new Lift(), 2) to weight metrics differently
 double threshold = 0.5;
 RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(operator, threshold);
 ```
