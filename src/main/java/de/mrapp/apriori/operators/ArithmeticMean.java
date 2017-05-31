@@ -34,7 +34,7 @@ public class ArithmeticMean implements Operator {
     /**
      * A collection, which contains the metrics, which have been added to the operator.
      */
-    private final Collection<Pair<Metric, Double>> metrics;
+    private final Collection<Pair<Metric, Integer>> metrics;
 
     /**
      * Creates a new arithmetic mean operator.
@@ -61,13 +61,13 @@ public class ArithmeticMean implements Operator {
      *
      * @param metric The metric, which should be added, as an instance of the type {@link Metric}.
      *               The metric may not be null
-     * @param weight The weight of the metric, which should be added, as a {@link Double} value. The
-     *               weight must be greater than 0
+     * @param weight The weight of the metric, which should be added, as an {@link Integer} value.
+     *               The weight must be at least 1
      * @return The operator, this method has been called upon, as an instance of the class {@link
      * ArithmeticMean}. The operator may not be null
      */
     @NotNull
-    public final ArithmeticMean add(@NotNull final Metric metric, final double weight) {
+    public final ArithmeticMean add(@NotNull final Metric metric, final int weight) {
         // TODO: Throw exceptions
         metrics.add(Pair.create(metric, weight));
         return this;
@@ -77,13 +77,13 @@ public class ArithmeticMean implements Operator {
     public final double average(@NotNull final AssociationRule<?> rule) {
         // TODO: Throw exception is no metric has been added
         double result = 0;
-        double sumOfWeights = metrics.stream().mapToDouble(x -> x.second).sum();
+        int sumOfWeights = metrics.stream().mapToInt(x -> x.second).sum();
 
-        for (Pair<Metric, Double> pair : metrics) {
+        for (Pair<Metric, Integer> pair : metrics) {
             Metric metric = pair.first;
             double heuristicValue = metric.evaluate(rule);
-            double weight = pair.second;
-            result += heuristicValue * (weight / sumOfWeights);
+            int weight = pair.second;
+            result += heuristicValue * ((double) weight / (double) sumOfWeights);
         }
 
         return result;
