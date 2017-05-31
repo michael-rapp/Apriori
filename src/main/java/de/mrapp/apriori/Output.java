@@ -30,19 +30,47 @@ public class Output<ItemType extends Item> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The runtime of the Apriori algorithm in milliseconds.
+     * The time, the Apriori algorithm has been started, in milliseconds.
      */
-    private final long runtime;
+    private final long startTime;
+
+    /**
+     * The time, the Apriori algorithm has been ended, in milliseconds.
+     */
+    private final long endTime;
 
     /**
      * Creates a new output of the Apriori algorithm.
      *
-     * @param runtime The runtime of the algorithm in milliseconds as a {@link Long} value. The
-     *                runtime must be at least 0
+     * @param startTime The time, the Apriori algorithm has been started, in milliseconds as a
+     *                  {@link Long} value. The time must be at least 0
+     * @param endTime   The time, the Apriori algorithm has been ended, in milliseconds as a {@link
+     *                  Long} value. The time must be at least the start time
      */
-    public Output(final long runtime) {
+    public Output(final long startTime, final long endTime) {
         // TODO: Throw exceptions
-        this.runtime = runtime;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    /**
+     * Returns the time, the Apriori algorithm has been started.
+     *
+     * @return The time, the Apriori algorithm has been started, in milliseconds as a {@link Long}
+     * value
+     */
+    public final long getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * Returns the time, the Apriori algorithm has been ended.
+     *
+     * @return The time, the Apriori algorithm has been ended, in milliseconds as a {@link Long}
+     * value
+     */
+    public final long getEndTime() {
+        return endTime;
     }
 
     /**
@@ -51,7 +79,7 @@ public class Output<ItemType extends Item> implements Serializable {
      * @return The runtime of the Apriori algorithm in milliseconds as a {@link Long} value
      */
     public final long getRuntime() {
-        return runtime;
+        return endTime - startTime;
     }
 
 }

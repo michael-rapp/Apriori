@@ -364,10 +364,11 @@ public class Apriori<ItemType extends Item> {
                     .generateAssociationRules(frequentItemSets);
         }
 
-        long runtime = System.currentTimeMillis() - startTime;
-        LOGGER.info("Apriori algorithm terminated after {} milliseconds", runtime);
+        long endTime = System.currentTimeMillis();
+        Output<ItemType> output = new Output<>(startTime, endTime);
         // TODO: Add frequent item sets and rule set to output
-        return new Output<>(runtime);
+        LOGGER.info("Apriori algorithm terminated after {} milliseconds", output.getRuntime());
+        return output;
     }
 
 }
