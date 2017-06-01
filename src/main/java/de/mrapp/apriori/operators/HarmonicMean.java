@@ -75,7 +75,7 @@ public class HarmonicMean implements Operator {
     }
 
     @Override
-    public final double average(@NotNull final AssociationRule<?> rule) {
+    public final double evaluate(@NotNull final AssociationRule<?> rule) {
         // TODO: Throw exception if no metric has been added
         double numerator = 0;
         double denominator = 0;

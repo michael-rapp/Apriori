@@ -65,35 +65,13 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     }
 
     /**
-     * Sorts the rules, which are contained by the rule set, by their "interestingly" in descending
-     * order according to a specific metric.
+     * Sorts the rules, which are contained by the rule set, by their heuristic values according to
+     * a specific operator or metric in descending order.
      *
-     * @param metric The metric, which should be used to measure the "interestingly" of the rules,
-     *               as an instance of the type {@link Metric}. The metric may not be null
-     * @return A rule set, which contains the sorted rules, as an instance of the class {@link
-     * RuleSet}. The rule set may not be null
-     */
-    @NotNull
-    public final RuleSet<ItemType> sort(@NotNull final Metric metric) {
-        // TODO: Throw exceptions
-        SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
-                new AssociationRule.Comparator<ItemType>(metric).reversed());
-        rules.addAll(this);
-        return new RuleSet<>(rules);
-    }
-
-    /**
-     * SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
-     * new AssociationRule.Comparator<ItemType>(metric).reversed());
-     * rules.addAll(this);
-     * return new RuleSet<>(rules);
-     * Sorts the rules, which are contained by the rule set, by their "interestingly" in descending
-     * order according to a specific operator.
-     *
-     * @param operator The operator, which should be used to average the "interestingly" of the
-     *                 rules, which have been calculated according to multiple metrics, as an
-     *                 instance of the type {@link Metric}. The metric may not be null
-     * @return A rule set, which contains the sorted rules, as an instance of the class {@link
+     * @param operator The operator, which should be used to calculate the heuristic values of the
+     *                 rules, as an instance of the type {@link Operator}. The operator may not be
+     *                 null
+     * @return A new rule set, which contains the sorted rules, as an instance of the class {@link
      * RuleSet}. The rule set may not be null
      */
     @NotNull
@@ -106,45 +84,16 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     }
 
     /**
-     * Filters all rules, which are contained by the rule set, whose "interestingly" according to a
-     * specific metric is greater or equal than a specific threshold.
+     * Filters all rules, which are contained by the rule set, whose heuristic value according to a
+     * specific operator or metric is greater or equal than a specific threshold.
      *
-     * @param metric    The metric, which should be used to measure the "interestingly" of the
+     * @param operator  The operator, which should be used to calculate the heuristic value of the
      *                  rules, as an instance of the type {@link Metric}. The metric may not be
      *                  null
      * @param threshold The threshold, which must be reached by the filtered rules, as a {@link
      *                  Double} value. The threshold must be greater than 0
-     * @return A rule set, which contains the rules, which reach the given threshold, as an instance
-     * of the class {@link RuleSet}. The rule set may not be null
-     */
-    @NotNull
-    public final RuleSet<ItemType> filter(@NotNull final Metric metric, final double threshold) {
-        // TODO: Throw exceptions
-        SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
-                new AssociationRule.Comparator<ItemType>(metric).reversed());
-
-        for (AssociationRule<ItemType> rule : this) {
-            double heuristicValue = metric.evaluate(rule);
-
-            if (heuristicValue >= threshold) {
-                rules.add(rule);
-            }
-        }
-
-        return new RuleSet<>(rules);
-    }
-
-    /**
-     * Filters all rules, which are contained by the rule set, whose "interestingly" according to a
-     * specific operator is greater or equal than a specific threshold.
-     *
-     * @param operator  The operator, which should be used to average the "interestingly" of the
-     *                  rules, which have been calculated according to multiple metrics, as an
-     *                  instance of the type {@link Metric}. The metric may not be null
-     * @param threshold The threshold, which must be reached by the filtered rules, as a {@link
-     *                  Double} value. The threshold must be greater than 0
-     * @return A rule set, which contains the rules, which reach the given threshold, as an instance
-     * of the class {@link RuleSet}. The rule set may not be null
+     * @return A new rule set, which contains the rules, which reach the given threshold, as an
+     * instance of the class {@link RuleSet}. The rule set may not be null
      */
     @NotNull
     public final RuleSet<ItemType> filter(@NotNull final Operator operator,
@@ -154,7 +103,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
                 new AssociationRule.Comparator<ItemType>(operator).reversed());
 
         for (AssociationRule<ItemType> rule : this) {
-            double heuristicValue = operator.average(rule);
+            double heuristicValue = operator.evaluate(rule);
 
             if (heuristicValue >= threshold) {
                 rules.add(rule);

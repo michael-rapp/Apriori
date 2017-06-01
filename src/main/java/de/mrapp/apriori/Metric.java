@@ -13,23 +13,11 @@
  */
 package de.mrapp.apriori;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
- * Defines the interface, a class, which allows to measure the "interestingly" of an association
- * rule according to a certain metric, must implement.
+ * Defines the interface, a class, which allows to measure the "interestingly" of association
+ * rules according to a certain metric, must implement.
  */
-public interface Metric {
-
-    /**
-     * Calculates and returns a heuristic value, which measures the "interestingly" of a specific
-     * association rule.
-     *
-     * @param rule The rule, whose "interestingly" should be measured , as an instance of the class
-     *             {@link AssociationRule}. The association rule may not be null
-     * @return The heuristic value, which has been calculated, as a {@link Double} value
-     */
-    double evaluate(@NotNull AssociationRule<?> rule);
+public interface Metric extends Operator {
 
     /**
      * Returns the minimum heuristic value of the metric.

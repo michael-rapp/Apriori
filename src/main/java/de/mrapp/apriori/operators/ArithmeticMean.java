@@ -75,7 +75,7 @@ public class ArithmeticMean implements Operator {
     }
 
     @Override
-    public final double average(@NotNull final AssociationRule<?> rule) {
+    public final double evaluate(@NotNull final AssociationRule<?> rule) {
         // TODO: Throw exception if no metric has been added
         double result = 0;
         int sumOfWeights = metrics.stream().mapToInt(x -> x.second).sum();

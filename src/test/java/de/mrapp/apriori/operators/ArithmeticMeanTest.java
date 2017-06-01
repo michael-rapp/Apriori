@@ -30,25 +30,25 @@ import static org.mockito.Mockito.when;
 public class ArithmeticMeanTest {
 
     /**
-     * Tests the functionality of the average-method, when using equal weights.
+     * Tests the functionality of the evaluate-method, when using equal weights.
      */
     @Test
-    public final void testAverageWithEqualWeights() {
+    public final void testEvaluateWithEqualWeights() {
         Metric metric = mock(Metric.class);
         when(metric.evaluate(any())).thenReturn(3d, 5d);
         ArithmeticMean arithmeticMean = new ArithmeticMean().add(metric).add(metric);
-        assertEquals(4, arithmeticMean.average(mock(AssociationRule.class)), 0);
+        assertEquals(4, arithmeticMean.evaluate(mock(AssociationRule.class)), 0);
     }
 
     /**
-     * Tests the functionality of the average-method, when using different weights.
+     * Tests the functionality of the evaluate-method, when using different weights.
      */
     @Test
     public final void testAverageWithDifferentWeights() {
         Metric metric = mock(Metric.class);
         when(metric.evaluate(any())).thenReturn(3d, 5d);
         ArithmeticMean arithmeticMean = new ArithmeticMean().add(metric, 2).add(metric, 1);
-        assertEquals(11d / 3d, arithmeticMean.average(mock(AssociationRule.class)), 0);
+        assertEquals(11d / 3d, arithmeticMean.evaluate(mock(AssociationRule.class)), 0);
     }
 
 }

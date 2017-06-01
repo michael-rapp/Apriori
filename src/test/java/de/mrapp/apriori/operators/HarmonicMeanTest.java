@@ -30,25 +30,25 @@ import static org.mockito.Mockito.when;
 public class HarmonicMeanTest {
 
     /**
-     * Tests the functionality of the average-method, when using equal weights.
+     * Tests the functionality of the evaluate-method, when using equal weights.
      */
     @Test
     public final void testAverageWithEqualWeights() {
         Metric metric = mock(Metric.class);
         when(metric.evaluate(any())).thenReturn(20d, 5d);
         HarmonicMean harmonicMean = new HarmonicMean().add(metric).add(metric);
-        assertEquals(8, harmonicMean.average(mock(AssociationRule.class)), 0);
+        assertEquals(8, harmonicMean.evaluate(mock(AssociationRule.class)), 0);
     }
 
     /**
-     * Tests the functionality of the average-method, when using different weights.
+     * Tests the functionality of the evaluate-method, when using different weights.
      */
     @Test
     public final void testAverageWithDifferentWeights() {
         Metric metric = mock(Metric.class);
         when(metric.evaluate(any())).thenReturn(3d, 6d);
         HarmonicMean harmonicMean = new HarmonicMean().add(metric, 1).add(metric, 2);
-        assertEquals(4.5, harmonicMean.average(mock(AssociationRule.class)), 0);
+        assertEquals(4.5, harmonicMean.evaluate(mock(AssociationRule.class)), 0);
     }
 
 }

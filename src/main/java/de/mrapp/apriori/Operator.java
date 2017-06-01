@@ -16,8 +16,9 @@ package de.mrapp.apriori;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Defines the interface, a class, which allows to average the heuristic values, which are
- * calculated by applying multiple metrics to a rule, must implement.
+ * Defines the interface, a class, which allows to calculate heuristic values of association rules,
+ * must implement. This applies to metrics, which measure the "interestingly" of rules, as well as
+ * to meta-heuristics, which average the results of multiple metrics.
  *
  * @author Michael Rapp
  * @since 1.0.0
@@ -25,13 +26,12 @@ import org.jetbrains.annotations.NotNull;
 public interface Operator {
 
     /**
-     * Averages the heuristic values, which are calculated by all metrics, which have been added to
-     * the operator.
+     * Calculates the heuristic value of a specific association rule.
      *
-     * @param rule The rule, the metrics should be applied to, as an instance of the class {@link
-     *             AssociationRule}. The rule may not be null
-     * @return The averaged heuristic value, which has been calculated, as a {@link Double} value
+     * @param rule The association rule, whose heuristic value should be calculated, as an instance
+     *             of the class {@link AssociationRule}. The rule may not be null
+     * @return The heuristic value, which has been calculated, as a {@link Double} value
      */
-    double average(@NotNull AssociationRule<?> rule);
+    double evaluate(@NotNull AssociationRule<?> rule);
 
 }
