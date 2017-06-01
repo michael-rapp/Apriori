@@ -76,6 +76,7 @@ public class ItemSetTest {
         itemSet.add(item1);
         itemSet.add(item2);
         itemSet.add(item3);
+        itemSet.add(item3);
         assertEquals(3, itemSet.size());
         Iterator<NamedItem> iterator = itemSet.iterator();
         assertEquals(item2, iterator.next());
@@ -97,6 +98,7 @@ public class ItemSetTest {
         itemSet.add(item2);
         itemSet.add(item3);
         assertEquals(3, itemSet.size());
+        itemSet.remove(item3);
         itemSet.remove(item3);
         assertEquals(2, itemSet.size());
         Iterator<NamedItem> iterator = itemSet.iterator();
