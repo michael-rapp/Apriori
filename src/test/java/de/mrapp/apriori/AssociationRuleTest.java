@@ -16,6 +16,9 @@ package de.mrapp.apriori;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests the functionality of the class {@link AssociationRule}.
@@ -103,6 +106,24 @@ public class AssociationRuleTest {
         assertFalse(associationRule1.equals(associationRule2));
         associationRule2 = new AssociationRule<>(body1, head2, 0.5);
         assertFalse(associationRule1.equals(associationRule2));
+    }
+
+    /**
+     * Tests the functionality of the comparator, which allows to compare the heuristic values of
+     * two association rules.
+     */
+    @Test
+    public final void testComparator() {
+        AssociationRule<?> associationRule1 = mock(AssociationRule.class);
+        AssociationRule<?> associationRule2 = mock(AssociationRule.class);
+        Operator operator = mock(Operator.class);
+        AssociationRule.Comparator comparator = new AssociationRule.Comparator(operator);
+        when(operator.evaluate(any())).thenReturn(0.5, 0.6);
+        assertEquals(-1, comparator.compare(associationRule1, associationRule2));
+        when(operator.evaluate(any())).thenReturn(0.5, 0.5);
+        assertEquals(0, comparator.compare(associationRule1, associationRule2));
+        when(operator.evaluate(any())).thenReturn(0.6, 0.5);
+        assertEquals(1, comparator.compare(associationRule1, associationRule2));
     }
 
 }

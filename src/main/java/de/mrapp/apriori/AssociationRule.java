@@ -33,11 +33,8 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
     /**
      * A comparator, which allows to compare the heuristic values of two association rules according
      * to a certain metric or operator.
-     *
-     * @param <ItemType> The type of the items, the association rules' bodies and heads consist of
      */
-    public static class Comparator<ItemType extends Item> implements
-            java.util.Comparator<AssociationRule<ItemType>> {
+    public static class Comparator implements java.util.Comparator<AssociationRule<?>> {
 
         /**
          * The operator, which is used to calculate the heuristic values of rules.
@@ -58,8 +55,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
         }
 
         @Override
-        public final int compare(final AssociationRule<ItemType> o1,
-                                 final AssociationRule<ItemType> o2) {
+        public final int compare(final AssociationRule<?> o1, final AssociationRule<?> o2) {
             double heuristicValue1 = operator.evaluate(o1);
             double heuristicValue2 = operator.evaluate(o2);
             return heuristicValue1 > heuristicValue2 ? 1 :

@@ -60,8 +60,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
      */
     public RuleSet() {
         // TODO: Throw exceptions
-        this.rules = new TreeSet<>(
-                new AssociationRule.Comparator<ItemType>(new Confidence()).reversed());
+        this.rules = new TreeSet<>(new AssociationRule.Comparator(new Confidence()).reversed());
     }
 
     /**
@@ -78,7 +77,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     public final RuleSet<ItemType> sort(@NotNull final Operator operator) {
         // TODO: Throw exceptions
         SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
-                new AssociationRule.Comparator<ItemType>(operator).reversed());
+                new AssociationRule.Comparator(operator).reversed());
         rules.addAll(this);
         return new RuleSet<>(rules);
     }
@@ -100,7 +99,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
                                           final double threshold) {
         // TODO: Throw exceptions
         SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
-                new AssociationRule.Comparator<ItemType>(operator).reversed());
+                new AssociationRule.Comparator(operator).reversed());
 
         for (AssociationRule<ItemType> rule : this) {
             double heuristicValue = operator.evaluate(rule);
