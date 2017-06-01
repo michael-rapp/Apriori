@@ -47,7 +47,7 @@ public class HarmonicMeanTest {
     public final void testAverageWithDifferentWeights() {
         Metric metric = mock(Metric.class);
         when(metric.evaluate(any())).thenReturn(3d, 6d);
-        HarmonicMean harmonicMean = new HarmonicMean().add(metric, 1).add(metric, 2);
+        HarmonicMean harmonicMean = new HarmonicMean().add(metric, 1.0).add(metric, 2.0);
         assertEquals(4.5, harmonicMean.evaluate(mock(AssociationRule.class)), 0);
     }
 

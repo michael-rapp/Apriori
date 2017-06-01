@@ -47,7 +47,7 @@ public class ArithmeticMeanTest {
     public final void testAverageWithDifferentWeights() {
         Metric metric = mock(Metric.class);
         when(metric.evaluate(any())).thenReturn(3d, 5d);
-        ArithmeticMean arithmeticMean = new ArithmeticMean().add(metric, 2).add(metric, 1);
+        ArithmeticMean arithmeticMean = new ArithmeticMean().add(metric, 2.0).add(metric, 1.0);
         assertEquals(11d / 3d, arithmeticMean.evaluate(mock(AssociationRule.class)), 0);
     }
 

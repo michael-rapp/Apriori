@@ -35,7 +35,7 @@ public class HarmonicMean implements Operator {
      * A collection, which contains the metrics, which have been added to the harmonic mean
      * operator.
      */
-    private final Collection<Pair<Metric, Integer>> metrics;
+    private final Collection<Pair<Metric, Double>> metrics;
 
     /**
      * Creates a new harmonic mean operator.
@@ -62,13 +62,13 @@ public class HarmonicMean implements Operator {
      *
      * @param metric The metric, which should be added, as an instance of the type {@link Metric}.
      *               The metric may not be null
-     * @param weight The weight of the metric, which should be added, as an {@link Integer} value.
-     *               The weight must be at least 1
+     * @param weight The weight of the metric, which should be added, as a {@link Double} value. The
+     *               weight must be greater than 0
      * @return The harmonic mean operator, this method has been called upon, as an instance of the
      * class {@link HarmonicMean}. The operator may not be null
      */
     @NotNull
-    public final HarmonicMean add(@NotNull final Metric metric, final int weight) {
+    public final HarmonicMean add(@NotNull final Metric metric, final double weight) {
         // TODO: Throw exceptions
         metrics.add(Pair.create(metric, weight));
         return this;
@@ -80,12 +80,12 @@ public class HarmonicMean implements Operator {
         double numerator = 0;
         double denominator = 0;
 
-        for (Pair<Metric, Integer> pair : metrics) {
+        for (Pair<Metric, Double> pair : metrics) {
             Metric metric = pair.first;
             double heuristicValue = metric.evaluate(rule);
-            int weight = pair.second;
+            double weight = pair.second;
             numerator += weight;
-            denominator += (double) weight / heuristicValue;
+            denominator += weight / heuristicValue;
         }
 
         return denominator > 0 ? numerator / denominator : 0;
