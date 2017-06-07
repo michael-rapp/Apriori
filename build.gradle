@@ -6,6 +6,7 @@ repositories {
 }
 
 dependencies {
+    compile 'com.github.michael-rapp:java-util:1.0+'
     compile 'org.jetbrains:annotations:15+'
     compile 'org.slf4j:slf4j-api:1.7+'
     testCompile 'junit:junit:4+'
