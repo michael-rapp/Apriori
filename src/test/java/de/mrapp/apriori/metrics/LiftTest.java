@@ -60,6 +60,15 @@ public class LiftTest {
     }
 
     /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the evaluate-method, when
+     * passing null as a parameter.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testEvaluatThrowsException() {
+        new Lift().evaluate(null);
+    }
+
+    /**
      * Tests the functionality of the minValue-method.
      */
     @Test

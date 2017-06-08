@@ -22,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import static de.mrapp.util.Condition.*;
+
 /**
  * An operator, which allows to average the heuristic values, which are calculated by applying
  * multiple metrics to a rule, according to the arithmetic mean operation.
@@ -69,14 +71,16 @@ public class ArithmeticMean implements Operator {
      */
     @NotNull
     public final ArithmeticMean add(@NotNull final Metric metric, final double weight) {
-        // TODO: Throw exceptions
+        ensureNotNull(metric, "The metric may not be null");
+        ensureGreater(weight, 0, "The weight must be greater than 0");
         metrics.add(Pair.create(metric, weight));
         return this;
     }
 
     @Override
     public final double evaluate(@NotNull final AssociationRule<?> rule) {
-        // TODO: Throw exception if no metric has been added
+        ensureNotNull(rule, "The rule may not be null");
+        ensureNotEmpty(metrics, "No metrics added", IllegalStateException.class);
         double result = 0;
         double sumOfWeights = metrics.stream().mapToDouble(x -> x.second).sum();
 

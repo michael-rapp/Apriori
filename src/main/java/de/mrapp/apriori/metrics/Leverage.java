@@ -17,6 +17,8 @@ import de.mrapp.apriori.AssociationRule;
 import de.mrapp.apriori.Metric;
 import org.jetbrains.annotations.NotNull;
 
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * A metric, which measures the leverage of an association rule. By definition, leverage is the
  * difference between the rule's support and the expected support for the body and head, if they
@@ -31,6 +33,7 @@ public class Leverage implements Metric {
 
     @Override
     public final double evaluate(@NotNull final AssociationRule<?> rule) {
+        ensureNotNull(rule, "The rule may not be null");
         double bodySupport = rule.getBody().getSupport();
         double headSupport = rule.getHead().getSupport();
         return rule.getSupport() - (bodySupport * headSupport);

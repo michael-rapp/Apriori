@@ -22,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import static de.mrapp.util.Condition.*;
+
 /**
  * An operator, which allows to average the heuristic values, which are calculated by applying
  * multiple metrics to a rule, according to the harmonic mean operation.
@@ -69,6 +71,8 @@ public class HarmonicMean implements Operator {
      */
     @NotNull
     public final HarmonicMean add(@NotNull final Metric metric, final double weight) {
+        ensureNotNull(metric, "The metric may not be null");
+        ensureGreater(weight, 0, "The weight must be greater than 0");
         // TODO: Throw exceptions
         metrics.add(Pair.create(metric, weight));
         return this;
@@ -76,7 +80,8 @@ public class HarmonicMean implements Operator {
 
     @Override
     public final double evaluate(@NotNull final AssociationRule<?> rule) {
-        // TODO: Throw exception if no metric has been added
+        ensureNotNull(rule, "The rule may not be null");
+        ensureNotEmpty(metrics, "No metrics added", IllegalStateException.class);
         double numerator = 0;
         double denominator = 0;
 

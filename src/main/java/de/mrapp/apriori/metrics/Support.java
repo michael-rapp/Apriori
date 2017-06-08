@@ -17,6 +17,8 @@ import de.mrapp.apriori.AssociationRule;
 import de.mrapp.apriori.Metric;
 import org.jetbrains.annotations.NotNull;
 
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * A metric, which measures the support of an association rule. By definition, support measures the
  * percentage of transactions for which the body and head of the rule is true.
@@ -28,6 +30,7 @@ public class Support implements Metric {
 
     @Override
     public final double evaluate(@NotNull final AssociationRule<?> rule) {
+        ensureNotNull(rule, "The rule may not be null");
         return rule.getSupport();
     }
 

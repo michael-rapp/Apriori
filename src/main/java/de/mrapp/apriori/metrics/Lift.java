@@ -17,6 +17,8 @@ import de.mrapp.apriori.AssociationRule;
 import de.mrapp.apriori.Metric;
 import org.jetbrains.annotations.NotNull;
 
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * A metric, which measures the lift of an association rule. By definition, lift is calculated as
  * the ratio of the rule's confidence over a priori expectation for the rule's head.
@@ -28,6 +30,7 @@ public class Lift implements Metric {
 
     @Override
     public final double evaluate(@NotNull final AssociationRule<?> rule) {
+        ensureNotNull(rule, "The rule may not be null");
         double bodySupport = rule.getBody().getSupport();
         double headSupport = rule.getHead().getSupport();
         double product = bodySupport * headSupport;

@@ -17,6 +17,8 @@ import de.mrapp.apriori.AssociationRule;
 import de.mrapp.apriori.Metric;
 import org.jetbrains.annotations.NotNull;
 
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * A metric, which measures the confidence of an association rule. By definition, confidence
  * measures the percentage of transactions for which the head of the rule is true, among all
@@ -29,7 +31,7 @@ public class Confidence implements Metric {
 
     @Override
     public final double evaluate(@NotNull final AssociationRule<?> rule) {
-        // TODO: Throw exceptions
+        ensureNotNull(rule, "The rule may not be null");
         double bodySupport = rule.getBody().getSupport();
         return bodySupport > 0 ? rule.getSupport() / bodySupport : 0;
     }
