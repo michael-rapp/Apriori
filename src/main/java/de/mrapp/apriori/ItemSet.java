@@ -19,6 +19,8 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
+import static de.mrapp.util.Condition.*;
+
 /**
  * An item set, which may contain several items. An item set may not contain duplicates. The
  * contained items are ordered according to the implementation of their {@link
@@ -61,7 +63,7 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSe
      *                ItemSet}. The item set may not be null
      */
     public ItemSet(@NotNull final ItemSet<ItemType> itemSet) {
-        // TODO: Throw exceptions
+        ensureNotNull(itemSet, "The item set may not be null");
         this.items = new TreeSet<>(itemSet.items);
         setSupport(itemSet.support);
     }
@@ -83,7 +85,8 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSe
      *                be at least 0 and at maximum 1
      */
     public final void setSupport(final double support) {
-        // TODO: Throw exceptions
+        ensureAtLeast(support, 0, "The support must be at least 0");
+        ensureAtMaximum(support, 1, "The support must be at least 1");
         this.support = support;
     }
 

@@ -53,6 +53,15 @@ public class ItemSetTest {
     }
 
     /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown, by the constructor, which
+     * expects another item set as an argument, if the item set is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithItemSetArgumentThrowsException() {
+        new ItemSet<>(null);
+    }
+
+    /**
      * Tests the functionality of the method, which allows to set the support of an item set.
      */
     @Test
@@ -61,6 +70,26 @@ public class ItemSetTest {
         ItemSet<NamedItem> itemSet = new ItemSet<>();
         itemSet.setSupport(support);
         assertEquals(support, itemSet.getSupport(), 0);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * set the support of an item set, if the support is less than 0.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testSetSupportThrowsExceptionWhenSupportIsLessThanZero() {
+        ItemSet<NamedItem> itemSet = new ItemSet<>();
+        itemSet.setSupport(-1);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * set the support of an item set, if the support is greater than 1.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testSetSupportThrowsExceptionWhenSupportIsGreaterThanOne() {
+        ItemSet<NamedItem> itemSet = new ItemSet<>();
+        itemSet.setSupport(1.1);
     }
 
     /**
