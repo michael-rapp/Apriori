@@ -93,8 +93,8 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
      *                rule's body, as an instance of the class {@link ItemSet}. The item set may not
      *                be null
      * @param head    An item set, which contains the items, which are contained by the association
-     *                rule's head, as an instance of the class {@link ItemSet}. The item set may
-     *                neither be null, nor empty
+     *                rule's head, as an instance of the class {@link ItemSet}. The item set may not
+     *                be null
      * @param support The support of the association rule as a {@link Double} value. The support
      *                must be at least 0 and at maximum 1
      */
