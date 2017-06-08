@@ -51,7 +51,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
          *                 rules, as an instance of the type {@link Operator}. The operator may not
          *                 be null
          */
-        public Comparator(@NotNull final Operator operator) {
+        Comparator(@NotNull final Operator operator) {
             ensureNotNull(operator, "The operator may not be null");
             this.operator = operator;
         }
@@ -60,8 +60,8 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
         public final int compare(final AssociationRule<?> o1, final AssociationRule<?> o2) {
             double heuristicValue1 = operator.evaluate(o1);
             double heuristicValue2 = operator.evaluate(o2);
-            return heuristicValue1 > heuristicValue2 ? 1 :
-                    (heuristicValue1 < heuristicValue2 ? -1 : 0);
+            return heuristicValue1 == heuristicValue2 ? (o1.equals(o2) ? 0 : 1) :
+                    (heuristicValue1 > heuristicValue2 ? 1 : -1);
         }
 
     }
@@ -93,8 +93,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
      *                rule's body, as an instance of the class {@link ItemSet}. The item set may not
      *                be null
      * @param head    An item set, which contains the items, which are contained by the association
-     *                rule's head, as an instance of the class {@link ItemSet}. The item set may not
-     *                be null
+     *                rule's head, as an instance of the class {@link ItemSet}. The item set may no
      * @param support The support of the association rule as a {@link Double} value. The support
      *                must be at least 0 and at maximum 1
      */

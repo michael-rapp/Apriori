@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * A rule set, which contains multiple association rules. The rules, which are contained by a rule
  * set, are unordered.
@@ -42,7 +44,14 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     /**
      * A sorted set, which contains the rules, the rule set consists of.
      */
-    private final SortedSet<AssociationRule<ItemType>> rules;
+    public final SortedSet<AssociationRule<ItemType>> rules;
+
+    /**
+     * Creates an empty rule set.
+     */
+    public RuleSet() {
+        this(new TreeSet<>(new AssociationRule.Comparator(new Confidence()).reversed()));
+    }
 
     /**
      * Creates a new rule set from a sorted set.
@@ -50,17 +59,9 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
      * @param rules The sorted set, the rule set should be created from, as an instance of the type
      *              {@link SortedSet}. The sorted set may not be null
      */
-    private RuleSet(@NotNull final SortedSet<AssociationRule<ItemType>> rules) {
-        // TODO: Throw exceptions
+    protected RuleSet(@NotNull final SortedSet<AssociationRule<ItemType>> rules) {
+        ensureNotNull(rules, "The rules may not be null");
         this.rules = rules;
-    }
-
-    /**
-     * Creates an empty rule set.
-     */
-    public RuleSet() {
-        // TODO: Throw exceptions
-        this.rules = new TreeSet<>(new AssociationRule.Comparator(new Confidence()).reversed());
     }
 
     /**

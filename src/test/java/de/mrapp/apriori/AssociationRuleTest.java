@@ -157,7 +157,7 @@ public class AssociationRuleTest {
         when(operator.evaluate(any())).thenReturn(0.5, 0.6);
         assertEquals(-1, comparator.compare(associationRule1, associationRule2));
         when(operator.evaluate(any())).thenReturn(0.5, 0.5);
-        assertEquals(0, comparator.compare(associationRule1, associationRule2));
+        assertEquals(0, comparator.compare(associationRule1, associationRule1));
         when(operator.evaluate(any())).thenReturn(0.6, 0.5);
         assertEquals(1, comparator.compare(associationRule1, associationRule2));
     }
