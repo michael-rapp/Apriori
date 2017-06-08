@@ -17,6 +17,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
+import static de.mrapp.util.Condition.*;
+
 /**
  * An association rule of the form Y <- X, which consists of a body X and a head Y. Both, the body
  * and the head of an association rule consist of one or several items. These item sets must be
@@ -50,7 +52,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
          *                 be null
          */
         public Comparator(@NotNull final Operator operator) {
-            // TODO: Throw exceptions
+            ensureNotNull(operator, "The operator may not be null");
             this.operator = operator;
         }
 
@@ -99,7 +101,10 @@ public class AssociationRule<ItemType extends Item> implements Serializable {
     public AssociationRule(@NotNull final ItemSet<ItemType> body,
                            @NotNull final ItemSet<ItemType> head,
                            final double support) {
-        // TODO: Throw exceptions
+        ensureNotNull(body, "The body may not be null");
+        ensureNotNull(head, "The head may not be null");
+        ensureAtLeast(support, 0, "The support must be at least 0");
+        ensureAtMaximum(support, 1, "The support must be at maximum 1");
         this.body = body;
         this.head = head;
         this.support = support;

@@ -46,6 +46,42 @@ public class AssociationRuleTest {
     }
 
     /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown, if the body, which is passed as
+     * a constructor parameter, is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorThrowsExceptionWhenBodyIsNull() {
+        new AssociationRule<>(null, new ItemSet<>(), 0.5);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown, if the head, which is passed as
+     * a constructor parameter, is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorThrowsExceptionWhenHeadIsNull() {
+        new AssociationRule<>(new ItemSet<>(), null, 0.5);
+    }
+
+    /**
+     * Ensures, tha an {@link IllegalArgumentException} is thrown, if the support, which is passed
+     * as a constructor parameter, is less than 0.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorThrowsExceptionWhenSupportIsLessThanZero() {
+        new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), -1);
+    }
+
+    /**
+     * Ensures, tha an {@link IllegalArgumentException} is thrown, if the support, which is passed
+     * as a constructor parameter, is greater than 1.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorThrowsExceptionWhenSupportIsGreaterThanOne() {
+        new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 1.1);
+    }
+
+    /**
      * Tests the functionality of the toString-method.
      */
     @Test
@@ -124,6 +160,16 @@ public class AssociationRuleTest {
         assertEquals(0, comparator.compare(associationRule1, associationRule2));
         when(operator.evaluate(any())).thenReturn(0.6, 0.5);
         assertEquals(1, comparator.compare(associationRule1, associationRule2));
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor of the
+     * comparator, which allows to compare the heuristic values of two association rules, if null is
+     * passed as a constructor parameter.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testComparatorConstructorThrowsException() {
+        new AssociationRule.Comparator(null);
     }
 
 }
