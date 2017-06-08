@@ -16,7 +16,7 @@ package de.mrapp.apriori.modules;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.Transaction;
-import de.mrapp.apriori.util.Pair;
+import de.mrapp.util.datastructure.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -16,7 +16,7 @@ package de.mrapp.apriori.operators;
 import de.mrapp.apriori.AssociationRule;
 import de.mrapp.apriori.Metric;
 import de.mrapp.apriori.Operator;
-import de.mrapp.apriori.util.Pair;
+import de.mrapp.util.datastructure.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
