@@ -24,6 +24,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests the functionality of the class {@link RuleSet}.
@@ -158,6 +159,79 @@ public class RuleSetTest {
         assertTrue(ruleSet.isEmpty());
         assertFalse(ruleSet.contains(associationRule1));
         assertFalse(ruleSet.contains(associationRule2));
+    }
+
+    /**
+     * Tests the functionality of the method, which allows to sort the rules of a rule set.
+     */
+    @Test
+    public final void testSort() {
+        ItemSet<NamedItem> body1 = new ItemSet<>();
+        body1.add(new NamedItem("a"));
+        ItemSet<NamedItem> body2 = new ItemSet<>();
+        body2.add(new NamedItem("b"));
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
+                0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
+                0.7);
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        ruleSet.add(associationRule1);
+        ruleSet.add(associationRule2);
+        assertEquals(associationRule1, ruleSet.first());
+        assertEquals(associationRule2, ruleSet.last());
+        RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(new Support());
+        assertEquals(associationRule2, sortedRuleSet.first());
+        assertEquals(associationRule1, sortedRuleSet.last());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * sort the rules of a rule set, when null is passed as an argument.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testSortThrowsException() {
+        new RuleSet<>().sort(null);
+    }
+
+    /**
+     * Tests the functionality of the method, which allows to filter the rules of a rule set.
+     */
+    @Test
+    public final void testFilter() {
+        ItemSet<NamedItem> body1 = new ItemSet<>();
+        body1.add(new NamedItem("a"));
+        ItemSet<NamedItem> body2 = new ItemSet<>();
+        body2.add(new NamedItem("b"));
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
+                0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
+                0.7);
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        ruleSet.add(associationRule1);
+        ruleSet.add(associationRule2);
+        assertEquals(2, ruleSet.size());
+        RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(new Support(), 0.6);
+        assertEquals(1, filteredRuleSet.size());
+        assertEquals(associationRule2, filteredRuleSet.first());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * filter the rules of a rule set, when the operator, which is passed to the method, is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testFilterThrowsExceptionWhenOperatorIsNull() {
+        new RuleSet<>().filter(null, 0.5);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, wihch allows to
+     * filter the rules of a rule set, when the threshold, which is passed to the method is not
+     * greater than 0.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testFilterThrowsExceptionWhenThresholdIsNotGreaterThanZero() {
+        new RuleSet<>().filter(mock(Operator.class), 0);
     }
 
     /**

@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static de.mrapp.util.Condition.ensureGreater;
 import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
@@ -76,7 +77,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
      */
     @NotNull
     public final RuleSet<ItemType> sort(@NotNull final Operator operator) {
-        // TODO: Throw exceptions
+        ensureNotNull(operator, "The operator may not be null");
         SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
                 new AssociationRule.Comparator(operator).reversed());
         rules.addAll(this);
@@ -98,7 +99,8 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     @NotNull
     public final RuleSet<ItemType> filter(@NotNull final Operator operator,
                                           final double threshold) {
-        // TODO: Throw exceptions
+        ensureNotNull(operator, "The operator may not be null");
+        ensureGreater(threshold, 0, "The threshold must be greater than 0");
         SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
                 new AssociationRule.Comparator(operator).reversed());
 
