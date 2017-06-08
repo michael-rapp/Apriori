@@ -89,6 +89,24 @@ public class FrequentItemSetMinerTest extends AbstractDataTest {
     }
 
     /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown, when the minimum support,
+     * which is passed as a constructor parameter, is less than 0.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorThrowsExceptionWhenMinSupportIsLessThanZero() {
+        new FrequentItemSetMiner<>(-1);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown, when the minimum support,
+     * which is passed as a constructor parameter, is greater than 1.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorThrowsExceptionWhenMinSupportIsGreaterThanOne() {
+        new FrequentItemSetMiner<>(1.1);
+    }
+
+    /**
      * Tests the functionality of the method, which allows to find frequent item sets, when using
      * the first input file.
      */
@@ -104,6 +122,15 @@ public class FrequentItemSetMinerTest extends AbstractDataTest {
     @Test
     public final void testFindFrequentItemSets2() {
         testFindFrequentItemSets(INPUT_FILE_2, 0.25, FREQUENT_ITEM_SETS_2, SUPPORTS_2);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * find frequent item sets, when null is passed as a parameter.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testGenerateAssociationRulesThrowsExcpetion() {
+        new FrequentItemSetMiner<>(0.5).findFrequentItemSets(null);
     }
 
 }

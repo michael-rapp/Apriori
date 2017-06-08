@@ -25,6 +25,8 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static de.mrapp.util.Condition.*;
+
 /**
  * A module, which allows to find all frequent item sets, which occur in a data set. The data set
  * must contain multiple transactions of which each one consists of multiple items. Item sets are
@@ -295,7 +297,8 @@ public class FrequentItemSetMiner<ItemType extends Item> {
      *                   maximum 1
      */
     public FrequentItemSetMiner(final double minSupport) {
-        // TODO: Throw exceptions
+        ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
+        ensureAtMaximum(minSupport, 1, "The minimum support must be at least 1");
         this.minSupport = minSupport;
     }
 
@@ -323,7 +326,7 @@ public class FrequentItemSetMiner<ItemType extends Item> {
     @NotNull
     public final Map<Integer, ItemSet<ItemType>> findFrequentItemSets(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
-        // TODO: Throw exceptions
+        ensureNotNull(iterator, "The iterator may not be null");
         LOGGER.debug("Searching for frequent item sets");
         Map<Integer, ItemSet<ItemType>> frequentItemSets = new HashMap<>();
         int k = 1;

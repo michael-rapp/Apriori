@@ -197,6 +197,24 @@ public class AssociationRuleGeneratorTest extends AbstractDataTest {
     }
 
     /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown, when the minimum confidence,
+     * which is passed as a constructor parameter, is less than 0.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorThrowsExceptionWhenMinConfidenceIsLessThanZero() {
+        new AssociationRuleGenerator<>(-1);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown, when the minimum confidence,
+     * which is passed as a constructor parameter, is greater than 1.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorThrowsExceptionWhenMinConfidenceIsGreaterThanOne() {
+        new AssociationRuleGenerator<>(1.1);
+    }
+
+    /**
      * Tests the functionality of the method, which allows to generate association rules, when using
      * the frequent item sets, which are contained by the first input file.
      */
@@ -214,6 +232,15 @@ public class AssociationRuleGeneratorTest extends AbstractDataTest {
     public final void testGenerateAssociationRules2() {
         testGenerateAssociationRules(FREQUENT_ITEM_SETS_2, SUPPORTS_2, 0.75, RULES_2,
                 RULE_SUPPORTS_2, RULE_CONFIDENCES_2, RULE_LIFTS_2, RULE_LEVERAGES_2);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * generate association rules, when null is passed as a parameter.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testGenerateAssociationRulesThrowsExcpetion() {
+        new AssociationRuleGenerator<>(0.5).generateAssociationRules(null);
     }
 
 }

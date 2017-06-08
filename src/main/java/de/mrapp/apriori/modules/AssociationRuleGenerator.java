@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+import static de.mrapp.util.Condition.*;
+
 /**
  * A module, which allows to generate association rules from frequent item sets. An association rule
  * specifies, that if certain items occur in a transaction, other items do also occur with a certain
@@ -131,7 +133,8 @@ public class AssociationRuleGenerator<ItemType extends Item> {
      *                      must be at least 0 and at maximum 1
      */
     public AssociationRuleGenerator(final double minConfidence) {
-        // TODO: Throw exceptions
+        ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
+        ensureAtMaximum(minConfidence, 1, "The maximum confidence must be at least 1");
         this.minConfidence = minConfidence;
     }
 
@@ -160,6 +163,7 @@ public class AssociationRuleGenerator<ItemType extends Item> {
     @NotNull
     public final RuleSet<ItemType> generateAssociationRules(
             @NotNull final Map<Integer, ItemSet<ItemType>> frequentItemSets) {
+        ensureNotNull(frequentItemSets, "The frequent item sets may not be null");
         LOGGER.debug("Generating association rules");
         RuleSet<ItemType> ruleSet = new RuleSet<>();
 
