@@ -63,7 +63,8 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
             Map<Integer, ItemSet<ItemType>> result = new HashMap<>();
             double currentMinSupport = getConfiguration().getMaxSupport();
 
-            while (result.size() < getConfiguration().getFrequentItemSetCount()) {
+            while (currentMinSupport >= getConfiguration().getMinSupport() &&
+                    result.size() < getConfiguration().getFrequentItemSetCount()) {
                 frequentItemSetMiner = new FrequentItemSetMiner<>(currentMinSupport);
                 Map<Integer, ItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
                         .findFrequentItemSets(iterator);

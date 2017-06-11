@@ -13,7 +13,7 @@
  */
 package de.mrapp.apriori;
 
-import de.mrapp.apriori.modules.AssociationRuleGenerator;
+import de.mrapp.apriori.tasks.AssociationRuleGeneratorTask;
 import de.mrapp.apriori.tasks.FrequentItemSetMinerTask;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -570,10 +570,9 @@ public class Apriori<ItemType extends Item> {
         RuleSet<ItemType> ruleSet = null;
 
         if (configuration.generateRules) {
-            AssociationRuleGenerator<ItemType> associationRuleGenerator = new AssociationRuleGenerator<>(
-                    configuration.minConfidence);
-            ruleSet = associationRuleGenerator
-                    .generateAssociationRules(frequentItemSets);
+            AssociationRuleGeneratorTask<ItemType> associationRuleGeneratorTask = new AssociationRuleGeneratorTask<>(
+                    configuration);
+            ruleSet = associationRuleGeneratorTask.generateAssociationRules(frequentItemSets);
         }
 
         SortedSet<ItemSet<ItemType>> sortedItemSets = new TreeSet<>(Comparator.reverseOrder());
