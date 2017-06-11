@@ -20,6 +20,9 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.SortedSet;
 
+import static de.mrapp.util.Condition.ensureAtLeast;
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * An output of the Apriori algorithm.
  *
@@ -27,6 +30,7 @@ import java.util.SortedSet;
  * @author Michael Rapp
  * @since 1.0.0
  */
+// TODO: Implement toString-, hashCode- and equals-method
 public class Output<ItemType extends Item> implements Serializable {
 
     /**
@@ -80,7 +84,10 @@ public class Output<ItemType extends Item> implements Serializable {
     public Output(@NotNull final Configuration configuration, final long startTime,
                   final long endTime, @NotNull final SortedSet<ItemSet<ItemType>> frequentItemSets,
                   @Nullable final RuleSet<ItemType> ruleSet) {
-        // TODO: Throw exceptions
+        ensureNotNull(configuration, "The configuration may not be null");
+        ensureAtLeast(startTime, 0, "The start time must be at least 0");
+        ensureAtLeast(endTime, startTime, "The end time must be at least " + startTime);
+        ensureNotNull(frequentItemSets, "The frequent item sets may not be null");
         this.configuration = configuration;
         this.startTime = startTime;
         this.endTime = endTime;
