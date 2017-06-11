@@ -14,7 +14,7 @@
 package de.mrapp.apriori;
 
 import de.mrapp.apriori.modules.AssociationRuleGenerator;
-import de.mrapp.apriori.modules.FrequentItemSetMiner;
+import de.mrapp.apriori.tasks.FrequentItemSetMinerTask;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -563,9 +563,9 @@ public class Apriori<ItemType extends Item> {
         // TODO: Throw exceptions
         LOGGER.info("Starting Apriori algorithm");
         long startTime = System.currentTimeMillis();
-        FrequentItemSetMiner<ItemType> frequentItemSetMiner = new FrequentItemSetMiner<>(
-                configuration.minSupport);
-        Map<Integer, ItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
+        FrequentItemSetMinerTask<ItemType> frequentItemSetMinerTask = new FrequentItemSetMinerTask<>(
+                configuration);
+        Map<Integer, ItemSet<ItemType>> frequentItemSets = frequentItemSetMinerTask
                 .findFrequentItemSets(iterator);
         RuleSet<ItemType> ruleSet = null;
 
