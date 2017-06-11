@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.*;
 
+import static de.mrapp.util.Condition.*;
+
 /**
  * An implementation of the Apriori algorithm for mining frequent item sets and (optionally)
  * generating association rules. The algorithm processes a set of transactions, of which each one
@@ -33,6 +35,9 @@ import java.util.*;
  */
 public class Apriori<ItemType extends Item> {
 
+    /**
+     * An configuration of the Apriori algorithm.
+     */
     public static class Configuration implements Serializable {
 
         /**
@@ -40,24 +45,59 @@ public class Apriori<ItemType extends Item> {
          */
         private static final long serialVersionUID = 1L;
 
+        /**
+         * The minimum support, which must at least be reached by item sets to be considered
+         * frequent.
+         */
         private double minSupport;
 
+        /**
+         * The minimum support, which should initially be used, when trying to find
+         * a specific number of frequent item sets.
+         */
         private double maxSupport;
 
+        /**
+         * The value, the minimum support should be decreased by after each iteration, when trying
+         * to find a specific number of frequent item sets.
+         */
         private double supportDelta;
 
+        /**
+         * The number of frequent item sets the Apriori algorithm should try to find.
+         */
         private int frequentItemSetCount;
 
+        /**
+         * True, if association rules should be generated, false otherwise.
+         */
         private boolean generateRules;
 
+        /**
+         * The minimum confidence, which must at least be reached by association rules.
+         */
         private double minConfidence;
 
+        /**
+         * The minimum confidence, which should initially be used, when trying to generate a
+         * specific number of association rules.
+         */
         private double maxConfidence;
 
+        /**
+         * The value, the minimum confidence should be decreased by, when trying to generate a
+         * specific number of association rules.
+         */
         private double confidenceDelta;
 
+        /**
+         * The number of association rules the Apriori algorithm should try to to generate.
+         */
         private int ruleCount;
 
+        /**
+         * Creates a new configuration of the Apriori algorithm with default values.
+         */
         protected Configuration() {
             setMinSupport(0);
             setMaxSupport(1);
@@ -70,7 +110,14 @@ public class Apriori<ItemType extends Item> {
             setRuleCount(0);
         }
 
+        /**
+         * Creates a new configuration of the Apriori algorithm by copying an existing one.
+         *
+         * @param configuration The configuration, which should be copied, as an instance of the
+         *                      class {@link Configuration}. The configuration may not be null
+         */
         protected Configuration(@NotNull final Configuration configuration) {
+            ensureNotNull(configuration, "The configuration may not be null");
             setMinSupport(configuration.minSupport);
             setMaxSupport(configuration.maxSupport);
             setSupportDelta(configuration.supportDelta);
@@ -82,48 +129,260 @@ public class Apriori<ItemType extends Item> {
             setRuleCount(configuration.ruleCount);
         }
 
+        /**
+         * Returns the minimum support, which must at least be reached by an item set to be
+         * considered frequent.
+         *
+         * @return The minimum support, which must at least be reached by an item set to be
+         * considered frequent, as a {@link Double} value
+         */
+        public final double getMinSupport() {
+            return minSupport;
+        }
+
+        /**
+         * Sets the minimum support, which must at least be reached by an item set to be considered
+         * frequent.
+         *
+         * @param minSupport The support, which should be set, as a {@link Double} value. The
+         *                   support must at least be 0 and at maximum 1
+         */
         protected final void setMinSupport(final double minSupport) {
-            // TODO: Throw exceptions
+            ensureAtLeast(minSupport, 0, "The minimum support must at least be 0");
+            ensureAtMaximum(minSupport, 1, "The minimum support must at least be 1");
             this.minSupport = minSupport;
         }
 
+        /**
+         * Returns the minimum support, which should initially be used, when trying to find a
+         * specific number of frequent item sets.
+         *
+         * @return The minimum support, which should initially be used, when trying to find a
+         * specific number of frequent item sets, as a {@link Double} value
+         */
+        public final double getMaxSupport() {
+            return maxSupport;
+        }
+
+        /**
+         * Sets the minimum support, which should initially be used, when trying to find a specific
+         * number of frequent item sets.
+         *
+         * @param maxSupport The support, which should be set, as a {@link Double} value. The
+         *                   support must be at least the minimum support
+         */
         protected final void setMaxSupport(final double maxSupport) {
-            // TODO: Throw exceptions
+            ensureAtLeast(maxSupport, minSupport, "The maximum support must be at least" +
+                    minSupport);
             this.maxSupport = maxSupport;
         }
 
+        /**
+         * Returns the value, the minimum support should be decreased by after each iteration, when
+         * trying to find a specific number of frequent item sets.
+         *
+         * @return The value, the minimum support should be decreased by after each iteration, when
+         * trying to find a specific number of frequent item sets, as a {@link Double} value
+         */
+        public final double getSupportDelta() {
+            return supportDelta;
+        }
+
+        /**
+         * Sets the value, the minimum support should be decreased by after each iteration, when
+         * trying to find a specific number of frequent item sets.
+         *
+         * @param supportDelta The value, which should be set, as a {@link Double} value. The value
+         *                     must be greater than 0 and less than the maximum support
+         */
         protected final void setSupportDelta(final double supportDelta) {
-            // TODO: Throw exceptions
+            ensureGreater(supportDelta, 0, "The support delta must be greater than 0");
+            ensureSmaller(supportDelta, maxSupport,
+                    "The support delta must be less than " + maxSupport);
             this.supportDelta = supportDelta;
         }
 
+        /**
+         * Returns the number of frequent item sets, the Apriori algorithm should try to find.
+         *
+         * @return The number of frequent item sets, the Apriori algorithm should try to find, as an
+         * {@link Integer} value
+         */
+        public final int getFrequentItemSetCount() {
+            return frequentItemSetCount;
+        }
+
+        /**
+         * Sets the number of of frequent item sets, the Apriori algorithm should try to find.
+         *
+         * @param frequentItemSetCount The number of frequent item sets, which should be set, as an
+         *                             {@link Integer} value or 0, if the Apriori algorithm should
+         *                             not try to find a specific number of frequent item sets
+         */
         protected final void setFrequentItemSetCount(final int frequentItemSetCount) {
-            // TODO: Throw exceptions
+            ensureAtLeast(frequentItemSetCount, 0,
+                    "The number of frequent item sets must be at least 0");
             this.frequentItemSetCount = frequentItemSetCount;
         }
 
+        /**
+         * Returns, whether association rules should be generated, or not.
+         *
+         * @return True, if association rules should be generated, false otherwise
+         */
+        public final boolean isGeneratingRules() {
+            return generateRules;
+        }
+
+        /**
+         * Sets, whether association rules should be generated, or not.
+         *
+         * @param generateRules True, if association rules should be generated, false otherwise
+         */
         protected final void setGenerateRules(final boolean generateRules) {
             this.generateRules = generateRules;
         }
 
+        /**
+         * Returns the minimum confidence, which must at least be reached by association rules.
+         *
+         * @return The minimum confidence, which must at least be reached by association rules, as a
+         * {@link Double} value
+         */
+        public final double getMinConfidence() {
+            return minConfidence;
+        }
+
+        /**
+         * Sets the minimum confidence, which must at least be reached by association rules.
+         *
+         * @param minConfidence The confidence, which should be set, as a {@link Double} value. The
+         *                      confidence must be at least 0 and at maximum 1
+         */
         protected final void setMinConfidence(final double minConfidence) {
-            // TODO: Throw exceptions
+            ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
+            ensureAtMaximum(minConfidence, 1, "The minimum confidence must be at least 1");
             this.minConfidence = minConfidence;
         }
 
+        /**
+         * Returns the minimum confidence, which should initially be used, when trying to generate a
+         * specific number of association rules.
+         *
+         * @return The minimum confidence, which should initially be used, when trying to generate a
+         * specific number of association rules, as a {@link Double} value
+         */
+        public final double getMaxConfidence() {
+            return maxConfidence;
+        }
+
+        /**
+         * Sets the minimum confidence, which should initially be used, when trying to generate a
+         * specific number of association rules.
+         *
+         * @param maxConfidence The confidence, which should be set, as a {@link Double} value. The
+         *                      confidence must be at least 0 and at maximum 1
+         */
         protected final void setMaxConfidence(final double maxConfidence) {
-            // TODO: Throw exceptions
+            ensureAtLeast(maxConfidence, 0, "The max confidence must be at least 0");
+            ensureAtMaximum(maxConfidence, 1, "The max confidence must be at least 1");
             this.maxConfidence = maxConfidence;
         }
 
+        /**
+         * Returns the value, the minimum confidence should be decreased by after each iteration,
+         * when trying to generate a specific number of association rules.
+         *
+         * @return The value, the minimum confidence should be decreased by after each iteration,
+         * when trying to generate a specific number of association rules, as a {@link Double}
+         * value
+         */
+        public final double getConfidenceDelta() {
+            return confidenceDelta;
+        }
+
+        /**
+         * Sets the value, the minimum confidence should be decreased by after each iteration, when
+         * trying to generate a specific number of association rules.
+         *
+         * @param confidenceDelta The value, which should be set, as a {@link Double} value. The
+         *                        value must be greater than 0 and less than the maximum confidence
+         */
         protected final void setConfidenceDelta(final double confidenceDelta) {
-            // TODO: Throw exceptions
+            ensureGreater(confidenceDelta, 0, "The confidence delta must be greater than 0");
+            ensureSmaller(confidenceDelta, maxConfidence,
+                    "The confidence delta must be less than " + maxSupport);
             this.confidenceDelta = confidenceDelta;
         }
 
+        /**
+         * Returns the number of association rules, the Apriori algorithm should try to generate.
+         *
+         * @return The number of association rules, the Apriori algorithm should try to generate, as
+         * an {@link Integer} value
+         */
+        public final int getRuleCount() {
+            return ruleCount;
+        }
+
+        /**
+         * Sets the number of association rule, the Apriori algorithm should try to generate.
+         *
+         * @param ruleCount The number of association rules, which should be set, as an {@link
+         *                  Integer} value or 0, if the Apriori algorithm should not try to generate
+         *                  a specific number of association rules
+         */
         protected final void setRuleCount(final int ruleCount) {
-            // TODO: Throw exceptions
+            ensureAtLeast(ruleCount, 0, "The rule count must be at least 0");
             this.ruleCount = ruleCount;
+        }
+
+        @Override
+        public final String toString() {
+            return "Configuration [minSupport=" + minSupport + ", maxSupport=" + maxSupport +
+                    ", supportDelta=" + supportDelta + ", frequentItemSetCount=" +
+                    frequentItemSetCount + ", generateRules=" + generateRules + ", minConfidence=" +
+                    minConfidence + ", maxConfidence=" + maxConfidence + ", confidenceDelta=" +
+                    confidenceDelta + ", ruleCount=" + ruleCount + "]";
+        }
+
+        @Override
+        public final int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            long tempMinSupport = Double.doubleToLongBits(minSupport);
+            result = prime * result + (int) (tempMinSupport ^ (tempMinSupport >>> 32));
+            long tempMaxSupport = Double.doubleToLongBits(maxSupport);
+            result = prime * result + (int) (tempMaxSupport ^ (tempMaxSupport >>> 32));
+            long tempSupportDelta = Double.doubleToLongBits(supportDelta);
+            result = prime * result + (int) (tempSupportDelta ^ (tempSupportDelta >>> 32));
+            result = prime * result + frequentItemSetCount;
+            result = prime * result + (generateRules ? 1231 : 1237);
+            long tempMinConfidence = Double.doubleToLongBits(minConfidence);
+            result = prime * result + (int) (tempMinConfidence ^ (tempMinConfidence >>> 32));
+            long tempMaxConfidence = Double.doubleToLongBits(maxConfidence);
+            result = prime * result + (int) (tempMaxConfidence ^ (tempMaxConfidence >>> 32));
+            long tempConfidenceDelta = Double.doubleToLongBits(confidenceDelta);
+            result = prime * result + (int) (tempConfidenceDelta ^ (tempConfidenceDelta >>> 32));
+            result = prime * result + ruleCount;
+            return result;
+        }
+
+        @Override
+        public final boolean equals(final Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Configuration other = (Configuration) obj;
+            return minSupport == other.minSupport && maxSupport == other.maxSupport &&
+                    supportDelta == other.supportDelta &&
+                    frequentItemSetCount == other.frequentItemSetCount &&
+                    generateRules == other.generateRules && minConfidence == other.minConfidence &&
+                    maxConfidence == other.maxConfidence &&
+                    confidenceDelta == other.confidenceDelta && ruleCount == other.ruleCount;
         }
 
     }
