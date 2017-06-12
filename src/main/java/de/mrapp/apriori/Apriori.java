@@ -172,6 +172,7 @@ public class Apriori<ItemType extends Item> {
          *                   support must be at least the minimum support
          */
         protected final void setMaxSupport(final double maxSupport) {
+            ensureAtMaximum(maxSupport, 1, "The maximum support must be at maximum 1");
             ensureAtLeast(maxSupport, minSupport, "The maximum support must be at least" +
                     minSupport);
             this.maxSupport = maxSupport;
@@ -284,8 +285,9 @@ public class Apriori<ItemType extends Item> {
          *                      confidence must be at least 0 and at maximum 1
          */
         protected final void setMaxConfidence(final double maxConfidence) {
-            ensureAtLeast(maxConfidence, 0, "The max confidence must be at least 0");
-            ensureAtMaximum(maxConfidence, 1, "The max confidence must be at least 1");
+            ensureAtMaximum(maxConfidence, 1, "The max confidence must be at maximum 1");
+            ensureAtLeast(maxConfidence, minConfidence,
+                    "The max confidence must be at least " + minConfidence);
             this.maxConfidence = maxConfidence;
         }
 
