@@ -30,7 +30,6 @@ import static de.mrapp.util.Condition.ensureNotNull;
  * @author Michael Rapp
  * @since 1.0.0
  */
-// TODO: Implement toString-, hashCode- and equals-method
 public class Output<ItemType extends Item> implements Serializable {
 
     /**
