@@ -14,10 +14,15 @@
 package de.mrapp.apriori;
 
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Iterator;
 import java.util.StringTokenizer;
+
+import static de.mrapp.util.Condition.ensureNotEmpty;
+import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * An iterator, which allows to iterate the transactions, which are contained by a text file.
@@ -44,7 +49,8 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
          *             neither be null, nor empty
          */
         TransactionImplementation(@NotNull final String line) {
-            // TODO: Throw exceptions
+            ensureNotNull(line, "The line may not be null");
+            ensureNotEmpty(line, "The line may not be empty");
             this.line = line;
         }
 
@@ -75,7 +81,8 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
          *             line may neither be null, nor empty
          */
         LineIterator(@NotNull final String line) {
-            // TODO: Throw exceptions
+            ensureNotNull(line, "The line may not be null");
+            ensureNotEmpty(line, "The line may not be empty");
             this.tokenizer = new StringTokenizer(line);
         }
 
@@ -115,8 +122,8 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
             try {
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             } catch (IOException e) {
-                // TODO: Log message
                 String message = "Failed to open file " + file;
+                LOGGER.error(message, e);
                 throw new RuntimeException(message, e);
             }
         }
@@ -157,11 +164,16 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
             closeReader();
             return null;
         } catch (IOException e) {
-            // TODO: Log message
             String message = "Failed to read file " + file;
+            LOGGER.error(message, e);
             throw new RuntimeException(message);
         }
     }
+
+    /**
+     * The SL4J logger, which is used by the iterator.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataIterator.class);
 
     /**
      * Creates a new iterator, which allows to iterate the transactions, which are contained by a
@@ -171,7 +183,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
      *             {@link File}. The file may not be null
      */
     public DataIterator(@NotNull final File file) {
-        // TODO: Throw exceptions
+        ensureNotNull(file, "The file may not be null");
         this.file = file;
         this.reader = null;
         this.nextLine = null;
