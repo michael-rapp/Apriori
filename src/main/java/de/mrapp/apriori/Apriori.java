@@ -118,15 +118,15 @@ public class Apriori<ItemType extends Item> {
          */
         protected Configuration(@NotNull final Configuration configuration) {
             ensureNotNull(configuration, "The configuration may not be null");
-            setMinSupport(configuration.minSupport);
-            setMaxSupport(configuration.maxSupport);
-            setSupportDelta(configuration.supportDelta);
-            setFrequentItemSetCount(configuration.frequentItemSetCount);
-            setGenerateRules(configuration.generateRules);
-            setMinConfidence(configuration.minConfidence);
-            setMaxConfidence(configuration.maxConfidence);
-            setConfidenceDelta(configuration.confidenceDelta);
-            setRuleCount(configuration.ruleCount);
+            minSupport = configuration.minSupport;
+            maxSupport = configuration.maxSupport;
+            supportDelta = configuration.supportDelta;
+            frequentItemSetCount = configuration.frequentItemSetCount;
+            generateRules = configuration.generateRules;
+            minConfidence = configuration.minConfidence;
+            maxConfidence = configuration.maxConfidence;
+            confidenceDelta = configuration.confidenceDelta;
+            ruleCount = configuration.ruleCount;
         }
 
         /**
@@ -145,11 +145,12 @@ public class Apriori<ItemType extends Item> {
          * frequent.
          *
          * @param minSupport The support, which should be set, as a {@link Double} value. The
-         *                   support must at least be 0 and at maximum 1
+         *                   support must at least be 0 and at maximum the maximum support
          */
         protected final void setMinSupport(final double minSupport) {
-            ensureAtLeast(minSupport, 0, "The minimum support must at least be 0");
-            ensureAtMaximum(minSupport, 1, "The minimum support must at least be 1");
+            ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
+            ensureAtMaximum(minSupport, maxSupport,
+                    "The minimum support must be at maximum " + maxSupport);
             this.minSupport = minSupport;
         }
 
@@ -194,12 +195,10 @@ public class Apriori<ItemType extends Item> {
          * trying to find a specific number of frequent item sets.
          *
          * @param supportDelta The value, which should be set, as a {@link Double} value. The value
-         *                     must be greater than 0 and less than the maximum support
+         *                     must be greater than 0
          */
         protected final void setSupportDelta(final double supportDelta) {
             ensureGreater(supportDelta, 0, "The support delta must be greater than 0");
-            ensureSmaller(supportDelta, maxSupport,
-                    "The support delta must be less than " + maxSupport);
             this.supportDelta = supportDelta;
         }
 
@@ -258,11 +257,12 @@ public class Apriori<ItemType extends Item> {
          * Sets the minimum confidence, which must at least be reached by association rules.
          *
          * @param minConfidence The confidence, which should be set, as a {@link Double} value. The
-         *                      confidence must be at least 0 and at maximum 1
+         *                      confidence must be at least 0 and at maximum the maximum confidence
          */
         protected final void setMinConfidence(final double minConfidence) {
             ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
-            ensureAtMaximum(minConfidence, 1, "The minimum confidence must be at least 1");
+            ensureAtMaximum(minConfidence, maxConfidence,
+                    "The minimum confidence must be at maximum " + maxConfidence);
             this.minConfidence = minConfidence;
         }
 
@@ -308,12 +308,10 @@ public class Apriori<ItemType extends Item> {
          * trying to generate a specific number of association rules.
          *
          * @param confidenceDelta The value, which should be set, as a {@link Double} value. The
-         *                        value must be greater than 0 and less than the maximum confidence
+         *                        value must be greater than 0
          */
         protected final void setConfidenceDelta(final double confidenceDelta) {
             ensureGreater(confidenceDelta, 0, "The confidence delta must be greater than 0");
-            ensureSmaller(confidenceDelta, maxConfidence,
-                    "The confidence delta must be less than " + maxSupport);
             this.confidenceDelta = confidenceDelta;
         }
 

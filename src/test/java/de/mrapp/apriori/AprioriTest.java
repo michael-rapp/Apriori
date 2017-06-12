@@ -105,11 +105,13 @@ public class AprioriTest {
 
     /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * set the minimum support, if the support is greater than 1.
+     * set the minimum support, if the support is greater than the maximum support.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testSetMinSupportThrowsExceptionWhenSupportIsGreaterThanOne() {
-        new Configuration().setMinSupport(1.1);
+    public final void testSetMinSupportThrowsExceptionWhenSupportIsGreaterThanMaxSupport() {
+        Configuration configuration = new Configuration();
+        configuration.setMaxSupport(0.8);
+        configuration.setMinSupport(0.9);
     }
 
     /**
@@ -142,16 +144,6 @@ public class AprioriTest {
 
     /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * set the support delta, if the delta is not less then the maximum support.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testSetSupportDeltaThrowsExceptionWhenDeltaIsNotLessThanMaxSupport() {
-        Configuration configuration = new Configuration();
-        configuration.setSupportDelta(configuration.getMaxSupport());
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
      * set the frequent item set count, if the count is less than 0.
      */
     @Test(expected = IllegalArgumentException.class)
@@ -170,11 +162,13 @@ public class AprioriTest {
 
     /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * set the minimum confidence, if the confidence is greater than 1.
+     * set the minimum confidence, if the confidence is greater than the maximum confidence.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testSetMinConfidenceThrowsExceptionWhenConfidenceIsGreaterThanOne() {
-        new Configuration().setMinConfidence(1.1);
+    public final void testSetMinConfidenceThrowsExceptionWhenConfidenceIsGreaterThanMaxConfidence() {
+        Configuration configuration = new Configuration();
+        configuration.setMaxConfidence(0.8);
+        configuration.setMinConfidence(0.9);
     }
 
     /**
@@ -203,16 +197,6 @@ public class AprioriTest {
     @Test(expected = IllegalArgumentException.class)
     public final void testSetConfidenceDeltaThrowsExceptionWhenDeltaIsNotGreaterThanZero() {
         new Configuration().setConfidenceDelta(0);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * set the confidence delta, if the delta is not less than the maximum confidence.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testSetConfidenceDeltaThrowsExceptionWhenDeltaIsNotLessThanMaxConfidence() {
-        Configuration configuration = new Configuration();
-        configuration.setConfidenceDelta(configuration.getMaxConfidence());
     }
 
     /**
