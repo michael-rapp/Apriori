@@ -374,9 +374,8 @@ public class AprioriTest {
         double confidenceDelta = 0.2;
         int ruleCount = 0;
         Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(frequentItemSetCount)
-                .minSupport(minSupport)
-                .maxSupport(maxSupport)
-                .supportDelta(supportDelta).generateRules(minConfidence)
+                .generateRules(minConfidence).minSupport(minSupport).maxSupport(maxSupport)
+                .supportDelta(supportDelta).frequentItemSetCount(frequentItemSetCount)
                 .maxConfidence(maxConfidence).confidenceDelta(confidenceDelta).ruleCount(ruleCount)
                 .create();
         Configuration configuration = apriori.getConfiguration();
@@ -406,11 +405,10 @@ public class AprioriTest {
         double confidenceDelta = 0.2;
         int ruleCount = 2;
         Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(frequentItemSetCount)
-                .minSupport(minSupport)
-                .maxSupport(maxSupport)
-                .supportDelta(supportDelta).generateRules(ruleCount).minConfidence(minConfidence)
-                .maxConfidence(maxConfidence).confidenceDelta(confidenceDelta)
-                .create();
+                .generateRules(ruleCount).minSupport(minSupport).maxSupport(maxSupport)
+                .supportDelta(supportDelta).frequentItemSetCount(frequentItemSetCount)
+                .minConfidence(minConfidence).maxConfidence(maxConfidence)
+                .confidenceDelta(confidenceDelta).create();
         Configuration configuration = apriori.getConfiguration();
         assertEquals(minSupport, configuration.getMinSupport());
         assertEquals(maxSupport, configuration.getMaxSupport());
