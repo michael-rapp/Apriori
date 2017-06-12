@@ -315,4 +315,112 @@ public class AprioriTest {
         assertFalse(configuration1.equals(configuration2));
     }
 
+    /**
+     * Tests the functionality of the builder, when configuring the Apriori algorithm to not
+     * trying to find a specific number of frequent item sets.
+     */
+    @Test
+    public final void testBuilderWhenNotTryingToFindASpecificNumberOfFrequentItemSets() {
+        double minSupport = 0.3;
+        double maxSupport = 0.8;
+        double supportDelta = 0.2;
+        int frequentItemSetCount = 0;
+        Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(minSupport)
+                .maxSupport(maxSupport)
+                .supportDelta(supportDelta)
+                .frequentItemSetCount(frequentItemSetCount).create();
+        Configuration configuration = apriori.getConfiguration();
+        assertEquals(minSupport, configuration.getMinSupport());
+        assertEquals(maxSupport, configuration.getMaxSupport());
+        assertEquals(supportDelta, configuration.getSupportDelta());
+        assertEquals(frequentItemSetCount, configuration.getFrequentItemSetCount());
+        assertFalse(configuration.isGeneratingRules());
+    }
+
+    /**
+     * Tests the functionality of the builder, when configuring the Apriori algorithm to trying
+     * to find a specific number of frequent item sets.
+     */
+    @Test
+    public final void testBuilderWhenTryingToFindASpecificNumberOfFrequentItemSets() {
+        double minSupport = 0.3;
+        double maxSupport = 0.8;
+        double supportDelta = 0.2;
+        int frequentItemSetCount = 2;
+        Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(frequentItemSetCount)
+                .minSupport(minSupport)
+                .maxSupport(maxSupport)
+                .supportDelta(supportDelta).create();
+        Configuration configuration = apriori.getConfiguration();
+        assertEquals(minSupport, configuration.getMinSupport());
+        assertEquals(maxSupport, configuration.getMaxSupport());
+        assertEquals(supportDelta, configuration.getSupportDelta());
+        assertEquals(frequentItemSetCount, configuration.getFrequentItemSetCount());
+        assertFalse(configuration.isGeneratingRules());
+    }
+
+    /**
+     * Tests the functionality of the builder, when configuring the Apriori algorithm to generate
+     * association rules.
+     */
+    @Test
+    public final void testBuilderWhenGeneratingAssociationRules() {
+        double minSupport = 0.3;
+        double maxSupport = 0.8;
+        double supportDelta = 0.2;
+        int frequentItemSetCount = 2;
+        double minConfidence = 0.4;
+        double maxConfidence = 0.8;
+        double confidenceDelta = 0.2;
+        int ruleCount = 0;
+        Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(frequentItemSetCount)
+                .minSupport(minSupport)
+                .maxSupport(maxSupport)
+                .supportDelta(supportDelta).generateRules(minConfidence)
+                .maxConfidence(maxConfidence).confidenceDelta(confidenceDelta).ruleCount(ruleCount)
+                .create();
+        Configuration configuration = apriori.getConfiguration();
+        assertEquals(minSupport, configuration.getMinSupport());
+        assertEquals(maxSupport, configuration.getMaxSupport());
+        assertEquals(supportDelta, configuration.getSupportDelta());
+        assertEquals(frequentItemSetCount, configuration.getFrequentItemSetCount());
+        assertFalse(configuration.isGeneratingRules());
+        assertEquals(minConfidence, configuration.getMinConfidence());
+        assertEquals(maxConfidence, configuration.getMaxConfidence());
+        assertEquals(confidenceDelta, configuration.getConfidenceDelta());
+        assertEquals(ruleCount, configuration.getRuleCount());
+    }
+
+    /**
+     * Tests the functionality of the builder, when configuring the Apriori algorithm to trying to
+     * generate a specific number of association rules.
+     */
+    @Test
+    public final void testBuilderWhenTryingToGenerateASpecificNumberOfAssociationRules() {
+        double minSupport = 0.3;
+        double maxSupport = 0.8;
+        double supportDelta = 0.2;
+        int frequentItemSetCount = 2;
+        double minConfidence = 0.4;
+        double maxConfidence = 0.8;
+        double confidenceDelta = 0.2;
+        int ruleCount = 2;
+        Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(frequentItemSetCount)
+                .minSupport(minSupport)
+                .maxSupport(maxSupport)
+                .supportDelta(supportDelta).generateRules(ruleCount).minConfidence(minConfidence)
+                .maxConfidence(maxConfidence).confidenceDelta(confidenceDelta)
+                .create();
+        Configuration configuration = apriori.getConfiguration();
+        assertEquals(minSupport, configuration.getMinSupport());
+        assertEquals(maxSupport, configuration.getMaxSupport());
+        assertEquals(supportDelta, configuration.getSupportDelta());
+        assertEquals(frequentItemSetCount, configuration.getFrequentItemSetCount());
+        assertFalse(configuration.isGeneratingRules());
+        assertEquals(minConfidence, configuration.getMinConfidence());
+        assertEquals(maxConfidence, configuration.getMaxConfidence());
+        assertEquals(confidenceDelta, configuration.getConfidenceDelta());
+        assertEquals(ruleCount, configuration.getRuleCount());
+    }
+
 }

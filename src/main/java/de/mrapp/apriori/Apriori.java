@@ -763,6 +763,17 @@ public class Apriori<ItemType extends Item> {
     }
 
     /**
+     * Returns the configuration, which is used by the Apriori algorithm.
+     *
+     * @return The configuration, which is used by the Apriori algorithm, as an instance of the
+     * class {@link Configuration}. The configuration may not be null
+     */
+    @NotNull
+    public final Configuration getConfiguration() {
+        return configuration;
+    }
+
+    /**
      * Executes the Apriori algorithm on a specific set of transactions in order to learn
      * association rules, which specify frequent item sets.
      *
