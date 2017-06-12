@@ -20,6 +20,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 
+import static de.mrapp.util.Condition.ensureNotEmpty;
+import static de.mrapp.util.Condition.ensureNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -66,11 +68,12 @@ public abstract class AbstractDataTest {
      * @param fileName The file name, which corresponds to the input file, which should be returned,
      *                 as a {@link String}. The string may neither be null, nor empty
      * @return The input file, which can be used by the tests, as an instance of the class {@link
-     * File}. The file may not be null
+     * File}. The file may neither be null, nor empty
      */
     @NotNull
     protected final File getInputFile(@NotNull final String fileName) {
-        // TODO: Throw exceptions
+        ensureNotNull(fileName, "The file name may not be null");
+        ensureNotEmpty(fileName, "The file name may not be null");
 
         try {
             URL url = getClass().getClassLoader().getResource(fileName);
