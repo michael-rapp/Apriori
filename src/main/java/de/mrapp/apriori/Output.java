@@ -165,4 +165,41 @@ public class Output<ItemType extends Item> implements Serializable {
                 frequentItemSets.toString() + ",\nruleSet=" + ruleSet.toString();
     }
 
+    @Override
+    public final int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + configuration.hashCode();
+        result = prime * result + (int) (startTime ^ (startTime >>> 32));
+        result = prime * result + (int) (endTime ^ (endTime >>> 32));
+        result = prime * result + frequentItemSets.hashCode();
+        result = prime * result + (ruleSet == null ? 0 : ruleSet.hashCode());
+        return result;
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Output<?> other = (Output<?>) obj;
+        if (!configuration.equals(other.configuration))
+            return false;
+        if (startTime != other.startTime)
+            return false;
+        if (endTime != other.endTime)
+            return false;
+        if (!frequentItemSets.equals(other.frequentItemSets))
+            return false;
+        if (ruleSet == null) {
+            if (other.ruleSet != null)
+                return false;
+        } else if (!ruleSet.equals(other.ruleSet))
+            return false;
+        return true;
+    }
+
 }

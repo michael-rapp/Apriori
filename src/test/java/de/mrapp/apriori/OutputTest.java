@@ -19,7 +19,7 @@ import org.junit.Test;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the functionality of the class {@link Output}.
@@ -105,6 +105,66 @@ public class OutputTest {
                 ",\nendTime=" + endTime + ",\nruntime=" + output.getRuntime() +
                 ",\nfrequentItemSets=" + frequentItemSets.toString() + ",\nruleSet=" +
                 ruleSet.toString(), output.toString());
+    }
+
+    /**
+     * Tests the functionality of the hashCode-method.
+     */
+    @Test
+    public final void testHashCode() {
+        Output<NamedItem> output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), null);
+        Output<NamedItem> output2 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), null);
+        assertEquals(output1.hashCode(), output1.hashCode());
+        assertEquals(output1.hashCode(), output2.hashCode());
+        Configuration configuration = new Configuration();
+        configuration.setMinSupport(0.2);
+        output1 = new Output<>(configuration, 0, 2, new TreeSet<>(), null);
+        assertNotSame(output1.hashCode(), output2.hashCode());
+        output1 = new Output<>(new Configuration(), 1, 2, new TreeSet<>(), null);
+        assertNotSame(output1.hashCode(), output2.hashCode());
+        output1 = new Output<>(new Configuration(), 0, 1, new TreeSet<>(), null);
+        assertNotSame(output1.hashCode(), output2.hashCode());
+        SortedSet<ItemSet<NamedItem>> frequentItemSets = new TreeSet<>();
+        frequentItemSets.add(new ItemSet<>());
+        output1 = new Output<>(new Configuration(), 0, 2, frequentItemSets, null);
+        assertNotSame(output1.hashCode(), output2.hashCode());
+        output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), new RuleSet<>());
+        assertNotSame(output1.hashCode(), output2.hashCode());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
+        output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), ruleSet);
+        assertNotSame(output1.hashCode(), output2.hashCode());
+    }
+
+    /**
+     * Tests the functionality of the equals-method.
+     */
+    @Test
+    public final void testEquals() {
+        Output<NamedItem> output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), null);
+        Output<NamedItem> output2 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), null);
+        assertFalse(output1.equals(null));
+        assertFalse(output1.equals(new Object()));
+        assertTrue(output1.equals(output1));
+        assertTrue(output1.equals(output2));
+        Configuration configuration = new Configuration();
+        configuration.setMinSupport(0.2);
+        output1 = new Output<>(configuration, 0, 2, new TreeSet<>(), null);
+        assertFalse(output1.equals(output2));
+        output1 = new Output<>(new Configuration(), 1, 2, new TreeSet<>(), null);
+        assertFalse(output1.equals(output2));
+        output1 = new Output<>(new Configuration(), 0, 1, new TreeSet<>(), null);
+        assertFalse(output1.equals(output2));
+        SortedSet<ItemSet<NamedItem>> frequentItemSets = new TreeSet<>();
+        frequentItemSets.add(new ItemSet<>());
+        output1 = new Output<>(new Configuration(), 0, 2, frequentItemSets, null);
+        assertFalse(output1.equals(output2));
+        output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), new RuleSet<>());
+        assertFalse(output1.equals(output2));
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
+        output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), ruleSet);
+        assertFalse(output1.equals(output2));
     }
 
 }
