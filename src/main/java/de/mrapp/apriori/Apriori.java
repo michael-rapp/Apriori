@@ -805,7 +805,7 @@ public class Apriori<ItemType extends Item> {
             ruleSet = associationRuleGeneratorTask.generateAssociationRules(frequentItemSets);
         }
 
-        SortedSet<ItemSet<ItemType>> sortedItemSets = new FrequentItemSetTreeSet<ItemType>(
+        SortedSet<ItemSet<ItemType>> sortedItemSets = new FrequentItemSetTreeSet<>(
                 Comparator.reverseOrder());
         sortedItemSets.addAll(frequentItemSets.values());
         long endTime = System.currentTimeMillis();
