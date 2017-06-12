@@ -15,6 +15,9 @@ package de.mrapp.apriori;
 
 import org.jetbrains.annotations.NotNull;
 
+import static de.mrapp.util.Condition.ensureNotEmpty;
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * An implementation of the type {@link Item}, which is used for test purposes. Each item can
  * unambiguously be identified via its name.
@@ -40,7 +43,8 @@ public class NamedItem implements Item {
      *             empty
      */
     public NamedItem(@NotNull final String name) {
-        // TODO: Throw exceptions
+        ensureNotNull(name, "The name may not be null");
+        ensureNotEmpty(name, "The name may not be empty");
         this.name = name;
     }
 
