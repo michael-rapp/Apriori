@@ -232,7 +232,7 @@ public class AprioriTest {
         configuration.setMaxConfidence(maxConfidence);
         configuration.setConfidenceDelta(confidenceDelta);
         configuration.setRuleCount(ruleCount);
-        assertEquals("Configuration [minSupport=" + minSupport + ", maxSupport=" + maxSupport +
+        assertEquals("[minSupport=" + minSupport + ", maxSupport=" + maxSupport +
                 ", supportDelta=" + supportDelta + ", frequentItemSetCount=" +
                 frequentItemSetCount + ", generateRules=" + generateRules + ", minConfidence=" +
                 minConfidence + ", maxConfidence=" + maxConfidence + ", confidenceDelta=" +

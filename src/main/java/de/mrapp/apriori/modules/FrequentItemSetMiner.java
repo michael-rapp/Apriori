@@ -16,12 +16,12 @@ package de.mrapp.apriori.modules;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.Transaction;
+import de.mrapp.apriori.datastructure.FrequentItemSetTreeSet;
 import de.mrapp.util.datastructure.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -241,42 +241,6 @@ public class FrequentItemSetMiner<ItemType extends Item> {
     }
 
     /**
-     * Creates and returns a string, which contains information about the frequent item set, which
-     * have been found by the algorithm.
-     *
-     * @param frequentItemSets A collection, which contains the frequent item sets, as an instance
-     *                         of the type {@link Collection} or null, if no frequent item sets have
-     *                         been found by the algorithm
-     * @return A string, which contains information about the given frequent item sets, as a {@link
-     * String}. The string may neither be null, nor empty
-     */
-    @NotNull
-    private String formatFrequentItemSets(
-            @NotNull final Collection<ItemSet<ItemType>> frequentItemSets) {
-        StringBuilder stringBuilder = new StringBuilder();
-        DecimalFormat decimalFormat = new DecimalFormat();
-        decimalFormat.setMinimumFractionDigits(1);
-        decimalFormat.setMaximumFractionDigits(2);
-        Iterator<ItemSet<ItemType>> iterator = frequentItemSets.iterator();
-        stringBuilder.append("[");
-
-        while (iterator.hasNext()) {
-            ItemSet<ItemType> itemSet = iterator.next();
-            stringBuilder.append(itemSet.toString());
-            stringBuilder.append(" (support = ");
-            stringBuilder.append(decimalFormat.format(itemSet.getSupport()));
-            stringBuilder.append(")");
-
-            if (iterator.hasNext()) {
-                stringBuilder.append(",\n");
-            }
-        }
-
-        stringBuilder.append("]");
-        return stringBuilder.toString();
-    }
-
-    /**
      * Calculates and returns the support of an item.
      *
      * @param transactions The total number of available transactions as an {@link Integer} value.
@@ -348,7 +312,8 @@ public class FrequentItemSetMiner<ItemType extends Item> {
         }
 
         LOGGER.debug("Found {} frequent item sets", frequentItemSets.size());
-        LOGGER.debug("Frequent item sets = {}", formatFrequentItemSets(frequentItemSets.values()));
+        LOGGER.debug("Frequent item sets = {}",
+                FrequentItemSetTreeSet.formatFrequentItemSets(frequentItemSets.values()));
         return frequentItemSets;
     }
 

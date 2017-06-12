@@ -87,4 +87,24 @@ public class OutputTest {
         new Output<>(new Configuration(), 0, 1, null, null);
     }
 
+    /**
+     * Tests the functionality of the toString-method.
+     */
+    @Test
+    public final void testToString() {
+        Configuration configuration = new Configuration();
+        long startTime = 0;
+        long endTime = 2;
+        SortedSet<ItemSet<NamedItem>> frequentItemSets = new TreeSet<>();
+        frequentItemSets.add(new ItemSet<>());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
+        Output<NamedItem> output = new Output<>(configuration, startTime, endTime, frequentItemSets,
+                ruleSet);
+        assertEquals("configuration=" + configuration.toString() + ",\nstartTime=" + startTime +
+                ",\nendTime=" + endTime + ",\nruntime=" + output.getRuntime() +
+                ",\nfrequentItemSets=" + frequentItemSets.toString() + ",\nruleSet=" +
+                ruleSet.toString(), output.toString());
+    }
+
 }

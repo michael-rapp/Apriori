@@ -13,6 +13,7 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.datastructure.FrequentItemSetTreeSet;
 import de.mrapp.apriori.tasks.AssociationRuleGeneratorTask;
 import de.mrapp.apriori.tasks.FrequentItemSetMinerTask;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.SortedSet;
 
 import static de.mrapp.util.Condition.*;
 
@@ -339,7 +343,7 @@ public class Apriori<ItemType extends Item> {
 
         @Override
         public final String toString() {
-            return "Configuration [minSupport=" + minSupport + ", maxSupport=" + maxSupport +
+            return "[minSupport=" + minSupport + ", maxSupport=" + maxSupport +
                     ", supportDelta=" + supportDelta + ", frequentItemSetCount=" +
                     frequentItemSetCount + ", generateRules=" + generateRules + ", minConfidence=" +
                     minConfidence + ", maxConfidence=" + maxConfidence + ", confidenceDelta=" +
@@ -801,7 +805,8 @@ public class Apriori<ItemType extends Item> {
             ruleSet = associationRuleGeneratorTask.generateAssociationRules(frequentItemSets);
         }
 
-        SortedSet<ItemSet<ItemType>> sortedItemSets = new TreeSet<>(Comparator.reverseOrder());
+        SortedSet<ItemSet<ItemType>> sortedItemSets = new FrequentItemSetTreeSet<ItemType>(
+                Comparator.reverseOrder());
         sortedItemSets.addAll(frequentItemSets.values());
         long endTime = System.currentTimeMillis();
         Output<ItemType> output = new Output<>(configuration, startTime, endTime, sortedItemSets,

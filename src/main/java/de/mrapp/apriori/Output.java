@@ -158,4 +158,11 @@ public class Output<ItemType extends Item> implements Serializable {
         return ruleSet;
     }
 
+    @Override
+    public final String toString() {
+        return "configuration=" + configuration.toString() + ",\nstartTime=" + startTime +
+                ",\nendTime=" + endTime + ",\nruntime=" + getRuntime() + ",\nfrequentItemSets=" +
+                frequentItemSets.toString() + ",\nruleSet=" + ruleSet.toString();
+    }
+
 }
