@@ -73,7 +73,6 @@ public class HarmonicMean implements Operator {
     public final HarmonicMean add(@NotNull final Metric metric, final double weight) {
         ensureNotNull(metric, "The metric may not be null");
         ensureGreater(weight, 0, "The weight must be greater than 0");
-        // TODO: Throw exceptions
         metrics.add(Pair.create(metric, weight));
         return this;
     }
