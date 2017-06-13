@@ -155,16 +155,15 @@ public class FrequentItemSetMiner<ItemType extends Item> {
 
                 for (Map.Entry<Integer, Transaction<ItemType>> entry : transactionSet) {
                     Transaction<ItemType> transaction = entry.getValue();
-                    int count = 0;
+                    Set<Integer> containedItemHashes = new HashSet<>();
 
                     for (ItemType item : transaction) {
-                        // TODO: What if transaction contains the same item multiple times!?
                         if (candidate.contains(item)) {
-                            count++;
+                            containedItemHashes.add(item.hashCode());
                         }
                     }
 
-                    if (count >= candidate.size()) {
+                    if (containedItemHashes.size() >= candidate.size()) {
                         transactions.put(entry.getKey(), transaction);
                     }
                 }
