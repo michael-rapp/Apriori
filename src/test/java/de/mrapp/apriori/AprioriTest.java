@@ -47,54 +47,6 @@ public class AprioriTest {
     }
 
     /**
-     * Tests, if all class members are set correctly by the constructor of the inner class {@link
-     * Configuration}, which expects a configuration as a parameter.
-     */
-    @Test
-    public final void testConfigurationConstructorWithConfigurationParameter() {
-        double minSupport = 0.3;
-        double maxSupport = 0.8;
-        double supportDelta = 0.2;
-        int frequentItemSetCount = 2;
-        boolean generateRules = true;
-        double minConfidence = 0.8;
-        double maxConfidence = 0.9;
-        double confidenceDelta = 0.2;
-        int ruleCount = 2;
-        Configuration configuration1 = new Configuration();
-        configuration1.setMinSupport(minSupport);
-        configuration1.setMaxSupport(maxSupport);
-        configuration1.setSupportDelta(supportDelta);
-        configuration1.setFrequentItemSetCount(frequentItemSetCount);
-        configuration1.setGenerateRules(generateRules);
-        configuration1.setMinConfidence(minConfidence);
-        configuration1.setMaxConfidence(maxConfidence);
-        configuration1.setConfidenceDelta(confidenceDelta);
-        configuration1.setRuleCount(ruleCount);
-        Configuration configuration2 = new Configuration(configuration1);
-        assertEquals(configuration1.getMinSupport(), configuration2.getMinSupport());
-        assertEquals(configuration1.getMaxSupport(), configuration2.getMaxSupport());
-        assertEquals(configuration1.getSupportDelta(), configuration2.getSupportDelta());
-        assertEquals(configuration1.getFrequentItemSetCount(),
-                configuration2.getFrequentItemSetCount());
-        assertEquals(configuration1.isGeneratingRules(), configuration2.isGeneratingRules());
-        assertEquals(configuration1.getMinConfidence(), configuration2.getMinConfidence());
-        assertEquals(configuration1.getMaxConfidence(), configuration2.getMaxConfidence());
-        assertEquals(configuration1.getConfidenceDelta(), configuration2.getConfidenceDelta());
-        assertEquals(configuration1.getRuleCount(), configuration2.getRuleCount());
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor of the inner
-     * class {@link Configuration}, which expects a configuration as a parameter, if the
-     * configuration is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testConfigurationConstructorWithConfigurationParameterThrowsException() {
-        new Configuration(null);
-    }
-
-    /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
      * set the minimum support, if the support is less than 0.
      */
@@ -206,6 +158,43 @@ public class AprioriTest {
     @Test(expected = IllegalArgumentException.class)
     public final void testSetRuleCountThrowsExceptionWhenCountIsLessThanZero() {
         new Configuration().setRuleCount(-1);
+    }
+
+    /**
+     * Tests the functionality of the clone-method.
+     */
+    @Test
+    public final void testClone() {
+        double minSupport = 0.3;
+        double maxSupport = 0.8;
+        double supportDelta = 0.2;
+        int frequentItemSetCount = 2;
+        boolean generateRules = true;
+        double minConfidence = 0.8;
+        double maxConfidence = 0.9;
+        double confidenceDelta = 0.2;
+        int ruleCount = 2;
+        Configuration configuration1 = new Configuration();
+        configuration1.setMinSupport(minSupport);
+        configuration1.setMaxSupport(maxSupport);
+        configuration1.setSupportDelta(supportDelta);
+        configuration1.setFrequentItemSetCount(frequentItemSetCount);
+        configuration1.setGenerateRules(generateRules);
+        configuration1.setMinConfidence(minConfidence);
+        configuration1.setMaxConfidence(maxConfidence);
+        configuration1.setConfidenceDelta(confidenceDelta);
+        configuration1.setRuleCount(ruleCount);
+        Configuration configuration2 = configuration1.clone();
+        assertEquals(configuration1.getMinSupport(), configuration2.getMinSupport());
+        assertEquals(configuration1.getMaxSupport(), configuration2.getMaxSupport());
+        assertEquals(configuration1.getSupportDelta(), configuration2.getSupportDelta());
+        assertEquals(configuration1.getFrequentItemSetCount(),
+                configuration2.getFrequentItemSetCount());
+        assertEquals(configuration1.isGeneratingRules(), configuration2.isGeneratingRules());
+        assertEquals(configuration1.getMinConfidence(), configuration2.getMinConfidence());
+        assertEquals(configuration1.getMaxConfidence(), configuration2.getMaxConfidence());
+        assertEquals(configuration1.getConfidenceDelta(), configuration2.getConfidenceDelta());
+        assertEquals(configuration1.getRuleCount(), configuration2.getRuleCount());
     }
 
     /**

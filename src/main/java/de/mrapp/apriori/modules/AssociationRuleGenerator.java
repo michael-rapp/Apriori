@@ -103,10 +103,9 @@ public class AssociationRuleGenerator<ItemType extends Item> {
                                @NotNull final ItemSet<ItemType> body,
                                @Nullable final ItemSet<ItemType> head) {
         for (ItemType item : body) {
-            ItemSet<ItemType> headItemSet =
-                    head != null ? new ItemSet<>(head) : new ItemSet<>();
+            ItemSet<ItemType> headItemSet = head != null ? head.clone() : new ItemSet<>();
             headItemSet.add(item);
-            ItemSet<ItemType> bodyItemSet = new ItemSet<>(body);
+            ItemSet<ItemType> bodyItemSet = body.clone();
             bodyItemSet.remove(item);
             bodyItemSet.setSupport(frequentItemSets.get(bodyItemSet.hashCode()).getSupport());
             headItemSet.setSupport(frequentItemSets.get(headItemSet.hashCode()).getSupport());

@@ -50,11 +50,32 @@ public class FrequentItemSetTreeSetTest {
     }
 
     /**
+     * Tests the functionality of the clone-method.
+     */
+    @Test
+    public final void testClone() {
+        FrequentItemSetTreeSet<NamedItem> frequentItemSets1 = new FrequentItemSetTreeSet<>(
+                Comparator.reverseOrder());
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        itemSet1.add(new NamedItem("a"));
+        itemSet1.setSupport(0.5);
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
+        itemSet2.add(new NamedItem("b"));
+        itemSet2.setSupport(0.6);
+        frequentItemSets1.add(itemSet1);
+        frequentItemSets1.add(itemSet2);
+        FrequentItemSetTreeSet<NamedItem> frequentItemSets2 = frequentItemSets1.clone();
+        assertEquals(frequentItemSets1.size(), frequentItemSets2.size());
+        assertEquals(frequentItemSets1.first(), frequentItemSets2.first());
+        assertEquals(frequentItemSets1.last(), frequentItemSets2.last());
+    }
+
+    /**
      * Test the functionality of the toString-method.
      */
     @Test
     public final void testToString() {
-        SortedSet<ItemSet<NamedItem>> frequentItemSets = new FrequentItemSetTreeSet<>(
+        FrequentItemSetTreeSet<NamedItem> frequentItemSets = new FrequentItemSetTreeSet<>(
                 Comparator.reverseOrder());
         ItemSet<NamedItem> itemSet1 = new ItemSet<>();
         itemSet1.add(new NamedItem("a"));

@@ -172,6 +172,21 @@ public class ItemSetTest {
     }
 
     /**
+     * Tests the functionality of the clone-method.
+     */
+    @Test
+    public final void testClone() {
+        NamedItem item = new NamedItem("a");
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        itemSet1.setSupport(0.5);
+        itemSet1.add(item);
+        ItemSet<NamedItem> itemSet2 = itemSet1.clone();
+        assertEquals(itemSet1.getSupport(), itemSet2.getSupport(), 0);
+        assertEquals(itemSet1.size(), itemSet2.size());
+        assertEquals(item, itemSet2.first());
+    }
+
+    /**
      * Tests the functionality of the toString-method.
      */
     @Test

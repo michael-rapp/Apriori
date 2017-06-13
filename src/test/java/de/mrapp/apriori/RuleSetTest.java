@@ -235,6 +235,23 @@ public class RuleSetTest {
     }
 
     /**
+     * Tests the functionality of the clone-method.
+     */
+    @Test
+    public final void testClone() {
+        ItemSet<NamedItem> body = new ItemSet<>();
+        body.add(new NamedItem("a"));
+        ItemSet<NamedItem> head = new ItemSet<>();
+        head.add(new NamedItem("b"));
+        AssociationRule<NamedItem> associationRule = new AssociationRule<>(body, head, 0.5);
+        RuleSet<NamedItem> ruleSet1 = new RuleSet<>();
+        ruleSet1.add(associationRule);
+        RuleSet<NamedItem> ruleSet2 = ruleSet1.clone();
+        assertEquals(ruleSet1.size(), ruleSet2.size());
+        assertEquals(associationRule, ruleSet2.first());
+    }
+
+    /**
      * Tests the functionality of the toString-method.
      */
     @Test

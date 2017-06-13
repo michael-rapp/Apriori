@@ -82,6 +82,27 @@ public class AssociationRuleTest {
     }
 
     /**
+     * Tests the functionality of the clone-method.
+     */
+    @Test
+    public final void testClone() {
+        NamedItem item1 = new NamedItem("a");
+        NamedItem item2 = new NamedItem("b");
+        ItemSet<NamedItem> body = new ItemSet<>();
+        body.add(item1);
+        ItemSet<NamedItem> head = new ItemSet<>();
+        head.add(item2);
+        double support = 0.5;
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body, head, support);
+        AssociationRule<NamedItem> associationRule2 = associationRule1.clone();
+        assertEquals(body.size(), associationRule2.getBody().size());
+        assertEquals(item1, associationRule2.getBody().first());
+        assertEquals(head.size(), associationRule2.getHead().size());
+        assertEquals(item2, associationRule2.getHead().first());
+        assertEquals(support, associationRule2.getSupport(), 0);
+    }
+
+    /**
      * Tests the functionality of the toString-method.
      */
     @Test

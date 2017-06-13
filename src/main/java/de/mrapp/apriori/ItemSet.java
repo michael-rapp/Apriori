@@ -31,7 +31,7 @@ import static de.mrapp.util.Condition.*;
  * @since 1.0.0
  */
 public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSet<ItemType>>,
-        Serializable {
+        Serializable, Cloneable {
 
     /**
      * The constant serial version UID.
@@ -196,6 +196,11 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSe
     @Override
     public final int compareTo(@NotNull final ItemSet<ItemType> o) {
         return support > o.getSupport() ? 1 : (support < o.getSupport() ? -1 : 0);
+    }
+
+    @Override
+    public final ItemSet<ItemType> clone()  {
+        return new ItemSet<>(this);
     }
 
     @Override

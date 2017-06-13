@@ -31,7 +31,8 @@ import java.util.TreeSet;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class FrequentItemSetTreeSet<ItemType extends Item> extends TreeSet<ItemSet<ItemType>> {
+public class FrequentItemSetTreeSet<ItemType extends Item> extends
+        TreeSet<ItemSet<ItemType>> implements Cloneable {
 
     /**
      * Creates a new tree set, which contains frequent item sets.
@@ -80,6 +81,14 @@ public class FrequentItemSetTreeSet<ItemType extends Item> extends TreeSet<ItemS
 
         stringBuilder.append("]");
         return stringBuilder.toString();
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public FrequentItemSetTreeSet<ItemType> clone() {
+        FrequentItemSetTreeSet<ItemType> clone = new FrequentItemSetTreeSet<>(comparator());
+        clone.addAll(this);
+        return clone;
     }
 
     @Override

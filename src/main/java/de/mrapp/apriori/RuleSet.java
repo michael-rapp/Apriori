@@ -35,7 +35,7 @@ import static de.mrapp.util.Condition.ensureNotNull;
  * @since 1.0.0
  */
 public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule<ItemType>>,
-        Serializable {
+        Serializable, Cloneable {
 
     /**
      * The constant serial version UID.
@@ -220,6 +220,14 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     @Override
     public final void clear() {
         rules.clear();
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public final RuleSet<ItemType> clone() {
+        SortedSet<AssociationRule<ItemType>> clonedRules = new TreeSet<>(rules.comparator());
+        clonedRules.addAll(rules);
+        return new RuleSet<>(clonedRules);
     }
 
     @Override

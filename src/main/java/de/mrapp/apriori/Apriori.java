@@ -24,7 +24,6 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.SortedSet;
 
 import static de.mrapp.util.Condition.*;
 
@@ -42,7 +41,7 @@ public class Apriori<ItemType extends Item> {
     /**
      * An configuration of the Apriori algorithm.
      */
-    public static class Configuration implements Serializable {
+    public static class Configuration implements Serializable, Cloneable {
 
         /**
          * The constant serial version UID.
@@ -112,25 +111,6 @@ public class Apriori<ItemType extends Item> {
             setMaxConfidence(1);
             setConfidenceDelta(0.1);
             setRuleCount(0);
-        }
-
-        /**
-         * Creates a new configuration of the Apriori algorithm by copying an existing one.
-         *
-         * @param configuration The configuration, which should be copied, as an instance of the
-         *                      class {@link Configuration}. The configuration may not be null
-         */
-        protected Configuration(@NotNull final Configuration configuration) {
-            ensureNotNull(configuration, "The configuration may not be null");
-            minSupport = configuration.minSupport;
-            maxSupport = configuration.maxSupport;
-            supportDelta = configuration.supportDelta;
-            frequentItemSetCount = configuration.frequentItemSetCount;
-            generateRules = configuration.generateRules;
-            minConfidence = configuration.minConfidence;
-            maxConfidence = configuration.maxConfidence;
-            confidenceDelta = configuration.confidenceDelta;
-            ruleCount = configuration.ruleCount;
         }
 
         /**
@@ -341,6 +321,22 @@ public class Apriori<ItemType extends Item> {
             this.ruleCount = ruleCount;
         }
 
+        @SuppressWarnings("MethodDoesntCallSuperMethod")
+        @Override
+        public final Configuration clone() {
+            Configuration clone = new Configuration();
+            clone.minSupport = minSupport;
+            clone.maxSupport = maxSupport;
+            clone.supportDelta = supportDelta;
+            clone.frequentItemSetCount = frequentItemSetCount;
+            clone.generateRules = generateRules;
+            clone.minConfidence = minConfidence;
+            clone.maxConfidence = maxConfidence;
+            clone.confidenceDelta = confidenceDelta;
+            clone.ruleCount = ruleCount;
+            return clone;
+        }
+
         @Override
         public final String toString() {
             return "[minSupport=" + minSupport + ", maxSupport=" + maxSupport +
@@ -440,7 +436,7 @@ public class Apriori<ItemType extends Item> {
          */
         private AbstractBuilder(@NotNull final AbstractBuilder<ItemType> builder) {
             ensureNotNull(builder, "The builder may not be null");
-            configuration = new Configuration(builder.configuration);
+            configuration = builder.configuration.clone();
         }
 
         /**
@@ -805,7 +801,7 @@ public class Apriori<ItemType extends Item> {
             ruleSet = associationRuleGeneratorTask.generateAssociationRules(frequentItemSets);
         }
 
-        SortedSet<ItemSet<ItemType>> sortedItemSets = new FrequentItemSetTreeSet<>(
+        FrequentItemSetTreeSet<ItemType> sortedItemSets = new FrequentItemSetTreeSet<>(
                 Comparator.reverseOrder());
         sortedItemSets.addAll(frequentItemSets.values());
         long endTime = System.currentTimeMillis();

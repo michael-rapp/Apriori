@@ -14,10 +14,8 @@
 package de.mrapp.apriori;
 
 import de.mrapp.apriori.Apriori.Configuration;
+import de.mrapp.apriori.datastructure.FrequentItemSetTreeSet;
 import org.junit.Test;
-
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import static org.junit.Assert.*;
 
@@ -36,7 +34,7 @@ public class OutputTest {
         Configuration configuration = new Configuration();
         long startTime = 0;
         long endTime = 2;
-        SortedSet<ItemSet<NamedItem>> frequentItemSets = new TreeSet<>();
+        FrequentItemSetTreeSet<NamedItem> frequentItemSets = new FrequentItemSetTreeSet<>(null);
         frequentItemSets.add(new ItemSet<>());
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
@@ -57,7 +55,7 @@ public class OutputTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenConfigurationIsNull() {
-        new Output<>(null, 0, 1, new TreeSet<>(), null);
+        new Output<>(null, 0, 1, new FrequentItemSetTreeSet<>(null), null);
     }
 
     /**
@@ -66,7 +64,7 @@ public class OutputTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenStartTimeIsLessThanZero() {
-        new Output<>(new Configuration(), -1, 0, new TreeSet<>(), null);
+        new Output<>(new Configuration(), -1, 0, new FrequentItemSetTreeSet<>(null), null);
     }
 
     /**
@@ -75,7 +73,7 @@ public class OutputTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenEndTimeIsLessThanStartTime() {
-        new Output<>(new Configuration(), 1, 0, new TreeSet<>(), null);
+        new Output<>(new Configuration(), 1, 0, new FrequentItemSetTreeSet<>(null), null);
     }
 
     /**
@@ -88,6 +86,25 @@ public class OutputTest {
     }
 
     /**
+     * Tests the functionality of the clone-method.
+     */
+    @Test
+    public final void testClone() {
+        Configuration configuration = new Configuration();
+        long startTime = 0;
+        long endTime = 2;
+        FrequentItemSetTreeSet<NamedItem> frequentItemSets = new FrequentItemSetTreeSet<>(null);
+        frequentItemSets.add(new ItemSet<>());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
+        Output<NamedItem> output1 = new Output<>(configuration, startTime, endTime,
+                frequentItemSets,
+                ruleSet);
+        Output<NamedItem> output2 = output1.clone();
+        assertEquals(output1, output2);
+    }
+
+    /**
      * Tests the functionality of the toString-method.
      */
     @Test
@@ -95,7 +112,7 @@ public class OutputTest {
         Configuration configuration = new Configuration();
         long startTime = 0;
         long endTime = 2;
-        SortedSet<ItemSet<NamedItem>> frequentItemSets = new TreeSet<>();
+        FrequentItemSetTreeSet<NamedItem> frequentItemSets = new FrequentItemSetTreeSet<>(null);
         frequentItemSets.add(new ItemSet<>());
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
@@ -112,27 +129,31 @@ public class OutputTest {
      */
     @Test
     public final void testHashCode() {
-        Output<NamedItem> output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), null);
-        Output<NamedItem> output2 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), null);
+        Output<NamedItem> output1 = new Output<>(new Configuration(), 0, 2,
+                new FrequentItemSetTreeSet<>(null), null);
+        Output<NamedItem> output2 = new Output<>(new Configuration(), 0, 2,
+                new FrequentItemSetTreeSet<>(null), null);
         assertEquals(output1.hashCode(), output1.hashCode());
         assertEquals(output1.hashCode(), output2.hashCode());
         Configuration configuration = new Configuration();
         configuration.setMinSupport(0.2);
-        output1 = new Output<>(configuration, 0, 2, new TreeSet<>(), null);
+        output1 = new Output<>(configuration, 0, 2, new FrequentItemSetTreeSet<>(null), null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        output1 = new Output<>(new Configuration(), 1, 2, new TreeSet<>(), null);
+        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSetTreeSet<>(null), null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        output1 = new Output<>(new Configuration(), 0, 1, new TreeSet<>(), null);
+        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSetTreeSet<>(null), null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        SortedSet<ItemSet<NamedItem>> frequentItemSets = new TreeSet<>();
+        FrequentItemSetTreeSet<NamedItem> frequentItemSets = new FrequentItemSetTreeSet<>(null);
         frequentItemSets.add(new ItemSet<>());
         output1 = new Output<>(new Configuration(), 0, 2, frequentItemSets, null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), new RuleSet<>());
+        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetTreeSet<>(null),
+                new RuleSet<>());
         assertNotSame(output1.hashCode(), output2.hashCode());
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
-        output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), ruleSet);
+        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetTreeSet<>(null),
+                ruleSet);
         assertNotSame(output1.hashCode(), output2.hashCode());
     }
 
@@ -141,29 +162,33 @@ public class OutputTest {
      */
     @Test
     public final void testEquals() {
-        Output<NamedItem> output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), null);
-        Output<NamedItem> output2 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), null);
+        Output<NamedItem> output1 = new Output<>(new Configuration(), 0, 2,
+                new FrequentItemSetTreeSet<>(null), null);
+        Output<NamedItem> output2 = new Output<>(new Configuration(), 0, 2,
+                new FrequentItemSetTreeSet<>(null), null);
         assertFalse(output1.equals(null));
         assertFalse(output1.equals(new Object()));
         assertTrue(output1.equals(output1));
         assertTrue(output1.equals(output2));
         Configuration configuration = new Configuration();
         configuration.setMinSupport(0.2);
-        output1 = new Output<>(configuration, 0, 2, new TreeSet<>(), null);
+        output1 = new Output<>(configuration, 0, 2, new FrequentItemSetTreeSet<>(null), null);
         assertFalse(output1.equals(output2));
-        output1 = new Output<>(new Configuration(), 1, 2, new TreeSet<>(), null);
+        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSetTreeSet<>(null), null);
         assertFalse(output1.equals(output2));
-        output1 = new Output<>(new Configuration(), 0, 1, new TreeSet<>(), null);
+        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSetTreeSet<>(null), null);
         assertFalse(output1.equals(output2));
-        SortedSet<ItemSet<NamedItem>> frequentItemSets = new TreeSet<>();
+        FrequentItemSetTreeSet<NamedItem> frequentItemSets = new FrequentItemSetTreeSet<>(null);
         frequentItemSets.add(new ItemSet<>());
         output1 = new Output<>(new Configuration(), 0, 2, frequentItemSets, null);
         assertFalse(output1.equals(output2));
-        output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), new RuleSet<>());
+        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetTreeSet<>(null),
+                new RuleSet<>());
         assertFalse(output1.equals(output2));
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
-        output1 = new Output<>(new Configuration(), 0, 2, new TreeSet<>(), ruleSet);
+        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetTreeSet<>(null),
+                ruleSet);
         assertFalse(output1.equals(output2));
     }
 
