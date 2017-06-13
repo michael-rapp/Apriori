@@ -50,13 +50,13 @@ public class FrequentItemSetMiner<ItemType extends Item> {
      *
      * @param <T> The type of the items, which are contained by the item set
      */
-    private class InternalItemSet<T extends Item> extends ItemSet<T> {
+    public static class InternalItemSet<T extends Item> extends ItemSet<T> {
 
         /**
          * A map, which contains the transactions, the item set occurs in. The transactions are
          * mapped to unique ids.
          */
-        private Map<Integer, Transaction<ItemType>> transactions;
+        private Map<Integer, Transaction<T>> transactions;
 
         /**
          * Creates an empty item set.
@@ -288,11 +288,11 @@ public class FrequentItemSetMiner<ItemType extends Item> {
      * corresponding keys
      */
     @NotNull
-    public final Map<Integer, ItemSet<ItemType>> findFrequentItemSets(
+    public final Map<Integer, InternalItemSet<ItemType>> findFrequentItemSets(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
         ensureNotNull(iterator, "The iterator may not be null");
         LOGGER.debug("Searching for frequent item sets");
-        Map<Integer, ItemSet<ItemType>> frequentItemSets = new HashMap<>();
+        Map<Integer, InternalItemSet<ItemType>> frequentItemSets = new HashMap<>();
         int k = 1;
         Pair<Collection<InternalItemSet<ItemType>>, Integer> pair = generateInitialItemSets(
                 iterator);

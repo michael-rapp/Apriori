@@ -15,9 +15,9 @@ package de.mrapp.apriori.tasks;
 
 import de.mrapp.apriori.Apriori.Configuration;
 import de.mrapp.apriori.Item;
-import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.RuleSet;
 import de.mrapp.apriori.modules.AssociationRuleGenerator;
+import de.mrapp.apriori.modules.FrequentItemSetMiner.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -54,7 +54,7 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends Abstrac
      */
     @NotNull
     public final RuleSet<ItemType> generateAssociationRules(
-            @NotNull final Map<Integer, ItemSet<ItemType>> frequentItemSets) {
+            @NotNull final Map<Integer, InternalItemSet<ItemType>> frequentItemSets) {
         AssociationRuleGenerator<ItemType> associationRuleGenerator;
 
         if (getConfiguration().getRuleCount() > 0) {

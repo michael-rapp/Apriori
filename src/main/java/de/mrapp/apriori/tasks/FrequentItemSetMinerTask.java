@@ -18,6 +18,7 @@ import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.Transaction;
 import de.mrapp.apriori.modules.FrequentItemSetMiner;
+import de.mrapp.apriori.modules.FrequentItemSetMiner.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -55,18 +56,18 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
      * corresponding keys
      */
     @NotNull
-    public final Map<Integer, ItemSet<ItemType>> findFrequentItemSets(
+    public final Map<Integer, InternalItemSet<ItemType>> findFrequentItemSets(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
         FrequentItemSetMiner<ItemType> frequentItemSetMiner;
 
         if (getConfiguration().getFrequentItemSetCount() > 0) {
-            Map<Integer, ItemSet<ItemType>> result = new HashMap<>();
+            Map<Integer, InternalItemSet<ItemType>> result = new HashMap<>();
             double currentMinSupport = getConfiguration().getMaxSupport();
 
             while (currentMinSupport >= getConfiguration().getMinSupport() &&
                     result.size() < getConfiguration().getFrequentItemSetCount()) {
                 frequentItemSetMiner = new FrequentItemSetMiner<>(currentMinSupport);
-                Map<Integer, ItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
+                Map<Integer, InternalItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
                         .findFrequentItemSets(iterator);
 
                 if (frequentItemSets.size() >= result.size()) {

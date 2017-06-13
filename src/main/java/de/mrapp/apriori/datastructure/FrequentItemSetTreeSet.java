@@ -59,12 +59,12 @@ public class FrequentItemSetTreeSet<ItemType extends Item> extends
      */
     @NotNull
     public static <T> String formatFrequentItemSets(
-            @NotNull final Collection<ItemSet<T>> frequentItemSets) {
+            @NotNull final Collection<? extends ItemSet<T>> frequentItemSets) {
         StringBuilder stringBuilder = new StringBuilder();
         DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.setMinimumFractionDigits(1);
         decimalFormat.setMaximumFractionDigits(2);
-        Iterator<ItemSet<T>> iterator = frequentItemSets.iterator();
+        Iterator<? extends ItemSet<T>> iterator = frequentItemSets.iterator();
         stringBuilder.append("[");
 
         while (iterator.hasNext()) {
