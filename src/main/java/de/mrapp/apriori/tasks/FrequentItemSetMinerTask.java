@@ -18,7 +18,8 @@ import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.Transaction;
 import de.mrapp.apriori.modules.FrequentItemSetMiner;
-import de.mrapp.apriori.modules.FrequentItemSetMiner.InternalItemSet;
+import de.mrapp.apriori.modules.FrequentItemSetMinerModule;
+import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -32,7 +33,9 @@ import java.util.Map;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTask<ItemType> {
+public class FrequentItemSetMinerTask<ItemType extends Item> extends
+        AbstractTask<ItemType> implements
+        FrequentItemSetMiner<ItemType> {
 
     /**
      * Creates a new task, which tries to find a specific number of frequent item sets.
@@ -66,7 +69,7 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
 
             while (currentMinSupport >= getConfiguration().getMinSupport() &&
                     result.size() < getConfiguration().getFrequentItemSetCount()) {
-                frequentItemSetMiner = new FrequentItemSetMiner<>(currentMinSupport);
+                frequentItemSetMiner = new FrequentItemSetMinerModule<>(currentMinSupport);
                 Map<Integer, InternalItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
                         .findFrequentItemSets(iterator);
 
@@ -79,7 +82,8 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
 
             return result;
         } else {
-            frequentItemSetMiner = new FrequentItemSetMiner<>(getConfiguration().getMinSupport());
+            frequentItemSetMiner = new FrequentItemSetMinerModule<>(
+                    getConfiguration().getMinSupport());
             return frequentItemSetMiner.findFrequentItemSets(iterator);
         }
     }

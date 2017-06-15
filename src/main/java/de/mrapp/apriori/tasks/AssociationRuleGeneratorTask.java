@@ -17,7 +17,8 @@ import de.mrapp.apriori.Apriori.Configuration;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.RuleSet;
 import de.mrapp.apriori.modules.AssociationRuleGenerator;
-import de.mrapp.apriori.modules.FrequentItemSetMiner.InternalItemSet;
+import de.mrapp.apriori.modules.AssociationRuleGeneratorModule;
+import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -29,7 +30,9 @@ import java.util.Map;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class AssociationRuleGeneratorTask<ItemType extends Item> extends AbstractTask<ItemType> {
+public class AssociationRuleGeneratorTask<ItemType extends Item> extends
+        AbstractTask<ItemType> implements
+        AssociationRuleGenerator<ItemType> {
 
     /**
      * Creates a new task, which tries to generate a specific number of association rules.
@@ -41,18 +44,8 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends Abstrac
         super(configuration);
     }
 
-    /**
-     * Tries to generate a specific number of association rules from frequent item sets.
-     *
-     * @param frequentItemSets A map, which contains all available frequent item sets, as an
-     *                         instance of the type {@link Map} or an empty map, if no frequent item
-     *                         sets are available. The map must store the frequent item sets as
-     *                         values and their hash codes as the corresponding keys
-     * @return A rule set, which contains the association rules, which have been generated, as an
-     * instance of the class {@link RuleSet} or an empty rule set, if no association rules have been
-     * generated
-     */
     @NotNull
+    @Override
     public final RuleSet<ItemType> generateAssociationRules(
             @NotNull final Map<Integer, InternalItemSet<ItemType>> frequentItemSets) {
         AssociationRuleGenerator<ItemType> associationRuleGenerator;
@@ -63,7 +56,8 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends Abstrac
 
             while (currentMinConfidence >= getConfiguration().getMinConfidence() &&
                     result.size() < getConfiguration().getFrequentItemSetCount()) {
-                associationRuleGenerator = new AssociationRuleGenerator<>(currentMinConfidence);
+                associationRuleGenerator = new AssociationRuleGeneratorModule<>(
+                        currentMinConfidence);
                 RuleSet<ItemType> ruleSet = associationRuleGenerator
                         .generateAssociationRules(frequentItemSets);
 
@@ -76,7 +70,7 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends Abstrac
 
             return result;
         } else {
-            associationRuleGenerator = new AssociationRuleGenerator<>(
+            associationRuleGenerator = new AssociationRuleGeneratorModule<>(
                     getConfiguration().getMinConfidence());
             return associationRuleGenerator.generateAssociationRules(frequentItemSets);
         }

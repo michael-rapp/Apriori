@@ -20,7 +20,7 @@ import de.mrapp.apriori.RuleSet;
 import de.mrapp.apriori.metrics.Confidence;
 import de.mrapp.apriori.metrics.Leverage;
 import de.mrapp.apriori.metrics.Lift;
-import de.mrapp.apriori.modules.FrequentItemSetMiner.InternalItemSet;
+import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -31,11 +31,11 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests the functionality of the class {@link AssociationRuleGenerator}.
+ * Tests the functionality of the class {@link AssociationRuleGeneratorModule}.
  *
  * @author Michael Rapp
  */
-public class AssociationRuleGeneratorTest extends AbstractDataTest {
+public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
 
     /**
      * The association rules, which result from the frequent item sets, which are contained by the
@@ -100,7 +100,7 @@ public class AssociationRuleGeneratorTest extends AbstractDataTest {
 
     /**
      * Creates and returns a map, which contains the frequent item sets as returned by the method
-     * {@link FrequentItemSetMiner#findFrequentItemSets(Iterator)}.
+     * {@link FrequentItemSetMinerModule#findFrequentItemSets(Iterator)}.
      *
      * @param frequentItemSets The frequent item sets, which should be added to the map, as a
      *                         two-dimensional {@link String} array. The array may not be null
@@ -167,7 +167,7 @@ public class AssociationRuleGeneratorTest extends AbstractDataTest {
                                               @NotNull final double[] actualConfidences,
                                               @NotNull final double[] actualLifts,
                                               @NotNull final double[] actualLeverages) {
-        AssociationRuleGenerator<NamedItem> associationRuleGenerator = new AssociationRuleGenerator<>(
+        AssociationRuleGeneratorModule<NamedItem> associationRuleGenerator = new AssociationRuleGeneratorModule<>(
                 minConfidence);
         Map<Integer, InternalItemSet<NamedItem>> map = createFrequentItemSets(
                 frequentItemSets, supports);
@@ -195,7 +195,7 @@ public class AssociationRuleGeneratorTest extends AbstractDataTest {
     @Test
     public final void testConstructor() {
         double minConfidence = 0.5;
-        AssociationRuleGenerator<NamedItem> associationRuleGenerator = new AssociationRuleGenerator<>(
+        AssociationRuleGeneratorModule<NamedItem> associationRuleGenerator = new AssociationRuleGeneratorModule<>(
                 minConfidence);
         assertEquals(minConfidence, associationRuleGenerator.getMinConfidence(), 0);
     }
@@ -206,7 +206,7 @@ public class AssociationRuleGeneratorTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenMinConfidenceIsLessThanZero() {
-        new AssociationRuleGenerator<>(-1);
+        new AssociationRuleGeneratorModule<>(-1);
     }
 
     /**
@@ -215,7 +215,7 @@ public class AssociationRuleGeneratorTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenMinConfidenceIsGreaterThanOne() {
-        new AssociationRuleGenerator<>(1.1);
+        new AssociationRuleGeneratorModule<>(1.1);
     }
 
     /**
@@ -244,7 +244,7 @@ public class AssociationRuleGeneratorTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testGenerateAssociationRulesThrowsExcpetion() {
-        new AssociationRuleGenerator<>(0.5).generateAssociationRules(null);
+        new AssociationRuleGeneratorModule<>(0.5).generateAssociationRules(null);
     }
 
 }

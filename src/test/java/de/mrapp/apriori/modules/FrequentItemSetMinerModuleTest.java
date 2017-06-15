@@ -17,7 +17,7 @@ import de.mrapp.apriori.AbstractDataTest;
 import de.mrapp.apriori.DataIterator;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.NamedItem;
-import de.mrapp.apriori.modules.FrequentItemSetMiner.InternalItemSet;
+import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -27,11 +27,11 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests the functionality of the class {@link FrequentItemSetMiner}.
+ * Tests the functionality of the class {@link FrequentItemSetMinerModule}.
  *
  * @author Michael Rapp
  */
-public class FrequentItemSetMinerTest extends AbstractDataTest {
+public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
 
     /**
      * Tests the functionality of the method, which allows to find frequent item sets, when using a
@@ -54,7 +54,7 @@ public class FrequentItemSetMinerTest extends AbstractDataTest {
                                           @NotNull double[] actualSupports) {
         File inputFile = getInputFile(fileName);
         DataIterator dataIterator = new DataIterator(inputFile);
-        FrequentItemSetMiner<NamedItem> frequentItemSetMiner = new FrequentItemSetMiner<>(
+        FrequentItemSetMinerModule<NamedItem> frequentItemSetMiner = new FrequentItemSetMinerModule<>(
                 minSupport);
         Map<Integer, InternalItemSet<NamedItem>> frequentItemSets = frequentItemSetMiner
                 .findFrequentItemSets(dataIterator);
@@ -84,7 +84,7 @@ public class FrequentItemSetMinerTest extends AbstractDataTest {
     @Test
     public final void testConstructor() {
         double minSupport = 0.5;
-        FrequentItemSetMiner<NamedItem> frequentItemSetMiner = new FrequentItemSetMiner<>(
+        FrequentItemSetMinerModule<NamedItem> frequentItemSetMiner = new FrequentItemSetMinerModule<>(
                 minSupport);
         assertEquals(minSupport, frequentItemSetMiner.getMinSupport(), 0);
     }
@@ -95,7 +95,7 @@ public class FrequentItemSetMinerTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenMinSupportIsLessThanZero() {
-        new FrequentItemSetMiner<>(-1);
+        new FrequentItemSetMinerModule<>(-1);
     }
 
     /**
@@ -104,7 +104,7 @@ public class FrequentItemSetMinerTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenMinSupportIsGreaterThanOne() {
-        new FrequentItemSetMiner<>(1.1);
+        new FrequentItemSetMinerModule<>(1.1);
     }
 
     /**
@@ -131,7 +131,7 @@ public class FrequentItemSetMinerTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testGenerateAssociationRulesThrowsExcpetion() {
-        new FrequentItemSetMiner<>(0.5).findFrequentItemSets(null);
+        new FrequentItemSetMinerModule<>(0.5).findFrequentItemSets(null);
     }
 
 }
