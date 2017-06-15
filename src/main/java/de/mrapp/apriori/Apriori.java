@@ -102,7 +102,7 @@ public class Apriori<ItemType extends Item> {
         /**
          * Creates a new configuration of the Apriori algorithm with default values.
          */
-        public Configuration() {
+        protected Configuration() {
             setMinSupport(0);
             setMaxSupport(1);
             setSupportDelta(0.1);
@@ -121,7 +121,7 @@ public class Apriori<ItemType extends Item> {
          * @return The minimum support, which must at least be reached by an item set to be
          * considered frequent, as a {@link Double} value
          */
-        public final double getMinSupport() {
+        public double getMinSupport() {
             return minSupport;
         }
 
@@ -132,7 +132,7 @@ public class Apriori<ItemType extends Item> {
          * @param minSupport The support, which should be set, as a {@link Double} value. The
          *                   support must at least be 0 and at maximum the maximum support
          */
-        protected final void setMinSupport(final double minSupport) {
+        protected void setMinSupport(final double minSupport) {
             ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
             ensureAtMaximum(minSupport, maxSupport,
                     "The minimum support must be at maximum " + maxSupport);
@@ -146,7 +146,7 @@ public class Apriori<ItemType extends Item> {
          * @return The minimum support, which should initially be used, when trying to find a
          * specific number of frequent item sets, as a {@link Double} value
          */
-        public final double getMaxSupport() {
+        public double getMaxSupport() {
             return maxSupport;
         }
 
@@ -157,7 +157,7 @@ public class Apriori<ItemType extends Item> {
          * @param maxSupport The support, which should be set, as a {@link Double} value. The
          *                   support must be at least the minimum support
          */
-        protected final void setMaxSupport(final double maxSupport) {
+        protected void setMaxSupport(final double maxSupport) {
             ensureAtMaximum(maxSupport, 1, "The maximum support must be at maximum 1");
             ensureAtLeast(maxSupport, minSupport, "The maximum support must be at least" +
                     minSupport);
@@ -171,7 +171,7 @@ public class Apriori<ItemType extends Item> {
          * @return The value, the minimum support should be decreased by after each iteration, when
          * trying to find a specific number of frequent item sets, as a {@link Double} value
          */
-        public final double getSupportDelta() {
+        public double getSupportDelta() {
             return supportDelta;
         }
 
@@ -182,7 +182,7 @@ public class Apriori<ItemType extends Item> {
          * @param supportDelta The value, which should be set, as a {@link Double} value. The value
          *                     must be greater than 0
          */
-        protected final void setSupportDelta(final double supportDelta) {
+        protected void setSupportDelta(final double supportDelta) {
             ensureGreater(supportDelta, 0, "The support delta must be greater than 0");
             this.supportDelta = supportDelta;
         }
@@ -193,7 +193,7 @@ public class Apriori<ItemType extends Item> {
          * @return The number of frequent item sets, the Apriori algorithm should try to find, as an
          * {@link Integer} value
          */
-        public final int getFrequentItemSetCount() {
+        public int getFrequentItemSetCount() {
             return frequentItemSetCount;
         }
 
@@ -204,7 +204,7 @@ public class Apriori<ItemType extends Item> {
          *                             {@link Integer} value or 0, if the Apriori algorithm should
          *                             not try to find a specific number of frequent item sets
          */
-        protected final void setFrequentItemSetCount(final int frequentItemSetCount) {
+        protected void setFrequentItemSetCount(final int frequentItemSetCount) {
             ensureAtLeast(frequentItemSetCount, 0,
                     "The number of frequent item sets must be at least 0");
             this.frequentItemSetCount = frequentItemSetCount;
@@ -215,7 +215,7 @@ public class Apriori<ItemType extends Item> {
          *
          * @return True, if association rules should be generated, false otherwise
          */
-        public final boolean isGeneratingRules() {
+        public boolean isGeneratingRules() {
             return generateRules;
         }
 
@@ -224,7 +224,7 @@ public class Apriori<ItemType extends Item> {
          *
          * @param generateRules True, if association rules should be generated, false otherwise
          */
-        protected final void setGenerateRules(final boolean generateRules) {
+        protected void setGenerateRules(final boolean generateRules) {
             this.generateRules = generateRules;
         }
 
@@ -234,7 +234,7 @@ public class Apriori<ItemType extends Item> {
          * @return The minimum confidence, which must at least be reached by association rules, as a
          * {@link Double} value
          */
-        public final double getMinConfidence() {
+        public double getMinConfidence() {
             return minConfidence;
         }
 
@@ -244,7 +244,7 @@ public class Apriori<ItemType extends Item> {
          * @param minConfidence The confidence, which should be set, as a {@link Double} value. The
          *                      confidence must be at least 0 and at maximum the maximum confidence
          */
-        protected final void setMinConfidence(final double minConfidence) {
+        protected void setMinConfidence(final double minConfidence) {
             ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
             ensureAtMaximum(minConfidence, maxConfidence,
                     "The minimum confidence must be at maximum " + maxConfidence);
@@ -258,7 +258,7 @@ public class Apriori<ItemType extends Item> {
          * @return The minimum confidence, which should initially be used, when trying to generate a
          * specific number of association rules, as a {@link Double} value
          */
-        public final double getMaxConfidence() {
+        public double getMaxConfidence() {
             return maxConfidence;
         }
 
@@ -269,7 +269,7 @@ public class Apriori<ItemType extends Item> {
          * @param maxConfidence The confidence, which should be set, as a {@link Double} value. The
          *                      confidence must be at least 0 and at maximum 1
          */
-        protected final void setMaxConfidence(final double maxConfidence) {
+        protected void setMaxConfidence(final double maxConfidence) {
             ensureAtMaximum(maxConfidence, 1, "The max confidence must be at maximum 1");
             ensureAtLeast(maxConfidence, minConfidence,
                     "The max confidence must be at least " + minConfidence);
@@ -284,7 +284,7 @@ public class Apriori<ItemType extends Item> {
          * when trying to generate a specific number of association rules, as a {@link Double}
          * value
          */
-        public final double getConfidenceDelta() {
+        public double getConfidenceDelta() {
             return confidenceDelta;
         }
 
@@ -295,7 +295,7 @@ public class Apriori<ItemType extends Item> {
          * @param confidenceDelta The value, which should be set, as a {@link Double} value. The
          *                        value must be greater than 0
          */
-        protected final void setConfidenceDelta(final double confidenceDelta) {
+        protected void setConfidenceDelta(final double confidenceDelta) {
             ensureGreater(confidenceDelta, 0, "The confidence delta must be greater than 0");
             this.confidenceDelta = confidenceDelta;
         }
@@ -306,7 +306,7 @@ public class Apriori<ItemType extends Item> {
          * @return The number of association rules, the Apriori algorithm should try to generate, as
          * an {@link Integer} value
          */
-        public final int getRuleCount() {
+        public int getRuleCount() {
             return ruleCount;
         }
 
@@ -317,7 +317,7 @@ public class Apriori<ItemType extends Item> {
          *                  Integer} value or 0, if the Apriori algorithm should not try to generate
          *                  a specific number of association rules
          */
-        protected final void setRuleCount(final int ruleCount) {
+        protected void setRuleCount(final int ruleCount) {
             ensureAtLeast(ruleCount, 0, "The rule count must be at least 0");
             this.ruleCount = ruleCount;
         }

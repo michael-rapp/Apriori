@@ -86,7 +86,7 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends
             double currentMinConfidence = getConfiguration().getMaxConfidence();
 
             while (currentMinConfidence >= getConfiguration().getMinConfidence() &&
-                    result.size() < getConfiguration().getFrequentItemSetCount()) {
+                    result.size() < getConfiguration().getRuleCount()) {
                 RuleSet<ItemType> ruleSet = associationRuleGenerator
                         .generateAssociationRules(frequentItemSets, currentMinConfidence);
 
@@ -94,7 +94,7 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends
                     result = ruleSet;
                 }
 
-                currentMinConfidence -= getConfiguration().getSupportDelta();
+                currentMinConfidence -= getConfiguration().getConfidenceDelta();
             }
 
             return result;
