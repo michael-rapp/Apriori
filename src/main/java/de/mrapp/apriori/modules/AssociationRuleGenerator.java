@@ -14,8 +14,8 @@
 package de.mrapp.apriori.modules;
 
 import de.mrapp.apriori.Item;
+import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.RuleSet;
-import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -42,6 +42,6 @@ public interface AssociationRuleGenerator<ItemType extends Item> {
      */
     @NotNull
     RuleSet<ItemType> generateAssociationRules(
-            @NotNull Map<Integer, InternalItemSet<ItemType>> frequentItemSets);
+            @NotNull Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets);
 
 }

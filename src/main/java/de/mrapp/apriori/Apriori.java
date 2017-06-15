@@ -14,9 +14,9 @@
 package de.mrapp.apriori;
 
 import de.mrapp.apriori.datastructure.FrequentItemSetTreeSet;
+import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import de.mrapp.apriori.modules.AssociationRuleGenerator;
 import de.mrapp.apriori.modules.FrequentItemSetMiner;
-import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
 import de.mrapp.apriori.tasks.AssociationRuleGeneratorTask;
 import de.mrapp.apriori.tasks.FrequentItemSetMinerTask;
 import org.jetbrains.annotations.NotNull;
@@ -794,7 +794,7 @@ public class Apriori<ItemType extends Item> {
         long startTime = System.currentTimeMillis();
         FrequentItemSetMiner<ItemType> frequentItemSetMiner = new FrequentItemSetMinerTask<>(
                 configuration);
-        Map<Integer, InternalItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
+        Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
                 .findFrequentItemSets(iterator);
         RuleSet<ItemType> ruleSet = null;
 

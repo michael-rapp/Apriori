@@ -14,9 +14,9 @@
 package de.mrapp.apriori.modules;
 
 import de.mrapp.apriori.Item;
-import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.Transaction;
 import de.mrapp.apriori.datastructure.FrequentItemSetTreeSet;
+import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import de.mrapp.util.datastructure.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -46,41 +46,6 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
         FrequentItemSetMiner<ItemType> {
 
     /**
-     * An extension of the class {@link ItemSet}, which allows to store the transactions, the item
-     * set occurs in.
-     *
-     * @param <T> The type of the items, which are contained by the item set
-     */
-    public static class InternalItemSet<T extends Item> extends ItemSet<T> {
-
-        /**
-         * A map, which contains the transactions, the item set occurs in. The transactions are
-         * mapped to unique ids.
-         */
-        private Map<Integer, Transaction<T>> transactions;
-
-        /**
-         * Creates an empty item set.
-         */
-        InternalItemSet() {
-            super();
-            this.transactions = new HashMap<>();
-        }
-
-        /**
-         * Creates a new item set by copying another item set.
-         *
-         * @param itemSet The item set, which should be copied, as an instance of the class {@link
-         *                InternalItemSet}. The item set may not be null
-         */
-        InternalItemSet(@NotNull final InternalItemSet<T> itemSet) {
-            super(itemSet);
-            this.transactions = new HashMap<>(itemSet.transactions);
-        }
-
-    }
-
-    /**
      * The SLF4J logger, which is used by the module.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(FrequentItemSetMinerModule.class);
@@ -101,23 +66,23 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
      * may not be null
      */
     @NotNull
-    private Pair<Collection<InternalItemSet<ItemType>>, Integer> generateInitialItemSets(
+    private Pair<Collection<TransactionalItemSet<ItemType>>, Integer> generateInitialItemSets(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
-        Map<Integer, InternalItemSet<ItemType>> itemSets = new HashMap<>();
+        Map<Integer, TransactionalItemSet<ItemType>> itemSets = new HashMap<>();
         int transactionCount = 0;
         Transaction<ItemType> transaction;
 
         while ((transaction = iterator.next()) != null) {
             for (ItemType item : transaction) {
-                InternalItemSet<ItemType> itemSet = new InternalItemSet<>();
+                TransactionalItemSet<ItemType> itemSet = new TransactionalItemSet<>();
                 itemSet.add(item);
-                InternalItemSet<ItemType> previous = itemSets
+                TransactionalItemSet<ItemType> previous = itemSets
                         .putIfAbsent(itemSet.hashCode(), itemSet);
 
                 if (previous != null) {
-                    previous.transactions.put(transactionCount, transaction);
+                    previous.getTransactions().put(transactionCount, transaction);
                 } else {
-                    itemSet.transactions.put(transactionCount, transaction);
+                    itemSet.getTransactions().put(transactionCount, transaction);
                 }
             }
 
@@ -142,14 +107,15 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
      * {@link List} or an empty list, if no item sets are frequent
      */
     @NotNull
-    private List<InternalItemSet<ItemType>> filterFrequentItemSets(
-            @NotNull final Collection<InternalItemSet<ItemType>> itemSets,
+    private List<TransactionalItemSet<ItemType>> filterFrequentItemSets(
+            @NotNull final Collection<TransactionalItemSet<ItemType>> itemSets,
             final int transactionCount, final int k) {
-        List<InternalItemSet<ItemType>> frequentCandidates = new ArrayList<>(itemSets.size());
+        List<TransactionalItemSet<ItemType>> frequentCandidates = new ArrayList<>(itemSets.size());
 
-        for (InternalItemSet<ItemType> candidate : itemSets) {
+        for (TransactionalItemSet<ItemType> candidate : itemSets) {
             if (k > 1) {
-                Set<Map.Entry<Integer, Transaction<ItemType>>> transactionSet = candidate.transactions
+                Set<Map.Entry<Integer, Transaction<ItemType>>> transactionSet = candidate
+                        .getTransactions()
                         .entrySet();
                 Map<Integer, Transaction<ItemType>> transactions = new HashMap<>(
                         transactionSet.size());
@@ -169,10 +135,10 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
                     }
                 }
 
-                candidate.transactions = transactions;
+                candidate.setTransactions(transactions);
             }
 
-            int occurrences = candidate.transactions.size();
+            int occurrences = candidate.getTransactions().size();
             double support = calculateSupport(transactionCount, occurrences);
             candidate.setSupport(support);
 
@@ -198,16 +164,16 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
      * of the type {@link Collection} or an empty collection, if no item sets have been created
      */
     @NotNull
-    private Collection<InternalItemSet<ItemType>> combineItemSets(
-            @NotNull final List<InternalItemSet<ItemType>> itemSets,
+    private Collection<TransactionalItemSet<ItemType>> combineItemSets(
+            @NotNull final List<TransactionalItemSet<ItemType>> itemSets,
             final int k) {
-        Set<InternalItemSet<ItemType>> combinedItemSets = new HashSet<>(
+        Set<TransactionalItemSet<ItemType>> combinedItemSets = new HashSet<>(
                 IntStream.range(1, itemSets.size()).reduce(0, (x, y) -> (x + y)), 1);
 
         for (int i = 0; i < itemSets.size(); i++) {
             for (int j = i + 1; j < itemSets.size(); j++) {
-                InternalItemSet<ItemType> itemSet1 = itemSets.get(i);
-                InternalItemSet<ItemType> itemSet2 = itemSets.get(j);
+                TransactionalItemSet<ItemType> itemSet1 = itemSets.get(i);
+                TransactionalItemSet<ItemType> itemSet2 = itemSets.get(j);
                 Iterator<ItemType> iterator1 = itemSet1.iterator();
                 Iterator<ItemType> iterator2 = itemSet2.iterator();
                 ItemType itemToAdd = null;
@@ -229,9 +195,10 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
                 }
 
                 if (itemToAdd != null) {
-                    InternalItemSet<ItemType> combinedItemSet = new InternalItemSet<>(itemSet1);
+                    TransactionalItemSet<ItemType> combinedItemSet = new TransactionalItemSet<>(
+                            itemSet1);
                     combinedItemSet.add(itemToAdd);
-                    combinedItemSet.transactions.putAll(itemSet2.transactions);
+                    combinedItemSet.getTransactions().putAll(itemSet2.getTransactions());
                     combinedItemSets.add(combinedItemSet);
                 }
             }
@@ -278,21 +245,22 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
 
     @NotNull
     @Override
-    public final Map<Integer, InternalItemSet<ItemType>> findFrequentItemSets(
+    public final Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
         ensureNotNull(iterator, "The iterator may not be null");
         LOGGER.debug("Searching for frequent item sets");
-        Map<Integer, InternalItemSet<ItemType>> frequentItemSets = new HashMap<>();
+        Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = new HashMap<>();
         int k = 1;
-        Pair<Collection<InternalItemSet<ItemType>>, Integer> pair = generateInitialItemSets(
+        Pair<Collection<TransactionalItemSet<ItemType>>, Integer> pair = generateInitialItemSets(
                 iterator);
-        Collection<InternalItemSet<ItemType>> candidates = pair.first;
+        Collection<TransactionalItemSet<ItemType>> candidates = pair.first;
         int transactionCount = pair.second;
 
         while (!candidates.isEmpty()) {
             LOGGER.trace("k = {}", k);
             LOGGER.trace("C_{} = {}", k, candidates);
-            List<InternalItemSet<ItemType>> frequentCandidates = filterFrequentItemSets(candidates,
+            List<TransactionalItemSet<ItemType>> frequentCandidates = filterFrequentItemSets(
+                    candidates,
                     transactionCount,
                     k);
             LOGGER.trace("S_{} = {}", k, frequentCandidates);

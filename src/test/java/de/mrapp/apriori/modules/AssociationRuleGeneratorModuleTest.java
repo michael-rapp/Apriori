@@ -13,14 +13,10 @@
  */
 package de.mrapp.apriori.modules;
 
-import de.mrapp.apriori.AbstractDataTest;
-import de.mrapp.apriori.AssociationRule;
-import de.mrapp.apriori.NamedItem;
-import de.mrapp.apriori.RuleSet;
+import de.mrapp.apriori.*;
 import de.mrapp.apriori.metrics.Confidence;
 import de.mrapp.apriori.metrics.Leverage;
 import de.mrapp.apriori.metrics.Lift;
-import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -110,13 +106,13 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
      * not be null
      */
     @NotNull
-    private Map<Integer, InternalItemSet<NamedItem>> createFrequentItemSets(
+    private Map<Integer, ItemSet<NamedItem>> createFrequentItemSets(
             @NotNull final String[][] frequentItemSets, @NotNull final double[] supports) {
-        Map<Integer, InternalItemSet<NamedItem>> map = new HashMap<>();
+        Map<Integer, ItemSet<NamedItem>> map = new HashMap<>();
         int index = 0;
 
         for (String[] frequentItemSet : frequentItemSets) {
-            InternalItemSet<NamedItem> itemSet = new InternalItemSet<>();
+            ItemSet<NamedItem> itemSet = new ItemSet<>();
             double support = supports[index];
             itemSet.setSupport(support);
 
@@ -169,7 +165,7 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
                                               @NotNull final double[] actualLeverages) {
         AssociationRuleGeneratorModule<NamedItem> associationRuleGenerator = new AssociationRuleGeneratorModule<>(
                 minConfidence);
-        Map<Integer, InternalItemSet<NamedItem>> map = createFrequentItemSets(
+        Map<Integer, ItemSet<NamedItem>> map = createFrequentItemSets(
                 frequentItemSets, supports);
         RuleSet<NamedItem> ruleSet = associationRuleGenerator
                 .generateAssociationRules(map);

@@ -18,7 +18,6 @@ import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.RuleSet;
 import de.mrapp.apriori.metrics.Confidence;
-import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -75,7 +74,7 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
      *                         of the class {@link RuleSet}. The rule set may not be null
      */
     private void generateRules(@NotNull final ItemSet<ItemType> itemSet,
-                               @NotNull final Map<Integer, InternalItemSet<ItemType>> frequentItemSets,
+                               @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets,
                                @NotNull final RuleSet<ItemType> ruleSet) {
         generateRules(itemSet, frequentItemSets, ruleSet, itemSet, null);
     }
@@ -101,7 +100,7 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
      *                         empty head should be created
      */
     private void generateRules(@NotNull final ItemSet<ItemType> itemSet,
-                               @NotNull final Map<Integer, InternalItemSet<ItemType>> frequentItemSets,
+                               @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets,
                                @NotNull final RuleSet<ItemType> ruleSet,
                                @NotNull final ItemSet<ItemType> body,
                                @Nullable final ItemSet<ItemType> head) {
@@ -154,7 +153,7 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
     @NotNull
     @Override
     public final RuleSet<ItemType> generateAssociationRules(
-            @NotNull final Map<Integer, InternalItemSet<ItemType>> frequentItemSets) {
+            @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets) {
         ensureNotNull(frequentItemSets, "The frequent item sets may not be null");
         LOGGER.debug("Generating association rules");
         RuleSet<ItemType> ruleSet = new RuleSet<>();

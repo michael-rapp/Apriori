@@ -35,7 +35,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
      * An implementation of the interface {@link Transaction}. Each transaction corresponds to a
      * single line of a text file.
      */
-    private class TransactionImplementation implements Transaction<NamedItem> {
+    public static class TransactionImplementation implements Transaction<NamedItem> {
 
         /**
          * The line, the transaction corresponds to.
@@ -48,7 +48,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
          * @param line The line, the transaction corresponds to, as a {@link String}. The line may
          *             neither be null, nor empty
          */
-        TransactionImplementation(@NotNull final String line) {
+        public TransactionImplementation(@NotNull final String line) {
             ensureNotNull(line, "The line may not be null");
             ensureNotEmpty(line, "The line may not be empty");
             this.line = line;
@@ -66,7 +66,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
      * An iterator, which allows to iterate the items, which are contained by a single line of a
      * text file.
      */
-    private class LineIterator implements Iterator<NamedItem> {
+    private static class LineIterator implements Iterator<NamedItem> {
 
         /**
          * The tokenizer, which is used by the iterator.

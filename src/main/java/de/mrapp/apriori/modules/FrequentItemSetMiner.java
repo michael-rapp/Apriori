@@ -16,7 +16,7 @@ package de.mrapp.apriori.modules;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.Transaction;
-import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
+import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -43,7 +43,7 @@ public interface FrequentItemSetMiner<ItemType extends Item> {
      * corresponding keys
      */
     @NotNull
-    Map<Integer, InternalItemSet<ItemType>> findFrequentItemSets(
+    Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
             @NotNull Iterator<Transaction<ItemType>> iterator);
 
 }

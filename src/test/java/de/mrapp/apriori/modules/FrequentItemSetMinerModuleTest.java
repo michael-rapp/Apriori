@@ -17,7 +17,7 @@ import de.mrapp.apriori.AbstractDataTest;
 import de.mrapp.apriori.DataIterator;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.NamedItem;
-import de.mrapp.apriori.modules.FrequentItemSetMinerModule.InternalItemSet;
+import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -56,11 +56,12 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
         DataIterator dataIterator = new DataIterator(inputFile);
         FrequentItemSetMinerModule<NamedItem> frequentItemSetMiner = new FrequentItemSetMinerModule<>(
                 minSupport);
-        Map<Integer, InternalItemSet<NamedItem>> frequentItemSets = frequentItemSetMiner
+        Map<Integer, TransactionalItemSet<NamedItem>> frequentItemSets = frequentItemSetMiner
                 .findFrequentItemSets(dataIterator);
         int frequentItemSetCount = 0;
 
-        for (Map.Entry<Integer, InternalItemSet<NamedItem>> entry : frequentItemSets.entrySet()) {
+        for (Map.Entry<Integer, TransactionalItemSet<NamedItem>> entry : frequentItemSets
+                .entrySet()) {
             int key = entry.getKey();
             ItemSet<NamedItem> itemSet = entry.getValue();
             int index = 0;
