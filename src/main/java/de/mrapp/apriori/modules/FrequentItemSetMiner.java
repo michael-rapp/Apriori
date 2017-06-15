@@ -34,9 +34,12 @@ public interface FrequentItemSetMiner<ItemType extends Item> {
     /**
      * Searches for frequent item sets.
      *
-     * @param iterator An iterator, which allows to iterate the transactions of the data set, which
-     *                 should be processed by the algorithm, as an instance of the type {@link
-     *                 Iterator}. The iterator may not be null
+     * @param iterator   An iterator, which allows to iterate the transactions of the data set,
+     *                   which should be processed by the algorithm, as an instance of the type
+     *                   {@link Iterator}. The iterator may not be null
+     * @param minSupport The minimum support, which must at least be reached by an item set to be
+     *                   considered frequent, as a {@link Double} value. The support must be at
+     *                   least 0 and at maximum 1
      * @return A map, which contains the frequent item sets, which have been found, as an instance
      * of the type {@link Map} or an empty map, if no frequent item sets have been found. The map
      * stores instances of the class {@link ItemSet} as values and their hash codes as the
@@ -44,6 +47,6 @@ public interface FrequentItemSetMiner<ItemType extends Item> {
      */
     @NotNull
     Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
-            @NotNull Iterator<Transaction<ItemType>> iterator);
+            @NotNull Iterator<Transaction<ItemType>> iterator, double minSupport);
 
 }

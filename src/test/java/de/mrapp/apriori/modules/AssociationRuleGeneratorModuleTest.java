@@ -96,7 +96,7 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
 
     /**
      * Creates and returns a map, which contains the frequent item sets as returned by the method
-     * {@link FrequentItemSetMinerModule#findFrequentItemSets(Iterator)}.
+     * {@link FrequentItemSetMinerModule#findFrequentItemSets(Iterator, double)}.
      *
      * @param frequentItemSets The frequent item sets, which should be added to the map, as a
      *                         two-dimensional {@link String} array. The array may not be null
@@ -163,12 +163,11 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
                                               @NotNull final double[] actualConfidences,
                                               @NotNull final double[] actualLifts,
                                               @NotNull final double[] actualLeverages) {
-        AssociationRuleGeneratorModule<NamedItem> associationRuleGenerator = new AssociationRuleGeneratorModule<>(
-                minConfidence);
+        AssociationRuleGeneratorModule<NamedItem> associationRuleGenerator = new AssociationRuleGeneratorModule<>();
         Map<Integer, ItemSet<NamedItem>> map = createFrequentItemSets(
                 frequentItemSets, supports);
         RuleSet<NamedItem> ruleSet = associationRuleGenerator
-                .generateAssociationRules(map);
+                .generateAssociationRules(map, minConfidence);
         int ruleCount = 0;
         int index = 0;
 
@@ -183,35 +182,6 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
         }
 
         assertEquals(actualRules.length, ruleCount);
-    }
-
-    /**
-     * Tests, if all class members are set correctly by the constructor.
-     */
-    @Test
-    public final void testConstructor() {
-        double minConfidence = 0.5;
-        AssociationRuleGeneratorModule<NamedItem> associationRuleGenerator = new AssociationRuleGeneratorModule<>(
-                minConfidence);
-        assertEquals(minConfidence, associationRuleGenerator.getMinConfidence(), 0);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown, when the minimum confidence,
-     * which is passed as a constructor parameter, is less than 0.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorThrowsExceptionWhenMinConfidenceIsLessThanZero() {
-        new AssociationRuleGeneratorModule<>(-1);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown, when the minimum confidence,
-     * which is passed as a constructor parameter, is greater than 1.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorThrowsExceptionWhenMinConfidenceIsGreaterThanOne() {
-        new AssociationRuleGeneratorModule<>(1.1);
     }
 
     /**
@@ -236,11 +206,31 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
 
     /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * generate association rules, when null is passed as a parameter.
+     * generate association rules, if the iterator, which is passed as a parameter, is null.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testGenerateAssociationRulesThrowsExcpetion() {
-        new AssociationRuleGeneratorModule<>(0.5).generateAssociationRules(null);
+    public final void testGenerateAssociationRulesThrowsExceptionWhenIteratorIsNull() {
+        new AssociationRuleGeneratorModule<>().generateAssociationRules(null, 0.5);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * generate association rules, if the minimum confidence, which is passed as a parameter, is
+     * less than 0.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testGenerateAssociationRulesThrowsExceptionWhenMinConfidenceIsLessThanZero() {
+        new AssociationRuleGeneratorModule<>().generateAssociationRules(new HashMap<>(), -0.1);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * generate association rules, if the minimum confidence, which is passed as a parameter, is
+     * greater than 1.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testGenerateAssociationRulesThrowsExceptionWhenMinConfidenceIsGreaterThanOne() {
+        new AssociationRuleGeneratorModule<>().generateAssociationRules(new HashMap<>(), 1.1);
     }
 
 }

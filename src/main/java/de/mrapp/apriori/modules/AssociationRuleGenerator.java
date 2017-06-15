@@ -36,12 +36,16 @@ public interface AssociationRuleGenerator<ItemType extends Item> {
      *                         instance of the type {@link Map} or an empty map, if no frequent item
      *                         sets are available. The map must store the frequent item sets as
      *                         values and their hash codes as the corresponding keys
+     * @param minConfidence    The minimum confidence, which must at least be reached by association
+     *                         rules, as a {@link Double} value. The confidence must be at least 0
+     *                         and at maximum 1
      * @return A rule set, which contains the association rules, which have been generated, as an
      * instance of the class {@link RuleSet} or an empty rule set, if no association rules have been
      * generated
      */
     @NotNull
     RuleSet<ItemType> generateAssociationRules(
-            @NotNull Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets);
+            @NotNull Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets,
+            double minConfidence);
 
 }

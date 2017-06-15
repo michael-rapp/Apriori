@@ -33,9 +33,7 @@ import java.util.Map;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class FrequentItemSetMinerTask<ItemType extends Item> extends
-        AbstractTask<ItemType> implements
-        FrequentItemSetMiner<ItemType> {
+public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTask<ItemType> {
 
     /**
      * Creates a new task, which tries to find a specific number of frequent item sets.
@@ -61,7 +59,7 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends
     @NotNull
     public final Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
-        FrequentItemSetMiner<ItemType> frequentItemSetMiner;
+        FrequentItemSetMiner<ItemType> frequentItemSetMiner = new FrequentItemSetMinerModule<>();
 
         if (getConfiguration().getFrequentItemSetCount() > 0) {
             Map<Integer, TransactionalItemSet<ItemType>> result = new HashMap<>();
@@ -69,9 +67,8 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends
 
             while (currentMinSupport >= getConfiguration().getMinSupport() &&
                     result.size() < getConfiguration().getFrequentItemSetCount()) {
-                frequentItemSetMiner = new FrequentItemSetMinerModule<>(currentMinSupport);
                 Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
-                        .findFrequentItemSets(iterator);
+                        .findFrequentItemSets(iterator, currentMinSupport);
 
                 if (frequentItemSets.size() >= result.size()) {
                     result = frequentItemSets;
@@ -82,9 +79,8 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends
 
             return result;
         } else {
-            frequentItemSetMiner = new FrequentItemSetMinerModule<>(
-                    getConfiguration().getMinSupport());
-            return frequentItemSetMiner.findFrequentItemSets(iterator);
+            return frequentItemSetMiner
+                    .findFrequentItemSets(iterator, getConfiguration().getMinSupport());
         }
     }
 

@@ -15,8 +15,6 @@ package de.mrapp.apriori;
 
 import de.mrapp.apriori.datastructure.FrequentItemSetTreeSet;
 import de.mrapp.apriori.datastructure.TransactionalItemSet;
-import de.mrapp.apriori.modules.AssociationRuleGenerator;
-import de.mrapp.apriori.modules.FrequentItemSetMiner;
 import de.mrapp.apriori.tasks.AssociationRuleGeneratorTask;
 import de.mrapp.apriori.tasks.FrequentItemSetMinerTask;
 import org.jetbrains.annotations.NotNull;
@@ -792,16 +790,16 @@ public class Apriori<ItemType extends Item> {
         ensureNotNull(iterator, "The iterator may not be null");
         LOGGER.info("Starting Apriori algorithm");
         long startTime = System.currentTimeMillis();
-        FrequentItemSetMiner<ItemType> frequentItemSetMiner = new FrequentItemSetMinerTask<>(
+        FrequentItemSetMinerTask<ItemType> frequentItemSetMinerTask = new FrequentItemSetMinerTask<>(
                 configuration);
-        Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
+        Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = frequentItemSetMinerTask
                 .findFrequentItemSets(iterator);
         RuleSet<ItemType> ruleSet = null;
 
         if (configuration.generateRules) {
-            AssociationRuleGenerator<ItemType> associationRuleGenerator = new AssociationRuleGeneratorTask<>(
+            AssociationRuleGeneratorTask<ItemType> associationRuleGeneratorTask = new AssociationRuleGeneratorTask<>(
                     configuration);
-            ruleSet = associationRuleGenerator.generateAssociationRules(frequentItemSets);
+            ruleSet = associationRuleGeneratorTask.generateAssociationRules(frequentItemSets);
         }
 
         FrequentItemSetTreeSet<ItemType> sortedItemSets = new FrequentItemSetTreeSet<>(

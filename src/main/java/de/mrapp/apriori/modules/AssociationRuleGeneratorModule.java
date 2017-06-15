@@ -56,12 +56,6 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
             .getLogger(AssociationRuleGeneratorModule.class);
 
     /**
-     * The confidence, which must at least be reached by association rules to be considered
-     * "interesting".
-     */
-    private final double minConfidence;
-
-    /**
      * Generates association rules from a specific item set.
      *
      * @param itemSet          The item set, the association rules should be created from, as an
@@ -72,11 +66,15 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
      *                         values and their hash codes as the corresponding keys
      * @param ruleSet          The rule set, the generated rules should be added to, as an instance
      *                         of the class {@link RuleSet}. The rule set may not be null
+     * @param minConfidence    The minimum confidence, which must at least be reached by association
+     *                         rules, as a {@link Double} value. The confidence must be at least 0
+     *                         and at maximum 1
      */
     private void generateRules(@NotNull final ItemSet<ItemType> itemSet,
                                @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets,
-                               @NotNull final RuleSet<ItemType> ruleSet) {
-        generateRules(itemSet, frequentItemSets, ruleSet, itemSet, null);
+                               @NotNull final RuleSet<ItemType> ruleSet,
+                               final double minConfidence) {
+        generateRules(itemSet, frequentItemSets, ruleSet, itemSet, null, minConfidence);
     }
 
     /**
@@ -98,12 +96,15 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
      * @param head             The head, the items, which are taken from the given body, should be
      *                         moved to, as an instance of the class {@link ItemSet} or null, if an
      *                         empty head should be created
+     * @param minConfidence    The minimum confidence, which must at least be reached by association
+     *                         rules, as a {@link Double} value. The confidence must be at least 0
+     *                         and at maximum 1
      */
     private void generateRules(@NotNull final ItemSet<ItemType> itemSet,
                                @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets,
                                @NotNull final RuleSet<ItemType> ruleSet,
                                @NotNull final ItemSet<ItemType> body,
-                               @Nullable final ItemSet<ItemType> head) {
+                               @Nullable final ItemSet<ItemType> head, final double minConfidence) {
         for (ItemType item : body) {
             ItemSet<ItemType> headItemSet = head != null ? head.clone() : new ItemSet<>();
             headItemSet.add(item);
@@ -120,47 +121,27 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
                 ruleSet.add(rule);
 
                 if (bodyItemSet.size() > 1) {
-                    generateRules(itemSet, frequentItemSets, ruleSet, bodyItemSet, headItemSet);
+                    generateRules(itemSet, frequentItemSets, ruleSet, bodyItemSet, headItemSet,
+                            minConfidence);
                 }
             }
         }
     }
 
-    /**
-     * Creates a new module, which allows to generate association rules from frequent item sets.
-     *
-     * @param minConfidence The confidence, which must at least be reached by association rules to
-     *                      be considered "interesting", as a {@link Double} value. The confidence
-     *                      must be at least 0 and at maximum 1
-     */
-    public AssociationRuleGeneratorModule(final double minConfidence) {
-        ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
-        ensureAtMaximum(minConfidence, 1, "The maximum confidence must be at least 1");
-        this.minConfidence = minConfidence;
-    }
-
-    /**
-     * Returns the confidence, which must at least be reached by association rules to be considered
-     * "interesting".
-     *
-     * @return The confidence, which must at least be reached by association rules to be considered
-     * "interesting as a {@link Double} value. The confidence must at least be 0 and at maximum 1
-     */
-    public final double getMinConfidence() {
-        return minConfidence;
-    }
-
     @NotNull
     @Override
     public final RuleSet<ItemType> generateAssociationRules(
-            @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets) {
+            @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets,
+            final double minConfidence) {
         ensureNotNull(frequentItemSets, "The frequent item sets may not be null");
+        ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
+        ensureAtMaximum(minConfidence, 1, "The minimum confidence must be at maximum 1");
         LOGGER.debug("Generating association rules");
         RuleSet<ItemType> ruleSet = new RuleSet<>();
 
         for (ItemSet<ItemType> itemSet : frequentItemSets.values()) {
             if (itemSet.size() > 1) {
-                generateRules(itemSet, frequentItemSets, ruleSet);
+                generateRules(itemSet, frequentItemSets, ruleSet, minConfidence);
             }
         }
 

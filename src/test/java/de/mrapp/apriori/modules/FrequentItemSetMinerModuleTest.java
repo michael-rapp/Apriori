@@ -54,10 +54,9 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
                                           @NotNull double[] actualSupports) {
         File inputFile = getInputFile(fileName);
         DataIterator dataIterator = new DataIterator(inputFile);
-        FrequentItemSetMinerModule<NamedItem> frequentItemSetMiner = new FrequentItemSetMinerModule<>(
-                minSupport);
+        FrequentItemSetMinerModule<NamedItem> frequentItemSetMiner = new FrequentItemSetMinerModule<>();
         Map<Integer, TransactionalItemSet<NamedItem>> frequentItemSets = frequentItemSetMiner
-                .findFrequentItemSets(dataIterator);
+                .findFrequentItemSets(dataIterator, minSupport);
         int frequentItemSetCount = 0;
 
         for (Map.Entry<Integer, TransactionalItemSet<NamedItem>> entry : frequentItemSets
@@ -80,35 +79,6 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
     }
 
     /**
-     * Tests, if all class members are set correctly by the constructor.
-     */
-    @Test
-    public final void testConstructor() {
-        double minSupport = 0.5;
-        FrequentItemSetMinerModule<NamedItem> frequentItemSetMiner = new FrequentItemSetMinerModule<>(
-                minSupport);
-        assertEquals(minSupport, frequentItemSetMiner.getMinSupport(), 0);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown, when the minimum support,
-     * which is passed as a constructor parameter, is less than 0.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorThrowsExceptionWhenMinSupportIsLessThanZero() {
-        new FrequentItemSetMinerModule<>(-1);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown, when the minimum support,
-     * which is passed as a constructor parameter, is greater than 1.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorThrowsExceptionWhenMinSupportIsGreaterThanOne() {
-        new FrequentItemSetMinerModule<>(1.1);
-    }
-
-    /**
      * Tests the functionality of the method, which allows to find frequent item sets, when using
      * the first input file.
      */
@@ -128,11 +98,35 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
 
     /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * find frequent item sets, when null is passed as a parameter.
+     * find frequent item sets, if the iterator, which is passed as a parameter, is null.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testGenerateAssociationRulesThrowsExcpetion() {
-        new FrequentItemSetMinerModule<>(0.5).findFrequentItemSets(null);
+    public final void testFindFrequentItemSetsThrowsExceptionWhenIteratorIsNull() {
+        new FrequentItemSetMinerModule<>().findFrequentItemSets(null, 0.5);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * find frequent item sets, if the minimum support, which is passed as a parameter, is less than
+     * 0.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testFindFrequentItemSetsThrowsExceptionWhenMinSupportIsLessThanZero() {
+        File inputFile = getInputFile(INPUT_FILE_1);
+        DataIterator dataIterator = new DataIterator(inputFile);
+        new FrequentItemSetMinerModule<NamedItem>().findFrequentItemSets(dataIterator, -0.1);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * find frequent item sets, if the minimum support, which is passed as a parameter, is greater
+     * than 1.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testFindFrequentItemSetsThrowsExceptionWhenMinSupportIsGreaterThanOne() {
+        File inputFile = getInputFile(INPUT_FILE_1);
+        DataIterator dataIterator = new DataIterator(inputFile);
+        new FrequentItemSetMinerModule<NamedItem>().findFrequentItemSets(dataIterator, 1.1);
     }
 
 }

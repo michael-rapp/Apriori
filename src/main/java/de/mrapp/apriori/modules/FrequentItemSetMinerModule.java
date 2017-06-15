@@ -51,11 +51,6 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
     private static final Logger LOGGER = LoggerFactory.getLogger(FrequentItemSetMinerModule.class);
 
     /**
-     * The support, which must at least be reached by item sets to be considered frequent.
-     */
-    private final double minSupport;
-
-    /**
      * Generates and returns item sets, which contain only one item.
      *
      * @param iterator An iterator, which allows to iterate the transactions of the data set, which
@@ -103,13 +98,16 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
      *                         set, as an {@link Integer} value
      * @param k                The length of the item sets, which should be filtered, as an {@link
      *                         Integer} value
+     * @param minSupport       The minimum support, which must at least be reached by an item set to
+     *                         be considered frequent, as a {@link Double} value. The support must
+     *                         be at least 0 and at maximum 1
      * @return A list, which contains the item sets, which are frequent, as an instance of the type
      * {@link List} or an empty list, if no item sets are frequent
      */
     @NotNull
     private List<TransactionalItemSet<ItemType>> filterFrequentItemSets(
             @NotNull final Collection<TransactionalItemSet<ItemType>> itemSets,
-            final int transactionCount, final int k) {
+            final int transactionCount, final int k, final double minSupport) {
         List<TransactionalItemSet<ItemType>> frequentCandidates = new ArrayList<>(itemSets.size());
 
         for (TransactionalItemSet<ItemType> candidate : itemSets) {
@@ -220,34 +218,13 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
         return transactions > 0 ? (double) occurrences / (double) transactions : 0;
     }
 
-    /**
-     * Creates a new module, which allows to find all frequent item sets, which occur in a data set.
-     *
-     * @param minSupport The support, which must at least be reached by item sets to be considered
-     *                   frequent, as a {@link Double} value. The support must be at least 0 and at
-     *                   maximum 1
-     */
-    public FrequentItemSetMinerModule(final double minSupport) {
-        ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
-        ensureAtMaximum(minSupport, 1, "The minimum support must be at least 1");
-        this.minSupport = minSupport;
-    }
-
-    /**
-     * Returns the support, which must at least be reached by item sets to be considered frequent.
-     *
-     * @return The support, which must at least be reached by item sets to be considered frequent,
-     * as a {@link Double} value. The support must be at least 0 and at maximum 1
-     */
-    public final double getMinSupport() {
-        return minSupport;
-    }
-
     @NotNull
     @Override
     public final Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
-            @NotNull final Iterator<Transaction<ItemType>> iterator) {
+            @NotNull final Iterator<Transaction<ItemType>> iterator, final double minSupport) {
         ensureNotNull(iterator, "The iterator may not be null");
+        ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
+        ensureAtMaximum(minSupport, 1, "The minimum support must be at maximum 1");
         LOGGER.debug("Searching for frequent item sets");
         Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = new HashMap<>();
         int k = 1;
@@ -260,9 +237,7 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
             LOGGER.trace("k = {}", k);
             LOGGER.trace("C_{} = {}", k, candidates);
             List<TransactionalItemSet<ItemType>> frequentCandidates = filterFrequentItemSets(
-                    candidates,
-                    transactionCount,
-                    k);
+                    candidates, transactionCount, k, minSupport);
             LOGGER.trace("S_{} = {}", k, frequentCandidates);
             candidates = combineItemSets(frequentCandidates, k);
             frequentCandidates.forEach(x -> frequentItemSets.put(x.hashCode(), x));
