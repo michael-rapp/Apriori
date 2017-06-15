@@ -1,6 +1,6 @@
 # JavaUtil - RELEASE NOTES
 
-## Version 1.0.0 (Jun. 17th 2017)
+## Version 1.0.0 (Jun. 16th 2017)
 
 The first stable release of the library, which provides the following features:
 
