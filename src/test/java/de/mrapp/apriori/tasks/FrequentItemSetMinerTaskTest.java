@@ -13,6 +13,8 @@
  */
 package de.mrapp.apriori.tasks;
 
+import de.mrapp.apriori.Apriori.Configuration;
+import de.mrapp.apriori.modules.FrequentItemSetMinerModule;
 import org.junit.Test;
 
 /**
@@ -23,12 +25,32 @@ import org.junit.Test;
 public class FrequentItemSetMinerTaskTest {
 
     /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown, if the configuration, which is
-     * passed to the constructor, is null,
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration as a parameter, if the configuration is null.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorThrowsException() {
+    public final void testConstructorWithConfigurationParameterThrowsException() {
         new FrequentItemSetMinerTask<>(null);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration and a frequent item set miner as parameters, if the configuration is
+     * null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithConfigurationAndFrequentItemSetMinerParameterThrowsExceptionWhenConfigurationIsNull() {
+        new FrequentItemSetMinerTask<>(null, new FrequentItemSetMinerModule<>());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration and a frequent item set miner as parameters, if the frequent item set miner
+     * is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithConfigurationAndFrequentItemSetMinerParameterThrowsExceptionWhenFrequentItemSetMinerIsNull() {
+        new FrequentItemSetMinerTask<>(new Configuration(), null);
     }
 
     /**

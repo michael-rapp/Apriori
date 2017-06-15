@@ -23,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * A task, which tries to generate a specific number of association rules.
  *
@@ -34,13 +36,35 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends
         AbstractTask<ItemType> {
 
     /**
+     * The association rule generator, which is used by the task.
+     */
+    private final AssociationRuleGenerator<ItemType> associationRuleGenerator;
+
+    /**
      * Creates a new task, which tries to generate a specific number of association rules.
      *
      * @param configuration The configuration, which should be used by the task, as an instance of
      *                      the class {@link Configuration}. The configuration may not be null
      */
     public AssociationRuleGeneratorTask(@NotNull final Configuration configuration) {
+        this(configuration, new AssociationRuleGeneratorModule<>());
+    }
+
+    /**
+     * Creates a new task, which tries to generate a specific number of association rules.
+     *
+     * @param configuration            The configuration, which should be used by the task, as an
+     *                                 instance of the class {@link Configuration}. The
+     *                                 configuration may not be null
+     * @param associationRuleGenerator The association rule generator, which should be used by the
+     *                                 task, as an instance of the type {@link AssociationRuleGenerator}.
+     *                                 The association rule generator may not be null
+     */
+    protected AssociationRuleGeneratorTask(@NotNull final Configuration configuration,
+                                           @NotNull final AssociationRuleGenerator<ItemType> associationRuleGenerator) {
         super(configuration);
+        ensureNotNull(associationRuleGenerator, "The association rule generator may not be null");
+        this.associationRuleGenerator = associationRuleGenerator;
     }
 
     /**
@@ -57,8 +81,6 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends
     @NotNull
     public final RuleSet<ItemType> generateAssociationRules(
             @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets) {
-        AssociationRuleGenerator<ItemType> associationRuleGenerator = new AssociationRuleGeneratorModule<>();
-
         if (getConfiguration().getRuleCount() > 0) {
             RuleSet<ItemType> result = new RuleSet<>();
             double currentMinConfidence = getConfiguration().getMaxConfidence();

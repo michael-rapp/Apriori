@@ -102,7 +102,7 @@ public class Apriori<ItemType extends Item> {
         /**
          * Creates a new configuration of the Apriori algorithm with default values.
          */
-        protected Configuration() {
+        public Configuration() {
             setMinSupport(0);
             setMaxSupport(1);
             setSupportDelta(0.1);

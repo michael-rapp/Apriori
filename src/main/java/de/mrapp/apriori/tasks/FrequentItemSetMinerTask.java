@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static de.mrapp.util.Condition.ensureNotNull;
+
 /**
  * A task, which tries to find a specific number of frequent item sets.
  *
@@ -36,13 +38,35 @@ import java.util.Map;
 public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTask<ItemType> {
 
     /**
+     * The frequent item set miner, which is used by the task.
+     */
+    private final FrequentItemSetMiner<ItemType> frequentItemSetMiner;
+
+    /**
      * Creates a new task, which tries to find a specific number of frequent item sets.
      *
      * @param configuration The configuration, which is used by the taks, as an instance of the
      *                      class {@link Configuration}. The configuration may not be null
      */
     public FrequentItemSetMinerTask(@NotNull final Configuration configuration) {
+        this(configuration, new FrequentItemSetMinerModule<>());
+    }
+
+    /**
+     * Creates a new task, which tries to find a specific number of frequent item sets.
+     *
+     * @param configuration        The configuration, which is used by the taks, as an instance of
+     *                             the class {@link Configuration}. The configuration may not be
+     *                             null
+     * @param frequentItemSetMiner The frequent item set miner, which should be used by the task, as
+     *                             an instance of the class {@link FrequentItemSetMiner}. The
+     *                             frequent item set miner may not be null
+     */
+    protected FrequentItemSetMinerTask(@NotNull final Configuration configuration,
+                                       @NotNull final FrequentItemSetMiner<ItemType> frequentItemSetMiner) {
         super(configuration);
+        ensureNotNull(frequentItemSetMiner, "The frequent item set miner may not be null");
+        this.frequentItemSetMiner = frequentItemSetMiner;
     }
 
     /**
@@ -59,8 +83,6 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
     @NotNull
     public final Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
-        FrequentItemSetMiner<ItemType> frequentItemSetMiner = new FrequentItemSetMinerModule<>();
-
         if (getConfiguration().getFrequentItemSetCount() > 0) {
             Map<Integer, TransactionalItemSet<ItemType>> result = new HashMap<>();
             double currentMinSupport = getConfiguration().getMaxSupport();

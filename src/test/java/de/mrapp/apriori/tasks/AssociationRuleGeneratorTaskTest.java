@@ -13,6 +13,8 @@
  */
 package de.mrapp.apriori.tasks;
 
+import de.mrapp.apriori.Apriori.Configuration;
+import de.mrapp.apriori.modules.AssociationRuleGeneratorModule;
 import org.junit.Test;
 
 /**
@@ -23,12 +25,32 @@ import org.junit.Test;
 public class AssociationRuleGeneratorTaskTest {
 
     /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown, if the configuration, which is
-     * passed to the constructor, is null,
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration as a parameter, if the configuration is null.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorThrowsException() {
+    public final void testConstructorWithConfigurationParameterThrowsException() {
         new AssociationRuleGeneratorTask<>(null);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration and an association rule generator as parameters, if the configuration is
+     * null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithConfigurationAndAssociationRuleGeneratorParameterThrowsExceptionWhenConfigurationIsNull() {
+        new AssociationRuleGeneratorTask<>(null, new AssociationRuleGeneratorModule<>());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration and an association rule generator as parameters, if the association rule
+     * generator is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithConfigurationAndAssociationRuleGeneratorParameterThrowsExceptionWhenAssociationRuleGeneratorIsNull() {
+        new AssociationRuleGeneratorTask<>(new Configuration(), null);
     }
 
     /**
