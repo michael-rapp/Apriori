@@ -14,19 +14,30 @@
 package de.mrapp.apriori;
 
 import de.mrapp.apriori.Apriori.Configuration;
+import de.mrapp.apriori.datastructure.TransactionalItemSet;
+import de.mrapp.apriori.tasks.AssociationRuleGeneratorTask;
+import de.mrapp.apriori.tasks.FrequentItemSetMinerTask;
 import org.junit.Test;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedSet;
 
 import static junit.framework.Assert.assertNotSame;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests the functionality of the class {@link Apriori}.
  *
  * @author Michael Rapp
  */
-public class AprioriTest {
+public class AprioriTest extends AbstractDataTest {
 
     /**
      * Tests, if all class members are set correctly by the default constructor of the inner class
@@ -408,6 +419,167 @@ public class AprioriTest {
         assertEquals(maxConfidence, configuration.getMaxConfidence());
         assertEquals(confidenceDelta, configuration.getConfidenceDelta());
         assertEquals(ruleCount, configuration.getRuleCount());
+    }
+
+    /**
+     * Tests, if all class members are set correctly by the constructor, which expects a
+     * configuration as a parameter.
+     */
+    @Test
+    public final void testConstructorWithConfigurationParameter() {
+        Configuration configuration = mock(Configuration.class);
+        Apriori<NamedItem> apriori = new Apriori<>(configuration);
+        assertEquals(configuration, apriori.getConfiguration());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration as a parameter, if the configuration is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithConfigurationParameterThrowsException() {
+        new Apriori<NamedItem>(null);
+    }
+
+    /**
+     * Tests, if all class members are set correctly by the constructor, which expects a
+     * configuration and tasks as parameters.
+     */
+    @Test
+    public final void testConstructorWithConfigurationAndTaskParameters() {
+        Configuration configuration = mock(Configuration.class);
+        Apriori<NamedItem> apriori = new Apriori<>(configuration,
+                new FrequentItemSetMinerTask<>(configuration),
+                new AssociationRuleGeneratorTask<>(configuration));
+        assertEquals(configuration, apriori.getConfiguration());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration and tasks as parameters, if the configuration is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithConfigurationAndTaskParametersThrowsExceptionWhenConfigurationIsNull() {
+        Configuration configuration = mock(Configuration.class);
+        new Apriori<NamedItem>(null, new FrequentItemSetMinerTask<>(configuration),
+                new AssociationRuleGeneratorTask<>(configuration));
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration and tasks as parameters, if the frequent item set miner task is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithConfigurationAndTaskParametersThrowsExceptionWhenFrequentItemSetMinerTaskIsNull() {
+        Configuration configuration = mock(Configuration.class);
+        new Apriori<NamedItem>(configuration, null,
+                new AssociationRuleGeneratorTask<>(configuration));
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
+     * a configuration and tasks as parameters, if the association rule generator task is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testConstructorWithConfigurationAndTaskParametersThrowsExceptionWhenAssociationRuleGeneratorTaskIsNull() {
+        Configuration configuration = mock(Configuration.class);
+        new Apriori<NamedItem>(configuration, new FrequentItemSetMinerTask<>(configuration), null);
+    }
+
+    /**
+     * Tests the functionality of the method, which allows to execute the Apriori algorithm, if no
+     * association rules should be generated.
+     */
+    @Test
+    public final void testExecuteWhenNotGeneratingRules() {
+        Configuration configuration = mock(Configuration.class);
+        when(configuration.isGeneratingRules()).thenReturn(false);
+        Map<Integer, TransactionalItemSet<NamedItem>> map = new HashMap<>();
+        TransactionalItemSet<NamedItem> itemSet1 = new TransactionalItemSet<>();
+        NamedItem item1 = new NamedItem("a");
+        itemSet1.add(item1);
+        itemSet1.setSupport(1.0);
+        TransactionalItemSet<NamedItem> itemSet2 = new TransactionalItemSet<>();
+        NamedItem item2 = new NamedItem("b");
+        itemSet2.add(item2);
+        itemSet2.setSupport(0.9);
+        map.put(itemSet1.hashCode(), itemSet1);
+        map.put(itemSet2.hashCode(), itemSet2);
+        FrequentItemSetMinerTask<NamedItem> frequentItemSetMinerTask = new FrequentItemSetMinerTask<>(
+                configuration, (iterator, minSupport) -> map);
+        AssociationRuleGeneratorTask<NamedItem> associationRuleGeneratorTask = new AssociationRuleGeneratorTask<>(
+                configuration, (frequentItemSets, minConfidence) -> {
+            throw new RuntimeException();
+        });
+        File file = getInputFile(INPUT_FILE_1);
+        DataIterator dataIterator = new DataIterator(file);
+        Apriori<NamedItem> apriori = new Apriori<>(configuration, frequentItemSetMinerTask,
+                associationRuleGeneratorTask);
+        Output<NamedItem> output = apriori.execute(dataIterator);
+        assertEquals(configuration, output.getConfiguration());
+        assertNull(output.getRuleSet());
+        SortedSet<ItemSet<NamedItem>> set = output.getFrequentItemSets();
+        assertEquals(map.size(), set.size());
+        assertFalse(set.first() instanceof TransactionalItemSet);
+        assertEquals(1, set.first().size());
+        assertEquals(item1, set.first().first());
+        assertFalse(set.last() instanceof TransactionalItemSet);
+        assertEquals(1, set.last().size());
+        assertEquals(item2, set.last().first());
+    }
+
+    /**
+     * Tests the functionality of the method, which allows to execute the Apriori algorithm, if
+     * association rules should be generated.
+     */
+    @Test
+    public final void testExecuteWhenGeneratingRules() {
+        Configuration configuration = mock(Configuration.class);
+        when(configuration.isGeneratingRules()).thenReturn(true);
+        Map<Integer, TransactionalItemSet<NamedItem>> map = new HashMap<>();
+        TransactionalItemSet<NamedItem> itemSet1 = new TransactionalItemSet<>();
+        NamedItem item1 = new NamedItem("a");
+        itemSet1.add(item1);
+        itemSet1.setSupport(1.0);
+        TransactionalItemSet<NamedItem> itemSet2 = new TransactionalItemSet<>();
+        NamedItem item2 = new NamedItem("b");
+        itemSet2.add(item2);
+        itemSet2.setSupport(0.9);
+        map.put(itemSet1.hashCode(), itemSet1);
+        map.put(itemSet2.hashCode(), itemSet2);
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        AssociationRule<NamedItem> associationRule = new AssociationRule<>(new ItemSet<>(),
+                new ItemSet<>(), 0.5);
+        ruleSet.add(associationRule);
+        FrequentItemSetMinerTask<NamedItem> frequentItemSetMinerTask = new FrequentItemSetMinerTask<>(
+                configuration, (iterator, minSupport) -> map);
+        AssociationRuleGeneratorTask<NamedItem> associationRuleGeneratorTask = new AssociationRuleGeneratorTask<>(
+                configuration, (frequentItemSets, minConfidence) -> ruleSet);
+        File file = getInputFile(INPUT_FILE_1);
+        DataIterator dataIterator = new DataIterator(file);
+        Apriori<NamedItem> apriori = new Apriori<>(configuration, frequentItemSetMinerTask,
+                associationRuleGeneratorTask);
+        Output<NamedItem> output = apriori.execute(dataIterator);
+        assertEquals(configuration, output.getConfiguration());
+        assertEquals(ruleSet, output.getRuleSet());
+        SortedSet<ItemSet<NamedItem>> set = output.getFrequentItemSets();
+        assertEquals(map.size(), set.size());
+        assertFalse(set.first() instanceof TransactionalItemSet);
+        assertEquals(1, set.first().size());
+        assertEquals(item1, set.first().first());
+        assertFalse(set.last() instanceof TransactionalItemSet);
+        assertEquals(1, set.last().size());
+        assertEquals(item2, set.last().first());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * execute the Apriori algorithm, if the iterator, which is passed as a parameter, is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testExecuteThrowsException() {
+        Apriori<NamedItem> apriori = new Apriori<>(mock(Configuration.class));
+        apriori.execute(null);
     }
 
 }

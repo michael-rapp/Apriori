@@ -62,8 +62,8 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
      *                             an instance of the class {@link FrequentItemSetMiner}. The
      *                             frequent item set miner may not be null
      */
-    protected FrequentItemSetMinerTask(@NotNull final Configuration configuration,
-                                       @NotNull final FrequentItemSetMiner<ItemType> frequentItemSetMiner) {
+    public FrequentItemSetMinerTask(@NotNull final Configuration configuration,
+                                    @NotNull final FrequentItemSetMiner<ItemType> frequentItemSetMiner) {
         super(configuration);
         ensureNotNull(frequentItemSetMiner, "The frequent item set miner may not be null");
         this.frequentItemSetMiner = frequentItemSetMiner;

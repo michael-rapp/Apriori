@@ -60,8 +60,8 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends
      *                                 task, as an instance of the type {@link AssociationRuleGenerator}.
      *                                 The association rule generator may not be null
      */
-    protected AssociationRuleGeneratorTask(@NotNull final Configuration configuration,
-                                           @NotNull final AssociationRuleGenerator<ItemType> associationRuleGenerator) {
+    public AssociationRuleGeneratorTask(@NotNull final Configuration configuration,
+                                        @NotNull final AssociationRuleGenerator<ItemType> associationRuleGenerator) {
         super(configuration);
         ensureNotNull(associationRuleGenerator, "The association rule generator may not be null");
         this.associationRuleGenerator = associationRuleGenerator;

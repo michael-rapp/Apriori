@@ -752,15 +752,52 @@ public class Apriori<ItemType extends Item> {
     private final Configuration configuration;
 
     /**
-     * Creates a new implementation of the Apriori algorithm for mining frequent item sets.
+     * The task, which is used to find frequent item sets.
+     */
+    private final FrequentItemSetMinerTask<ItemType> frequentItemSetMinerTask;
+
+    /**
+     * The task, which is used to generate association rules.
+     */
+    private final AssociationRuleGeneratorTask<ItemType> associationRuleGeneratorTask;
+
+    /**
+     * Creates a new implementation of the Apriori algorithm for mining frequent item sets and
+     * (optionally) generating association rules.
      *
      * @param configuration The configuration, which should be used by the apriori algorithm, as an
      *                      instance of the class {@link Configuration}. The configuration may not
      *                      be null
      */
-    private Apriori(@NotNull final Configuration configuration) {
+    protected Apriori(@NotNull final Configuration configuration) {
+        this(configuration, new FrequentItemSetMinerTask<>(configuration),
+                new AssociationRuleGeneratorTask<>(configuration));
+    }
+
+    /**
+     * Creates a new implementation of the Apriori algorithm for mining frequent item sets and
+     * (optionally) generating association rules.
+     *
+     * @param configuration                The configuration, which should be used by the apriori
+     *                                     algorithm, as an instance of the class {@link
+     *                                     Configuration}. The configuration may not be null
+     * @param frequentItemSetMinerTask     The task, which should be used to find frequent item
+     *                                     sets, as an instance of the class {@link
+     *                                     FrequentItemSetMinerTask}. The task may not be null
+     * @param associationRuleGeneratorTask The task, which should be used to generate association
+     *                                     rules, as an instance of the class {@link
+     *                                     AssociationRuleGeneratorTask}. The task may not be null
+     */
+    protected Apriori(@NotNull final Configuration configuration,
+                      @NotNull final FrequentItemSetMinerTask<ItemType> frequentItemSetMinerTask,
+                      @NotNull final AssociationRuleGeneratorTask<ItemType> associationRuleGeneratorTask) {
         ensureNotNull(configuration, "The configuration may not be null");
+        ensureNotNull(frequentItemSetMinerTask, "The frequent item set miner task may not be null");
+        ensureNotNull(associationRuleGeneratorTask,
+                "The association rule generator task may not be null");
         this.configuration = configuration;
+        this.frequentItemSetMinerTask = frequentItemSetMinerTask;
+        this.associationRuleGeneratorTask = associationRuleGeneratorTask;
     }
 
     /**
@@ -790,15 +827,11 @@ public class Apriori<ItemType extends Item> {
         ensureNotNull(iterator, "The iterator may not be null");
         LOGGER.info("Starting Apriori algorithm");
         long startTime = System.currentTimeMillis();
-        FrequentItemSetMinerTask<ItemType> frequentItemSetMinerTask = new FrequentItemSetMinerTask<>(
-                configuration);
         Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = frequentItemSetMinerTask
                 .findFrequentItemSets(iterator);
         RuleSet<ItemType> ruleSet = null;
 
-        if (configuration.generateRules) {
-            AssociationRuleGeneratorTask<ItemType> associationRuleGeneratorTask = new AssociationRuleGeneratorTask<>(
-                    configuration);
+        if (configuration.isGeneratingRules()) {
             ruleSet = associationRuleGeneratorTask.generateAssociationRules(frequentItemSets);
         }
 
