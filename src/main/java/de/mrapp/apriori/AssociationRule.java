@@ -20,8 +20,8 @@ import java.io.Serializable;
 import static de.mrapp.util.Condition.*;
 
 /**
- * An association rule of the form Y <- X, which consists of a body X and a head Y. Both, the body
- * and the head of an association rule consist of one or several items. These item sets must be
+ * An association rule of the form X -&gt; Y, which consists of a body X and a head Y. Both, the
+ * body and the head of an association rule consist of one or several items. These item sets must be
  * distinct. An association rule specifies, that if the items, which are contained by its body,
  * occur in a transaction, the items, which are given in its head, do also occur with a certain
  * probability.

@@ -35,12 +35,12 @@ import static de.mrapp.util.Condition.*;
  * than a specific threshold, are taken into account.
  *
  * In order to prune the search for association rules, the algorithm exploits the anti-monotonicity
- * property of the confidence metric, which states, that the confidence of the rule A,B -> C is an
- * upper bound to the confidence of a rule A -> B,C. Consequently, the algorithm starts by
+ * property of the confidence metric, which states, that the confidence of the rule A,B -&gt; C is
+ * an upper bound to the confidence of a rule A -&gt; B,C. Consequently, the algorithm starts by
  * generating rules, which contain a single item in there heads. Based on those rules, which reach
  * the minimum confidence, additional rules are created by moving items from their bodies to the
- * heads. For each rule said process is continued until the minimum threshold cannot be
- * reached anymore.
+ * heads. For each rule said process is continued until the minimum threshold cannot be reached
+ * anymore.
  *
  * @param <ItemType> The type of the items, which are processed by the algorithm
  * @author Michael Rapp
