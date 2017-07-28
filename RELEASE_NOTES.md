@@ -1,4 +1,10 @@
-# JavaUtil - RELEASE NOTES
+# Apriori - RELEASE NOTES
+
+## Version 1.0.1 (Jul. 28th 2017)
+
+A bugfix release, which fixed the following issues:
+
+- https://github.com/michael-rapp/Apriori/issues/1
 
 ## Version 1.0.0 (Jun. 16th 2017)
 
