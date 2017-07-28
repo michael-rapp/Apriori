@@ -60,7 +60,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable, Clo
         public final int compare(final AssociationRule<?> o1, final AssociationRule<?> o2) {
             double heuristicValue1 = operator.evaluate(o1);
             double heuristicValue2 = operator.evaluate(o2);
-            return heuristicValue1 == heuristicValue2 ? (o1.equals(o2) ? 0 : 1) :
+            return heuristicValue1 == heuristicValue2 ? 0 :
                     (heuristicValue1 > heuristicValue2 ? 1 : -1);
         }
 
