@@ -70,4 +70,41 @@ public class FrequentItemSetArraySetTest {
         assertEquals(frequentItemSets1.last(), frequentItemSets2.last());
     }
 
+    /**
+     * Tests the functionality of the method, which allows to create a string, which contains
+     * information about frequent item sets.
+     */
+    @Test
+    public final void testFormatFrequentItemSets() {
+        NamedItem item1 = new NamedItem("a");
+        NamedItem item2 = new NamedItem("b");
+        double support1 = 0.3;
+        double support2 = 0.7;
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        itemSet1.add(item1);
+        itemSet1.setSupport(support1);
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
+        itemSet2.add(item2);
+        itemSet2.setSupport(support2);
+        FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(
+                Comparator.reverseOrder());
+        frequentItemSets.add(itemSet1);
+        frequentItemSets.add(itemSet2);
+        assertEquals(
+                "[" + itemSet2 + " (support = " + support2 + "),\n" + itemSet1 + " (support = " +
+                        support1 + ")]",
+                FrequentItemSetArraySet.formatFrequentItemSets(frequentItemSets));
+    }
+
+    /**
+     * Tests the functionality of the method, which allows to create a string, which contains
+     * information about frequent item sets, if the no frequent item sets are available.
+     */
+    @Test
+    public final void testFormatFrequentItemSetsIfEmpty() {
+        FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(
+                Comparator.reverseOrder());
+        assertEquals("[]", FrequentItemSetArraySet.formatFrequentItemSets(frequentItemSets));
+    }
+
 }
