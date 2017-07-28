@@ -113,9 +113,19 @@ public class OutputTest {
         long startTime = 0;
         long endTime = 2;
         FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
-        frequentItemSets.add(new ItemSet<>());
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        itemSet1.add(new NamedItem("a"));
+        itemSet1.setSupport(0.5);
+        frequentItemSets.add(itemSet1);
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
-        ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
+        itemSet2.add(new NamedItem("b"));
+        itemSet2.setSupport(0.6);
+        ItemSet<NamedItem> itemSet3 = new ItemSet<>();
+        itemSet3.add(new NamedItem("c"));
+        itemSet3.setSupport(0.8);
+        AssociationRule<NamedItem> rule = new AssociationRule<>(itemSet2, itemSet3, 0.5);
+        ruleSet.add(rule);
         Output<NamedItem> output = new Output<>(configuration, startTime, endTime, frequentItemSets,
                 ruleSet);
         assertEquals("configuration=" + configuration.toString() + ",\nstartTime=" + startTime +
@@ -140,9 +150,11 @@ public class OutputTest {
         configuration.setMinSupport(0.2);
         output1 = new Output<>(configuration, 0, 2, new FrequentItemSetArraySet<>(null), null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSetArraySet<>(null), null);
+        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSetArraySet<>(null),
+                null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSetArraySet<>(null), null);
+        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSetArraySet<>(null),
+                null);
         assertNotSame(output1.hashCode(), output2.hashCode());
         FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
         frequentItemSets.add(new ItemSet<>());
@@ -175,9 +187,11 @@ public class OutputTest {
         configuration.setMinSupport(0.2);
         output1 = new Output<>(configuration, 0, 2, new FrequentItemSetArraySet<>(null), null);
         assertFalse(output1.equals(output2));
-        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSetArraySet<>(null), null);
+        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSetArraySet<>(null),
+                null);
         assertFalse(output1.equals(output2));
-        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSetArraySet<>(null), null);
+        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSetArraySet<>(null),
+                null);
         assertFalse(output1.equals(output2));
         FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
         frequentItemSets.add(new ItemSet<>());
