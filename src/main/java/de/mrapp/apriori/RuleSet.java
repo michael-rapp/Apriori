@@ -17,6 +17,7 @@ import de.mrapp.apriori.metrics.Confidence;
 import de.mrapp.apriori.metrics.Leverage;
 import de.mrapp.apriori.metrics.Lift;
 import de.mrapp.apriori.metrics.Support;
+import de.mrapp.util.datastructure.SortedArraySet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,7 +52,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
      * Creates an empty rule set.
      */
     public RuleSet() {
-        this(new TreeSet<>(new AssociationRule.Comparator(new Confidence()).reversed()));
+        this(new SortedArraySet<>(new AssociationRule.Comparator(new Confidence()).reversed()));
     }
 
     /**
@@ -78,7 +79,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     @NotNull
     public final RuleSet<ItemType> sort(@NotNull final Operator operator) {
         ensureNotNull(operator, "The operator may not be null");
-        SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
+        SortedSet<AssociationRule<ItemType>> rules = new SortedArraySet<>(
                 new AssociationRule.Comparator(operator).reversed());
         rules.addAll(this);
         return new RuleSet<>(rules);
@@ -101,7 +102,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
                                           final double threshold) {
         ensureNotNull(operator, "The operator may not be null");
         ensureGreater(threshold, 0, "The threshold must be greater than 0");
-        SortedSet<AssociationRule<ItemType>> rules = new TreeSet<>(
+        SortedSet<AssociationRule<ItemType>> rules = new SortedArraySet<>(
                 new AssociationRule.Comparator(operator).reversed());
 
         for (AssociationRule<ItemType> rule : this) {
@@ -225,7 +226,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public final RuleSet<ItemType> clone() {
-        SortedSet<AssociationRule<ItemType>> clonedRules = new TreeSet<>(rules.comparator());
+        SortedSet<AssociationRule<ItemType>> clonedRules = new SortedArraySet<>(rules.comparator());
         clonedRules.addAll(rules);
         return new RuleSet<>(clonedRules);
     }

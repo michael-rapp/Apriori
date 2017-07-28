@@ -19,6 +19,7 @@ import de.mrapp.apriori.metrics.Lift;
 import de.mrapp.apriori.metrics.Support;
 import org.junit.Test;
 
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -81,16 +82,19 @@ public class RuleSetTest {
     public final void testAdd() {
         ItemSet<NamedItem> body1 = new ItemSet<>();
         body1.add(new NamedItem("a"));
+        body1.setSupport(0.5);
         ItemSet<NamedItem> body2 = new ItemSet<>();
         body2.add(new NamedItem("b"));
+        body2.setSupport(0.7);
         ItemSet<NamedItem> body3 = new ItemSet<>();
         body3.add(new NamedItem("c"));
+        body3.setSupport(0.9);
         AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.7);
+                0.5);
         AssociationRule<NamedItem> associationRule3 = new AssociationRule<>(body3, new ItemSet<>(),
-                0.6);
+                0.5);
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
         assertTrue(ruleSet.isEmpty());
         ruleSet.add(associationRule1);
@@ -112,16 +116,19 @@ public class RuleSetTest {
     public final void testRemove() {
         ItemSet<NamedItem> body1 = new ItemSet<>();
         body1.add(new NamedItem("a"));
+        body1.setSupport(0.5);
         ItemSet<NamedItem> body2 = new ItemSet<>();
         body2.add(new NamedItem("b"));
+        body2.setSupport(0.7);
         ItemSet<NamedItem> body3 = new ItemSet<>();
         body3.add(new NamedItem("c"));
+        body3.setSupport(0.9);
         AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.7);
+                0.5);
         AssociationRule<NamedItem> associationRule3 = new AssociationRule<>(body3, new ItemSet<>(),
-                0.6);
+                0.5);
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
@@ -168,12 +175,14 @@ public class RuleSetTest {
     public final void testSort() {
         ItemSet<NamedItem> body1 = new ItemSet<>();
         body1.add(new NamedItem("a"));
+        body1.setSupport(0.5);
         ItemSet<NamedItem> body2 = new ItemSet<>();
         body2.add(new NamedItem("b"));
+        body2.setSupport(0.7);
         AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.7);
+                0.5);
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
@@ -258,8 +267,10 @@ public class RuleSetTest {
     public final void testToString() {
         ItemSet<NamedItem> body1 = new ItemSet<>();
         body1.add(new NamedItem("a"));
+        body1.setSupport(0.5);
         ItemSet<NamedItem> body2 = new ItemSet<>();
         body2.add(new NamedItem("b"));
+        body2.setSupport(0.8);
         AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
@@ -267,16 +278,19 @@ public class RuleSetTest {
         RuleSet<NamedItem> ruleSet = new RuleSet<>();
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setMinimumFractionDigits(1);
+        decimalFormat.setMaximumFractionDigits(2);
         assertEquals("[" + associationRule1.toString() + " (support = " +
-                        new Support().evaluate(associationRule1) + ", confidence = " +
-                        new Confidence().evaluate(associationRule1) + ", lift = " +
-                        new Lift().evaluate(associationRule1) + ", leverage = " +
-                        new Leverage().evaluate(associationRule1) + "),\n" + associationRule2.toString() +
-                        " (support = " +
-                        new Support().evaluate(associationRule2) + ", confidence = " +
-                        new Confidence().evaluate(associationRule2) + ", lift = " +
-                        new Lift().evaluate(associationRule2) + ", leverage = " +
-                        new Leverage().evaluate(associationRule2) + ")]",
+                        decimalFormat.format(new Support().evaluate(associationRule1)) + ", confidence = " +
+                        decimalFormat.format(new Confidence().evaluate(associationRule1)) + ", lift = " +
+                        decimalFormat.format(new Lift().evaluate(associationRule1)) + ", leverage = " +
+                        decimalFormat.format(new Leverage().evaluate(associationRule1)) + "),\n"
+                        + associationRule2.toString() + " (support = " +
+                        decimalFormat.format(new Support().evaluate(associationRule2)) + ", confidence = " +
+                        decimalFormat.format(new Confidence().evaluate(associationRule2)) + ", lift = " +
+                        decimalFormat.format(new Lift().evaluate(associationRule2)) + ", leverage = " +
+                        decimalFormat.format(new Leverage().evaluate(associationRule2)) + ")]",
                 ruleSet.toString());
     }
 

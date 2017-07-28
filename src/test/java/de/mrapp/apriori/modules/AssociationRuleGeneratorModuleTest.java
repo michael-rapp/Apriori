@@ -37,13 +37,13 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
      * The association rules, which result from the frequent item sets, which are contained by the
      * first input file.
      */
-    private static final String[] RULES_1 = {"[milk, sugar] -> [coffee]", "[coffee, sugar] -> [milk]", "[milk] -> [coffee]", "[coffee] -> [milk]", "[bread] -> [sugar]"};
+    private static final String[] RULES_1 = {"[bread] -> [sugar]", "[coffee] -> [milk]", "[milk] -> [coffee]", "[coffee, sugar] -> [milk]", "[milk, sugar] -> [coffee]"};
 
     /**
      * The supports of the rules, which result from the frequent item sets, which are contained by
      * the first input file.
      */
-    private static final double[] RULE_SUPPORTS_1 = {0.5, 0.5, 0.75, 0.75, 0.5};
+    private static final double[] RULE_SUPPORTS_1 = {0.5, 0.75, 0.75, 0.5, 0.5};
 
     /**
      * The confidences of the rules, which result from the frequent item sets, which are contained
@@ -61,20 +61,20 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
      * The leverages of the rules, which result from the frequent item sets, which are contained by
      * the first input file.
      */
-    private static final double[] RULE_LEVERAGES_1 = {0.12, 0.12, 0.19, 0.19, 0.12};
+    private static final double[] RULE_LEVERAGES_1 = {0.12, 0.19, 0.19, 0.12, 0.12};
 
 
     /**
      * The association rules, which result from the frequent item sets, which are contained by the
      * second input file.
      */
-    private static final String[] RULES_2 = {"[chips, wine] -> [beer]", "[beer, wine] -> [chips]", "[beer] -> [chips]"};
+    private static final String[] RULES_2 = {"[beer] -> [chips]", "[beer, wine] -> [chips]", "[chips, wine] -> [beer]"};
 
     /**
      * The supports of the rules, which result from the frequent item sets, which are contained by
      * the second input file.
      */
-    private static final double[] RULE_SUPPORTS_2 = {0.25, 0.25, 0.5};
+    private static final double[] RULE_SUPPORTS_2 = {0.5, 0.25, 0.25};
 
     /**
      * The confidences of the rules, which result from the frequent item sets, which are contained
@@ -86,7 +86,7 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
      * The lifts of the rules, which result from the frequent item sets, which are contained by
      * the first second file.
      */
-    private static final double[] RULE_LIFTS_2 = {2.0, 1.33, 1.33};
+    private static final double[] RULE_LIFTS_2 = {1.33, 1.33, 2.0};
 
     /**
      * The leverages of the rules, which result from the frequent item sets, which are contained by
