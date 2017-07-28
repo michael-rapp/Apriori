@@ -281,6 +281,14 @@ public class RuleSetTest {
     }
 
     /**
+     * Tests the functionality of the toString-method, if a rule set is empty.
+     */
+    @Test
+    public final void testToStringIfEmpty() {
+        assertEquals("[]", new RuleSet<>().toString());
+    }
+
+    /**
      * Tests the functionality of the hashCode-method.
      */
     @Test
