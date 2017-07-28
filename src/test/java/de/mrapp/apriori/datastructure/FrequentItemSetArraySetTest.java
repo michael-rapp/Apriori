@@ -23,18 +23,18 @@ import java.util.SortedSet;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests the functionality of the class {@link FrequentItemSetTreeSet}.
+ * Tests the functionality of the class {@link FrequentItemSetArraySet}.
  *
  * @author Michael Rapp
  */
-public class FrequentItemSetTreeSetTest {
+public class FrequentItemSetArraySetTest {
 
     /**
      * Tests, if all class members are set correctly by the constructor.
      */
     @Test
     public final void testConstructor() {
-        SortedSet<ItemSet<NamedItem>> frequentItemSets = new FrequentItemSetTreeSet<>(
+        SortedSet<ItemSet<NamedItem>> frequentItemSets = new FrequentItemSetArraySet<>(
                 Comparator.reverseOrder());
         ItemSet<NamedItem> itemSet1 = new ItemSet<>();
         itemSet1.add(new NamedItem("a"));
@@ -54,7 +54,7 @@ public class FrequentItemSetTreeSetTest {
      */
     @Test
     public final void testClone() {
-        FrequentItemSetTreeSet<NamedItem> frequentItemSets1 = new FrequentItemSetTreeSet<>(
+        FrequentItemSetArraySet<NamedItem> frequentItemSets1 = new FrequentItemSetArraySet<>(
                 Comparator.reverseOrder());
         ItemSet<NamedItem> itemSet1 = new ItemSet<>();
         itemSet1.add(new NamedItem("a"));
@@ -64,28 +64,10 @@ public class FrequentItemSetTreeSetTest {
         itemSet2.setSupport(0.6);
         frequentItemSets1.add(itemSet1);
         frequentItemSets1.add(itemSet2);
-        FrequentItemSetTreeSet<NamedItem> frequentItemSets2 = frequentItemSets1.clone();
+        FrequentItemSetArraySet<NamedItem> frequentItemSets2 = frequentItemSets1.clone();
         assertEquals(frequentItemSets1.size(), frequentItemSets2.size());
         assertEquals(frequentItemSets1.first(), frequentItemSets2.first());
         assertEquals(frequentItemSets1.last(), frequentItemSets2.last());
-    }
-
-    /**
-     * Test the functionality of the toString-method.
-     */
-    @Test
-    public final void testToString() {
-        FrequentItemSetTreeSet<NamedItem> frequentItemSets = new FrequentItemSetTreeSet<>(
-                Comparator.reverseOrder());
-        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
-        itemSet1.add(new NamedItem("a"));
-        itemSet1.setSupport(0.5);
-        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
-        itemSet2.add(new NamedItem("b"));
-        itemSet2.setSupport(0.6);
-        frequentItemSets.add(itemSet1);
-        frequentItemSets.add(itemSet2);
-        assertEquals("[[b] (support = 0.6),\n[a] (support = 0.5)]", frequentItemSets.toString());
     }
 
 }

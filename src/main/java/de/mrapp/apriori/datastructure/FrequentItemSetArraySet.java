@@ -15,6 +15,7 @@ package de.mrapp.apriori.datastructure;
 
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
+import de.mrapp.util.datastructure.SortedArraySet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,7 +23,6 @@ import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.TreeSet;
 
 /**
  * A tree set, which contains frequent item sets.
@@ -31,8 +31,8 @@ import java.util.TreeSet;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class FrequentItemSetTreeSet<ItemType extends Item> extends
-        TreeSet<ItemSet<ItemType>> implements Cloneable {
+public class FrequentItemSetArraySet<ItemType extends Item> extends
+        SortedArraySet<ItemSet<ItemType>> implements Cloneable {
 
     /**
      * Creates a new tree set, which contains frequent item sets.
@@ -41,7 +41,7 @@ public class FrequentItemSetTreeSet<ItemType extends Item> extends
      *                   the type {@link Comparator} or null, if the natural ordering should be
      *                   used
      */
-    public FrequentItemSetTreeSet(
+    public FrequentItemSetArraySet(
             @Nullable final Comparator<? super ItemSet<ItemType>> comparator) {
         super(comparator);
     }
@@ -85,15 +85,10 @@ public class FrequentItemSetTreeSet<ItemType extends Item> extends
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    public FrequentItemSetTreeSet<ItemType> clone() {
-        FrequentItemSetTreeSet<ItemType> clone = new FrequentItemSetTreeSet<>(comparator());
+    public FrequentItemSetArraySet<ItemType> clone() {
+        FrequentItemSetArraySet<ItemType> clone = new FrequentItemSetArraySet<>(comparator());
         clone.addAll(this);
         return clone;
-    }
-
-    @Override
-    public final String toString() {
-        return formatFrequentItemSets(this);
     }
 
 }

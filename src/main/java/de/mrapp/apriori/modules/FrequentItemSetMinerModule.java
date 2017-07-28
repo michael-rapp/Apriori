@@ -15,7 +15,7 @@ package de.mrapp.apriori.modules;
 
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.Transaction;
-import de.mrapp.apriori.datastructure.FrequentItemSetTreeSet;
+import de.mrapp.apriori.datastructure.FrequentItemSetArraySet;
 import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import de.mrapp.util.datastructure.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -246,7 +246,7 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
 
         LOGGER.debug("Found {} frequent item sets", frequentItemSets.size());
         LOGGER.debug("Frequent item sets = {}",
-                FrequentItemSetTreeSet.formatFrequentItemSets(frequentItemSets.values()));
+                FrequentItemSetArraySet.formatFrequentItemSets(frequentItemSets.values()));
         return frequentItemSets;
     }
 
