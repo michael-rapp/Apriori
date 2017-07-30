@@ -20,7 +20,6 @@ import java.util.function.BiFunction;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -56,6 +55,15 @@ public class TieBreakerTest {
         assertEquals(0, tieBreaker.tieBreak(associationRule1, associationRule2));
         when(operator.evaluate(any(AssociationRule.class))).thenReturn(0.0, 1.0);
         assertEquals(-1, tieBreaker.tieBreak(associationRule1, associationRule2));
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the
+     * <code>byOperator</code>-method, if the operator is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testByOperatorThrowsExceptionIfOperatorIsNull() {
+        new TieBreaker().byOperator(null);
     }
 
     /**
@@ -203,6 +211,15 @@ public class TieBreakerTest {
         BiFunction<AssociationRule, AssociationRule, Integer> function = (associationRule, associationRule21) -> 1;
         TieBreaker tieBreaker = new TieBreaker().custom(function);
         assertEquals(1, tieBreaker.tieBreak(associationRule1, associationRule2));
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the
+     * <code>custom</code>-method, if the tie-breaking function is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testCustomThrowsExceptionIfFunctionIsNull() {
+        new TieBreaker().custom(null);
     }
 
     /**
