@@ -194,12 +194,48 @@ public class RuleSetTest {
     }
 
     /**
+     * Tests the functionality of the method, which allows to sort the rules of a rule set, when a
+     * tie-breaking strategy is applied.
+     */
+    @Test
+    public final void testSortWhenTieBreaking() {
+        ItemSet<NamedItem> body1 = new ItemSet<>();
+        body1.add(new NamedItem("a"));
+        body1.setSupport(0.5);
+        ItemSet<NamedItem> body2 = new ItemSet<>();
+        body2.add(new NamedItem("b"));
+        body2.setSupport(0.5);
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
+                0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
+                0.5);
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        ruleSet.add(associationRule1);
+        ruleSet.add(associationRule2);
+        assertEquals(associationRule2, ruleSet.first());
+        assertEquals(associationRule1, ruleSet.last());
+        RuleSet<NamedItem> sortedRuleSet = ruleSet
+                .sort(new Support(), new TieBreaker().custom((a, b) -> 1));
+        assertEquals(associationRule1, sortedRuleSet.first());
+        assertEquals(associationRule2, sortedRuleSet.last());
+    }
+
+    /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * sort the rules of a rule set, when null is passed as an argument.
+     * sort the rules of a rule set, if the operator is null.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testSortThrowsException() {
+    public final void testSortThrowsExceptionIfOperatorIsNull() {
         new RuleSet<>().sort(null);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * sort the rules of a rule set, if the tie-breaking strategy is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testSortThrowsExceptionIfTieBreakerIsNull() {
+        new RuleSet<>().sort(mock(Operator.class), null);
     }
 
     /**
@@ -225,6 +261,31 @@ public class RuleSetTest {
     }
 
     /**
+     * Tests the functionality of the method, which allows to filter the rules of a rule set, when a
+     * tie-breaking strategy is applied.
+     */
+    @Test
+    public final void testFilterWhenTieBreaking() {
+        ItemSet<NamedItem> body1 = new ItemSet<>();
+        body1.add(new NamedItem("a"));
+        ItemSet<NamedItem> body2 = new ItemSet<>();
+        body2.add(new NamedItem("b"));
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
+                0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
+                0.5);
+        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        ruleSet.add(associationRule2);
+        ruleSet.add(associationRule1);
+        assertEquals(2, ruleSet.size());
+        RuleSet<NamedItem> filteredRuleSet = ruleSet
+                .filter(new Support(), 0.5, new TieBreaker().custom((a, b) -> -1));
+        assertEquals(2, filteredRuleSet.size());
+        assertEquals(associationRule1, filteredRuleSet.first());
+        assertEquals(associationRule2, filteredRuleSet.last());
+    }
+
+    /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
      * filter the rules of a rule set, when the operator, which is passed to the method, is null.
      */
@@ -241,6 +302,16 @@ public class RuleSetTest {
     @Test(expected = IllegalArgumentException.class)
     public final void testFilterThrowsExceptionWhenThresholdIsNotGreaterThanZero() {
         new RuleSet<>().filter(mock(Operator.class), 0);
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * filter the rules of a rule set, when the tie-breaking strategy, which is passed to the
+     * method, is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testFilterThrowsExceptionWhenTieBreakerIsNull() {
+        new RuleSet<>().filter(mock(Operator.class), 0.5, null);
     }
 
     /**
