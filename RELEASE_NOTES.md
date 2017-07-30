@@ -1,5 +1,11 @@
 # Apriori - RELEASE NOTES
 
+## Version 1.1.0 (Ju. 30th 2017)
+
+A feature release, which introduces the following changes:
+
+- Added the ability to use different tie-breaking strategies when sorting or filtering rule sets
+
 ## Version 1.0.1 (Jul. 28th 2017)
 
 A bugfix release, which fixed the following issues:
