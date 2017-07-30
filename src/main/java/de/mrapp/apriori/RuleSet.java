@@ -111,7 +111,8 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
 
     /**
      * Filters all rules, which are contained by the rule set, whose heuristic value according to a
-     * specific operator or metric is greater or equal than a specific threshold.
+     * specific operator or metric is greater or equal than a specific threshold. By default, no
+     * tie-breaking strategy is used.
      *
      * @param operator  The operator, which should be used to calculate the heuristic value of the
      *                  rules, as an instance of the type {@link Metric}. The metric may not be
@@ -131,11 +132,13 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
      * Filters all rules, which are contained by the rule set, whose heuristic value according to a
      * specific operator or metric is greater or equal than a specific threshold.
      *
-     * @param operator  The operator, which should be used to calculate the heuristic value of the
-     *                  rules, as an instance of the type {@link Metric}. The metric may not be
-     *                  null
-     * @param threshold The threshold, which must be reached by the filtered rules, as a {@link
-     *                  Double} value. The threshold must be greater than 0
+     * @param operator   The operator, which should be used to calculate the heuristic value of the
+     *                   rules, as an instance of the type {@link Metric}. The metric may not be
+     *                   null
+     * @param threshold  The threshold, which must be reached by the filtered rules, as a {@link
+     *                   Double} value. The threshold must be greater than 0
+     * @param tieBreaker The tie-breaking strategy, which should be used, as an instance of the
+     *                   class {@link TieBreaker}. The tie-breaking strategy may not be null
      * @return A new rule set, which contains the rules, which reach the given threshold, as an
      * instance of the class {@link RuleSet}. The rule set may not be null
      */
