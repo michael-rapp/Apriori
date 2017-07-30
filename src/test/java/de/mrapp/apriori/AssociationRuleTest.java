@@ -186,7 +186,7 @@ public class AssociationRuleTest {
 
     /**
      * Tests the functionality of the comparator, which allows to compare the heuristic values of
-     * two association rules.
+     * two association rules, when a tie-breaking strategy is applied.
      */
     @Test
     public final void testComparatorWhenTieBreaking() {
