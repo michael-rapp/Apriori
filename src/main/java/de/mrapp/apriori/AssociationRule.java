@@ -44,24 +44,33 @@ public class AssociationRule<ItemType extends Item> implements Serializable, Clo
         private final Operator operator;
 
         /**
+         * The tie-breaking strategy, which is used to tie-break between two rules, whose heuristic
+         * values are equal.
+         */
+        private final TieBreaker tieBreaker;
+
+        /**
          * Creates a new comparator, which allows to compare the heuristic values of two association
          * rules according to a certain operator.
          *
-         * @param operator The operator, which should be used to calculate the heuristic values of
-         *                 rules, as an instance of the type {@link Operator}. The operator may not
-         *                 be null
+         * @param operator   The operator, which should be used to calculate the heuristic values of
+         *                   rules, as an instance of the type {@link Operator}. The operator may
+         *                   not be null
+         * @param tieBreaker The tie-breaking strategy, which should be used, as an instance of the
+         *                   class {@link TieBreaker}. The tie-breaking strategy may not be null
          */
-        Comparator(@NotNull final Operator operator) {
+        Comparator(@NotNull final Operator operator, final TieBreaker tieBreaker) {
             ensureNotNull(operator, "The operator may not be null");
+            ensureNotNull(tieBreaker, "The tie-breaking strategy may not be null");
             this.operator = operator;
+            this.tieBreaker = tieBreaker;
         }
 
         @Override
         public final int compare(final AssociationRule<?> o1, final AssociationRule<?> o2) {
-            double heuristicValue1 = operator.evaluate(o1);
-            double heuristicValue2 = operator.evaluate(o2);
-            return heuristicValue1 == heuristicValue2 ? 0 :
-                    (heuristicValue1 > heuristicValue2 ? 1 : -1);
+            double h1 = operator.evaluate(o1);
+            double h2 = operator.evaluate(o2);
+            return h1 > h2 ? 1 : (h1 == h2 ? tieBreaker.tieBreak(o1, o2) : -1);
         }
 
     }

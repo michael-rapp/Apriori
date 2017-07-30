@@ -55,7 +55,7 @@ public class RuleSetTest {
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(),
                 new ItemSet<>(), 0.6);
         SortedSet<AssociationRule<NamedItem>> sortedSet = new TreeSet<>(
-                new AssociationRule.Comparator(new Support()));
+                new AssociationRule.Comparator(new Support(), new TieBreaker()));
         sortedSet.add(associationRule1);
         sortedSet.add(associationRule2);
         RuleSet<NamedItem> ruleSet = new RuleSet<>(sortedSet);

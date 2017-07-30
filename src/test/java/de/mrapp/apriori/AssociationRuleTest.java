@@ -174,7 +174,8 @@ public class AssociationRuleTest {
         AssociationRule<?> associationRule1 = mock(AssociationRule.class);
         AssociationRule<?> associationRule2 = mock(AssociationRule.class);
         Operator operator = mock(Operator.class);
-        AssociationRule.Comparator comparator = new AssociationRule.Comparator(operator);
+        AssociationRule.Comparator comparator = new AssociationRule.Comparator(operator,
+                new TieBreaker());
         when(operator.evaluate(any())).thenReturn(0.5, 0.6);
         assertEquals(-1, comparator.compare(associationRule1, associationRule2));
         when(operator.evaluate(any())).thenReturn(0.5, 0.5);
@@ -184,13 +185,39 @@ public class AssociationRuleTest {
     }
 
     /**
+     * Tests the functionality of the comparator, which allows to compare the heuristic values of
+     * two association rules.
+     */
+    @Test
+    public final void testComparatorWhenTieBreaking() {
+        AssociationRule<?> associationRule1 = mock(AssociationRule.class);
+        AssociationRule<?> associationRule2 = mock(AssociationRule.class);
+        Operator operator = mock(Operator.class);
+        TieBreaker tieBreaker = new TieBreaker().custom((a, b) -> 1);
+        AssociationRule.Comparator comparator = new AssociationRule.Comparator(operator,
+                tieBreaker);
+        when(operator.evaluate(any())).thenReturn(0.5, 0.5);
+        assertEquals(1, comparator.compare(associationRule1, associationRule2));
+    }
+
+    /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor of the
-     * comparator, which allows to compare the heuristic values of two association rules, if null is
-     * passed as a constructor parameter.
+     * comparator, which allows to compare the heuristic values of two association rules, if the
+     * operator is null.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testComparatorConstructorThrowsException() {
-        new AssociationRule.Comparator(null);
+    public final void testComparatorConstructorThrowsExceptionIfOperatorIsNull() {
+        new AssociationRule.Comparator(null, new TieBreaker());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor of the
+     * comparator, which allows to compare the heuristic values of two association rules, if the
+     * tie-breaking strategy is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testComparatorConstructorThrowsExceptionIfTieBreakerIsNull() {
+        new AssociationRule.Comparator(mock(Operator.class), null);
     }
 
 }

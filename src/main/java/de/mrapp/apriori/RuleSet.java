@@ -52,7 +52,8 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
      * Creates an empty rule set.
      */
     public RuleSet() {
-        this(new SortedArraySet<>(new AssociationRule.Comparator(new Confidence()).reversed()));
+        this(new SortedArraySet<>(
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed()));
     }
 
     /**
@@ -80,7 +81,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     public final RuleSet<ItemType> sort(@NotNull final Operator operator) {
         ensureNotNull(operator, "The operator may not be null");
         SortedSet<AssociationRule<ItemType>> rules = new SortedArraySet<>(
-                new AssociationRule.Comparator(operator).reversed());
+                new AssociationRule.Comparator(operator, new TieBreaker()).reversed());
         rules.addAll(this);
         return new RuleSet<>(rules);
     }
@@ -103,7 +104,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
         ensureNotNull(operator, "The operator may not be null");
         ensureGreater(threshold, 0, "The threshold must be greater than 0");
         SortedSet<AssociationRule<ItemType>> rules = new SortedArraySet<>(
-                new AssociationRule.Comparator(operator).reversed());
+                new AssociationRule.Comparator(operator, new TieBreaker()).reversed());
 
         for (AssociationRule<ItemType> rule : this) {
             double heuristicValue = operator.evaluate(rule);
