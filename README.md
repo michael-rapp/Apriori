@@ -200,6 +200,28 @@ double threshold = 0.5;
 RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(operator, threshold);
 ```
 
+#### Tie-breaking
+
+When sorting or filtering a `RuleSet`, different tie-breaking strategies can be applied. Tie-breaking refers to deciding which association rule should be considered to be more "interestingly", if two rules evaluate to the same heuristic value. For this reason, the `sort` and `filter`-methods of the class `RuleSet` allow to pass an instance of the class `TieBreaker`. Several pre-defined tie-breaking strategies are provided by the library and can be added to a `TieBreaker` by calling the corresponding method. A list of existing tie-breaking strategies and the corresponding methods is given below.
+
+| Method | Description | 
+|:-----:|:------:|
+| `byOperator(Operator):TieBreaker` | Performs tie-breaking according to a specific operator |
+| `preferSimple():TieBreaker` | Prefers rules, which contain few items in their body and head |
+| `preferComplex():TieBreaker` | Prefers rules, which contain many items in their body and head |
+| `preferSimpleBody():TieBreaker` | Prefers rules, which contain few items in their body |
+| `preferComplexBody():TieBreaker` | Prefers rules, which contain many items in their body |
+| `preferSimpleHead():TieBreaker` | Prefers rules, which contain few items in their head |
+| `preferComplexHead():TieBreaker` | Prefers rules, which contain many items in their head |
+| `custom(BiFunction):TieBreaker` | Allows to specify a custom tie-breaking strategy. The given function must return 1, if the first rule should be preferred, -1, if the second one should be preferred, or 0, if no decision can be made |
+
+The following example illustrates, how an instances of the class `TieBreaker` can be created by adding multiple tie-breaking strategies to it. Afterwards, the configured tie-breaking strategy is used to sort a rule set.
+
+```java
+TieBreaker tieBreaker = new TieBreaker().byOperator(new Support()).preferComplex();
+ruleSet.sort(new Confidence(), tieBreaker);
+```
+
 ## Logging
 
 The library uses the [SLF4J](https://www.slf4j.org/) logging facade for writing log messages at different granularities. By adding a logging framework such as [Log4J](https://logging.apache.org/log4j/) or [Logback](https://logback.qos.ch/) to your project and creating a respective configuration file, the Apriori algorithm's log messages can be written to different outputs such as files, databases or the console.
