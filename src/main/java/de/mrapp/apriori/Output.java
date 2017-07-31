@@ -168,8 +168,7 @@ public class Output<ItemType extends Item> implements Serializable, Cloneable {
     public final String toString() {
         return "configuration=" + configuration.toString() + ",\nstartTime=" + startTime +
                 ",\nendTime=" + endTime + ",\nruntime=" + getRuntime() + ",\nfrequentItemSets=" +
-                FrequentItemSets.formatFrequentItemSets(frequentItemSets) + ",\nruleSet=" +
-                ruleSet.toString();
+                frequentItemSets.toString() + ",\nruleSet=" + ruleSet.toString();
     }
 
     @Override

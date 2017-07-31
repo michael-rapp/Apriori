@@ -13,9 +13,9 @@
  */
 package de.mrapp.apriori.modules;
 
+import de.mrapp.apriori.FrequentItemSets;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.Transaction;
-import de.mrapp.apriori.FrequentItemSets;
 import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import de.mrapp.util.datastructure.Pair;
 import org.jetbrains.annotations.NotNull;
