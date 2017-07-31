@@ -142,7 +142,7 @@ public class Output<ItemType extends Item> implements Serializable, Cloneable {
      * of the type {@link SortedSet} or an empty set, if no frequent item sets have been found
      */
     @NotNull
-    public final SortedSet<ItemSet<ItemType>> getFrequentItemSets() {
+    public final FrequentItemSets<ItemType> getFrequentItemSets() {
         return frequentItemSets;
     }
 
