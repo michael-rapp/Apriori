@@ -56,8 +56,8 @@ public class Apriori<ItemType extends Item> {
         private double minSupport;
 
         /**
-         * The minimum support, which should initially be used, when trying to find
-         * a specific number of frequent item sets.
+         * The minimum support, which should initially be used, when trying to find a specific
+         * number of frequent item sets.
          */
         private double maxSupport;
 
@@ -599,6 +599,7 @@ public class Apriori<ItemType extends Item> {
         private RuleGeneratorBuilder(@NotNull final AbstractBuilder<ItemType> builder,
                                      final double minConfidence) {
             super(builder);
+            configuration.setGenerateRules(true);
             minConfidence(minConfidence);
         }
 
@@ -616,6 +617,7 @@ public class Apriori<ItemType extends Item> {
         private RuleGeneratorBuilder(@NotNull final AbstractBuilder<ItemType> builder,
                                      final int ruleCount) {
             super(builder);
+            configuration.setGenerateRules(true);
             ruleCount(ruleCount);
         }
 
