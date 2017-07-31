@@ -314,8 +314,8 @@ public class AprioriTest extends AbstractDataTest {
     }
 
     /**
-     * Tests the functionality of the builder, when configuring the Apriori algorithm to not
-     * trying to find a specific number of frequent item sets.
+     * Tests the functionality of the builder, when configuring the Apriori algorithm to not trying
+     * to find a specific number of frequent item sets.
      */
     @Test
     public final void testBuilderWhenNotTryingToFindASpecificNumberOfFrequentItemSets() {
@@ -336,8 +336,8 @@ public class AprioriTest extends AbstractDataTest {
     }
 
     /**
-     * Tests the functionality of the builder, when configuring the Apriori algorithm to trying
-     * to find a specific number of frequent item sets.
+     * Tests the functionality of the builder, when configuring the Apriori algorithm to trying to
+     * find a specific number of frequent item sets.
      */
     @Test
     public final void testBuilderWhenTryingToFindASpecificNumberOfFrequentItemSets() {
@@ -381,7 +381,7 @@ public class AprioriTest extends AbstractDataTest {
         assertEquals(maxSupport, configuration.getMaxSupport());
         assertEquals(supportDelta, configuration.getSupportDelta());
         assertEquals(frequentItemSetCount, configuration.getFrequentItemSetCount());
-        assertFalse(configuration.isGeneratingRules());
+        assertTrue(configuration.isGeneratingRules());
         assertEquals(minConfidence, configuration.getMinConfidence());
         assertEquals(maxConfidence, configuration.getMaxConfidence());
         assertEquals(confidenceDelta, configuration.getConfidenceDelta());
@@ -412,7 +412,7 @@ public class AprioriTest extends AbstractDataTest {
         assertEquals(maxSupport, configuration.getMaxSupport());
         assertEquals(supportDelta, configuration.getSupportDelta());
         assertEquals(frequentItemSetCount, configuration.getFrequentItemSetCount());
-        assertFalse(configuration.isGeneratingRules());
+        assertTrue(configuration.isGeneratingRules());
         assertEquals(minConfidence, configuration.getMinConfidence());
         assertEquals(maxConfidence, configuration.getMaxConfidence());
         assertEquals(confidenceDelta, configuration.getConfidenceDelta());
