@@ -86,7 +86,7 @@ Output<NamedItem> output = apriori.execute(iterator);
 FrequentItemSets<NamedItem> frequentItemSets = output.getFrequentItemSets();
 ```
 
-By invoking the `execute`-method of the class `Apriori` the execution of the algorithm is started. It results in an instance of the class `Output` to be returned. Such an output contains various information about the executed algorithm. By calling the `getFrequentItemSets`-method, the frequent item sets, which have been found by the algorithm, can be obtained. They are given as an instance of the class `FrequentItemSets` and are sorted by their support in decreasing order. The class `FrequentItemSets` contains the found item sets as `ItemSet` instances and can be used like a regular `java.util.SortedSet`. The individual `ItemSet` instances provide the `getSupport`-method, which allows to retrieve the support of the respective item set.
+By invoking the `execute`-method of the class `Apriori` the execution of the algorithm is started. It results in an instance of the class `Output` to be returned. Such an output contains various information about the executed algorithm. By calling the `getFrequentItemSets`-method, the frequent item sets, which have been found by the algorithm, can be obtained. They are given as an instance of the class `FrequentItemSets` and are sorted by their support in decreasing order. The class `FrequentItemSets` contains the found item sets as `ItemSet` instances. Both, the class `FrequentItemSets` as well as the class `ItemSet` implement the interface `java.util.SortedSet`. Furthermore, the individual `ItemSet` instances provide a `getSupport`-method, which allows to retrieve the support of the respective item set.
 
 ### Trying to find a specific number of frequent item sets
 
