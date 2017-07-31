@@ -195,11 +195,11 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSe
 
     @Override
     public final int compareTo(@NotNull final ItemSet<ItemType> o) {
-        return support > o.getSupport() ? 1 : (support < o.getSupport() ? -1 : 0);
+        return Double.compare(support, o.getSupport());
     }
 
     @Override
-    public final ItemSet<ItemType> clone()  {
+    public final ItemSet<ItemType> clone() {
         return new ItemSet<>(this);
     }
 
