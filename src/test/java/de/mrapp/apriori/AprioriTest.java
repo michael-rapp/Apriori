@@ -545,7 +545,7 @@ public class AprioriTest extends AbstractDataTest {
         itemSet2.setSupport(0.9);
         map.put(itemSet1.hashCode(), itemSet1);
         map.put(itemSet2.hashCode(), itemSet2);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         AssociationRule<NamedItem> associationRule = new AssociationRule<>(new ItemSet<>(),
                 new ItemSet<>(), 0.5);
         ruleSet.add(associationRule);

@@ -13,10 +13,7 @@
  */
 package de.mrapp.apriori.modules;
 
-import de.mrapp.apriori.AssociationRule;
-import de.mrapp.apriori.Item;
-import de.mrapp.apriori.ItemSet;
-import de.mrapp.apriori.RuleSet;
+import de.mrapp.apriori.*;
 import de.mrapp.apriori.metrics.Confidence;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -137,7 +134,8 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
         ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
         ensureAtMaximum(minConfidence, 1, "The minimum confidence must be at maximum 1");
         LOGGER.debug("Generating association rules");
-        RuleSet<ItemType> ruleSet = new RuleSet<>();
+        RuleSet<ItemType> ruleSet = new RuleSet<>(
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
 
         for (ItemSet<ItemType> itemSet : frequentItemSets.values()) {
             if (itemSet.size() > 1) {

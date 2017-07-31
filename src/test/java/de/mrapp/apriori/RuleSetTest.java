@@ -20,9 +20,10 @@ import de.mrapp.apriori.metrics.Support;
 import org.junit.Test;
 
 import java.text.DecimalFormat;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -35,31 +36,41 @@ import static org.mockito.Mockito.mock;
 public class RuleSetTest {
 
     /**
-     * Tests, if all class members are initialized correctly by the default constructor.
+     * Tests, if all class members are initialized correctly by the constructor, which expects a
+     * comparator as a parameter.
      */
     @Test
-    public final void testDefaultConstructor() {
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+    public final void testConstructorWithComparatorParameter() {
+        Comparator<AssociationRule<?>> comparator = new AssociationRule.Comparator(
+                new Confidence(), new TieBreaker()).reversed();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(comparator);
         assertTrue(ruleSet.isEmpty());
         assertEquals(0, ruleSet.size());
+        assertEquals(comparator, ruleSet.comparator());
     }
 
     /**
      * Tests, if all class members are initialized correctly by the constructor, which excepts a
-     * sorted set as an argument.
+     * collection and a comparator as parameters.
      */
     @Test
-    public final void testConstructorWithSortedSetArgument() {
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(),
-                new ItemSet<>(), 0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(),
-                new ItemSet<>(), 0.6);
-        SortedSet<AssociationRule<NamedItem>> sortedSet = new TreeSet<>(
-                new AssociationRule.Comparator(new Support(), new TieBreaker()));
-        sortedSet.add(associationRule1);
-        sortedSet.add(associationRule2);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(sortedSet);
-        assertEquals(sortedSet.size(), ruleSet.size());
+    public final void testConstructorWithCollectionAndComparatorParameters() {
+        ItemSet<NamedItem> body1 = new ItemSet<>();
+        body1.add(new NamedItem("a"));
+        ItemSet<NamedItem> head1 = new ItemSet<>();
+        head1.add(new NamedItem("b"));
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, head1, 0.5);
+        ItemSet<NamedItem> body2 = new ItemSet<>();
+        body2.add(new NamedItem("c"));
+        ItemSet<NamedItem> head2 = new ItemSet<>();
+        head2.add(new NamedItem("d"));
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.5);
+        Collection<AssociationRule<NamedItem>> collection = new LinkedList<>();
+        collection.add(associationRule1);
+        collection.add(associationRule2);
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(collection,
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
+        assertEquals(collection.size(), ruleSet.size());
         Iterator<AssociationRule<NamedItem>> iterator = ruleSet.iterator();
         assertEquals(associationRule2, iterator.next());
         assertEquals(associationRule1, iterator.next());
@@ -68,104 +79,11 @@ public class RuleSetTest {
 
     /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
-     * a sorted set as an argument, if the sorted set is null.
+     * a collection and a comparator as parameters, if the collection is null.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorWithSortedSetArgumentThrowsException() {
-        new RuleSet<>(null);
-    }
-
-    /**
-     * Tests the functionality of the method, which allows to add new rules to a rule set.
-     */
-    @Test
-    public final void testAdd() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        body1.setSupport(0.5);
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("b"));
-        body2.setSupport(0.7);
-        ItemSet<NamedItem> body3 = new ItemSet<>();
-        body3.add(new NamedItem("c"));
-        body3.setSupport(0.9);
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule3 = new AssociationRule<>(body3, new ItemSet<>(),
-                0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
-        assertTrue(ruleSet.isEmpty());
-        ruleSet.add(associationRule1);
-        ruleSet.add(associationRule2);
-        ruleSet.add(associationRule3);
-        ruleSet.add(associationRule3);
-        assertEquals(3, ruleSet.size());
-        Iterator<AssociationRule<NamedItem>> iterator = ruleSet.iterator();
-        assertEquals(associationRule1, iterator.next());
-        assertEquals(associationRule2, iterator.next());
-        assertEquals(associationRule3, iterator.next());
-        assertFalse(iterator.hasNext());
-    }
-
-    /**
-     * Tests the functionality of the method, which allows to remove rules from a rule set.
-     */
-    @Test
-    public final void testRemove() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        body1.setSupport(0.5);
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("b"));
-        body2.setSupport(0.7);
-        ItemSet<NamedItem> body3 = new ItemSet<>();
-        body3.add(new NamedItem("c"));
-        body3.setSupport(0.9);
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule3 = new AssociationRule<>(body3, new ItemSet<>(),
-                0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
-        ruleSet.add(associationRule1);
-        ruleSet.add(associationRule2);
-        ruleSet.add(associationRule3);
-        assertEquals(3, ruleSet.size());
-        ruleSet.remove(associationRule2);
-        ruleSet.remove(associationRule2);
-        assertEquals(2, ruleSet.size());
-        Iterator<AssociationRule<NamedItem>> iterator = ruleSet.iterator();
-        assertEquals(associationRule1, iterator.next());
-        assertEquals(associationRule3, iterator.next());
-        assertFalse(iterator.hasNext());
-    }
-
-    /**
-     * Tests the functionality of the method, which allows to check, whether an item is contained by
-     * an item set, or not.
-     */
-    @Test
-    public final void testContains() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("b"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.7);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
-        ruleSet.add(associationRule1);
-        assertEquals(1, ruleSet.size());
-        assertTrue(ruleSet.contains(associationRule1));
-        assertFalse(ruleSet.contains(associationRule2));
-        ruleSet.clear();
-        assertTrue(ruleSet.isEmpty());
-        assertFalse(ruleSet.contains(associationRule1));
-        assertFalse(ruleSet.contains(associationRule2));
+    public final void testConstructorWithCollectionAndComparatorParametersThrowsException() {
+        new RuleSet<>(null, null);
     }
 
     /**
@@ -183,7 +101,8 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         assertEquals(associationRule1, ruleSet.first());
@@ -209,7 +128,8 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         assertEquals(associationRule2, ruleSet.first());
@@ -226,7 +146,7 @@ public class RuleSetTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testSortThrowsExceptionIfOperatorIsNull() {
-        new RuleSet<>().sort(null);
+        new RuleSet<>(null).sort(null);
     }
 
     /**
@@ -235,7 +155,7 @@ public class RuleSetTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testSortThrowsExceptionIfTieBreakerIsNull() {
-        new RuleSet<>().sort(mock(Operator.class), null);
+        new RuleSet<>(null).sort(mock(Operator.class), null);
     }
 
     /**
@@ -251,7 +171,8 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.7);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         assertEquals(2, ruleSet.size());
@@ -274,7 +195,8 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
         ruleSet.add(associationRule2);
         ruleSet.add(associationRule1);
         assertEquals(2, ruleSet.size());
@@ -291,7 +213,7 @@ public class RuleSetTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testFilterThrowsExceptionWhenOperatorIsNull() {
-        new RuleSet<>().filter(null, 0.5);
+        new RuleSet<>(null).filter(null, 0.5);
     }
 
     /**
@@ -301,7 +223,7 @@ public class RuleSetTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testFilterThrowsExceptionWhenThresholdIsNotGreaterThanZero() {
-        new RuleSet<>().filter(mock(Operator.class), 0);
+        new RuleSet<>(null).filter(mock(Operator.class), 0);
     }
 
     /**
@@ -311,7 +233,7 @@ public class RuleSetTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testFilterThrowsExceptionWhenTieBreakerIsNull() {
-        new RuleSet<>().filter(mock(Operator.class), 0.5, null);
+        new RuleSet<>(null).filter(mock(Operator.class), 0.5, null);
     }
 
     /**
@@ -319,16 +241,26 @@ public class RuleSetTest {
      */
     @Test
     public final void testClone() {
-        ItemSet<NamedItem> body = new ItemSet<>();
-        body.add(new NamedItem("a"));
-        ItemSet<NamedItem> head = new ItemSet<>();
-        head.add(new NamedItem("b"));
-        AssociationRule<NamedItem> associationRule = new AssociationRule<>(body, head, 0.5);
-        RuleSet<NamedItem> ruleSet1 = new RuleSet<>();
-        ruleSet1.add(associationRule);
+        ItemSet<NamedItem> body1 = new ItemSet<>();
+        body1.add(new NamedItem("a"));
+        body1.setSupport(0.5);
+        ItemSet<NamedItem> head1 = new ItemSet<>();
+        head1.add(new NamedItem("b"));
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, head1, 0.5);
+        ItemSet<NamedItem> body2 = new ItemSet<>();
+        body2.add(new NamedItem("c"));
+        body2.setSupport(0.6);
+        ItemSet<NamedItem> head2 = new ItemSet<>();
+        head2.add(new NamedItem("d"));
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.5);
+        RuleSet<NamedItem> ruleSet1 = new RuleSet<>(
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
+        ruleSet1.add(associationRule1);
+        ruleSet1.add(associationRule2);
         RuleSet<NamedItem> ruleSet2 = ruleSet1.clone();
         assertEquals(ruleSet1.size(), ruleSet2.size());
-        assertEquals(associationRule, ruleSet2.first());
+        assertEquals(ruleSet1.first(), ruleSet2.first());
+        assertEquals(ruleSet1.last(), ruleSet2.last());
     }
 
     /**
@@ -346,7 +278,8 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.7);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(
+                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         DecimalFormat decimalFormat = new DecimalFormat();
@@ -370,59 +303,7 @@ public class RuleSetTest {
      */
     @Test
     public final void testToStringIfEmpty() {
-        assertEquals("[]", new RuleSet<>().toString());
-    }
-
-    /**
-     * Tests the functionality of the hashCode-method.
-     */
-    @Test
-    public final void testHashCode() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("b"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.7);
-        RuleSet<NamedItem> ruleSet1 = new RuleSet<>();
-        RuleSet<NamedItem> ruleSet2 = new RuleSet<>();
-        assertEquals(ruleSet1.hashCode(), ruleSet1.hashCode());
-        assertEquals(ruleSet1.hashCode(), ruleSet2.hashCode());
-        ruleSet1.add(associationRule1);
-        assertNotEquals(ruleSet1.hashCode(), ruleSet2.hashCode());
-        ruleSet2.add(associationRule1);
-        assertEquals(ruleSet1.hashCode(), ruleSet2.hashCode());
-        ruleSet1.add(associationRule2);
-        assertNotEquals(ruleSet1.hashCode(), ruleSet2.hashCode());
-    }
-
-    /**
-     * Tests the functionality of the equals-method.
-     */
-    @Test
-    public final void testEquals() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("b"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.7);
-        RuleSet<NamedItem> ruleSet1 = new RuleSet<>();
-        RuleSet<NamedItem> ruleSet2 = new RuleSet<>();
-        assertFalse(ruleSet1.equals(null));
-        assertFalse(ruleSet1.equals(new Object()));
-        assertTrue(ruleSet1.equals(ruleSet1));
-        assertTrue(ruleSet1.equals(ruleSet2));
-        ruleSet1.add(associationRule1);
-        assertFalse(ruleSet1.equals(ruleSet2));
-        ruleSet2.add(associationRule1);
-        assertTrue(ruleSet1.equals(ruleSet2));
-        ruleSet1.add(associationRule2);
-        assertFalse(ruleSet1.equals(ruleSet2));
+        assertEquals("[]", new RuleSet<>(null).toString());
     }
 
 }

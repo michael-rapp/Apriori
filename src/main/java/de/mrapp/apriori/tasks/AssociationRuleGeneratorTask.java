@@ -14,9 +14,8 @@
 package de.mrapp.apriori.tasks;
 
 import de.mrapp.apriori.Apriori.Configuration;
-import de.mrapp.apriori.Item;
-import de.mrapp.apriori.ItemSet;
-import de.mrapp.apriori.RuleSet;
+import de.mrapp.apriori.*;
+import de.mrapp.apriori.metrics.Confidence;
 import de.mrapp.apriori.modules.AssociationRuleGenerator;
 import de.mrapp.apriori.modules.AssociationRuleGeneratorModule;
 import org.jetbrains.annotations.NotNull;
@@ -82,22 +81,23 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends
     public final RuleSet<ItemType> generateAssociationRules(
             @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets) {
         if (getConfiguration().getRuleCount() > 0) {
-            RuleSet<ItemType> result = new RuleSet<>();
+            RuleSet<ItemType> result = null;
             double currentMinConfidence = getConfiguration().getMaxConfidence();
 
             while (currentMinConfidence >= getConfiguration().getMinConfidence() &&
-                    result.size() < getConfiguration().getRuleCount()) {
+                    (result == null || result.size() < getConfiguration().getRuleCount())) {
                 RuleSet<ItemType> ruleSet = associationRuleGenerator
                         .generateAssociationRules(frequentItemSets, currentMinConfidence);
 
-                if (ruleSet.size() >= result.size()) {
+                if (result == null || ruleSet.size() >= result.size()) {
                     result = ruleSet;
                 }
 
                 currentMinConfidence -= getConfiguration().getConfidenceDelta();
             }
 
-            return result;
+            return result != null ? result : new RuleSet<>(
+                    new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
         } else {
             return associationRuleGenerator.generateAssociationRules(frequentItemSets,
                     getConfiguration().getMinConfidence());

@@ -56,7 +56,7 @@ public class AssociationRuleGeneratorTaskTest {
                 @NotNull final Map<Integer, ? extends ItemSet<NamedItem>> frequentItemSets,
                 final double minConfidence) {
             minConfidences.add(minConfidence);
-            return new RuleSet<>();
+            return new RuleSet<>(null);
         }
 
     }

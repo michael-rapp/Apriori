@@ -36,7 +36,7 @@ public class OutputTest {
         long endTime = 2;
         FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
         frequentItemSets.add(new ItemSet<>());
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
         Output<NamedItem> output = new Output<>(configuration, startTime, endTime, frequentItemSets,
                 ruleSet);
@@ -68,8 +68,8 @@ public class OutputTest {
     }
 
     /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown, if the end time, which is
-     * passed to the constructor, is less than the start time.
+     * Ensures, that an {@link IllegalArgumentException} is thrown, if the end time, which is passed
+     * to the constructor, is less than the start time.
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenEndTimeIsLessThanStartTime() {
@@ -95,7 +95,7 @@ public class OutputTest {
         long endTime = 2;
         FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
         frequentItemSets.add(new ItemSet<>());
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
         Output<NamedItem> output1 = new Output<>(configuration, startTime, endTime,
                 frequentItemSets,
@@ -117,7 +117,7 @@ public class OutputTest {
         itemSet1.add(new NamedItem("a"));
         itemSet1.setSupport(0.5);
         frequentItemSets.add(itemSet1);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ItemSet<NamedItem> itemSet2 = new ItemSet<>();
         itemSet2.add(new NamedItem("b"));
         itemSet2.setSupport(0.6);
@@ -161,9 +161,9 @@ public class OutputTest {
         output1 = new Output<>(new Configuration(), 0, 2, frequentItemSets, null);
         assertNotSame(output1.hashCode(), output2.hashCode());
         output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetArraySet<>(null),
-                new RuleSet<>());
+                new RuleSet<>(null));
         assertNotSame(output1.hashCode(), output2.hashCode());
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
         output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetArraySet<>(null),
                 ruleSet);
@@ -198,9 +198,9 @@ public class OutputTest {
         output1 = new Output<>(new Configuration(), 0, 2, frequentItemSets, null);
         assertFalse(output1.equals(output2));
         output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetArraySet<>(null),
-                new RuleSet<>());
+                new RuleSet<>(null));
         assertFalse(output1.equals(output2));
-        RuleSet<NamedItem> ruleSet = new RuleSet<>();
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
         output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetArraySet<>(null),
                 ruleSet);

@@ -59,7 +59,7 @@ public class AssociationRule<ItemType extends Item> implements Serializable, Clo
          * @param tieBreaker The tie-breaking strategy, which should be used, as an instance of the
          *                   class {@link TieBreaker}. The tie-breaking strategy may not be null
          */
-        Comparator(@NotNull final Operator operator, final TieBreaker tieBreaker) {
+        public Comparator(@NotNull final Operator operator, final TieBreaker tieBreaker) {
             ensureNotNull(operator, "The operator may not be null");
             ensureNotNull(tieBreaker, "The tie-breaking strategy may not be null");
             this.operator = operator;

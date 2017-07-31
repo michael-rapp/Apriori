@@ -26,7 +26,6 @@ import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.SortedSet;
 
 import static de.mrapp.util.Condition.ensureGreater;
 import static de.mrapp.util.Condition.ensureNotNull;
@@ -38,8 +37,8 @@ import static de.mrapp.util.Condition.ensureNotNull;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule<ItemType>>,
-        Serializable, Cloneable {
+public class RuleSet<ItemType extends Item> extends
+        SortedArraySet<AssociationRule<ItemType>> implements Serializable, Cloneable {
 
     /**
      * The constant serial version UID.
@@ -47,27 +46,29 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
     private static final long serialVersionUID = 1L;
 
     /**
-     * A sorted set, which contains the rules, the rule set consists of.
-     */
-    public final SortedSet<AssociationRule<ItemType>> rules;
-
-    /**
      * Creates an empty rule set.
+     *
+     * @param comparator The comparator, which should be used to sort the set, as as an instance of
+     *                   the type {@link Comparator} or null, if the natural ordering should be
+     *                   used
      */
-    public RuleSet() {
-        this(new SortedArraySet<>(
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed()));
+    public RuleSet(@Nullable final Comparator<? super AssociationRule<ItemType>> comparator) {
+        super(comparator);
     }
 
     /**
-     * Creates a new rule set from a sorted set.
+     * Creates a new rule set.
      *
-     * @param rules The sorted set, the rule set should be created from, as an instance of the type
-     *              {@link SortedSet}. The sorted set may not be null
+     * @param rules      A collection, which contains the rules, which should be added to the rule
+     *                   set, as an instance of the type {@link Collection} or an empty collection,
+     *                   if no rules should be added
+     * @param comparator The comparator, which should be used to sort the set, as as an instance of
+     *                   the type {@link Comparator} or null, if the natural ordering should be
+     *                   used
      */
-    protected RuleSet(@NotNull final SortedSet<AssociationRule<ItemType>> rules) {
-        ensureNotNull(rules, "The rules may not be null");
-        this.rules = rules;
+    protected RuleSet(@NotNull final Collection<AssociationRule<ItemType>> rules,
+                      @Nullable final Comparator<? super AssociationRule<ItemType>> comparator) {
+        super(rules, comparator);
     }
 
     /**
@@ -103,10 +104,7 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
                                         @NotNull final TieBreaker tieBreaker) {
         ensureNotNull(operator, "The operator may not be null");
         ensureNotNull(tieBreaker, "The tie-breaking strategy may not be null");
-        SortedSet<AssociationRule<ItemType>> rules = new SortedArraySet<>(
-                new AssociationRule.Comparator(operator, tieBreaker).reversed());
-        rules.addAll(this);
-        return new RuleSet<>(rules);
+        return new RuleSet<>(this, new AssociationRule.Comparator(operator, tieBreaker).reversed());
     }
 
     /**
@@ -149,133 +147,24 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
         ensureNotNull(operator, "The operator may not be null");
         ensureGreater(threshold, 0, "The threshold must be greater than 0");
         ensureNotNull(tieBreaker, "The tie-breaking strategy may not be null");
-        SortedSet<AssociationRule<ItemType>> rules = new SortedArraySet<>(
+        RuleSet<ItemType> filteredRuleSet = new RuleSet<>(
                 new AssociationRule.Comparator(operator, tieBreaker).reversed());
 
         for (AssociationRule<ItemType> rule : this) {
             double heuristicValue = operator.evaluate(rule);
 
             if (heuristicValue >= threshold) {
-                rules.add(rule);
+                filteredRuleSet.add(rule);
             }
         }
 
-        return new RuleSet<>(rules);
-    }
-
-    @Nullable
-    @Override
-    public final Comparator<? super AssociationRule<ItemType>> comparator() {
-        return rules.comparator();
-    }
-
-    @NotNull
-    @Override
-    public final SortedSet<AssociationRule<ItemType>> subSet(
-            final AssociationRule<ItemType> fromElement,
-            final AssociationRule<ItemType> toElement) {
-        return rules.subSet(fromElement, toElement);
-    }
-
-    @NotNull
-    @Override
-    public final SortedSet<AssociationRule<ItemType>> headSet(
-            final AssociationRule<ItemType> toElement) {
-        return rules.headSet(toElement);
-    }
-
-    @NotNull
-    @Override
-    public final SortedSet<AssociationRule<ItemType>> tailSet(
-            final AssociationRule<ItemType> fromElement) {
-        return rules.tailSet(fromElement);
-    }
-
-    @Override
-    public final AssociationRule<ItemType> first() {
-        return rules.first();
-    }
-
-    @Override
-    public final AssociationRule<ItemType> last() {
-        return rules.last();
-    }
-
-    @Override
-    public final int size() {
-        return rules.size();
-    }
-
-    @Override
-    public final boolean isEmpty() {
-        return rules.isEmpty();
-    }
-
-    @Override
-    public final boolean contains(final Object o) {
-        return rules.contains(o);
-    }
-
-    @NotNull
-    @Override
-    public final Iterator<AssociationRule<ItemType>> iterator() {
-        return rules.iterator();
-    }
-
-    @NotNull
-    @Override
-    public final Object[] toArray() {
-        return rules.toArray();
-    }
-
-    @SuppressWarnings("SuspiciousToArrayCall")
-    @NotNull
-    @Override
-    public final <T> T[] toArray(@NotNull final T[] a) {
-        return rules.toArray(a);
-    }
-
-    @Override
-    public final boolean add(final AssociationRule<ItemType> rule) {
-        return rules.add(rule);
-    }
-
-    @Override
-    public final boolean remove(final Object o) {
-        return rules.remove(o);
-    }
-
-    @Override
-    public final boolean containsAll(@NotNull final Collection<?> c) {
-        return rules.containsAll(c);
-    }
-
-    @Override
-    public final boolean addAll(@NotNull final Collection<? extends AssociationRule<ItemType>> c) {
-        return rules.addAll(c);
-    }
-
-    @Override
-    public final boolean retainAll(@NotNull final Collection<?> c) {
-        return rules.retainAll(c);
-    }
-
-    @Override
-    public final boolean removeAll(@NotNull final Collection<?> c) {
-        return rules.removeAll(c);
-    }
-
-    @Override
-    public final void clear() {
-        rules.clear();
+        return filteredRuleSet;
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public final RuleSet<ItemType> clone() {
-        SortedSet<AssociationRule<ItemType>> clonedRules = new SortedArraySet<>(rules.comparator());
-        clonedRules.addAll(rules);
-        return new RuleSet<>(clonedRules);
+        return new RuleSet<>(this, comparator());
     }
 
     @Override
@@ -307,26 +196,6 @@ public class RuleSet<ItemType extends Item> implements SortedSet<AssociationRule
 
         stringBuilder.append("]");
         return stringBuilder.toString();
-    }
-
-    @Override
-    public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + rules.hashCode();
-        return result;
-    }
-
-    @Override
-    public final boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RuleSet<?> other = (RuleSet<?>) obj;
-        return rules.equals(other.rules);
     }
 
 }
