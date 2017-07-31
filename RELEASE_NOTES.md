@@ -1,6 +1,12 @@
 # Apriori - RELEASE NOTES
 
-## Version 1.1.0 (Ju. 30th 2017)
+## Version 1.1.1 (Jul. 31th 2017)
+
+A bugfix release, which fixes the following issues:
+
+- https://github.com/michael-rapp/Apriori/issues/3
+
+## Version 1.1.0 (Jul. 30th 2017)
 
 A feature release, which introduces the following changes:
 
