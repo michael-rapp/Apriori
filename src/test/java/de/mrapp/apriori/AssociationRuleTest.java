@@ -82,6 +82,26 @@ public class AssociationRuleTest {
     }
 
     /**
+     * Tests the functionality of the compareTo-method.
+     */
+    @Test
+    public final void testCompareTo() {
+        NamedItem item1 = new NamedItem("a");
+        NamedItem item2 = new NamedItem("b");
+        ItemSet<NamedItem> body = new ItemSet<>();
+        body.add(item1);
+        ItemSet<NamedItem> head = new ItemSet<>();
+        head.add(item2);
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body, head, 0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body, head, 0.5);
+        assertEquals(0, associationRule1.compareTo(associationRule2));
+        associationRule2 = new AssociationRule<>(body, head, 0.6);
+        assertEquals(-1, associationRule1.compareTo(associationRule2));
+        associationRule2 = new AssociationRule<>(body, head, 0.4);
+        assertEquals(1, associationRule1.compareTo(associationRule2));
+    }
+
+    /**
      * Tests the functionality of the clone-method.
      */
     @Test

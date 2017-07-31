@@ -30,7 +30,8 @@ import static de.mrapp.util.Condition.*;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class AssociationRule<ItemType extends Item> implements Serializable, Cloneable {
+public class AssociationRule<ItemType extends Item> implements
+        Comparable<AssociationRule<ItemType>>, Serializable, Cloneable {
 
     /**
      * A comparator, which allows to compare the heuristic values of two association rules according
@@ -149,6 +150,11 @@ public class AssociationRule<ItemType extends Item> implements Serializable, Clo
      */
     public final double getSupport() {
         return support;
+    }
+
+    @Override
+    public final int compareTo(@NotNull final AssociationRule<ItemType> o) {
+        return Double.compare(getSupport(), o.getSupport());
     }
 
     @Override
