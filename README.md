@@ -90,7 +90,11 @@ By invoking the `execute`-method of the class `Apriori` the execution of the alg
 
 ### Trying to find a specific number of frequent item sets
 
-As an alternative to specifying a certain minimum support, the algorithm can be configure to use varying values. This allows to search for a specific number of frequent item sets by starting with a great value for the minimum support and decreasing it successively until the given number of item sets is found or the minimum support reaches 0. In order to configure an instance of the class `Apriori` that way, the following code can be used:
+As an alternative to specifying a certain minimum support, the algorithm can be configure to use varying values. This allows to search for a specific number of frequent item sets by starting with a great value for the minimum support and decreasing it successively until the given number of item sets is found or the minimum support reaches 0. 
+
+**_This will not guarantee the specified number of frequent item sets to be found. The algorithm just TRIES to find at least as many frequent item sets as specified. However, this might not be possible, depending on the data set. Also more item sets than specified might be returned, if all of them reach the minimum confidence used in the last iteration._**
+
+In order to configure an instance of the class `Apriori` to try to find a specific number of frequent item sets, the following code can be used:
 
 ```java
 int count = 5;
@@ -145,7 +149,11 @@ The induced rules can be obtained from the resulting `Output` instance by callin
 
 ### Trying to generate a specific number of association rules
 
-In addition to generating all rules, which reach a certain minimum confidence, the algorithm can be configured to try to generate a specific number of rules. The sample code below illustrates how a `Apriori` instance can be created to meet this requirement:
+In addition to generating all rules, which reach a certain minimum confidence, the algorithm can be configured to try to generate a specific number of rules.
+
+**_This will not guarantee the specified number of rules to be generated. The algorithm just TRIES to generate at least as many association rules as specified. However, this might not be possible, depending on the available frequent item sets. Also more rules than specified might be returned, if all of them reach the minimum confidence used in the last iteration._**
+
+The sample code below illustrates how a `Apriori` instance can be configured to try to generate a specific number of association rules:
 
 ```java
 double minSupport = 0.5;
