@@ -11,10 +11,8 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.mrapp.apriori.datastructure;
+package de.mrapp.apriori;
 
-import de.mrapp.apriori.Item;
-import de.mrapp.apriori.ItemSet;
 import de.mrapp.util.datastructure.SortedArraySet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,23 +23,23 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * A tree set, which contains frequent item sets.
+ * A sorted set, which contains frequent item sets.
  *
  * @param <ItemType> The type of the items, which are contained by the frequent item sets
  * @author Michael Rapp
- * @since 1.0.0
+ * @since 1.2.0
  */
-public class FrequentItemSetArraySet<ItemType extends Item> extends
+public class FrequentItemSets<ItemType extends Item> extends
         SortedArraySet<ItemSet<ItemType>> implements Cloneable {
 
     /**
-     * Creates a new tree set, which contains frequent item sets.
+     * Creates a new sorted set, which contains frequent item sets.
      *
      * @param comparator The comparator, which should be used to sort the set, as as an instance of
      *                   the type {@link Comparator} or null, if the natural ordering should be
      *                   used
      */
-    public FrequentItemSetArraySet(
+    public FrequentItemSets(
             @Nullable final Comparator<? super ItemSet<ItemType>> comparator) {
         super(comparator);
     }
@@ -85,8 +83,8 @@ public class FrequentItemSetArraySet<ItemType extends Item> extends
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    public FrequentItemSetArraySet<ItemType> clone() {
-        FrequentItemSetArraySet<ItemType> clone = new FrequentItemSetArraySet<>(comparator());
+    public FrequentItemSets<ItemType> clone() {
+        FrequentItemSets<ItemType> clone = new FrequentItemSets<>(comparator());
         clone.addAll(this);
         return clone;
     }

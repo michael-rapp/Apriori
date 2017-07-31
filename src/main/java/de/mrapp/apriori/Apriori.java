@@ -13,7 +13,6 @@
  */
 package de.mrapp.apriori;
 
-import de.mrapp.apriori.datastructure.FrequentItemSetArraySet;
 import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import de.mrapp.apriori.tasks.AssociationRuleGeneratorTask;
 import de.mrapp.apriori.tasks.FrequentItemSetMinerTask;
@@ -837,7 +836,7 @@ public class Apriori<ItemType extends Item> {
             ruleSet = associationRuleGeneratorTask.generateAssociationRules(frequentItemSets);
         }
 
-        FrequentItemSetArraySet<ItemType> sortedItemSets = new FrequentItemSetArraySet<>(
+        FrequentItemSets<ItemType> sortedItemSets = new FrequentItemSets<>(
                 Comparator.reverseOrder());
         frequentItemSets.values().forEach(x -> sortedItemSets.add(new ItemSet<>(x)));
         long endTime = System.currentTimeMillis();

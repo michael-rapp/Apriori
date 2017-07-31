@@ -14,7 +14,6 @@
 package de.mrapp.apriori;
 
 import de.mrapp.apriori.Apriori.Configuration;
-import de.mrapp.apriori.datastructure.FrequentItemSetArraySet;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -34,7 +33,7 @@ public class OutputTest {
         Configuration configuration = new Configuration();
         long startTime = 0;
         long endTime = 2;
-        FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
+        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(null);
         frequentItemSets.add(new ItemSet<>());
         RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
@@ -55,7 +54,7 @@ public class OutputTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenConfigurationIsNull() {
-        new Output<>(null, 0, 1, new FrequentItemSetArraySet<>(null), null);
+        new Output<>(null, 0, 1, new FrequentItemSets<>(null), null);
     }
 
     /**
@@ -64,7 +63,7 @@ public class OutputTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenStartTimeIsLessThanZero() {
-        new Output<>(new Configuration(), -1, 0, new FrequentItemSetArraySet<>(null), null);
+        new Output<>(new Configuration(), -1, 0, new FrequentItemSets<>(null), null);
     }
 
     /**
@@ -73,7 +72,7 @@ public class OutputTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenEndTimeIsLessThanStartTime() {
-        new Output<>(new Configuration(), 1, 0, new FrequentItemSetArraySet<>(null), null);
+        new Output<>(new Configuration(), 1, 0, new FrequentItemSets<>(null), null);
     }
 
     /**
@@ -93,7 +92,7 @@ public class OutputTest {
         Configuration configuration = new Configuration();
         long startTime = 0;
         long endTime = 2;
-        FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
+        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(null);
         frequentItemSets.add(new ItemSet<>());
         RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
@@ -112,7 +111,7 @@ public class OutputTest {
         Configuration configuration = new Configuration();
         long startTime = 0;
         long endTime = 2;
-        FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
+        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(null);
         ItemSet<NamedItem> itemSet1 = new ItemSet<>();
         itemSet1.add(new NamedItem("a"));
         itemSet1.setSupport(0.5);
@@ -131,7 +130,7 @@ public class OutputTest {
         assertEquals("configuration=" + configuration.toString() + ",\nstartTime=" + startTime +
                 ",\nendTime=" + endTime + ",\nruntime=" + output.getRuntime() +
                 ",\nfrequentItemSets=" +
-                FrequentItemSetArraySet.formatFrequentItemSets(frequentItemSets) + ",\nruleSet=" +
+                FrequentItemSets.formatFrequentItemSets(frequentItemSets) + ",\nruleSet=" +
                 ruleSet.toString(), output.toString());
     }
 
@@ -141,31 +140,31 @@ public class OutputTest {
     @Test
     public final void testHashCode() {
         Output<NamedItem> output1 = new Output<>(new Configuration(), 0, 2,
-                new FrequentItemSetArraySet<>(null), null);
+                new FrequentItemSets<>(null), null);
         Output<NamedItem> output2 = new Output<>(new Configuration(), 0, 2,
-                new FrequentItemSetArraySet<>(null), null);
+                new FrequentItemSets<>(null), null);
         assertEquals(output1.hashCode(), output1.hashCode());
         assertEquals(output1.hashCode(), output2.hashCode());
         Configuration configuration = new Configuration();
         configuration.setMinSupport(0.2);
-        output1 = new Output<>(configuration, 0, 2, new FrequentItemSetArraySet<>(null), null);
+        output1 = new Output<>(configuration, 0, 2, new FrequentItemSets<>(null), null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSetArraySet<>(null),
+        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSets<>(null),
                 null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSetArraySet<>(null),
+        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSets<>(null),
                 null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
+        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(null);
         frequentItemSets.add(new ItemSet<>());
         output1 = new Output<>(new Configuration(), 0, 2, frequentItemSets, null);
         assertNotSame(output1.hashCode(), output2.hashCode());
-        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetArraySet<>(null),
+        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSets<>(null),
                 new RuleSet<>(null));
         assertNotSame(output1.hashCode(), output2.hashCode());
         RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
-        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetArraySet<>(null),
+        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSets<>(null),
                 ruleSet);
         assertNotSame(output1.hashCode(), output2.hashCode());
     }
@@ -176,33 +175,33 @@ public class OutputTest {
     @Test
     public final void testEquals() {
         Output<NamedItem> output1 = new Output<>(new Configuration(), 0, 2,
-                new FrequentItemSetArraySet<>(null), null);
+                new FrequentItemSets<>(null), null);
         Output<NamedItem> output2 = new Output<>(new Configuration(), 0, 2,
-                new FrequentItemSetArraySet<>(null), null);
+                new FrequentItemSets<>(null), null);
         assertFalse(output1.equals(null));
         assertFalse(output1.equals(new Object()));
         assertTrue(output1.equals(output1));
         assertTrue(output1.equals(output2));
         Configuration configuration = new Configuration();
         configuration.setMinSupport(0.2);
-        output1 = new Output<>(configuration, 0, 2, new FrequentItemSetArraySet<>(null), null);
+        output1 = new Output<>(configuration, 0, 2, new FrequentItemSets<>(null), null);
         assertFalse(output1.equals(output2));
-        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSetArraySet<>(null),
+        output1 = new Output<>(new Configuration(), 1, 2, new FrequentItemSets<>(null),
                 null);
         assertFalse(output1.equals(output2));
-        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSetArraySet<>(null),
+        output1 = new Output<>(new Configuration(), 0, 1, new FrequentItemSets<>(null),
                 null);
         assertFalse(output1.equals(output2));
-        FrequentItemSetArraySet<NamedItem> frequentItemSets = new FrequentItemSetArraySet<>(null);
+        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(null);
         frequentItemSets.add(new ItemSet<>());
         output1 = new Output<>(new Configuration(), 0, 2, frequentItemSets, null);
         assertFalse(output1.equals(output2));
-        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetArraySet<>(null),
+        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSets<>(null),
                 new RuleSet<>(null));
         assertFalse(output1.equals(output2));
         RuleSet<NamedItem> ruleSet = new RuleSet<>(null);
         ruleSet.add(new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5));
-        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSetArraySet<>(null),
+        output1 = new Output<>(new Configuration(), 0, 2, new FrequentItemSets<>(null),
                 ruleSet);
         assertFalse(output1.equals(output2));
     }
