@@ -82,7 +82,7 @@ public class TieBreaker {
         return new TieBreaker(this, (a, b) -> {
             double h1 = operator.evaluate(a);
             double h2 = operator.evaluate(b);
-            return h1 > h2 ? 1 : (h1 == h2 ? 0 : -1);
+            return Double.compare(h1, h2);
         });
     }
 
@@ -99,7 +99,7 @@ public class TieBreaker {
         return new TieBreaker(this, (a, b) -> {
             int size1 = a.getBody().size() + a.getHead().size();
             int size2 = b.getBody().size() + b.getHead().size();
-            return size1 < size2 ? 1 : (size1 == size2 ? 0 : -1);
+            return Integer.compare(size2, size1);
         });
     }
 
@@ -116,7 +116,7 @@ public class TieBreaker {
         return new TieBreaker(this, (a, b) -> {
             int size1 = a.getBody().size() + a.getHead().size();
             int size2 = b.getBody().size() + b.getHead().size();
-            return size1 > size2 ? 1 : (size1 == size2 ? 0 : -1);
+            return Integer.compare(size1, size2);
         });
     }
 
@@ -133,7 +133,7 @@ public class TieBreaker {
         return new TieBreaker(this, (a, b) -> {
             int size1 = a.getBody().size();
             int size2 = b.getBody().size();
-            return size1 < size2 ? 1 : (size1 == size2 ? 0 : -1);
+            return Integer.compare(size2, size1);
         });
     }
 
@@ -150,7 +150,7 @@ public class TieBreaker {
         return new TieBreaker(this, (a, b) -> {
             int size1 = a.getBody().size();
             int size2 = b.getBody().size();
-            return size1 > size2 ? 1 : (size1 == size2 ? 0 : -1);
+            return Integer.compare(size1, size2);
         });
     }
 
@@ -167,7 +167,7 @@ public class TieBreaker {
         return new TieBreaker(this, (a, b) -> {
             int size1 = a.getHead().size();
             int size2 = b.getHead().size();
-            return size1 < size2 ? 1 : (size1 == size2 ? 0 : -1);
+            return Integer.compare(size2, size1);
         });
     }
 
@@ -184,7 +184,7 @@ public class TieBreaker {
         return new TieBreaker(this, (a, b) -> {
             int size1 = a.getHead().size();
             int size2 = b.getHead().size();
-            return size1 > size2 ? 1 : (size1 == size2 ? 0 : -1);
+            return Integer.compare(size1, size2);
         });
     }
 
