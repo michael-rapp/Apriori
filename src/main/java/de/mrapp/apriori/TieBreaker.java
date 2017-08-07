@@ -36,7 +36,7 @@ public abstract class TieBreaker<T> implements Comparator<T> {
      * @param <T>              The type of the items, the tie-breaking strategy applies to
      * @param <TieBreakerType> The type of the tie-breaking strategy
      */
-    protected static abstract class AbstractTieBreaker<T, TieBreakerType extends TieBreaker<T>> extends
+    private static abstract class AbstractTieBreaker<T, TieBreakerType extends TieBreaker<T>> extends
             TieBreaker<T> {
 
         /**

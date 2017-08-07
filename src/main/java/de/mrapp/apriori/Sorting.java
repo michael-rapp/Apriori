@@ -36,7 +36,7 @@ public abstract class Sorting<T> implements Comparator<T> {
      * @param <T>           The type of the items, the sorting applies to
      * @param <SortingType> The type of the sorting
      */
-    protected static abstract class AbstractSorting<T, SortingType extends Sorting<T>> extends
+    private static abstract class AbstractSorting<T, SortingType extends Sorting<T>> extends
             Sorting<T> {
 
         /**
