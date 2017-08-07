@@ -15,10 +15,11 @@ package de.mrapp.apriori;
 
 import org.junit.Test;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Tests the functionality of the class {@link AssociationRule}.
@@ -79,6 +80,111 @@ public class AssociationRuleTest {
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorThrowsExceptionWhenSupportIsGreaterThanOne() {
         new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 1.1);
+    }
+
+    /**
+     * Tests the functionality of the {@link AssociationRule#covers(Item[])} method.
+     */
+    @Test
+    public final void testCoversWithArrayParameter() {
+        NamedItem[] items = {
+                new NamedItem("a"),
+                new NamedItem("c"),
+                new NamedItem("d"),
+                new NamedItem("e"),
+                new NamedItem("f")};
+        ItemSet<NamedItem> body = new ItemSet<>();
+        body.add(new NamedItem("a"));
+        body.add(new NamedItem("b"));
+        ItemSet<NamedItem> head = new ItemSet<>();
+        head.add(new NamedItem("c"));
+        AssociationRule<NamedItem> associationRule = new AssociationRule<>(new ItemSet<>(), head,
+                0.5);
+        assertTrue(associationRule.covers(items));
+        associationRule = new AssociationRule<>(body, head, 0.5);
+        assertFalse(associationRule.covers(items));
+        items[1] = new NamedItem("b");
+        assertTrue(associationRule.covers(items));
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the {@link
+     * AssociationRule#covers(Item[])} method, if the given array is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testCoversWithArrayParameterThrowsException() {
+        NamedItem[] items = null;
+        new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5).covers(items);
+    }
+
+    /**
+     * Tests the functionality of the {@link AssociationRule#covers(Iterable)} method.
+     */
+    @Test
+    public final void testCoversWithIterableParameter() {
+        Collection<NamedItem> items = new LinkedList<>();
+        items.add(new NamedItem("a"));
+        items.add(new NamedItem("c"));
+        items.add(new NamedItem("d"));
+        items.add(new NamedItem("e"));
+        items.add(new NamedItem("f"));
+        ItemSet<NamedItem> body = new ItemSet<>();
+        body.add(new NamedItem("a"));
+        body.add(new NamedItem("b"));
+        ItemSet<NamedItem> head = new ItemSet<>();
+        head.add(new NamedItem("c"));
+        AssociationRule<NamedItem> associationRule = new AssociationRule<>(new ItemSet<>(), head,
+                0.5);
+        assertTrue(associationRule.covers(items));
+        associationRule = new AssociationRule<>(body, head, 0.5);
+        assertFalse(associationRule.covers(items));
+        items.add(new NamedItem("b"));
+        assertTrue(associationRule.covers(items));
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the {@link
+     * AssociationRule#covers(Iterable)} method, if the given iterable is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testCoversWithIterableParameterThrowsException() {
+        Iterable<NamedItem> iterable = null;
+        new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5).covers(iterable);
+    }
+
+    /**
+     * Tests the functionality of the {@link AssociationRule#covers(Iterator)} method.
+     */
+    @Test
+    public final void testCoversWithIteratorParameter() {
+        Collection<NamedItem> items = new LinkedList<>();
+        items.add(new NamedItem("a"));
+        items.add(new NamedItem("c"));
+        items.add(new NamedItem("d"));
+        items.add(new NamedItem("e"));
+        items.add(new NamedItem("f"));
+        ItemSet<NamedItem> body = new ItemSet<>();
+        body.add(new NamedItem("a"));
+        body.add(new NamedItem("b"));
+        ItemSet<NamedItem> head = new ItemSet<>();
+        head.add(new NamedItem("c"));
+        AssociationRule<NamedItem> associationRule = new AssociationRule<>(new ItemSet<>(), head,
+                0.5);
+        assertTrue(associationRule.covers(items.iterator()));
+        associationRule = new AssociationRule<>(body, head, 0.5);
+        assertFalse(associationRule.covers(items.iterator()));
+        items.add(new NamedItem("b"));
+        assertTrue(associationRule.covers(items.iterator()));
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the {@link
+     * AssociationRule#covers(Iterator)} method, if the given iterator is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testCoversWithIteratorParameterThrowsException() {
+        Iterator<NamedItem> iterator = null;
+        new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.5).covers(iterator);
     }
 
     /**
@@ -183,61 +289,6 @@ public class AssociationRuleTest {
         assertFalse(associationRule1.equals(associationRule2));
         associationRule2 = new AssociationRule<>(body1, head2, 0.5);
         assertFalse(associationRule1.equals(associationRule2));
-    }
-
-    /**
-     * Tests the functionality of the comparator, which allows to compare the heuristic values of
-     * two association rules.
-     */
-    @Test
-    public final void testComparator() {
-        AssociationRule<?> associationRule1 = mock(AssociationRule.class);
-        AssociationRule<?> associationRule2 = mock(AssociationRule.class);
-        Operator operator = mock(Operator.class);
-        AssociationRule.Comparator comparator = new AssociationRule.Comparator(operator,
-                new TieBreaker());
-        when(operator.evaluate(any())).thenReturn(0.5, 0.6);
-        assertEquals(-1, comparator.compare(associationRule1, associationRule2));
-        when(operator.evaluate(any())).thenReturn(0.5, 0.5);
-        assertEquals(0, comparator.compare(associationRule1, associationRule1));
-        when(operator.evaluate(any())).thenReturn(0.6, 0.5);
-        assertEquals(1, comparator.compare(associationRule1, associationRule2));
-    }
-
-    /**
-     * Tests the functionality of the comparator, which allows to compare the heuristic values of
-     * two association rules, when a tie-breaking strategy is applied.
-     */
-    @Test
-    public final void testComparatorWhenTieBreaking() {
-        AssociationRule<?> associationRule1 = mock(AssociationRule.class);
-        AssociationRule<?> associationRule2 = mock(AssociationRule.class);
-        Operator operator = mock(Operator.class);
-        TieBreaker tieBreaker = new TieBreaker().custom((a, b) -> 1);
-        AssociationRule.Comparator comparator = new AssociationRule.Comparator(operator,
-                tieBreaker);
-        when(operator.evaluate(any())).thenReturn(0.5, 0.5);
-        assertEquals(1, comparator.compare(associationRule1, associationRule2));
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor of the
-     * comparator, which allows to compare the heuristic values of two association rules, if the
-     * operator is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testComparatorConstructorThrowsExceptionIfOperatorIsNull() {
-        new AssociationRule.Comparator(null, new TieBreaker());
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor of the
-     * comparator, which allows to compare the heuristic values of two association rules, if the
-     * tie-breaking strategy is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testComparatorConstructorThrowsExceptionIfTieBreakerIsNull() {
-        new AssociationRule.Comparator(mock(Operator.class), null);
     }
 
 }

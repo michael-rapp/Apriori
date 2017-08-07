@@ -16,6 +16,8 @@ package de.mrapp.apriori;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import static de.mrapp.util.Condition.*;
 
@@ -30,51 +32,8 @@ import static de.mrapp.util.Condition.*;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class AssociationRule<ItemType extends Item> implements
-        Comparable<AssociationRule<ItemType>>, Serializable, Cloneable {
-
-    /**
-     * A comparator, which allows to compare the heuristic values of two association rules according
-     * to a certain metric or operator.
-     */
-    public static class Comparator implements java.util.Comparator<AssociationRule<?>> {
-
-        /**
-         * The operator, which is used to calculate the heuristic values of rules.
-         */
-        private final Operator operator;
-
-        /**
-         * The tie-breaking strategy, which is used to tie-break between two rules, whose heuristic
-         * values are equal.
-         */
-        private final TieBreaker tieBreaker;
-
-        /**
-         * Creates a new comparator, which allows to compare the heuristic values of two association
-         * rules according to a certain operator.
-         *
-         * @param operator   The operator, which should be used to calculate the heuristic values of
-         *                   rules, as an instance of the type {@link Operator}. The operator may
-         *                   not be null
-         * @param tieBreaker The tie-breaking strategy, which should be used, as an instance of the
-         *                   class {@link TieBreaker}. The tie-breaking strategy may not be null
-         */
-        public Comparator(@NotNull final Operator operator, final TieBreaker tieBreaker) {
-            ensureNotNull(operator, "The operator may not be null");
-            ensureNotNull(tieBreaker, "The tie-breaking strategy may not be null");
-            this.operator = operator;
-            this.tieBreaker = tieBreaker;
-        }
-
-        @Override
-        public final int compare(final AssociationRule<?> o1, final AssociationRule<?> o2) {
-            double h1 = operator.evaluate(o1);
-            double h2 = operator.evaluate(o2);
-            return h1 > h2 ? 1 : (h1 == h2 ? tieBreaker.tieBreak(o1, o2) : -1);
-        }
-
-    }
+public class AssociationRule<ItemType extends Item> implements Comparable<AssociationRule>,
+        Serializable, Cloneable {
 
     /**
      * The constant serial version UID.
@@ -152,8 +111,65 @@ public class AssociationRule<ItemType extends Item> implements
         return support;
     }
 
+    /**
+     * Returns, whether the association rule covers several items, i.e. that all of the items, which
+     * are contained in its body are contained by given items as well.
+     *
+     * @param <T>   The type of the items, which should be checked
+     * @param items An array, which contains the items, which should be checked, as an array of the
+     *              generic type T. The array may not be null
+     * @return True, if the association rule covers the given items, false otherwise
+     */
+    @SafeVarargs
+    public final <T extends ItemType> boolean covers(@NotNull final T... items) {
+        ensureNotNull(items, "The array may not be nul");
+        return covers(Arrays.asList(items));
+    }
+
+    /**
+     * Returns, whether the association rule covers several items, i.e. that all of the items, which
+     * are contained in its body are contained by given items as well.
+     *
+     * @param items An iterable, which allows to iterate the items, which should be checked, as an
+     *              instance of the type {@link Iterable}. The iterable may not be null
+     * @return True, if the association rule covers the given items, false otherwise
+     */
+    public final boolean covers(@NotNull final Iterable<? extends ItemType> items) {
+        ensureNotNull(items, "The iterable may not be null");
+        return covers(items.iterator());
+    }
+
+    /**
+     * Returns, whether the association rule covers several items, i.e. that all of the items, which
+     * are contained in its body are contained by given items as well.
+     *
+     * @param iterator An iterator, which allows to iterate the items, which should be checked, as
+     *                 an instance of the type {@link Iterator}. The iterator may not be null
+     * @return True, if the association rule covers the given items, false otherwise
+     */
+    public final boolean covers(@NotNull final Iterator<? extends ItemType> iterator) {
+        ensureNotNull(iterator, "The iterator may not be null");
+
+        for (ItemType bodyItem : body) {
+            boolean contains = false;
+
+            while (iterator.hasNext()) {
+                if (bodyItem.equals(iterator.next())) {
+                    contains = true;
+                    break;
+                }
+            }
+
+            if (!contains) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     @Override
-    public final int compareTo(@NotNull final AssociationRule<ItemType> o) {
+    public final int compareTo(@NotNull final AssociationRule o) {
         return Double.compare(getSupport(), o.getSupport());
     }
 

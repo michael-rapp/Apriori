@@ -47,8 +47,7 @@ public class FrequentItemSets<ItemType extends Item> extends
      *                   the type {@link Comparator} or null, if the natural ordering should be
      *                   used
      */
-    public FrequentItemSets(
-            @Nullable final Comparator<? super ItemSet<ItemType>> comparator) {
+    public FrequentItemSets(@Nullable final Comparator<? super ItemSet<ItemType>> comparator) {
         super(comparator);
     }
 

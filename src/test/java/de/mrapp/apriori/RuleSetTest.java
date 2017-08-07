@@ -13,6 +13,7 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.Sorting.Order;
 import de.mrapp.apriori.metrics.Confidence;
 import de.mrapp.apriori.metrics.Leverage;
 import de.mrapp.apriori.metrics.Lift;
@@ -26,7 +27,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 /**
  * Tests the functionality of the class {@link RuleSet}.
@@ -41,8 +41,7 @@ public class RuleSetTest {
      */
     @Test
     public final void testConstructorWithComparatorParameter() {
-        Comparator<AssociationRule<?>> comparator = new AssociationRule.Comparator(
-                new Confidence(), new TieBreaker()).reversed();
+        Comparator<AssociationRule> comparator = Sorting.forAssociationRules();
         RuleSet<NamedItem> ruleSet = new RuleSet<>(comparator);
         assertTrue(ruleSet.isEmpty());
         assertEquals(0, ruleSet.size());
@@ -68,8 +67,7 @@ public class RuleSetTest {
         Collection<AssociationRule<NamedItem>> collection = new LinkedList<>();
         collection.add(associationRule1);
         collection.add(associationRule2);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(collection,
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(collection, Sorting.forAssociationRules());
         assertEquals(collection.size(), ruleSet.size());
         Iterator<AssociationRule<NamedItem>> iterator = ruleSet.iterator();
         assertEquals(associationRule2, iterator.next());
@@ -101,139 +99,15 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.forAssociationRules());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         assertEquals(associationRule1, ruleSet.first());
         assertEquals(associationRule2, ruleSet.last());
-        RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(new Support());
+        Sorting<AssociationRule> sorting = Sorting.forAssociationRules().order(Order.ASCENDING);
+        RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(sorting);
         assertEquals(associationRule2, sortedRuleSet.first());
         assertEquals(associationRule1, sortedRuleSet.last());
-    }
-
-    /**
-     * Tests the functionality of the method, which allows to sort the rules of a rule set, when a
-     * tie-breaking strategy is applied.
-     */
-    @Test
-    public final void testSortWhenTieBreaking() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        body1.setSupport(0.5);
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("b"));
-        body2.setSupport(0.5);
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
-        ruleSet.add(associationRule1);
-        ruleSet.add(associationRule2);
-        assertEquals(associationRule2, ruleSet.first());
-        assertEquals(associationRule1, ruleSet.last());
-        RuleSet<NamedItem> sortedRuleSet = ruleSet
-                .sort(new Support(), new TieBreaker().custom((a, b) -> 1));
-        assertEquals(associationRule1, sortedRuleSet.first());
-        assertEquals(associationRule2, sortedRuleSet.last());
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * sort the rules of a rule set, if the operator is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testSortThrowsExceptionIfOperatorIsNull() {
-        new RuleSet<>(null).sort(null);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * sort the rules of a rule set, if the tie-breaking strategy is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testSortThrowsExceptionIfTieBreakerIsNull() {
-        new RuleSet<>(null).sort(mock(Operator.class), null);
-    }
-
-    /**
-     * Tests the functionality of the method, which allows to filter the rules of a rule set.
-     */
-    @Test
-    public final void testFilter() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("b"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.7);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
-        ruleSet.add(associationRule1);
-        ruleSet.add(associationRule2);
-        assertEquals(2, ruleSet.size());
-        RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(new Support(), 0.6);
-        assertEquals(1, filteredRuleSet.size());
-        assertEquals(associationRule2, filteredRuleSet.first());
-    }
-
-    /**
-     * Tests the functionality of the method, which allows to filter the rules of a rule set, when a
-     * tie-breaking strategy is applied.
-     */
-    @Test
-    public final void testFilterWhenTieBreaking() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("b"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
-        ruleSet.add(associationRule2);
-        ruleSet.add(associationRule1);
-        assertEquals(2, ruleSet.size());
-        RuleSet<NamedItem> filteredRuleSet = ruleSet
-                .filter(new Support(), 0.5, new TieBreaker().custom((a, b) -> -1));
-        assertEquals(2, filteredRuleSet.size());
-        assertEquals(associationRule1, filteredRuleSet.first());
-        assertEquals(associationRule2, filteredRuleSet.last());
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * filter the rules of a rule set, when the operator, which is passed to the method, is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testFilterThrowsExceptionWhenOperatorIsNull() {
-        new RuleSet<>(null).filter(null, 0.5);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, wihch allows to
-     * filter the rules of a rule set, when the threshold, which is passed to the method is not
-     * greater than 0.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testFilterThrowsExceptionWhenThresholdIsNotGreaterThanZero() {
-        new RuleSet<>(null).filter(mock(Operator.class), 0);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * filter the rules of a rule set, when the tie-breaking strategy, which is passed to the
-     * method, is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testFilterThrowsExceptionWhenTieBreakerIsNull() {
-        new RuleSet<>(null).filter(mock(Operator.class), 0.5, null);
     }
 
     /**
@@ -253,8 +127,7 @@ public class RuleSetTest {
         ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("d"));
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.5);
-        RuleSet<NamedItem> ruleSet1 = new RuleSet<>(
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
+        RuleSet<NamedItem> ruleSet1 = new RuleSet<>(Sorting.forAssociationRules());
         ruleSet1.add(associationRule1);
         ruleSet1.add(associationRule2);
         RuleSet<NamedItem> ruleSet2 = ruleSet1.clone();
@@ -278,8 +151,7 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.7);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.forAssociationRules());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         DecimalFormat decimalFormat = new DecimalFormat();

@@ -134,8 +134,7 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
         ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
         ensureAtMaximum(minConfidence, 1, "The minimum confidence must be at maximum 1");
         LOGGER.debug("Generating association rules");
-        RuleSet<ItemType> ruleSet = new RuleSet<>(
-                new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
+        RuleSet<ItemType> ruleSet = new RuleSet<>(Sorting.forAssociationRules());
 
         for (ItemSet<ItemType> itemSet : frequentItemSets.values()) {
             if (itemSet.size() > 1) {

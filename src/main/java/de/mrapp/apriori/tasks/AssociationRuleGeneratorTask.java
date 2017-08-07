@@ -14,8 +14,10 @@
 package de.mrapp.apriori.tasks;
 
 import de.mrapp.apriori.Apriori.Configuration;
-import de.mrapp.apriori.*;
-import de.mrapp.apriori.metrics.Confidence;
+import de.mrapp.apriori.Item;
+import de.mrapp.apriori.ItemSet;
+import de.mrapp.apriori.RuleSet;
+import de.mrapp.apriori.Sorting;
 import de.mrapp.apriori.modules.AssociationRuleGenerator;
 import de.mrapp.apriori.modules.AssociationRuleGeneratorModule;
 import org.jetbrains.annotations.NotNull;
@@ -96,8 +98,7 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends
                 currentMinConfidence -= getConfiguration().getConfidenceDelta();
             }
 
-            return result != null ? result : new RuleSet<>(
-                    new AssociationRule.Comparator(new Confidence(), new TieBreaker()).reversed());
+            return result != null ? result : new RuleSet<>(Sorting.forAssociationRules());
         } else {
             return associationRuleGenerator.generateAssociationRules(frequentItemSets,
                     getConfiguration().getMinConfidence());
