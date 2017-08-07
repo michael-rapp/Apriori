@@ -30,7 +30,7 @@ public class SortingTest {
     }
 
     /**
-     * Tests the sorting for item sets, which sorting in ascending order.
+     * Tests the sorting for item sets, when sorting in ascending order.
      */
     @Test
     public void testAscendingSortingForItemSets() {
@@ -145,7 +145,8 @@ public class SortingTest {
         ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("d"));
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.25);
-        Sorting<AssociationRule> sorting = Sorting.forAssociationRules().withTieBreaking((o1, o2) -> 1);
+        Sorting<AssociationRule> sorting = Sorting.forAssociationRules()
+                .withTieBreaking((o1, o2) -> 1);
         assertEquals(-1, sorting.compare(associationRule1, associationRule2));
     }
 
