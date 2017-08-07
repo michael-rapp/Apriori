@@ -65,8 +65,8 @@ public abstract class Sorting<T> implements Comparator<T> {
          * sorted.
          */
         private AbstractSorting() {
-            order(Order.DESCENDING);
-            tieBreak(null);
+            withOrder(Order.DESCENDING);
+            withTieBreaking(null);
         }
 
         /**
@@ -78,7 +78,7 @@ public abstract class Sorting<T> implements Comparator<T> {
          * SortingType. The sorting may not be null
          */
         @NotNull
-        public SortingType order(@NotNull final Order order) {
+        public SortingType withOrder(@NotNull final Order order) {
             ensureNotNull(order, "The order may not be null");
             this.order = order;
             return self();
@@ -94,7 +94,7 @@ public abstract class Sorting<T> implements Comparator<T> {
          * SortingType. The sorting may not be null
          */
         @NotNull
-        public SortingType tieBreak(@Nullable final Comparator<T> comparator) {
+        public SortingType withTieBreaking(@Nullable final Comparator<T> comparator) {
             this.tieBreaker = comparator;
             return self();
         }
@@ -134,7 +134,7 @@ public abstract class Sorting<T> implements Comparator<T> {
          * Creates a new sorting, which applies to association rules.
          */
         private AssociationRuleSorting() {
-            operator(new Confidence());
+            byOperator(new Confidence());
         }
 
         /**
@@ -146,7 +146,7 @@ public abstract class Sorting<T> implements Comparator<T> {
          * AssociationRuleSorting}. The sorting may not be null
          */
         @NotNull
-        public AssociationRuleSorting operator(@Nullable final Operator operator) {
+        public AssociationRuleSorting byOperator(@Nullable final Operator operator) {
             this.operator = operator;
             return self();
         }

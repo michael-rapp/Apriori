@@ -104,7 +104,7 @@ public class RuleSetTest {
         ruleSet.add(associationRule2);
         assertEquals(associationRule1, ruleSet.first());
         assertEquals(associationRule2, ruleSet.last());
-        Sorting<AssociationRule> sorting = Sorting.forAssociationRules().order(Order.ASCENDING);
+        Sorting<AssociationRule> sorting = Sorting.forAssociationRules().withOrder(Order.ASCENDING);
         RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(sorting);
         assertEquals(associationRule2, sortedRuleSet.first());
         assertEquals(associationRule1, sortedRuleSet.last());
