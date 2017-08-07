@@ -24,20 +24,20 @@ import static de.mrapp.util.Condition.ensureNotNull;
 /**
  * A sorting, which specifies how item sets or association rules should be sorted.
  *
- * @param <ItemType> The type of the items, the sorting applies to
+ * @param <T> The type of the items, the sorting applies to
  * @author Michael Rapp
  * @since 1.2.0
  */
-public abstract class Sorting<ItemType> implements Comparator<ItemType> {
+public abstract class Sorting<T> implements Comparator<T> {
 
     /**
      * An abstract base class for all sortings.
      *
-     * @param <ItemType>    The type of the items, the sorting applies to
+     * @param <T>           The type of the items, the sorting applies to
      * @param <SortingType> The type of the sorting
      */
-    protected static abstract class AbstractSorting<ItemType, SortingType extends Sorting<ItemType>> extends
-            Sorting<ItemType> {
+    protected static abstract class AbstractSorting<T, SortingType extends Sorting<T>> extends
+            Sorting<T> {
 
         /**
          * The order, which is used for sorting.
@@ -47,7 +47,7 @@ public abstract class Sorting<ItemType> implements Comparator<ItemType> {
         /**
          * The comparator, which is used to perform tie-breaking.
          */
-        protected Comparator<ItemType> tieBreaker;
+        protected Comparator<T> tieBreaker;
 
         /**
          * Returns a reference to the sorting itself.
@@ -94,7 +94,7 @@ public abstract class Sorting<ItemType> implements Comparator<ItemType> {
          * SortingType. The sorting may not be null
          */
         @NotNull
-        public SortingType tieBreak(@Nullable final Comparator<ItemType> comparator) {
+        public SortingType tieBreak(@Nullable final Comparator<T> comparator) {
             this.tieBreaker = comparator;
             return self();
         }

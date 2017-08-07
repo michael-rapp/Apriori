@@ -24,20 +24,20 @@ import static de.mrapp.util.Condition.ensureNotNull;
  * A tie-breaking strategy, which allows to decide, which one of two item sets or association rules
  * should be sorted before the other one, if their heuristic values are equal.
  *
- * @param <ItemType> The type of the items, the tie-breaking strategy applies to
+ * @param <T> The type of the items, the tie-breaking strategy applies to
  * @author Michael Rapp
  * @since 1.1.0
  */
-public abstract class TieBreaker<ItemType> implements Comparator<ItemType> {
+public abstract class TieBreaker<T> implements Comparator<T> {
 
     /**
      * An abstract base class for all tie-breaking strategies.
      *
-     * @param <ItemType>       The type of the items, the tie-breaking strategy applies to
+     * @param <T>              The type of the items, the tie-breaking strategy applies to
      * @param <TieBreakerType> The type of the tie-breaking strategy
      */
-    protected static abstract class AbstractTieBreaker<ItemType, TieBreakerType extends TieBreaker<ItemType>> extends
-            TieBreaker<ItemType> {
+    protected static abstract class AbstractTieBreaker<T, TieBreakerType extends TieBreaker<T>> extends
+            TieBreaker<T> {
 
         /**
          * The tie-breaking strategy, which is used for tie-breaking before applying this
@@ -49,7 +49,7 @@ public abstract class TieBreaker<ItemType> implements Comparator<ItemType> {
          * The comparator, which specifies which one of two item sets or association rules is sorted
          * before the other one, when performing tie-breaking.
          */
-        private final Comparator<ItemType> comparator;
+        private final Comparator<T> comparator;
 
         /**
          * Creates a new tie-breaking strategy.
@@ -63,14 +63,14 @@ public abstract class TieBreaker<ItemType> implements Comparator<ItemType> {
          *                   comparator may not be null
          */
         private AbstractTieBreaker(@Nullable final TieBreakerType parent,
-                                   @NotNull final Comparator<ItemType> comparator) {
+                                   @NotNull final Comparator<T> comparator) {
             ensureNotNull(comparator, "The tie-breaking comparator may not be null");
             this.parent = parent;
             this.comparator = comparator;
         }
 
         @Override
-        public final int compare(@NotNull final ItemType o1, @NotNull final ItemType o2) {
+        public final int compare(@NotNull final T o1, @NotNull final T o2) {
             if (parent != null) {
                 int result = parent.compare(o1, o2);
 

@@ -23,10 +23,12 @@ import java.util.Comparator;
  * Defines the interface a data structure, which is sortable using {@link Comparable} or {@link
  * Sorting} instances, must implement.
  *
+ * @param <DataStructureType> The type of the data structure
+ * @param <T>                 The type of the items, which are contained by the data structure
  * @author Michael Rapp
  * @since 1.2.0
  */
-public interface Sortable<DataStructureType, ItemType> {
+public interface Sortable<DataStructureType, T> {
 
     /**
      * Sorts the items, which are contained by the data structure.
@@ -38,6 +40,6 @@ public interface Sortable<DataStructureType, ItemType> {
      * generic type DataStructureType. The data structure may not be null
      */
     @NotNull
-    DataStructureType sort(@Nullable final Comparator<ItemType> comparator);
+    DataStructureType sort(@Nullable final Comparator<T> comparator);
 
 }

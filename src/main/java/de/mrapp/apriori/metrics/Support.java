@@ -29,7 +29,7 @@ import static de.mrapp.util.Condition.ensureNotNull;
 public class Support implements Metric {
 
     @Override
-    public final double evaluate(@NotNull final AssociationRule<?> rule) {
+    public final double evaluate(@NotNull final AssociationRule rule) {
         ensureNotNull(rule, "The rule may not be null");
         return rule.getSupport();
     }

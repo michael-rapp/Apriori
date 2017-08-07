@@ -78,7 +78,7 @@ public class ArithmeticMean implements Operator {
     }
 
     @Override
-    public final double evaluate(@NotNull final AssociationRule<?> rule) {
+    public final double evaluate(@NotNull final AssociationRule rule) {
         ensureNotNull(rule, "The rule may not be null");
         ensureNotEmpty(metrics, "No metrics added", IllegalStateException.class);
         double result = 0;

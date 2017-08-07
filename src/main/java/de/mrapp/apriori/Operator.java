@@ -32,6 +32,6 @@ public interface Operator {
      *             of the class {@link AssociationRule}. The rule may not be null
      * @return The heuristic value, which has been calculated, as a {@link Double} value
      */
-    double evaluate(@NotNull AssociationRule<?> rule);
+    double evaluate(@NotNull AssociationRule rule);
 
 }
