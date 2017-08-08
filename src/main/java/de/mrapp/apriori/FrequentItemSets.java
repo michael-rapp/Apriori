@@ -13,6 +13,7 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.datastructure.Filterable;
 import de.mrapp.apriori.datastructure.Sortable;
 import de.mrapp.util.datastructure.SortedArraySet;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,7 @@ import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import static de.mrapp.util.Condition.ensureNotNull;
 
@@ -35,7 +37,7 @@ import static de.mrapp.util.Condition.ensureNotNull;
  */
 public class FrequentItemSets<ItemType extends Item> extends
         SortedArraySet<ItemSet<ItemType>> implements Sortable<FrequentItemSets<ItemType>, ItemSet>,
-        Serializable, Cloneable {
+        Filterable<FrequentItemSets<ItemType>, ItemSet>, Serializable, Cloneable {
 
     /**
      * The constant serial version UID.
@@ -110,6 +112,21 @@ public class FrequentItemSets<ItemType extends Item> extends
     @Override
     public final FrequentItemSets<ItemType> sort(@Nullable final Comparator<ItemSet> comparator) {
         return new FrequentItemSets<ItemType>(this, comparator);
+    }
+
+    @NotNull
+    @Override
+    public final FrequentItemSets<ItemType> filter(@NotNull final Predicate<ItemSet> predicate) {
+        ensureNotNull(predicate, "The predicate may not be null");
+        FrequentItemSets<ItemType> filteredFrequentItemSets = new FrequentItemSets<>(comparator());
+
+        for (ItemSet<ItemType> itemSet : this) {
+            if (predicate.test(itemSet)) {
+                filteredFrequentItemSets.add(itemSet);
+            }
+        }
+
+        return filteredFrequentItemSets;
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")

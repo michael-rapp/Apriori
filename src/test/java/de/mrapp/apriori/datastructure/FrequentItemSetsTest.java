@@ -13,10 +13,7 @@
  */
 package de.mrapp.apriori.datastructure;
 
-import de.mrapp.apriori.FrequentItemSets;
-import de.mrapp.apriori.ItemSet;
-import de.mrapp.apriori.NamedItem;
-import de.mrapp.apriori.Sorting;
+import de.mrapp.apriori.*;
 import org.junit.Test;
 
 import java.util.Comparator;
@@ -118,9 +115,10 @@ public class FrequentItemSetsTest {
         itemSet1.add(new NamedItem("a"));
         itemSet1.setSupport(0.5);
         ItemSet<NamedItem> itemSet2 = new ItemSet<>();
-        itemSet2.add(new NamedItem("b"));
+        itemSet1.add(new NamedItem("b"));
+        itemSet2.add(new NamedItem("c"));
         itemSet2.setSupport(0.4);
-        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<NamedItem>(
+        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(
                 Sorting.forItemSets());
         frequentItemSets.add(itemSet1);
         frequentItemSets.add(itemSet2);
@@ -130,6 +128,40 @@ public class FrequentItemSetsTest {
         FrequentItemSets<NamedItem> sortedFrequentItemSets = frequentItemSets.sort(sorting);
         assertEquals(itemSet2, sortedFrequentItemSets.first());
         assertEquals(itemSet1, sortedFrequentItemSets.last());
+    }
+
+
+    /**
+     * Tests the functionality of the method, which allows to filter frequent item sets.
+     */
+    @Test
+    public final void testFilter() {
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        itemSet1.add(new NamedItem("a"));
+        itemSet1.setSupport(0.5);
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
+        itemSet1.add(new NamedItem("b"));
+        itemSet2.add(new NamedItem("c"));
+        itemSet2.setSupport(0.4);
+        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(
+                Sorting.forItemSets());
+        frequentItemSets.add(itemSet1);
+        frequentItemSets.add(itemSet2);
+        assertEquals(itemSet1, frequentItemSets.first());
+        assertEquals(itemSet2, frequentItemSets.last());
+        Filter<ItemSet> filter = Filter.forItemSets().bySize(2);
+        FrequentItemSets<NamedItem> filteredFrequentItemSets = frequentItemSets.filter(filter);
+        assertEquals(1, filteredFrequentItemSets.size());
+        assertEquals(itemSet1, filteredFrequentItemSets.first());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * filter frequent item sets, if the given predicate is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testFilterThrowsExceptionIfPredicateIsNull() {
+        new FrequentItemSets<>(null).filter(null);
     }
 
 }
