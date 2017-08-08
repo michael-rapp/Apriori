@@ -21,7 +21,7 @@ A feature release, which introduces the following changes:
 
 ## Version 1.0.1 (Jul. 28th 2017)
 
-A bugfix release, which fixed the following issues:
+A bugfix release, which fixes the following issues:
 
 - https://github.com/michael-rapp/Apriori/issues/1
 
