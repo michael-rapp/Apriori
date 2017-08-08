@@ -6,6 +6,7 @@ A feature release, which introduces the following changes:
 
 - An enhanced API for sorting and filtering association rules and frequent item sets has been added
 - The class `AssociationRule` does now provide `covers`-methods, which allow to test, if the rule applies to a set of items
+- Added support for the conviction metric
 
 ## Version 1.1.1 (Jul. 31th 2017)
 
