@@ -313,8 +313,6 @@ For personal feedback or questions feel free to contact me via the mail address,
 
 ## References
 
-\[1\] Rakesh Agrawal and Ramakrishnan Srikant ["Fast algorithms for mining association rules in large databases"](http://rakesh.agrawal-family.com/papers/vldb94apriori.pdf). Proceedings of the 20th International Conference on Very Large Data Bases, VLDB, pages 487-499, Santiago, Chile, September 1994.
-
-\[2\] Brin, Sergey, et al. ["Dynamic itemset counting and implication rules for market basket data"](https://ophelia.cs.put.poznan.pl/webdav/dbdw/students/dbdw-summer_2011/labs/DIC.pdf) ACM SIGMOD Record. Vol. 26. No. 2. ACM, 1997.
-
-\[3\] Piatetsky-Shapiro, Gregory. "Discovery, analysis and presentation of strong rules." Knowledge discovery in databases (1991): 229-248.
+* \[1\] Rakesh Agrawal and Ramakrishnan Srikant ["Fast algorithms for mining association rules in large databases"](http://rakesh.agrawal-family.com/papers/vldb94apriori.pdf). Proceedings of the 20th International Conference on Very Large Data Bases, VLDB, pages 487-499, Santiago, Chile, September 1994.
+* \[2\] Brin, Sergey, et al. ["Dynamic itemset counting and implication rules for market basket data"](https://ophelia.cs.put.poznan.pl/webdav/dbdw/students/dbdw-summer_2011/labs/DIC.pdf) ACM SIGMOD Record. Vol. 26. No. 2. ACM, 1997.
+* \[3\] Piatetsky-Shapiro, Gregory. "Discovery, analysis and presentation of strong rules." Knowledge discovery in databases (1991): 229-248.
