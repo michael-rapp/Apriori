@@ -30,6 +30,16 @@ dependencies {
 }
 ```
 
+When using Maven, the following dependency can be added to the `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>com.github.michael-rapp</groupId>
+    <artifactId>apriori</artifactId>
+    <version>1.2.1</version>
+</dependency>
+```
+
 ## Preliminaries
 
 To be able to apply the Apriori algorithm to a data set, the data must be available in the following form:
