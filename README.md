@@ -227,7 +227,7 @@ When configuring the builder that way, the semantics of the `confidenceDelta`-, 
 
 ### Measuring the "interestingly" of association rules
 
-The Apriori algorithm usually results in many association rules being learned. This requires to filter the rules by "interestingly". However, it is not easy to determine, whether a rule is interesting, or not. To measure the interestingly of rules additional metrics beside support and confidence - namely lift and leverage - can be used. They are defined as follows:
+The Apriori algorithm usually results in many association rules being learned. This requires to filter the rules by "interestingly". However, it is not easy to determine, whether a rule is interesting, or not. To measure the interestingly of rules additional metrics beside support and confidence - namely lift, leverage and conviction - can be used. They are defined as follows:
 
 * **Lift (also refered to as "interest"):** The ratio of a rule's confidence over a priori expectation for the head \[2\].
 * **Leverage:** The difference between support and expected support, if the rule's body and head were independent \[3\].
