@@ -64,7 +64,7 @@ public class LiftTest {
      * passing null as a parameter.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testEvaluatThrowsException() {
+    public final void testEvaluateThrowsException() {
         new Lift().evaluate(null);
     }
 
