@@ -20,8 +20,9 @@ import org.jetbrains.annotations.NotNull;
 import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
- * A metric, which measures the lift of an association rule. By definition, lift is calculated as
- * the ratio of the rule's confidence over a priori expectation for the rule's head.
+ * A metric, which measures the lift of an association rule (also referred to as "interest"). By
+ * definition, lift is calculated as the ratio of the rule's confidence over a priori expectation
+ * for the rule's head.
  *
  * @author Michael Rapp
  * @since 1.0.0
