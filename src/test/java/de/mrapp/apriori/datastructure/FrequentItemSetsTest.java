@@ -16,6 +16,7 @@ package de.mrapp.apriori.datastructure;
 import de.mrapp.apriori.FrequentItemSets;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.NamedItem;
+import de.mrapp.apriori.Sorting;
 import org.junit.Test;
 
 import java.util.Comparator;
@@ -106,6 +107,29 @@ public class FrequentItemSetsTest {
         FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(
                 Comparator.reverseOrder());
         assertEquals("[]", FrequentItemSets.formatFrequentItemSets(frequentItemSets));
+    }
+
+    /**
+     * Tests the functionality of the method, which allows to sort frequent item sets.
+     */
+    @Test
+    public final void testSort() {
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        itemSet1.add(new NamedItem("a"));
+        itemSet1.setSupport(0.5);
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
+        itemSet2.add(new NamedItem("b"));
+        itemSet2.setSupport(0.4);
+        FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<NamedItem>(
+                Sorting.forItemSets());
+        frequentItemSets.add(itemSet1);
+        frequentItemSets.add(itemSet2);
+        assertEquals(itemSet1, frequentItemSets.first());
+        assertEquals(itemSet2, frequentItemSets.last());
+        Sorting<ItemSet> sorting = Sorting.forItemSets().withOrder(Sorting.Order.ASCENDING);
+        FrequentItemSets<NamedItem> sortedFrequentItemSets = frequentItemSets.sort(sorting);
+        assertEquals(itemSet2, sortedFrequentItemSets.first());
+        assertEquals(itemSet1, sortedFrequentItemSets.last());
     }
 
 }

@@ -13,6 +13,7 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.datastructure.Sortable;
 import de.mrapp.util.datastructure.SortedArraySet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +34,8 @@ import static de.mrapp.util.Condition.ensureNotNull;
  * @since 1.2.0
  */
 public class FrequentItemSets<ItemType extends Item> extends
-        SortedArraySet<ItemSet<ItemType>> implements Serializable, Cloneable {
+        SortedArraySet<ItemSet<ItemType>> implements Sortable<FrequentItemSets<ItemType>, ItemSet>,
+        Serializable, Cloneable {
 
     /**
      * The constant serial version UID.
@@ -102,6 +104,12 @@ public class FrequentItemSets<ItemType extends Item> extends
 
         stringBuilder.append("]");
         return stringBuilder.toString();
+    }
+
+    @NotNull
+    @Override
+    public final FrequentItemSets<ItemType> sort(@Nullable final Comparator<ItemSet> comparator) {
+        return new FrequentItemSets<ItemType>(this, comparator);
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
