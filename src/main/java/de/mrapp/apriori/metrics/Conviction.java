@@ -21,8 +21,8 @@ import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A metric, which measures the conviction of an association rule. By definition, conviction is the
- * ratio of the expected frequency, that the body occurs without the head, if they were independent,
- * divided by the observed frequency of incorrect predictions. For example, a conviction of 1.2
+ * ratio of the expected frequency that a rule makes an incorrect prediction, if body and head were
+ * independent, over the frequency of incorrect predictions. For example, a conviction of 1.2
  * states, that the items, which are contained in the body and head of a rule, occur together 1.2
  * times as often as if the association between head and body was purely random.
  *
