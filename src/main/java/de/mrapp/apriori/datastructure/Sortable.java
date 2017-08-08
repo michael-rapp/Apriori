@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Comparator;
 
 /**
- * Defines the interface a data structure, which is sortable using {@link Comparable} or {@link
+ * Defines the interface, a data structure, which is sortable using {@link Comparable} or {@link
  * Sorting} instances, must implement.
  *
  * @param <DataStructureType> The type of the data structure
