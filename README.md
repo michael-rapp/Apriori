@@ -219,9 +219,9 @@ When configuring the builder that way, the semantics of the `confidenceDelta`-, 
 
 The Apriori algorithm usually results in many association rules being learned. This requires to filter the rules by "interestingly". However, it is not easy to determine, whether a rule is interesting, or not. To measure the interestingly of rules additional metrics beside support and confidence - namely lift and leverage - can be used. They are defined as follows:
 
-* **Lift:** The ratio of a rule's confidence over a priori expectation for the head.
-* **Leverage:** The difference between support and expected support, if the rule's body and head were independent.
-* **Conviction:** The ratio of the expected frequency that the rule makes an incorrect prediction, if body and head were independent, over the frequency of incorrect predictions.
+* **Lift (also refered to as "interest"):** The ratio of a rule's confidence over a priori expectation for the head \[2\].
+* **Leverage:** The difference between support and expected support, if the rule's body and head were independent \[3\].
+* **Conviction:** The ratio of the expected frequency that the rule makes an incorrect prediction, if body and head were independent, over the frequency of incorrect predictions \[2\].
 
 Leverage is a lower bound for support and high leverage implies, that the support is also high. In contrast to optimizing the confidence or lift of a rule, optimizing the leverage guarantees, that a certain minimum support is reached.
 
@@ -313,4 +313,6 @@ For personal feedback or questions feel free to contact me via the mail address,
 
 ## References
 
-[1] Rakesh Agrawal and Ramakrishnan Srikant [Fast algorithms for mining association rules in large databases](http://rakesh.agrawal-family.com/papers/vldb94apriori.pdf). Proceedings of the 20th International Conference on Very Large Data Bases, VLDB, pages 487-499, Santiago, Chile, September 1994.
+\[1\] Rakesh Agrawal and Ramakrishnan Srikant ["Fast algorithms for mining association rules in large databases"](http://rakesh.agrawal-family.com/papers/vldb94apriori.pdf). Proceedings of the 20th International Conference on Very Large Data Bases, VLDB, pages 487-499, Santiago, Chile, September 1994.
+\[2\] Brin, Sergey, et al. ["Dynamic itemset counting and implication rules for market basket data"](https://ophelia.cs.put.poznan.pl/webdav/dbdw/students/dbdw-summer_2011/labs/DIC.pdf) ACM SIGMOD Record. Vol. 26. No. 2. ACM, 1997.
+\[3\] Piatetsky-Shapiro, Gregory. "Discovery, analysis and presentation of strong rules." Knowledge discovery in databases (1991): 229-248.
