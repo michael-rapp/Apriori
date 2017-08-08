@@ -1,5 +1,12 @@
 # Apriori - RELEASE NOTES
 
+## Version 1.2.0 (Aug. 8th 2017)
+
+A feature release, which introduces the following changes:
+
+- An enhanced API for sorting and filtering association rules and frequent item sets has been added
+- The class `AssociationRule` does now provide `covers`-methods, which allow to test, if the rule applies to a set of items
+
 ## Version 1.1.1 (Jul. 31th 2017)
 
 A bugfix release, which fixes the following issues:
