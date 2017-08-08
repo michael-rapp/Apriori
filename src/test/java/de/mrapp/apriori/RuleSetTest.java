@@ -111,6 +111,42 @@ public class RuleSetTest {
     }
 
     /**
+     * Tests the functionality of the method, which allows to filter the rules of a rule set.
+     */
+    @Test
+    public final void testFilter() {
+        ItemSet<NamedItem> body1 = new ItemSet<>();
+        body1.add(new NamedItem("a"));
+        body1.setSupport(0.5);
+        ItemSet<NamedItem> body2 = new ItemSet<>();
+        body2.add(new NamedItem("b"));
+        body2.setSupport(0.7);
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
+                0.4);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
+                0.5);
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.forAssociationRules());
+        ruleSet.add(associationRule1);
+        ruleSet.add(associationRule2);
+        assertEquals(associationRule1, ruleSet.first());
+        assertEquals(associationRule2, ruleSet.last());
+        Filter<AssociationRule> filter = Filter.forAssociationRules()
+                .byOperator(new Support(), 0.5);
+        RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(filter);
+        assertEquals(1, filteredRuleSet.size());
+        assertEquals(associationRule2, filteredRuleSet.first());
+    }
+
+    /**
+     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
+     * filter the rules of a rule set, if the given predicate is null.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public final void testFilterThrowsExceptionIfPredicateIsNull() {
+        new RuleSet<>(null).filter(null);
+    }
+
+    /**
      * Tests the functionality of the clone-method.
      */
     @Test

@@ -13,6 +13,7 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.apriori.datastructure.Filterable;
 import de.mrapp.apriori.datastructure.Sortable;
 import de.mrapp.apriori.metrics.Confidence;
 import de.mrapp.apriori.metrics.Leverage;
@@ -27,6 +28,9 @@ import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.function.Predicate;
+
+import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A rule set, which contains multiple association rules. The rules, which are contained by a rule
@@ -37,7 +41,8 @@ import java.util.Iterator;
  */
 public class RuleSet<ItemType extends Item> extends
         SortedArraySet<AssociationRule<ItemType>> implements
-        Sortable<RuleSet<ItemType>, AssociationRule>, Serializable, Cloneable {
+        Sortable<RuleSet<ItemType>, AssociationRule>,
+        Filterable<RuleSet<ItemType>, AssociationRule>, Serializable, Cloneable {
 
     /**
      * The constant serial version UID.
@@ -74,6 +79,21 @@ public class RuleSet<ItemType extends Item> extends
     @Override
     public final RuleSet<ItemType> sort(@Nullable final Comparator<AssociationRule> comparator) {
         return new RuleSet<>(this, comparator);
+    }
+
+    @NotNull
+    @Override
+    public final RuleSet<ItemType> filter(@NotNull final Predicate<AssociationRule> predicate) {
+        ensureNotNull(predicate, "The predicate may not be null");
+        RuleSet<ItemType> filteredRuleSet = new RuleSet<>(comparator());
+
+        for (AssociationRule<ItemType> item : this) {
+            if (predicate.test(item)) {
+                filteredRuleSet.add(item);
+            }
+        }
+
+        return filteredRuleSet;
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")

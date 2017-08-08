@@ -34,8 +34,8 @@ public interface Sortable<DataStructureType, T> {
      * Sorts the items, which are contained by the data structure.
      *
      * @param comparator The comparator, which should be used, as an instance of the type {@link
-     *                   Comparable}. The comparator may not be null. It might be an instance of the
-     *                   class {@link Sorting}
+     *                   Comparable} or null, if the natural ordering should be used. It might be an
+     *                   instance of the class {@link Sorting}
      * @return A new data structure, which contains the items in sorted order, as an instance of the
      * generic type DataStructureType. The data structure may not be null
      */

@@ -15,7 +15,6 @@ package de.mrapp.apriori.datastructure;
 
 import de.mrapp.apriori.Filter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
@@ -41,6 +40,6 @@ public interface Filterable<DataStructureType, T> {
      * generic type DataStructureType. The data structure may not be null
      */
     @NotNull
-    DataStructureType filter(@Nullable final Predicate<T> predicate);
+    DataStructureType filter(@NotNull final Predicate<T> predicate);
 
 }
