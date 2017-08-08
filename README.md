@@ -2,14 +2,17 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X75YSLEJV3DWE)
 
-This is a Java library, which provides an implementation of the Apriori algorithm [1]. It can be used to efficiently find frequent item sets in large data sets and (optionally) allows to generate association rules. A famous use-case of the Apriori algorithm is to create recommendations of relevant articles in online shops by learning association rules from the purchases customers made in the past. The library provides the following features:
+This is a Java library, which provides an implementation of the [Apriori algorithm](https://en.wikipedia.org/wiki/Apriori_algorithm) \[1\]. It can be used to efficiently find frequent item sets in large data sets and (optionally) allows to generate [association rules](https://en.wikipedia.org/wiki/Association_rule_learning). A famous use-case of the Apriori algorithm is to create recommendations of relevant articles in online shops by learning association rules from the purchases customers made in the past. The library provides the following features:
 
 * Searching for frequent item sets, which fulfill a certain minimum support
 * Trying to find a specific number of frequent items sets by starting with a great minimum support and iteratively decreasing it until enough item sets are found
 * Generating association rules, which reach a minimum confidence, from frequent item sets
 * Trying to generate a specific number of association rules by starting with a great minimum confidence and decreasing it until enough rules can be generated
-* Association rules can be sorted by their support, confidence, lift or leverage
-* Association rules can be filtered to ensure that they reach a certain support, confidence, lift or leverage
+* Frequent item sets can be sorted by their support, as well as by their size
+* Frequent item sets can be filtered to ensure that they reach a certain support, as well as by their size
+* Association rules can be sorted by their performance according to the support, confidence, lift or leverage metrics, as well as by the size of their head and body
+* Association rules can be filtered to ensure that they reach a certain performance according to the support, confidence, lift or leverage metrics, as well as by the size of their head and body
+* It can easily be tested, if association rules cover specific items, i.e. that all items, which are contained in their body are also contained in a tested set of items
 
 ## License Agreement
 
@@ -104,6 +107,54 @@ Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(count).supportDelta(
 
 The `count` variable, which is passed to the constructor of the builder in the example above, specifies the number of frequent item sets, which should be found. In addition, the `supportDelta`-method call allows to specify the value, the minimum support should successively be decreased by, starting with the value given by the ``maxSupport``-method. If not enough rules can be found until the support, which is specified by calling the ``minSupport``-method,  is reached, the search for frequent item sets is aborted.
 
+### Sorting frequent item sets
+
+The item sets, which are contained by a `FrequentItemSets` instance can be sorted by their support using the `sort`-method. It expects an instance of the class `Sorting`, which specifies the sorting order, as a parameter. The following example shows, how a `Sorting` instance can be used to sort frequent item sets.
+
+```java
+Sorting<ItemSet> sorting = Sorting.forItemSets().withOrder(Order.DESCENDING);
+FrequentItemSets<NamedItem> sortedFrequentItemSets = frequentItemSets.sort(sorting);
+```
+
+The following table provides an overview of the methods, which can be used to configure the ordering, which should be used for sorting frequent item sets.
+
+| Method | Description | 
+|:-----:|:------:|
+| `withOrder(Order):ItemSetSorting` | Specifies, whether the item sets should be sorted in `Order.ASCENDING` or `Order.DESCENDING` order |
+| `withTieBreaking(TieBreaker):ItemSetSorting` | Specifies the tie-breaking strategy, which should be applied, if two item sets reach the same support (see section below) |
+
+### Tie-breaking frequent item sets
+
+If two or more item sets reach the same support, it cannot be decided, which one should be sorted before the other ones. To work around such undefined behavior, a tie-breaking strategy, which is represented by a `TieBreaker` instance, can be used. The following code illustrates, how such an instance can be configured.
+
+```java
+TieBreaker<ItemSet> tieBreaker = TieBreaker.forItemSets().preferLarge();
+```
+
+All methods, which are provided by the library for configuring a `TieBreaker` for tie-breaking item sets, can be seen in the table below.
+
+| Method | Description | 
+|:-----:|:------:|
+| `preferSmall():ItemSetTieBreaker` | Prefers item sets, which contain few items |
+| `preferLarge():ItemSetTieBreaker` | Prefers item sets, which contain many items |
+| `custom(BiFunction):AssociationRuleTieBreaker` | Allows to specify a custom tie-breaking strategy. The given function must return 1, if the first item set should be preferred, -1, if the second one should be preferred, or 0, if no decision can be made |
+
+### Filtering frequent item sets
+
+In addition to sorting a `FrequentItemSets` instance, the item sets it contains can also be filtered. For this reason, a `filter`-method, which expects a `Filter` as a parameter, is provided. The filter is used to identify the item sets, which should be retained. In the following it is shown, how such a `Filter` can be configured and used to obtain a filtered copy of a `FrequentItemSets` instance. If multiple criterions are added to a filter, an item set is only retained, if it satisfies all of them.
+
+```java
+Filter<ItemSet> filter = Filter.forItemSets().bySupport(0.5).bySize(2);
+FrequentItemSets<NamedItem> filteredFrequentItemSets = frequentItemSets.filter(filter);
+```
+
+The table, which is shown below, gives an overview of the different criterions, which can be add to a `Filter`for filtering frequent item sets.
+
+| Method | Description | 
+|:-----:|:------:|
+| `bySupport(double,double):ItemSetFilter` | Filters the item sets by their support. The method allows to specify a minimum (and optionally maximum) support |
+| `bySize(int,int):ItemSetFilter` | Filters the item sets by their size. The method allows to specify a minimum (and optionally maximum) size |
+
 ## Generating Association Rules
 
 This library also allows to generate association rules from frequent item sets. An association rule consists of a head Y and a body X and is denoted as X -> Y. It specifies, that if the items in the body take part in a transaction, the items in the head occur as well with a certain probability. That probability is measured by using the confidence metric. It measures the proportion of transactions for which the head is true among those transactions for which the body is true.
@@ -182,53 +233,73 @@ double lift = new Lift().evaluate(rule); // may be greater than 1
 double leverage = new Leverage().evaluate(rule); // between 0 and 1
 ```
 
-### Sorting and filtering association rules
-
-In order to sort the association rules, which are returned by the library's Apriori algorithm, the `sort`-method of the class `RuleSet` can be used. It returns a copy of the rule set, which contains the rules sorted by their support, confidence, lift or leverage in decreasing order, depending on whether an instance of the class `Support`, `Confidence`, `Lift` or `Leverage` is passed as an argument. The following code illustrates this functionality:
-
-```java
-Metric metric = new Leverage();
-RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(metric);
-```
-
-In addition, the `filter`-method of the class `RuleSet` enables to filter the rules based on one of the available metrics. It causes the rules to be sorted in decreasing order and returns a rule set, which only contains those rules, whose heuristic value is greater or equal than a certain threshold.
-
-```java
-Metric metric = new Leverage();
-double threshold = 0.5;
-RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(metric, threshold);
-```
-
-If the rules should be filtered depending on more than one metric, there is an additional `filter`-method, which expects an instance of the type `Operator` as an argument. Available implementations of said interface are the classes `ArithmeticMean` and `HarmonicMean`. They allow to average two or more heuristic values, which have been calculated by using one of above metrics. Optionally, the individual heuristic values can be weighted differently. The following sample code illustrates the use of these averaging operators:
+If multiple metrics should be used for calculating the "interestingly" of a rule, they can be averaged by using the class `ArithmeticMean` or `HarmonicMean`. The code below shows, how these classes can be used.
 
 ```java
 Operator operator = new HarmonicMean().add(new Leverage()).add(new Lift());
 // use new HarmonicMean().add(new Leverage(), 1).add(new Lift(), 2) to weight metrics differently
-double threshold = 0.5;
-RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(operator, threshold);
+double performance = operator.evaluate(rule);
 ```
 
-#### Tie-breaking
+### Sorting association rules
 
-When sorting or filtering a `RuleSet`, different tie-breaking strategies can be applied. Tie-breaking refers to deciding which association rule should be considered to be more "interestingly", if two rules evaluate to the same heuristic value. For this reason, the `sort` and `filter`-methods of the class `RuleSet` allow to pass an instance of the class `TieBreaker`. Several pre-defined tie-breaking strategies are provided by the library and can be added to a `TieBreaker` by calling the corresponding method. A list of existing tie-breaking strategies and the corresponding methods is given below.
+In order to sort the association rules, which are returned by the library's Apriori algorithm, the `sort`-method of the class `RuleSet` can be used. It returns a copy of the rule set, which contains the original rules in sorted order. The order is specified by an instance of the class `Sorting`. The following code illustrates, how such an instance can be configured using multiple criterions:
+
+```java
+Sorting<AssociationRule> sorting = Sorting.forAssociationRules().withOrder(Order.DESCENDING).byOperator(new Confidence());
+RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(sorting);
+```
+
+The following table provides an overview of all methods, which can be used to configure a `Sorting` instance, when sorting association rules.
 
 | Method | Description | 
 |:-----:|:------:|
-| `byOperator(Operator):TieBreaker` | Performs tie-breaking according to a specific operator |
-| `preferSimple():TieBreaker` | Prefers rules, which contain few items in their body and head |
-| `preferComplex():TieBreaker` | Prefers rules, which contain many items in their body and head |
-| `preferSimpleBody():TieBreaker` | Prefers rules, which contain few items in their body |
-| `preferComplexBody():TieBreaker` | Prefers rules, which contain many items in their body |
-| `preferSimpleHead():TieBreaker` | Prefers rules, which contain few items in their head |
-| `preferComplexHead():TieBreaker` | Prefers rules, which contain many items in their head |
-| `custom(BiFunction):TieBreaker` | Allows to specify a custom tie-breaking strategy. The given function must return 1, if the first rule should be preferred, -1, if the second one should be preferred, or 0, if no decision can be made |
+| `withOrder(Order):AssociationRuleSorting` | Specifies whether the association rules should be sorted in `Order.ASCENDING` or `Order.DESCENDING` order |
+| `withTieBreaking(TieBreaker):AssociationRuleSorting` | Specifies the tie-breaking strategy, which should be applied, if it can not be decided, which one of two association rules should be sorted before the other one (see section below) |
+| `byOperator(Operator):AssociationRuleSorting` | Sorts the association rules by their performance according to a specific operator. The operator may be of the type `Support`, `Confidence`, `Lift` or `Leverage`. If a combination of multiple metrics should be used, they can be averaged by using `ArithmeticMean` or `HarmonicMean` instances |
 
-The following example illustrates, how an instances of the class `TieBreaker` can be created by adding multiple tie-breaking strategies to it. Afterwards, the configured tie-breaking strategy is used to sort a rule set.
+### Tie-breaking association rules
+
+When sorting a `RuleSet` using a `Sorting` instance, different tie-breaking strategies can be applied. Tie-breaking refers to deciding which association rule should be considered to be more "interestingly", if it can not be decided which one of two rules should be sorted before the other one given the criterions of the `Sorting` instance. Several pre-defined tie-breaking strategies are provided by the library and can be added to a `TieBreaker` by calling the corresponding method. The following examples illustrates how a tie-breaking strategy for association rules can be configured. If multiple criterions are added to a `TieBreaker`, they are processed in the order they have been added.
 
 ```java
-TieBreaker tieBreaker = new TieBreaker().byOperator(new Support()).preferComplex();
-ruleSet.sort(new Confidence(), tieBreaker);
+TieBreaker<AssociationRule> tieBreaker = TieBreaker.forAssociationRules().byOperator(new Support()).preferComplex();
 ```
+
+A list of all pre-defined tie-breaking strategies, which are provided by the library, and the corresponding methods is given in the table below.
+
+| Method | Description | 
+|:-----:|:------:|
+| `byOperator(Operator):AssociationRuleTieBreaker` | Performs tie-breaking according to a specific operator |
+| `preferSimple():AssociationRuleTieBreaker` | Prefers rules, which contain few items in their body and head |
+| `preferComplex():AssociationRuleTieBreaker` | Prefers rules, which contain many items in their body and head |
+| `preferSimpleBody():AssociationRuleTieBreaker` | Prefers rules, which contain few items in their body |
+| `preferComplexBody():AssociationRuleTieBreaker` | Prefers rules, which contain many items in their body |
+| `preferSimpleHead():AssociationRuleTieBreaker` | Prefers rules, which contain few items in their head |
+| `preferComplexHead():AssociationRuleTieBreaker` | Prefers rules, which contain many items in their head |
+| `custom(BiFunction):AssociationRuleTieBreaker` | Allows to specify a custom tie-breaking strategy. The given function must return 1, if the first rule should be preferred, -1, if the second one should be preferred, or 0, if no decision can be made |
+
+### Filtering association rules
+
+In addition to sorting the rules of a `RuleSet`, they can also be filtered. For this reason, the class `RuleSet` does provide a `filter`-method. It expects an instance of the class `Filter` as a parameter and returns a new `RuleSet`, which only contains the rules, which are accepted by the given filter. If multiple criterions are added to a filter, all of them must be met by the rule to be accepted. The following code illustrates how `Filter` instances can be configured for filtering association rules.
+
+```java
+Filter<AssociationRule> filter = Filter.forAssociationRules().byOperator(new Confidence(), 0.5).byBodySize(2);
+RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(filter);
+```
+
+The table below provides an overview of the different methods, which can be used to configure a `Filter` for filtering association rules.
+
+| Method | Description | 
+|:-----:|:------:|
+| `byOperator(Operator,double,double):AssociationRuleFilter` | Filters the rules by their performance according to a specific operator. The method allows to specify a minimum (and optionally maximum) performance |
+| `bySize(int,int):AssociationRuleFilter` | Filters the rules by the number of items, which are contained in body and head. The method allows to specify a minimum (and optionally maximum) number of items |
+| `byBodySize(int,int):AssociationRuleFilter` | Filters the rules by the size of their body. The method allows to specify a minimum (and optionally maximum) size |
+| `byHeadSize():AssociationRuleFilter` | Filters the rules by the size of their head. The method allows to specify a minimum (and optionally maximum) size |
+
+### Testing if an association rule "covers" items
+
+To test, if an `AssociationRule` covers specific items, it provides several `covers`-methods. In order to specify the items, which should be tested, these methods expect an array, an `Iterable` or an `Iterator` as a parameter. All of these methods return `true`, if all items, which are contained by the rule's body are also contained in the given items. If at least one item is missing, `false` is returned. Using said methods can for example be useful to check, whether an association rule applies to the items, which are contained in an user's shopping cart in an online store. If that is the case, the heads of "covering" association rules  can be used to recommend items, which might be interesting for the customer.
 
 ## Logging
 
