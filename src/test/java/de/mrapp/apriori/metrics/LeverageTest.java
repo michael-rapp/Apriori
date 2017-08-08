@@ -59,7 +59,7 @@ public class LeverageTest {
      */
     @Test
     public final void testMinValue() {
-        assertEquals(0, new Leverage().minValue(), 0);
+        assertEquals(-Double.MAX_VALUE, new Leverage().minValue(), 0);
     }
 
     /**

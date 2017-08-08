@@ -41,7 +41,7 @@ public class Leverage implements Metric {
 
     @Override
     public final double minValue() {
-        return 0;
+        return -Double.MAX_VALUE;
     }
 
     @Override
