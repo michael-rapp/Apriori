@@ -50,7 +50,7 @@ public class LeverageTest {
      * passing null as a parameter.
      */
     @Test(expected = IllegalArgumentException.class)
-    public final void testEvaluatThrowsException() {
+    public final void testEvaluateThrowsException() {
         new Leverage().evaluate(null);
     }
 
