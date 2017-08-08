@@ -10,8 +10,8 @@ This is a Java library, which provides an implementation of the [Apriori algorit
 * Trying to generate a specific number of association rules by starting with a great minimum confidence and decreasing it until enough rules can be generated
 * Frequent item sets can be sorted by their support, as well as by their size
 * Frequent item sets can be filtered to ensure that they reach a certain support, as well as by their size
-* Association rules can be sorted by their performance according to the support, confidence, lift or leverage metrics, as well as by the size of their head and body
-* Association rules can be filtered to ensure that they reach a certain performance according to the support, confidence, lift or leverage metrics, as well as by the size of their head and body
+* Association rules can be sorted by their performance according to the [support](https://en.wikipedia.org/wiki/Association_rule_learning#Support), [confidence](https://en.wikipedia.org/wiki/Association_rule_learning#Confidence), [lift](https://en.wikipedia.org/wiki/Association_rule_learning#Lift), leverage or [conviction](https://en.wikipedia.org/wiki/Association_rule_learning#Conviction) metrics, as well as by the size of their head and body
+* Association rules can be filtered to ensure that they reach a certain performance according to the support, confidence, lift, leverage or conviction metrics, as well as by the size of their head and body
 * It can easily be tested, if association rules cover specific items, i.e. that all items, which are contained in their body are also contained in a tested set of items
 
 ## License Agreement
@@ -221,16 +221,18 @@ The Apriori algorithm usually results in many association rules being learned. T
 
 * **Lift:** The ratio of a rule's confidence over a priori expectation for the head.
 * **Leverage:** The difference between support and expected support, if the rule's body and head were independent.
+* **Conviction:** The ratio of the expected frequency that the rule makes an incorrect prediction, if body and head were independent, over the frequency of incorrect predictions.
 
 Leverage is a lower bound for support and high leverage implies, that the support is also high. In contrast to optimizing the confidence or lift of a rule, optimizing the leverage guarantees, that a certain minimum support is reached.
 
-To measure the support, confidence, lift or leverage of an `AssociationRule`, the following code can be used.
+To measure the support, confidence, lift, leverage or conviction of an `AssociationRule`, the following code can be used.
 
 ```java
 double support = new Support().evaluate(rule); // between 0 and 1
 double confidence = new Confidence().evaluate(rule); // between 0 and 1
-double lift = new Lift().evaluate(rule); // may be greater than 1
-double leverage = new Leverage().evaluate(rule); // between 0 and 1
+double lift = new Lift().evaluate(rule); // at minimum 0, may be greater than 1
+double leverage = new Leverage().evaluate(rule); // at maximum 1, may be less than 0
+double conviction = new Conviction().evaluate(rule); // at minimum 0, may be greater than 1
 ```
 
 If multiple metrics should be used for calculating the "interestingly" of a rule, they can be averaged by using the class `ArithmeticMean` or `HarmonicMean`. The code below shows, how these classes can be used.
@@ -256,7 +258,7 @@ The following table provides an overview of all methods, which can be used to co
 |:-----:|:------:|
 | `withOrder(Order):AssociationRuleSorting` | Specifies whether the association rules should be sorted in `Order.ASCENDING` or `Order.DESCENDING` order |
 | `withTieBreaking(TieBreaker):AssociationRuleSorting` | Specifies the tie-breaking strategy, which should be applied, if it can not be decided, which one of two association rules should be sorted before the other one (see section below) |
-| `byOperator(Operator):AssociationRuleSorting` | Sorts the association rules by their performance according to a specific operator. The operator may be of the type `Support`, `Confidence`, `Lift` or `Leverage`. If a combination of multiple metrics should be used, they can be averaged by using `ArithmeticMean` or `HarmonicMean` instances |
+| `byOperator(Operator):AssociationRuleSorting` | Sorts the association rules by their performance according to a specific operator. The operator may be of the type `Support`, `Confidence`, `Lift`, `Leverage` or `Conviction`. If a combination of multiple metrics should be used, they can be averaged by using `ArithmeticMean` or `HarmonicMean` instances |
 
 ### Tie-breaking association rules
 
