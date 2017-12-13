@@ -23,7 +23,6 @@ import de.mrapp.apriori.modules.FrequentItemSetMinerModule;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import static de.mrapp.util.Condition.ensureNotNull;
@@ -72,9 +71,9 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
     /**
      * Tries to find a specific number of frequent item sets.
      *
-     * @param iterator An iterator, which allows to iterate the transactions of the data set, which
+     * @param iterable An iterable, which allows to iterate the transactions of the data set, which
      *                 should be processed by the algorithm, as an instance of the type {@link
-     *                 Iterator}. The iterator may not be null
+     *                 Iterable}. The iterable may not be null
      * @return A map, which contains the frequent item sets, which have been found, as an instance
      * of the type {@link Map} or an empty map, if no frequent item sets have been found. The map
      * stores instances of the class {@link ItemSet} as values and their hash codes as the
@@ -82,7 +81,7 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
      */
     @NotNull
     public final Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
-            @NotNull final Iterator<Transaction<ItemType>> iterator) {
+            @NotNull final Iterable<Transaction<ItemType>> iterable) {
         if (getConfiguration().getFrequentItemSetCount() > 0) {
             Map<Integer, TransactionalItemSet<ItemType>> result = new HashMap<>();
             double currentMinSupport = getConfiguration().getMaxSupport();
@@ -90,7 +89,7 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
             while (currentMinSupport >= getConfiguration().getMinSupport() &&
                     result.size() < getConfiguration().getFrequentItemSetCount()) {
                 Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = frequentItemSetMiner
-                        .findFrequentItemSets(iterator, currentMinSupport);
+                        .findFrequentItemSets(iterable, currentMinSupport);
 
                 if (frequentItemSets.size() >= result.size()) {
                     result = frequentItemSets;
@@ -102,7 +101,7 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
             return result;
         } else {
             return frequentItemSetMiner
-                    .findFrequentItemSets(iterator, getConfiguration().getMinSupport());
+                    .findFrequentItemSets(iterable, getConfiguration().getMinSupport());
         }
     }
 

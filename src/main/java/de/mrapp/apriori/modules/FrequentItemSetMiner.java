@@ -19,7 +19,6 @@ import de.mrapp.apriori.Transaction;
 import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -34,9 +33,9 @@ public interface FrequentItemSetMiner<ItemType extends Item> {
     /**
      * Searches for frequent item sets.
      *
-     * @param iterator   An iterator, which allows to iterate the transactions of the data set,
+     * @param iterable   An iterable, which allows to iterate the transactions of the data set,
      *                   which should be processed by the algorithm, as an instance of the type
-     *                   {@link Iterator}. The iterator may not be null
+     *                   {@link Iterable}. The iterable may not be null
      * @param minSupport The minimum support, which must at least be reached by an item set to be
      *                   considered frequent, as a {@link Double} value. The support must be at
      *                   least 0 and at maximum 1
@@ -47,6 +46,6 @@ public interface FrequentItemSetMiner<ItemType extends Item> {
      */
     @NotNull
     Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
-            @NotNull Iterator<Transaction<ItemType>> iterator, double minSupport);
+            @NotNull Iterable<Transaction<ItemType>> iterable, double minSupport);
 
 }

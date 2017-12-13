@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.Map;
 
 import static de.mrapp.util.Condition.*;
@@ -816,20 +815,19 @@ public class Apriori<ItemType extends Item> {
      * Executes the Apriori algorithm on a specific set of transactions in order to learn
      * association rules, which specify frequent item sets.
      *
-     * @param iterator An iterator, which allows to iterate the transactions, as an instance of the
+     * @param iterable An iterable, which allows to iterate the transactions, as an instance of the
      *                 type {@link Iterable}. The iterable may not be null
      * @return The rule set, which contains the association rules, which have been learned by the
      * algorithm, as an instance of the class {@link RuleSet} or an empty rule set, if no
      * association rules have been learned
      */
     @NotNull
-    public final Output<ItemType> execute(
-            @NotNull final Iterator<Transaction<ItemType>> iterator) {
-        ensureNotNull(iterator, "The iterator may not be null");
+    public final Output<ItemType> execute(@NotNull final Iterable<Transaction<ItemType>> iterable) {
+        ensureNotNull(iterable, "The iterable may not be null");
         LOGGER.info("Starting Apriori algorithm");
         long startTime = System.currentTimeMillis();
         Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = frequentItemSetMinerTask
-                .findFrequentItemSets(iterator);
+                .findFrequentItemSets(iterable);
         RuleSet<ItemType> ruleSet = null;
 
         if (configuration.isGeneratingRules()) {

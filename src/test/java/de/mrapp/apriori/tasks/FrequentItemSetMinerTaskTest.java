@@ -25,7 +25,10 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -44,15 +47,15 @@ public class FrequentItemSetMinerTaskTest extends AbstractDataTest {
     private class FrequentItemSetMinerMock implements FrequentItemSetMiner<NamedItem> {
 
         /**
-         * A list, which contains the minimum supports, which have been passed when invoking
-         * the {@link FrequentItemSetMinerMock#findFrequentItemSets(Iterator, double)} method.
+         * A list, which contains the minimum supports, which have been passed when invoking the
+         * {@link FrequentItemSetMinerMock#findFrequentItemSets(Iterable, double)} method.
          */
         private final List<Double> minSupports = new LinkedList<>();
 
         @NotNull
         @Override
         public Map<Integer, TransactionalItemSet<NamedItem>> findFrequentItemSets(
-                @NotNull final Iterator<Transaction<NamedItem>> iterator, final double minSupport) {
+                @NotNull final Iterable<Transaction<NamedItem>> iterable, final double minSupport) {
             minSupports.add(minSupport);
             return new HashMap<>();
         }
@@ -70,8 +73,7 @@ public class FrequentItemSetMinerTaskTest extends AbstractDataTest {
 
     /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
-     * a configuration and a frequent item set miner as parameters, if the configuration is
-     * null.
+     * a configuration and a frequent item set miner as parameters, if the configuration is null.
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testConstructorWithConfigurationAndFrequentItemSetMinerParameterThrowsExceptionWhenConfigurationIsNull() {
@@ -106,8 +108,7 @@ public class FrequentItemSetMinerTaskTest extends AbstractDataTest {
         FrequentItemSetMinerTask<NamedItem> frequentItemSetMinerTask = new FrequentItemSetMinerTask<>(
                 configuration, frequentItemSetMinerMock);
         File file = getInputFile(INPUT_FILE_1);
-        DataIterator dataIterator = new DataIterator(file);
-        frequentItemSetMinerTask.findFrequentItemSets(dataIterator);
+        frequentItemSetMinerTask.findFrequentItemSets(() -> new DataIterator(file));
         assertEquals(Math.round((maxSupport - minSupport) / supportDelta) + 1,
                 frequentItemSetMinerMock.minSupports.size(), 0);
 
@@ -131,8 +132,7 @@ public class FrequentItemSetMinerTaskTest extends AbstractDataTest {
         FrequentItemSetMinerTask<NamedItem> frequentItemSetMinerTask = new FrequentItemSetMinerTask<>(
                 configuration, frequentItemSetMinerMock);
         File file = getInputFile(INPUT_FILE_1);
-        DataIterator dataIterator = new DataIterator(file);
-        frequentItemSetMinerTask.findFrequentItemSets(dataIterator);
+        frequentItemSetMinerTask.findFrequentItemSets(() -> new DataIterator(file));
         assertEquals(1, frequentItemSetMinerMock.minSupports.size());
         assertEquals(minSupport, frequentItemSetMinerMock.minSupports.get(0), 0);
     }

@@ -53,10 +53,9 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
                                           @NotNull final String[][] actualFrequentItemSets,
                                           @NotNull double[] actualSupports) {
         File inputFile = getInputFile(fileName);
-        DataIterator dataIterator = new DataIterator(inputFile);
         FrequentItemSetMinerModule<NamedItem> frequentItemSetMiner = new FrequentItemSetMinerModule<>();
         Map<Integer, TransactionalItemSet<NamedItem>> frequentItemSets = frequentItemSetMiner
-                .findFrequentItemSets(dataIterator, minSupport);
+                .findFrequentItemSets(() -> new DataIterator(inputFile), minSupport);
         int frequentItemSetCount = 0;
 
         for (Map.Entry<Integer, TransactionalItemSet<NamedItem>> entry : frequentItemSets
@@ -113,8 +112,8 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
     @Test(expected = IllegalArgumentException.class)
     public final void testFindFrequentItemSetsThrowsExceptionWhenMinSupportIsLessThanZero() {
         File inputFile = getInputFile(INPUT_FILE_1);
-        DataIterator dataIterator = new DataIterator(inputFile);
-        new FrequentItemSetMinerModule<NamedItem>().findFrequentItemSets(dataIterator, -0.1);
+        new FrequentItemSetMinerModule<NamedItem>()
+                .findFrequentItemSets(() -> new DataIterator(inputFile), -0.1);
     }
 
     /**
@@ -125,8 +124,8 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
     @Test(expected = IllegalArgumentException.class)
     public final void testFindFrequentItemSetsThrowsExceptionWhenMinSupportIsGreaterThanOne() {
         File inputFile = getInputFile(INPUT_FILE_1);
-        DataIterator dataIterator = new DataIterator(inputFile);
-        new FrequentItemSetMinerModule<NamedItem>().findFrequentItemSets(dataIterator, 1.1);
+        new FrequentItemSetMinerModule<NamedItem>()
+                .findFrequentItemSets(() -> new DataIterator(inputFile), 1.1);
     }
 
 }

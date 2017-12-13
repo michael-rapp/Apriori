@@ -510,10 +510,9 @@ public class AprioriTest extends AbstractDataTest {
             throw new RuntimeException();
         });
         File file = getInputFile(INPUT_FILE_1);
-        DataIterator dataIterator = new DataIterator(file);
         Apriori<NamedItem> apriori = new Apriori<>(configuration, frequentItemSetMinerTask,
                 associationRuleGeneratorTask);
-        Output<NamedItem> output = apriori.execute(dataIterator);
+        Output<NamedItem> output = apriori.execute(() -> new DataIterator(file));
         assertEquals(configuration, output.getConfiguration());
         assertNull(output.getRuleSet());
         SortedSet<ItemSet<NamedItem>> set = output.getFrequentItemSets();
@@ -554,10 +553,9 @@ public class AprioriTest extends AbstractDataTest {
         AssociationRuleGeneratorTask<NamedItem> associationRuleGeneratorTask = new AssociationRuleGeneratorTask<>(
                 configuration, (frequentItemSets, minConfidence) -> ruleSet);
         File file = getInputFile(INPUT_FILE_1);
-        DataIterator dataIterator = new DataIterator(file);
         Apriori<NamedItem> apriori = new Apriori<>(configuration, frequentItemSetMinerTask,
                 associationRuleGeneratorTask);
-        Output<NamedItem> output = apriori.execute(dataIterator);
+        Output<NamedItem> output = apriori.execute(() -> new DataIterator(file));
         assertEquals(configuration, output.getConfiguration());
         assertEquals(ruleSet, output.getRuleSet());
         SortedSet<ItemSet<NamedItem>> set = output.getFrequentItemSets();

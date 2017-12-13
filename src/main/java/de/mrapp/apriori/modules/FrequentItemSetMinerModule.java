@@ -53,22 +53,20 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
     /**
      * Generates and returns item sets, which contain only one item.
      *
-     * @param iterator An iterator, which allows to iterate the transactions of the data set, which
+     * @param iterable An iterable, which allows to iterate the transactions of the data set, which
      *                 should be processed by the algorithm, as an instance of the type {@link
-     *                 Iterator}. The iterator may not be null
+     *                 Iterable}. The iterable may not be null
      * @return A pair, which contains the generated item sets, as well as the number of
      * transactions, which have been iterated, as an instance of the class {@link Pair}. The pair
      * may not be null
      */
     @NotNull
     private Pair<Collection<TransactionalItemSet<ItemType>>, Integer> generateInitialItemSets(
-            @NotNull final Iterator<Transaction<ItemType>> iterator) {
+            @NotNull final Iterable<Transaction<ItemType>> iterable) {
         Map<Integer, TransactionalItemSet<ItemType>> itemSets = new HashMap<>();
         int transactionCount = 0;
 
-        while (iterator.hasNext()) {
-            Transaction<ItemType> transaction = iterator.next();
-
+        for (Transaction<ItemType> transaction : iterable) {
             for (ItemType item : transaction) {
                 TransactionalItemSet<ItemType> itemSet = new TransactionalItemSet<>();
                 itemSet.add(item);
@@ -222,15 +220,15 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
     @NotNull
     @Override
     public final Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
-            @NotNull final Iterator<Transaction<ItemType>> iterator, final double minSupport) {
-        ensureNotNull(iterator, "The iterator may not be null");
+            @NotNull final Iterable<Transaction<ItemType>> iterable, final double minSupport) {
+        ensureNotNull(iterable, "The iterable may not be null");
         ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
         ensureAtMaximum(minSupport, 1, "The minimum support must be at maximum 1");
         LOGGER.debug("Searching for frequent item sets");
         Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = new HashMap<>();
         int k = 1;
         Pair<Collection<TransactionalItemSet<ItemType>>, Integer> pair = generateInitialItemSets(
-                iterator);
+                iterable);
         Collection<TransactionalItemSet<ItemType>> candidates = pair.first;
         int transactionCount = pair.second;
 
