@@ -50,9 +50,9 @@ public class DataIteratorTest extends AbstractDataTest {
         File inputFile = getInputFile(fileName);
         DataIterator iterator = new DataIterator(inputFile);
         int transactionCount = 0;
-        Transaction<NamedItem> transaction;
 
-        while ((transaction = iterator.next()) != null) {
+        while (iterator.hasNext()) {
+            Transaction<NamedItem> transaction = iterator.next();
             String[] line = actualData[transactionCount];
             int index = 0;
 
@@ -62,7 +62,6 @@ public class DataIteratorTest extends AbstractDataTest {
             }
 
             transactionCount++;
-            System.out.print("\n");
         }
 
         assertEquals(DATA_1.length, transactionCount);

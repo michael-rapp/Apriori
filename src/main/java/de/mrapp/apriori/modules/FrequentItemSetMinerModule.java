@@ -65,9 +65,10 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
             @NotNull final Iterator<Transaction<ItemType>> iterator) {
         Map<Integer, TransactionalItemSet<ItemType>> itemSets = new HashMap<>();
         int transactionCount = 0;
-        Transaction<ItemType> transaction;
 
-        while ((transaction = iterator.next()) != null) {
+        while (iterator.hasNext()) {
+            Transaction<ItemType> transaction = iterator.next();
+
             for (ItemType item : transaction) {
                 TransactionalItemSet<ItemType> itemSet = new TransactionalItemSet<>();
                 itemSet.add(item);

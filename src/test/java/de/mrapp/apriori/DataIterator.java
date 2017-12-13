@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import static de.mrapp.util.Condition.ensureNotEmpty;
@@ -115,6 +116,11 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
     private String nextLine;
 
     /**
+     * True, if the end of the text file has been reached.
+     */
+    private boolean reachedEnd;
+
+    /**
      * Opens the reader, which is used to read the text file, if it is not opened yet.
      */
     private void openReader() {
@@ -162,6 +168,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
             }
 
             closeReader();
+            reachedEnd = true;
             return null;
         } catch (IOException e) {
             String message = "Failed to read file " + file;
@@ -187,18 +194,29 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
         this.file = file;
         this.reader = null;
         this.nextLine = null;
+        this.reachedEnd = false;
     }
 
     @Override
     public final boolean hasNext() {
         openReader();
-        nextLine = readNextLine();
-        return nextLine != null;
+
+        if (nextLine == null && !reachedEnd) {
+            nextLine = readNextLine();
+        }
+
+        return nextLine != null && !reachedEnd;
     }
 
     @Override
     public final Transaction<NamedItem> next() {
-        return hasNext() ? new TransactionImplementation(nextLine) : null;
+        if (hasNext()) {
+            Transaction<NamedItem> transaction = new TransactionImplementation(nextLine);
+            nextLine = null;
+            return transaction;
+        }
+
+        throw new NoSuchElementException();
     }
 
 }
