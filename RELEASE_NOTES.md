@@ -1,5 +1,12 @@
 # Apriori - RELEASE NOTES
 
+## Version 1.3.0 (Dec. 13th 2017)
+
+A feature release, which introduces the following changes:
+
+- The `execute`-method of the class `Apriori` now takes an `Iterable` as an argument. This allows to properly iterate transactions multiple times.
+- In accordance with the API specification, iterators are now expected to throw a `NoSuchElementException` instead of returning `null` when the end is reached.
+
 ## Version 1.2.0 (Aug. 8th 2017)
 
 A feature release, which introduces the following changes:
