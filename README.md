@@ -46,9 +46,9 @@ To be able to apply the Apriori algorithm to a data set, the data must be availa
 
 * The data set must consist of a finite set of "items" (e.g. the articles available in an online shop). The library provides the interface `Item`, which must be implemented in order to specify the properties of an item. It is important to correctly override the `hashCode`- and `equals`-methods and to implement the `compareTo`-method of the interface `java.lang.Comparable`.
 * A data set consists of multiple "transactions" (e.g. the purchases of individual customers). Each transaction contains one or several items. The library provides the interface `Transaction`, which must be implemented to provide a `java.util.Ìterator`, which allows to traverse the items of a transaction.
-* To execute the Apriori algorithm, a `java.util.Iterator`, which allows to traverse all available transactions, must be passed to the libary's `Apriori` class.
+* To execute the Apriori algorithm, a `java.lang.Iterable`, which allows to traverse all available transactions, must be passed to the libary's `Apriori` class.
 
-An exemplary implementation of the interface `Item` can be found in the class `NamedItem`, which is part of the library's JUnit tests. It implements an item, which consists of a text. Furthermore, the library's test resources include the class `DataIterator`, which implements a `java.util.iterator`, which reads items from text files and provides them as transactions. In practice, by creating custom iterator and transaction implementations, the library can flexibly be used to process data from various data sources, such as databases, files, or network resources.
+An exemplary implementation of the interface `Item` can be found in the class `NamedItem`, which is part of the library's JUnit tests. It implements an item, which consists of a text. Furthermore, the library's test resources include the class `DataIterator`, which implements a `java.util.Iterator`, which reads items from text files and provides them as transactions. In practice, by creating custom iterator and transaction implementations, the library can flexibly be used to process data from various data sources, such as databases, files, or network resources.
 
 ## Finding Frequent Item Sets
 
@@ -94,8 +94,8 @@ To use the implementation of the Apriori algorithm, which is provided by this li
 ```java
 double minSupport = 0.5;
 Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(minSupport).create();
-Iterator<Transaction<NamedItem>> iterator = new DataIterator(inputFile);
-Output<NamedItem> output = apriori.execute(iterator);
+Iterable<Transaction<NamedItem>> iterable = () -> new DataIterator(inputFile);
+Output<NamedItem> output = apriori.execute(iterable);
 FrequentItemSets<NamedItem> frequentItemSets = output.getFrequentItemSets();
 ```
 
@@ -201,8 +201,8 @@ In order to configure the algorithm, which is provided by this library, to gener
 double minSupport = 0.5;
 double minConfidence = 1.0;
 Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(minSupport).generateRules(minConfidence).create();
-Iterator<Transaction<NamedItem>> iterator = new DataIterator(inputFile);
-Output<NamedItem> output = apriori.execute(iterator);
+Iterable<Transaction<NamedItem>> iterable = () -> new DataIterator(inputFile);
+Output<NamedItem> output = apriori.execute(iterable);
 RuleSet<NamedItem> ruleSet = output.getRuleSet();
 ```
 
