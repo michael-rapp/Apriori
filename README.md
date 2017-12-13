@@ -26,7 +26,7 @@ Alternatively, the library can be added to your project as a Gradle dependency b
 
 ```groovy
 dependencies {
-    compile 'com.github.michael-rapp:apriori:1.2.0'
+    compile 'com.github.michael-rapp:apriori:1.3.0'
 }
 ```
 
