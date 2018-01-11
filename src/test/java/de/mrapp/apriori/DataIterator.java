@@ -95,7 +95,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
         @Override
         public NamedItem next() {
             String token = tokenizer.nextToken();
-            return token != null && !token.isEmpty() ? new NamedItem(token) : null;
+            return new NamedItem(token);
         }
 
     }
