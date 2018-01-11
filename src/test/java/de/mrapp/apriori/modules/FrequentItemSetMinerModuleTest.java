@@ -96,11 +96,19 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
     }
 
     /**
-     * Tests the functionality fo the method, which allows to find frequent item sets, when using the third input file.
+     * Tests the functionality of the method, which allows to find frequent item sets, when using the third input file.
      */
     @Test
     public final void testFindFrequentItemSets3() {
         testFindFrequentItemSets(INPUT_FILE_3, 0.5, FREQUENT_ITEM_SETS_3, SUPPORTS_3);
+    }
+
+    /**
+     * Tests the functionality of the method, which allows to find frequent item sets, when using the fourth input file.
+     */
+    @Test
+    public final void testFindFrequentItemSets4() {
+        testFindFrequentItemSets(INPUT_FILE_4, 0.5, FREQUENT_ITEM_SETS_4, SUPPORTS_4);
     }
 
     /**

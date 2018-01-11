@@ -48,6 +48,13 @@ public class DataIteratorTest extends AbstractDataTest {
             { "0", "1", "4" }
     };
 
+    /**
+     * The data, which is contained by the fourth input file.
+     */
+    private static final String[][] DATA_4 = { { "0", "1", "2", "3" }, { "0", "1", "2", "3" },
+            { "0", "1", "3", "4", "5" }, { "0", "1", "4" }, { "0", "1", "4" }
+    };
+
 
     /**
      * Tests, if the data, which is contained by an input file, is iterated correctly.
@@ -75,7 +82,7 @@ public class DataIteratorTest extends AbstractDataTest {
             transactionCount++;
         }
 
-        assertEquals(DATA_1.length, transactionCount);
+        assertEquals(actualData.length, transactionCount);
     }
 
     /**
@@ -100,6 +107,14 @@ public class DataIteratorTest extends AbstractDataTest {
     @Test
     public final void testIterator3() {
         testIterator(INPUT_FILE_3, DATA_3);
+    }
+
+    /**
+     * Tests, if the data of the third input file is iterated correctly.
+     */
+    @Test
+    public final void testIterator4() {
+        testIterator(INPUT_FILE_4, DATA_4);
     }
 
 }

@@ -47,6 +47,11 @@ public abstract class AbstractDataTest {
     protected static final String INPUT_FILE_3 = "data3.txt";
 
     /**
+     * The name of the fourth input file, which is used by the tests.
+     */
+    protected static final String INPUT_FILE_4 = "data4.txt";
+
+    /**
      * The frequent item sets, which are contained by the first input file.
      */
     protected static final String[][] FREQUENT_ITEM_SETS_1 = { { "milk", "sugar" }, { "coffee" },
@@ -83,6 +88,18 @@ public abstract class AbstractDataTest {
      * The supports of the frequent items sets, which are contained by the third input file.
      */
     protected static final double[] SUPPORTS_3 = { 0.5, 0.5, 0.5, 0.75, 0.75, 0.75, 0.75, 1.0, 1.0, 1.0 };
+
+    /**
+     * The frequent item sets, which are contained by the fourth input file.
+     */
+    protected static final String[][] FREQUENT_ITEM_SETS_4 = { { "0", "3" }, { "0", "1", "3" }, { "3" }, { "0", "4" },
+            { "0", "1", "4" }, { "4" }, { "1", "4" }, { "0" }, { "0", "1" }, { "1" }
+    };
+
+    /**
+     * The supports of the frequent items sets, which are contained by the third input file.
+     */
+    protected static final double[] SUPPORTS_4 = { 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 1.0, 1.0, 1.0 };
 
     /**
      * Returns the input file, which corresponds to a specific file name.
