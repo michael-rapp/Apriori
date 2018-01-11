@@ -49,9 +49,9 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
      *                               null
      */
     private void testFindFrequentItemSets(@NotNull final String fileName,
-                                          final double minSupport,
-                                          @NotNull final String[][] actualFrequentItemSets,
-                                          @NotNull double[] actualSupports) {
+            final double minSupport,
+            @NotNull final String[][] actualFrequentItemSets,
+            @NotNull double[] actualSupports) {
         File inputFile = getInputFile(fileName);
         FrequentItemSetMinerModule<NamedItem> frequentItemSetMiner = new FrequentItemSetMinerModule<>();
         Map<Integer, TransactionalItemSet<NamedItem>> frequentItemSets = frequentItemSetMiner
@@ -93,6 +93,14 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
     @Test
     public final void testFindFrequentItemSets2() {
         testFindFrequentItemSets(INPUT_FILE_2, 0.25, FREQUENT_ITEM_SETS_2, SUPPORTS_2);
+    }
+
+    /**
+     * Tests the functionality fo the method, which allows to find frequent item sets, when using the third input file.
+     */
+    @Test
+    public final void testFindFrequentItemSets3() {
+        testFindFrequentItemSets(INPUT_FILE_3, 0.5, FREQUENT_ITEM_SETS_3, SUPPORTS_3);
     }
 
     /**

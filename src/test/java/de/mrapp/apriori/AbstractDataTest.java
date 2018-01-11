@@ -42,31 +42,54 @@ public abstract class AbstractDataTest {
     protected static final String INPUT_FILE_2 = "data2.txt";
 
     /**
+     * The name of the third input file, which is used by the tests.
+     */
+    protected static final String INPUT_FILE_3 = "data3.txt";
+
+    /**
      * The frequent item sets, which are contained by the first input file.
      */
-    protected static final String[][] FREQUENT_ITEM_SETS_1 = {{"milk", "sugar"}, {"coffee"}, {"coffee", "milk", "sugar"}, {"coffee", "sugar"}, {"milk"}, {"coffee", "milk"}, {"bread"}, {"bread", "sugar"}, {"sugar"}};
+    protected static final String[][] FREQUENT_ITEM_SETS_1 = { { "milk", "sugar" }, { "coffee" },
+            { "coffee", "milk", "sugar" }, { "coffee", "sugar" }, { "milk" }, { "coffee", "milk" }, { "bread" },
+            { "bread", "sugar" }, { "sugar" }
+    };
 
     /**
      * The supports of the frequent item sets, which are contained by the first input file.
      */
-    protected static final double[] SUPPORTS_1 = {0.5, 0.75, 0.5, 0.5, 0.75, 0.75, 0.5, 0.5, 0.75};
+    protected static final double[] SUPPORTS_1 = { 0.5, 0.75, 0.5, 0.5, 0.75, 0.75, 0.5, 0.5, 0.75 };
 
     /**
      * The frequent item sets, which are contained by the second input file.
      */
-    protected static final String[][] FREQUENT_ITEM_SETS_2 = {{"beer"}, {"wine"}, {"beer", "wine"}, {"chips", "pizza"}, {"beer", "chips", "wine"}, {"chips"}, {"beer", "chips"}, {"chips", "wine"}, {"pizza"}, {"pizza", "wine"}};
+    protected static final String[][] FREQUENT_ITEM_SETS_2 = { { "beer" }, { "wine" }, { "beer", "wine" },
+            { "chips", "pizza" }, { "beer", "chips", "wine" }, { "chips" }, { "beer", "chips" }, { "chips", "wine" },
+            { "pizza" }, { "pizza", "wine" }
+    };
 
     /**
      * The supports of the frequent item sets, which are contained by the second input file.
      */
-    protected static final double[] SUPPORTS_2 = {0.5, 0.5, 0.25, 0.25, 0.25, 0.75, 0.5, 0.25, 0.5, 0.25};
+    protected static final double[] SUPPORTS_2 = { 0.5, 0.5, 0.25, 0.25, 0.25, 0.75, 0.5, 0.25, 0.5, 0.25 };
 
+    /**
+     * The frequent item sets, which are contained by the third input file.
+     */
+    protected static final String[][] FREQUENT_ITEM_SETS_3 = { { "0", "3" }, { "0", "1", "3" }, { "3" }, { "0", "4" },
+            { "0", "1", "4" }, { "4" }, { "1", "4" }, { "0" }, { "0", "1" }, { "1" }
+    };
+
+    /**
+     * The supports of the frequent items sets, which are contained by the third input file.
+     */
+    protected static final double[] SUPPORTS_3 = { 0.5, 0.5, 0.5, 0.75, 0.75, 0.75, 0.75, 1.0, 1.0, 1.0 };
 
     /**
      * Returns the input file, which corresponds to a specific file name.
      *
      * @param fileName The file name, which corresponds to the input file, which should be returned,
      *                 as a {@link String}. The string may neither be null, nor empty
+     *
      * @return The input file, which can be used by the tests, as an instance of the class {@link
      * File}. The file may neither be null, nor empty
      */

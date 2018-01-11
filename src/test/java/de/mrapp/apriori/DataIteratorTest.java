@@ -30,12 +30,23 @@ public class DataIteratorTest extends AbstractDataTest {
     /**
      * The data, which is contained by the first input file.
      */
-    private static final String[][] DATA_1 = {{"bread", "butter", "sugar"}, {"coffee", "milk", "sugar"}, {"bread", "coffee", "milk", "sugar"}, {"coffee", "milk"}};
+    private static final String[][] DATA_1 = { { "bread", "butter", "sugar" }, { "coffee", "milk", "sugar" },
+            { "bread", "coffee", "milk", "sugar" }, { "coffee", "milk" }
+    };
 
     /**
      * The data, which is contained by the second input file.
      */
-    private static final String[][] DATA_2 = {{"beer", "chips", "wine"}, {"beer", "chips"}, {"pizza", "wine"}, {"chips", "pizza"}};
+    private static final String[][] DATA_2 = { { "beer", "chips", "wine" }, { "beer", "chips" }, { "pizza", "wine" },
+            { "chips", "pizza" }
+    };
+
+    /**
+     * The data, which is contained by the third input file.
+     */
+    private static final String[][] DATA_3 = { { "0", "1", "2", "3" }, { "0", "1", "3", "4", "5" }, { "0", "1", "4" },
+            { "0", "1", "4" }
+    };
 
 
     /**
@@ -46,7 +57,7 @@ public class DataIteratorTest extends AbstractDataTest {
      *                   String} array. The array may not be null
      */
     private void testIterator(@NotNull final String fileName,
-                              @NotNull final String[][] actualData) {
+            @NotNull final String[][] actualData) {
         File inputFile = getInputFile(fileName);
         DataIterator iterator = new DataIterator(inputFile);
         int transactionCount = 0;
@@ -81,6 +92,14 @@ public class DataIteratorTest extends AbstractDataTest {
     @Test
     public final void testIterator2() {
         testIterator(INPUT_FILE_2, DATA_2);
+    }
+
+    /**
+     * Tests, if the data of the third input file is iterated correctly.
+     */
+    @Test
+    public final void testIterator3() {
+        testIterator(INPUT_FILE_3, DATA_3);
     }
 
 }
