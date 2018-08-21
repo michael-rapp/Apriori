@@ -20,12 +20,11 @@ import de.mrapp.apriori.Transaction;
 import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import de.mrapp.apriori.modules.FrequentItemSetMiner;
 import de.mrapp.apriori.modules.FrequentItemSetMinerModule;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A task, which tries to find a specific number of frequent item sets.
@@ -64,7 +63,7 @@ public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTas
     public FrequentItemSetMinerTask(@NotNull final Configuration configuration,
                                     @NotNull final FrequentItemSetMiner<ItemType> frequentItemSetMiner) {
         super(configuration);
-        ensureNotNull(frequentItemSetMiner, "The frequent item set miner may not be null");
+        Condition.INSTANCE.ensureNotNull(frequentItemSetMiner, "The frequent item set miner may not be null");
         this.frequentItemSetMiner = frequentItemSetMiner;
     }
 

@@ -15,9 +15,8 @@ package de.mrapp.apriori.tasks;
 
 import de.mrapp.apriori.Apriori.Configuration;
 import de.mrapp.apriori.Item;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * An abstract base class for all tasks, which execute a module multiple times in order to
@@ -42,7 +41,7 @@ public abstract class AbstractTask<ItemType extends Item> {
      *                      the class {@link Configuration}. The configuration may not be null
      */
     public AbstractTask(@NotNull final Configuration configuration) {
-        ensureNotNull(configuration, "The configuration may not be null");
+        Condition.INSTANCE.ensureNotNull(configuration, "The configuration may not be null");
         this.configuration = configuration;
     }
 

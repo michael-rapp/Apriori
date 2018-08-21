@@ -17,6 +17,7 @@ import de.mrapp.apriori.FrequentItemSets;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.Transaction;
 import de.mrapp.apriori.datastructure.TransactionalItemSet;
+import de.mrapp.util.Condition;
 import de.mrapp.util.datastructure.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -24,8 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.IntStream;
-
-import static de.mrapp.util.Condition.*;
 
 /**
  * A module, which allows to find all frequent item sets, which occur in a data set. The data set
@@ -83,7 +82,7 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
             transactionCount++;
         }
 
-        return Pair.create(itemSets.values(), transactionCount);
+        return Pair.Companion.create(itemSets.values(), transactionCount);
     }
 
     /**
@@ -221,16 +220,16 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
     @Override
     public final Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
             @NotNull final Iterable<Transaction<ItemType>> iterable, final double minSupport) {
-        ensureNotNull(iterable, "The iterable may not be null");
-        ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
-        ensureAtMaximum(minSupport, 1, "The minimum support must be at maximum 1");
+        Condition.INSTANCE.ensureNotNull(iterable, "The iterable may not be null");
+        Condition.INSTANCE.ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
+        Condition.INSTANCE.ensureAtMaximum(minSupport, 1, "The minimum support must be at maximum 1");
         LOGGER.debug("Searching for frequent item sets");
         Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = new HashMap<>();
         int k = 1;
         Pair<Collection<TransactionalItemSet<ItemType>>, Integer> pair = generateInitialItemSets(
                 iterable);
-        Collection<TransactionalItemSet<ItemType>> candidates = pair.first;
-        int transactionCount = pair.second;
+        Collection<TransactionalItemSet<ItemType>> candidates = pair.getFirst();
+        int transactionCount = pair.getSecond();
 
         while (!candidates.isEmpty()) {
             LOGGER.trace("k = {}", k);

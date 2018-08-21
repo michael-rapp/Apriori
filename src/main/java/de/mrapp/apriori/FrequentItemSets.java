@@ -15,6 +15,7 @@ package de.mrapp.apriori;
 
 import de.mrapp.apriori.datastructure.Filterable;
 import de.mrapp.apriori.datastructure.Sortable;
+import de.mrapp.util.Condition;
 import de.mrapp.util.datastructure.SortedArraySet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,8 +26,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A sorted set, which contains frequent item sets.
@@ -84,7 +83,7 @@ public class FrequentItemSets<ItemType extends Item> extends
     @NotNull
     public static <T> String formatFrequentItemSets(
             @NotNull final Collection<? extends ItemSet<T>> frequentItemSets) {
-        ensureNotNull(frequentItemSets, "The collection may not be null");
+        Condition.INSTANCE.ensureNotNull(frequentItemSets, "The collection may not be null");
         StringBuilder stringBuilder = new StringBuilder();
         DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.setMinimumFractionDigits(1);
@@ -117,7 +116,7 @@ public class FrequentItemSets<ItemType extends Item> extends
     @NotNull
     @Override
     public final FrequentItemSets<ItemType> filter(@NotNull final Predicate<ItemSet> predicate) {
-        ensureNotNull(predicate, "The predicate may not be null");
+        Condition.INSTANCE.ensureNotNull(predicate, "The predicate may not be null");
         FrequentItemSets<ItemType> filteredFrequentItemSets = new FrequentItemSets<>(comparator());
 
         for (ItemSet<ItemType> itemSet : this) {

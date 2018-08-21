@@ -16,12 +16,11 @@ package de.mrapp.apriori.datastructure;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
 import de.mrapp.apriori.Transaction;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * An extension of the class {@link ItemSet}, which allows to store the transactions, the item
@@ -77,7 +76,7 @@ public class TransactionalItemSet<ItemType extends Item> extends ItemSet<ItemTyp
      */
     public final void setTransactions(
             @NotNull final Map<Integer, Transaction<ItemType>> transactions) {
-        ensureNotNull(transactions, "The map may not be null");
+        Condition.INSTANCE.ensureNotNull(transactions, "The map may not be null");
         this.transactions = transactions;
     }
 

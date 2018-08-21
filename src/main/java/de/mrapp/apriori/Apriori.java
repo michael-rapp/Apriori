@@ -16,6 +16,7 @@ package de.mrapp.apriori;
 import de.mrapp.apriori.datastructure.TransactionalItemSet;
 import de.mrapp.apriori.tasks.AssociationRuleGeneratorTask;
 import de.mrapp.apriori.tasks.FrequentItemSetMinerTask;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +24,6 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Map;
-
-import static de.mrapp.util.Condition.*;
 
 /**
  * An implementation of the Apriori algorithm for mining frequent item sets and (optionally)
@@ -131,8 +130,8 @@ public class Apriori<ItemType extends Item> {
          *                   support must at least be 0 and at maximum the maximum support
          */
         protected void setMinSupport(final double minSupport) {
-            ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
-            ensureAtMaximum(minSupport, maxSupport,
+            Condition.INSTANCE.ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
+            Condition.INSTANCE.ensureAtMaximum(minSupport, maxSupport,
                     "The minimum support must be at maximum " + maxSupport);
             this.minSupport = minSupport;
         }
@@ -156,8 +155,8 @@ public class Apriori<ItemType extends Item> {
          *                   support must be at least the minimum support
          */
         protected void setMaxSupport(final double maxSupport) {
-            ensureAtMaximum(maxSupport, 1, "The maximum support must be at maximum 1");
-            ensureAtLeast(maxSupport, minSupport, "The maximum support must be at least" +
+            Condition.INSTANCE.ensureAtMaximum(maxSupport, 1, "The maximum support must be at maximum 1");
+            Condition.INSTANCE.ensureAtLeast(maxSupport, minSupport, "The maximum support must be at least" +
                     minSupport);
             this.maxSupport = maxSupport;
         }
@@ -181,7 +180,7 @@ public class Apriori<ItemType extends Item> {
          *                     must be greater than 0
          */
         protected void setSupportDelta(final double supportDelta) {
-            ensureGreater(supportDelta, 0, "The support delta must be greater than 0");
+            Condition.INSTANCE.ensureGreater(supportDelta, 0, "The support delta must be greater than 0");
             this.supportDelta = supportDelta;
         }
 
@@ -203,7 +202,7 @@ public class Apriori<ItemType extends Item> {
          *                             not try to find a specific number of frequent item sets
          */
         protected void setFrequentItemSetCount(final int frequentItemSetCount) {
-            ensureAtLeast(frequentItemSetCount, 0,
+            Condition.INSTANCE.ensureAtLeast(frequentItemSetCount, 0,
                     "The number of frequent item sets must be at least 0");
             this.frequentItemSetCount = frequentItemSetCount;
         }
@@ -243,8 +242,8 @@ public class Apriori<ItemType extends Item> {
          *                      confidence must be at least 0 and at maximum the maximum confidence
          */
         protected void setMinConfidence(final double minConfidence) {
-            ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
-            ensureAtMaximum(minConfidence, maxConfidence,
+            Condition.INSTANCE.ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
+            Condition.INSTANCE.ensureAtMaximum(minConfidence, maxConfidence,
                     "The minimum confidence must be at maximum " + maxConfidence);
             this.minConfidence = minConfidence;
         }
@@ -268,8 +267,8 @@ public class Apriori<ItemType extends Item> {
          *                      confidence must be at least 0 and at maximum 1
          */
         protected void setMaxConfidence(final double maxConfidence) {
-            ensureAtMaximum(maxConfidence, 1, "The max confidence must be at maximum 1");
-            ensureAtLeast(maxConfidence, minConfidence,
+            Condition.INSTANCE.ensureAtMaximum(maxConfidence, 1, "The max confidence must be at maximum 1");
+            Condition.INSTANCE.ensureAtLeast(maxConfidence, minConfidence,
                     "The max confidence must be at least " + minConfidence);
             this.maxConfidence = maxConfidence;
         }
@@ -294,7 +293,7 @@ public class Apriori<ItemType extends Item> {
          *                        value must be greater than 0
          */
         protected void setConfidenceDelta(final double confidenceDelta) {
-            ensureGreater(confidenceDelta, 0, "The confidence delta must be greater than 0");
+            Condition.INSTANCE.ensureGreater(confidenceDelta, 0, "The confidence delta must be greater than 0");
             this.confidenceDelta = confidenceDelta;
         }
 
@@ -316,7 +315,7 @@ public class Apriori<ItemType extends Item> {
          *                  a specific number of association rules
          */
         protected void setRuleCount(final int ruleCount) {
-            ensureAtLeast(ruleCount, 0, "The rule count must be at least 0");
+            Condition.INSTANCE.ensureAtLeast(ruleCount, 0, "The rule count must be at least 0");
             this.ruleCount = ruleCount;
         }
 
@@ -434,7 +433,7 @@ public class Apriori<ItemType extends Item> {
          *                AbstractBuilder}. The builder may not be null
          */
         private AbstractBuilder(@NotNull final AbstractBuilder<ItemType> builder) {
-            ensureNotNull(builder, "The builder may not be null");
+            Condition.INSTANCE.ensureNotNull(builder, "The builder may not be null");
             configuration = builder.configuration.clone();
         }
 
@@ -791,9 +790,9 @@ public class Apriori<ItemType extends Item> {
     protected Apriori(@NotNull final Configuration configuration,
                       @NotNull final FrequentItemSetMinerTask<ItemType> frequentItemSetMinerTask,
                       @NotNull final AssociationRuleGeneratorTask<ItemType> associationRuleGeneratorTask) {
-        ensureNotNull(configuration, "The configuration may not be null");
-        ensureNotNull(frequentItemSetMinerTask, "The frequent item set miner task may not be null");
-        ensureNotNull(associationRuleGeneratorTask,
+        Condition.INSTANCE.ensureNotNull(configuration, "The configuration may not be null");
+        Condition.INSTANCE.ensureNotNull(frequentItemSetMinerTask, "The frequent item set miner task may not be null");
+        Condition.INSTANCE.ensureNotNull(associationRuleGeneratorTask,
                 "The association rule generator task may not be null");
         this.configuration = configuration;
         this.frequentItemSetMinerTask = frequentItemSetMinerTask;
@@ -823,7 +822,7 @@ public class Apriori<ItemType extends Item> {
      */
     @NotNull
     public final Output<ItemType> execute(@NotNull final Iterable<Transaction<ItemType>> iterable) {
-        ensureNotNull(iterable, "The iterable may not be null");
+        Condition.INSTANCE.ensureNotNull(iterable, "The iterable may not be null");
         LOGGER.info("Starting Apriori algorithm");
         long startTime = System.currentTimeMillis();
         Map<Integer, TransactionalItemSet<ItemType>> frequentItemSets = frequentItemSetMinerTask

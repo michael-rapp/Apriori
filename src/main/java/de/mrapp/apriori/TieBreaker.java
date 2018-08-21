@@ -13,12 +13,11 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A tie-breaking strategy, which allows to decide, which one of two item sets or association rules
@@ -64,7 +63,7 @@ public abstract class TieBreaker<T> implements Comparator<T> {
          */
         private AbstractTieBreaker(@Nullable final TieBreakerType parent,
                                    @NotNull final Comparator<T> comparator) {
-            ensureNotNull(comparator, "The tie-breaking comparator may not be null");
+            Condition.INSTANCE.ensureNotNull(comparator, "The tie-breaking comparator may not be null");
             this.parent = parent;
             this.comparator = comparator;
         }
@@ -185,7 +184,7 @@ public abstract class TieBreaker<T> implements Comparator<T> {
          */
         @NotNull
         public final AssociationRuleTieBreaker byOperator(@NotNull final Operator operator) {
-            ensureNotNull(operator, "The metric may not be null");
+            Condition.INSTANCE.ensureNotNull(operator, "The metric may not be null");
             return new AssociationRuleTieBreaker(this, (o1, o2) -> {
                 double h1 = operator.evaluate(o1);
                 double h2 = operator.evaluate(o2);

@@ -15,14 +15,13 @@ package de.mrapp.apriori.modules;
 
 import de.mrapp.apriori.*;
 import de.mrapp.apriori.metrics.Confidence;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-
-import static de.mrapp.util.Condition.*;
 
 /**
  * A module, which allows to generate association rules from frequent item sets. An association rule
@@ -130,9 +129,9 @@ public class AssociationRuleGeneratorModule<ItemType extends Item> implements
     public final RuleSet<ItemType> generateAssociationRules(
             @NotNull final Map<Integer, ? extends ItemSet<ItemType>> frequentItemSets,
             final double minConfidence) {
-        ensureNotNull(frequentItemSets, "The frequent item sets may not be null");
-        ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
-        ensureAtMaximum(minConfidence, 1, "The minimum confidence must be at maximum 1");
+        Condition.INSTANCE.ensureNotNull(frequentItemSets, "The frequent item sets may not be null");
+        Condition.INSTANCE.ensureAtLeast(minConfidence, 0, "The minimum confidence must be at least 0");
+        Condition.INSTANCE.ensureAtMaximum(minConfidence, 1, "The minimum confidence must be at maximum 1");
         LOGGER.debug("Generating association rules");
         RuleSet<ItemType> ruleSet = new RuleSet<>(Sorting.forAssociationRules());
 

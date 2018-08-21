@@ -19,6 +19,7 @@ import de.mrapp.apriori.metrics.Confidence;
 import de.mrapp.apriori.metrics.Leverage;
 import de.mrapp.apriori.metrics.Lift;
 import de.mrapp.apriori.metrics.Support;
+import de.mrapp.util.Condition;
 import de.mrapp.util.datastructure.SortedArraySet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,8 +30,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A rule set, which contains multiple association rules. The rules, which are contained by a rule
@@ -84,7 +83,7 @@ public class RuleSet<ItemType extends Item> extends
     @NotNull
     @Override
     public final RuleSet<ItemType> filter(@NotNull final Predicate<AssociationRule> predicate) {
-        ensureNotNull(predicate, "The predicate may not be null");
+        Condition.INSTANCE.ensureNotNull(predicate, "The predicate may not be null");
         RuleSet<ItemType> filteredRuleSet = new RuleSet<>(comparator());
 
         for (AssociationRule<ItemType> item : this) {

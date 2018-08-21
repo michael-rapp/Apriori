@@ -13,13 +13,12 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
-
-import static de.mrapp.util.Condition.*;
 
 /**
  * An association rule of the form X -&gt; Y, which consists of a body X and a head Y. Both, the
@@ -69,10 +68,10 @@ public class AssociationRule<ItemType extends Item> implements Comparable<Associ
     public AssociationRule(@NotNull final ItemSet<ItemType> body,
                            @NotNull final ItemSet<ItemType> head,
                            final double support) {
-        ensureNotNull(body, "The body may not be null");
-        ensureNotNull(head, "The head may not be null");
-        ensureAtLeast(support, 0, "The support must be at least 0");
-        ensureAtMaximum(support, 1, "The support must be at maximum 1");
+        Condition.INSTANCE.ensureNotNull(body, "The body may not be null");
+        Condition.INSTANCE.ensureNotNull(head, "The head may not be null");
+        Condition.INSTANCE.ensureAtLeast(support, 0, "The support must be at least 0");
+        Condition.INSTANCE.ensureAtMaximum(support, 1, "The support must be at maximum 1");
         this.body = body;
         this.head = head;
         this.support = support;
@@ -122,7 +121,7 @@ public class AssociationRule<ItemType extends Item> implements Comparable<Associ
      */
     @SafeVarargs
     public final <T extends ItemType> boolean covers(@NotNull final T... items) {
-        ensureNotNull(items, "The array may not be nul");
+        Condition.INSTANCE.ensureNotNull(items, "The array may not be nul");
         return covers(Arrays.asList(items));
     }
 
@@ -135,7 +134,7 @@ public class AssociationRule<ItemType extends Item> implements Comparable<Associ
      * @return True, if the association rule covers the given items, false otherwise
      */
     public final boolean covers(@NotNull final Iterable<? extends ItemType> items) {
-        ensureNotNull(items, "The iterable may not be null");
+        Condition.INSTANCE.ensureNotNull(items, "The iterable may not be null");
         return covers(items.iterator());
     }
 
@@ -148,7 +147,7 @@ public class AssociationRule<ItemType extends Item> implements Comparable<Associ
      * @return True, if the association rule covers the given items, false otherwise
      */
     public final boolean covers(@NotNull final Iterator<? extends ItemType> iterator) {
-        ensureNotNull(iterator, "The iterator may not be null");
+        Condition.INSTANCE.ensureNotNull(iterator, "The iterator may not be null");
 
         for (ItemType bodyItem : body) {
             boolean contains = false;

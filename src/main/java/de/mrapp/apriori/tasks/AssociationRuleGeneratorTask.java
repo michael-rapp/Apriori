@@ -20,11 +20,10 @@ import de.mrapp.apriori.RuleSet;
 import de.mrapp.apriori.Sorting;
 import de.mrapp.apriori.modules.AssociationRuleGenerator;
 import de.mrapp.apriori.modules.AssociationRuleGeneratorModule;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A task, which tries to generate a specific number of association rules.
@@ -64,7 +63,7 @@ public class AssociationRuleGeneratorTask<ItemType extends Item> extends
     public AssociationRuleGeneratorTask(@NotNull final Configuration configuration,
                                         @NotNull final AssociationRuleGenerator<ItemType> associationRuleGenerator) {
         super(configuration);
-        ensureNotNull(associationRuleGenerator, "The association rule generator may not be null");
+        Condition.INSTANCE.ensureNotNull(associationRuleGenerator, "The association rule generator may not be null");
         this.associationRuleGenerator = associationRuleGenerator;
     }
 

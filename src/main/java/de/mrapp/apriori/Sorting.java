@@ -14,12 +14,11 @@
 package de.mrapp.apriori;
 
 import de.mrapp.apriori.metrics.Confidence;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A sorting, which specifies how item sets or association rules should be sorted.
@@ -79,7 +78,7 @@ public abstract class Sorting<T> implements Comparator<T> {
          */
         @NotNull
         public SortingType withOrder(@NotNull final Order order) {
-            ensureNotNull(order, "The order may not be null");
+            Condition.INSTANCE.ensureNotNull(order, "The order may not be null");
             this.order = order;
             return self();
         }

@@ -14,14 +14,12 @@
 package de.mrapp.apriori;
 
 import de.mrapp.apriori.Apriori.Configuration;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.SortedSet;
-
-import static de.mrapp.util.Condition.ensureAtLeast;
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * An output of the Apriori algorithm.
@@ -84,10 +82,10 @@ public class Output<ItemType extends Item> implements Serializable, Cloneable {
                   final long endTime,
                   @NotNull final FrequentItemSets<ItemType> frequentItemSets,
                   @Nullable final RuleSet<ItemType> ruleSet) {
-        ensureNotNull(configuration, "The configuration may not be null");
-        ensureAtLeast(startTime, 0, "The start time must be at least 0");
-        ensureAtLeast(endTime, startTime, "The end time must be at least " + startTime);
-        ensureNotNull(frequentItemSets, "The frequent item sets may not be null");
+        Condition.INSTANCE.ensureNotNull(configuration, "The configuration may not be null");
+        Condition.INSTANCE.ensureAtLeast(startTime, 0, "The start time must be at least 0");
+        Condition.INSTANCE.ensureAtLeast(endTime, startTime, "The end time must be at least " + startTime);
+        Condition.INSTANCE.ensureNotNull(frequentItemSets, "The frequent item sets may not be null");
         this.configuration = configuration;
         this.startTime = startTime;
         this.endTime = endTime;

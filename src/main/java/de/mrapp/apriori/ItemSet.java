@@ -13,13 +13,12 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.*;
-
-import static de.mrapp.util.Condition.*;
 
 /**
  * An item set, which may contain several items. An item set may not contain duplicates. The
@@ -63,7 +62,7 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSe
      *                ItemSet}. The item set may not be null
      */
     public ItemSet(@NotNull final ItemSet<ItemType> itemSet) {
-        ensureNotNull(itemSet, "The item set may not be null");
+        Condition.INSTANCE.ensureNotNull(itemSet, "The item set may not be null");
         this.items = new TreeSet<>(itemSet.items);
         setSupport(itemSet.support);
     }
@@ -85,8 +84,8 @@ public class ItemSet<ItemType> implements SortedSet<ItemType>, Comparable<ItemSe
      *                be at least 0 and at maximum 1
      */
     public final void setSupport(final double support) {
-        ensureAtLeast(support, 0, "The support must be at least 0");
-        ensureAtMaximum(support, 1, "The support must be at least 1");
+        Condition.INSTANCE.ensureAtLeast(support, 0, "The support must be at least 0");
+        Condition.INSTANCE.ensureAtMaximum(support, 1, "The support must be at least 1");
         this.support = support;
     }
 

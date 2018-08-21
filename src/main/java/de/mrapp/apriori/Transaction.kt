@@ -11,16 +11,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.mrapp.apriori;
+package de.mrapp.apriori
 
 /**
  * Defines the interface, a transaction, which consists of multiple items, must implement. The
  * Apriori algorithm processes a set of transactions in order to find frequent item sets.
  *
- * @param <ItemType> The type of the items, the transaction consists of
+ * @param ItemType The type of the items, the transaction consists of
  * @author Michael Rapp
  * @since 1.0.0
  */
-public interface Transaction<ItemType extends Item> extends Iterable<ItemType> {
-
-}
+interface Transaction<ItemType : Item> : Iterable<ItemType>

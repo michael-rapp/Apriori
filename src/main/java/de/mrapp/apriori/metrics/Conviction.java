@@ -15,9 +15,8 @@ package de.mrapp.apriori.metrics;
 
 import de.mrapp.apriori.AssociationRule;
 import de.mrapp.apriori.Metric;
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
-
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * A metric, which measures the conviction of an association rule. By definition, conviction is the
@@ -33,7 +32,7 @@ public class Conviction implements Metric {
 
     @Override
     public final double evaluate(@NotNull final AssociationRule rule) {
-        ensureNotNull(rule, "The rule may not be null");
+        Condition.INSTANCE.ensureNotNull(rule, "The rule may not be null");
         double numerator = 1 - rule.getHead().getSupport();
         double denominator = 1 - new Confidence().evaluate(rule);
         return denominator == 0 ? 0 : numerator / denominator;

@@ -16,13 +16,12 @@ package de.mrapp.apriori.operators;
 import de.mrapp.apriori.AssociationRule;
 import de.mrapp.apriori.Metric;
 import de.mrapp.apriori.Operator;
+import de.mrapp.util.Condition;
 import de.mrapp.util.datastructure.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.LinkedList;
-
-import static de.mrapp.util.Condition.*;
 
 /**
  * An operator, which allows to average the heuristic values, which are calculated by applying
@@ -71,23 +70,23 @@ public class ArithmeticMean implements Operator {
      */
     @NotNull
     public final ArithmeticMean add(@NotNull final Metric metric, final double weight) {
-        ensureNotNull(metric, "The metric may not be null");
-        ensureGreater(weight, 0, "The weight must be greater than 0");
-        metrics.add(Pair.create(metric, weight));
+        Condition.INSTANCE.ensureNotNull(metric, "The metric may not be null");
+        Condition.INSTANCE.ensureGreater(weight, 0, "The weight must be greater than 0");
+        metrics.add(Pair.Companion.create(metric, weight));
         return this;
     }
 
     @Override
     public final double evaluate(@NotNull final AssociationRule rule) {
-        ensureNotNull(rule, "The rule may not be null");
-        ensureNotEmpty(metrics, "No metrics added", IllegalStateException.class);
+        Condition.INSTANCE.ensureNotNull(rule, "The rule may not be null");
+        Condition.INSTANCE.ensureNotEmpty(metrics, "No metrics added", IllegalStateException.class);
         double result = 0;
-        double sumOfWeights = metrics.stream().mapToDouble(x -> x.second).sum();
+        double sumOfWeights = metrics.stream().mapToDouble(x -> x.getSecond()).sum();
 
         for (Pair<Metric, Double> pair : metrics) {
-            Metric metric = pair.first;
+            Metric metric = pair.getFirst();
             double heuristicValue = metric.evaluate(rule);
-            double weight = pair.second;
+            double weight = pair.getSecond();
             result += heuristicValue * (weight / sumOfWeights);
         }
 

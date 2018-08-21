@@ -13,12 +13,11 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
-
-import static de.mrapp.util.Condition.*;
 
 /**
  * A filter, which can be applied to item sets or association rules.
@@ -58,7 +57,7 @@ public abstract class Filter<T> implements Predicate<T> {
          */
         private AbstractFilter(@Nullable final FilterType parent,
                                @NotNull final Predicate<T> predicate) {
-            ensureNotNull(predicate, "The predicate may not be null");
+            Condition.INSTANCE.ensureNotNull(predicate, "The predicate may not be null");
             this.parent = parent;
             this.predicate = predicate;
         }
@@ -111,10 +110,10 @@ public abstract class Filter<T> implements Predicate<T> {
          */
         @NotNull
         public final ItemSetFilter bySupport(final double minSupport, final double maxSupport) {
-            ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
-            ensureAtMaximum(minSupport, 1, "The minimum support must be at least 1");
-            ensureAtMaximum(maxSupport, 1, "The maximum support must be at least 1");
-            ensureAtLeast(maxSupport, minSupport,
+            Condition.INSTANCE.ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
+            Condition.INSTANCE.ensureAtMaximum(minSupport, 1, "The minimum support must be at least 1");
+            Condition.INSTANCE.ensureAtMaximum(maxSupport, 1, "The maximum support must be at least 1");
+            Condition.INSTANCE.ensureAtLeast(maxSupport, minSupport,
                     "The maximum support must be at least the minimum support");
             return new ItemSetFilter(this,
                     x -> x.getSupport() >= minSupport && x.getSupport() <= maxSupport);
@@ -145,14 +144,14 @@ public abstract class Filter<T> implements Predicate<T> {
          */
         @NotNull
         public final ItemSetFilter bySize(final int minSize, final int maxSize) {
-            ensureAtLeast(minSize, 0, "The minimum size must be at least 0");
-            ensureAtLeast(maxSize, minSize, "The maximum size must be at least the minimum size");
+            Condition.INSTANCE.ensureAtLeast(minSize, 0, "The minimum size must be at least 0");
+            Condition.INSTANCE.ensureAtLeast(maxSize, minSize, "The maximum size must be at least the minimum size");
             return new ItemSetFilter(this, x -> x.size() >= minSize && x.size() <= maxSize);
         }
 
         @Override
         public final boolean test(@NotNull final ItemSet t) {
-            ensureNotNull(t, "The item set may not be null");
+            Condition.INSTANCE.ensureNotNull(t, "The item set may not be null");
             return predicate.test(t) && (parent == null || parent.test(t));
         }
 
@@ -214,9 +213,9 @@ public abstract class Filter<T> implements Predicate<T> {
         public final AssociationRuleFilter byOperator(@NotNull final Operator operator,
                                                       final double minPerformance,
                                                       final double maxPerformance) {
-            ensureNotNull(operator, "The operator may not be null");
-            ensureAtLeast(minPerformance, 0, "The minimum performance must be at least 0");
-            ensureAtLeast(maxPerformance, minPerformance,
+            Condition.INSTANCE.ensureNotNull(operator, "The operator may not be null");
+            Condition.INSTANCE.ensureAtLeast(minPerformance, 0, "The minimum performance must be at least 0");
+            Condition.INSTANCE.ensureAtLeast(maxPerformance, minPerformance,
                     "The maximum performance must be at least the minimum performance");
             return new AssociationRuleFilter(this, x -> {
                 double h = operator.evaluate(x);
@@ -252,8 +251,8 @@ public abstract class Filter<T> implements Predicate<T> {
          */
         @NotNull
         public final AssociationRuleFilter bySize(final int minSize, final int maxSize) {
-            ensureAtLeast(minSize, 0, "The minimum size must be at least 0");
-            ensureAtLeast(maxSize, minSize, "The maximum size must be at least the minimum size");
+            Condition.INSTANCE.ensureAtLeast(minSize, 0, "The minimum size must be at least 0");
+            Condition.INSTANCE.ensureAtLeast(maxSize, minSize, "The maximum size must be at least the minimum size");
             return new AssociationRuleFilter(this, x -> {
                 int size = x.getBody().size() + x.getHead().size();
                 return size >= minSize && size <= maxSize;
@@ -287,8 +286,8 @@ public abstract class Filter<T> implements Predicate<T> {
          */
         @NotNull
         public final AssociationRuleFilter byBodySize(final int minSize, final int maxSize) {
-            ensureAtLeast(minSize, 0, "The minimum size must be at least 0");
-            ensureAtLeast(maxSize, minSize, "The minimum size must be at least the minimum size");
+            Condition.INSTANCE.ensureAtLeast(minSize, 0, "The minimum size must be at least 0");
+            Condition.INSTANCE.ensureAtLeast(maxSize, minSize, "The minimum size must be at least the minimum size");
             return new AssociationRuleFilter(this,
                     x -> x.getBody().size() >= minSize && x.getBody().size() <= maxSize);
         }
@@ -320,15 +319,15 @@ public abstract class Filter<T> implements Predicate<T> {
          */
         @NotNull
         public final AssociationRuleFilter byHeadSize(final int minSize, final int maxSize) {
-            ensureAtLeast(minSize, 0, "The minimum size must be at least 0");
-            ensureAtLeast(maxSize, minSize, "The maximum size must be at least the minimum size");
+            Condition.INSTANCE.ensureAtLeast(minSize, 0, "The minimum size must be at least 0");
+            Condition.INSTANCE.ensureAtLeast(maxSize, minSize, "The maximum size must be at least the minimum size");
             return new AssociationRuleFilter(this,
                     x -> x.getHead().size() >= minSize && x.getHead().size() <= maxSize);
         }
 
         @Override
         public boolean test(@NotNull final AssociationRule t) {
-            ensureNotNull(t, "The association rule may not be null");
+            Condition.INSTANCE.ensureNotNull(t, "The association rule may not be null");
             return predicate.test(t) && (parent == null || parent.test(t));
         }
 
