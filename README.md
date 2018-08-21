@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X75YSLEJV3DWE)
 
-This is a Java library, which provides an implementation of the [Apriori algorithm](https://en.wikipedia.org/wiki/Apriori_algorithm) \[1\]. It can be used to efficiently find frequent item sets in large data sets and (optionally) allows to generate [association rules](https://en.wikipedia.org/wiki/Association_rule_learning). A famous use-case of the Apriori algorithm is to create recommendations of relevant articles in online shops by learning association rules from the purchases customers made in the past. The library provides the following features:
+This is a Kotlin library that provides an implementation of the [Apriori algorithm](https://en.wikipedia.org/wiki/Apriori_algorithm) \[1\]. It can be used to efficiently find frequent item sets in large data sets and (optionally) allows to generate [association rules](https://en.wikipedia.org/wiki/Association_rule_learning). A famous use-case of the Apriori algorithm is to create recommendations of relevant articles in online shops by learning association rules from the purchases customers made in the past. The library provides the following features:
 
 * Searching for frequent item sets, which fulfill a certain minimum support
 * Trying to find a specific number of frequent items sets by starting with a great minimum support and iteratively decreasing it until enough item sets are found
@@ -13,6 +13,8 @@ This is a Java library, which provides an implementation of the [Apriori algorit
 * Association rules can be sorted by their performance according to the [support](https://en.wikipedia.org/wiki/Association_rule_learning#Support), [confidence](https://en.wikipedia.org/wiki/Association_rule_learning#Confidence), [lift](https://en.wikipedia.org/wiki/Association_rule_learning#Lift), leverage or [conviction](https://en.wikipedia.org/wiki/Association_rule_learning#Conviction) metrics, as well as by the size of their head and body
 * Association rules can be filtered to ensure that they reach a certain performance according to the support, confidence, lift, leverage or conviction metrics, as well as by the size of their head and body
 * It can easily be tested, if association rules cover specific items, i.e. that all items, which are contained in their body are also contained in a tested set of items
+
+Note that prior to version 2.0.0 this library was implemented using Java 8.
 
 ## License Agreement
 
@@ -26,7 +28,7 @@ Alternatively, the library can be added to your project as a Gradle dependency b
 
 ```groovy
 dependencies {
-    compile 'com.github.michael-rapp:apriori:1.3.0'
+    compile 'com.github.michael-rapp:apriori:2.0.0'
 }
 ```
 
@@ -36,7 +38,7 @@ When using Maven, the following dependency can be added to the `pom.xml`:
 <dependency>
     <groupId>com.github.michael-rapp</groupId>
     <artifactId>apriori</artifactId>
-    <version>1.3.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
