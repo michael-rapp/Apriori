@@ -11,26 +11,25 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.mrapp.apriori;
+package de.mrapp.apriori
 
 /**
  * Defines the interface, a class, which allows to measure the "interestingly" of association
  * rules according to a certain metric, must implement.
+ *
+ * @author Michael Rapp
+ * @since 1.0.0
  */
-public interface Metric extends Operator {
+interface Metric : Operator {
 
     /**
      * Returns the minimum heuristic value of the metric.
-     *
-     * @return The minimum heuristic value of the metric as a {@link Double} value
      */
-    double minValue();
+    fun minValue(): Double
 
     /**
      * Returns the maximum heuristic value of the metric.
-     *
-     * @return The maximum heuristic value of the metric as a {@link Double} value
      */
-    double maxValue();
+    fun maxValue(): Double
 
 }

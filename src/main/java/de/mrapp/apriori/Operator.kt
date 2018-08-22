@@ -11,9 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.mrapp.apriori;
-
-import org.jetbrains.annotations.NotNull;
+package de.mrapp.apriori
 
 /**
  * Defines the interface, a class, which allows to calculate heuristic values of association rules,
@@ -23,15 +21,13 @@ import org.jetbrains.annotations.NotNull;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public interface Operator {
+interface Operator {
 
     /**
-     * Calculates the heuristic value of a specific association rule.
+     * Calculates the heuristic value of a specific [rule].
      *
-     * @param rule The association rule, whose heuristic value should be calculated, as an instance
-     *             of the class {@link AssociationRule}. The rule may not be null
-     * @return The heuristic value, which has been calculated, as a {@link Double} value
+     * @return The heuristic value, which has been calculated
      */
-    double evaluate(@NotNull AssociationRule rule);
+    fun evaluate(rule: AssociationRule<*>): Double
 
 }
