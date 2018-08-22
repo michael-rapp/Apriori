@@ -11,12 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.mrapp.apriori.metrics;
+package de.mrapp.apriori.metrics
 
-import de.mrapp.apriori.AssociationRule;
-import de.mrapp.apriori.Metric;
-import de.mrapp.util.Condition;
-import org.jetbrains.annotations.NotNull;
+import de.mrapp.apriori.AssociationRule
+import de.mrapp.apriori.Metric
 
 /**
  * A metric, which measures the conviction of an association rule. By definition, conviction is the
@@ -28,24 +26,16 @@ import org.jetbrains.annotations.NotNull;
  * @author Michael Rapp
  * @since 1.2.0
  */
-public class Conviction implements Metric {
+class Conviction : Metric {
 
-    @Override
-    public final double evaluate(@NotNull final AssociationRule rule) {
-        Condition.INSTANCE.ensureNotNull(rule, "The rule may not be null");
-        double numerator = 1 - rule.getHead().getSupport();
-        double denominator = 1 - new Confidence().evaluate(rule);
-        return denominator == 0 ? 0 : numerator / denominator;
+    override fun evaluate(rule: AssociationRule<*>): Double {
+        val numerator = 1 - rule.head.support
+        val denominator = 1 - Confidence().evaluate(rule)
+        return if (denominator == 0.0) denominator else numerator / denominator
     }
 
-    @Override
-    public final double minValue() {
-        return 0;
-    }
+    override fun minValue() = 0.0
 
-    @Override
-    public final double maxValue() {
-        return Double.MAX_VALUE;
-    }
+    override fun maxValue() = Double.MAX_VALUE
 
 }

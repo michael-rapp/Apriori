@@ -11,12 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.mrapp.apriori.metrics;
+package de.mrapp.apriori.metrics
 
-import de.mrapp.apriori.AssociationRule;
-import de.mrapp.apriori.Metric;
-import de.mrapp.util.Condition;
-import org.jetbrains.annotations.NotNull;
+import de.mrapp.apriori.AssociationRule
+import de.mrapp.apriori.Metric
 
 /**
  * A metric, which measures the confidence of an association rule. By definition, confidence
@@ -26,23 +24,15 @@ import org.jetbrains.annotations.NotNull;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class Confidence implements Metric {
+class Confidence : Metric {
 
-    @Override
-    public final double evaluate(@NotNull final AssociationRule rule) {
-        Condition.INSTANCE.ensureNotNull(rule, "The rule may not be null");
-        double bodySupport = rule.getBody().getSupport();
-        return bodySupport > 0 ? rule.getSupport() / bodySupport : 0;
+    override fun evaluate(rule: AssociationRule<*>): Double {
+        val bodySupport = rule.body.support
+        return if (bodySupport > 0) rule.support / bodySupport else 0.0
     }
 
-    @Override
-    public final double minValue() {
-        return 0;
-    }
+    override fun minValue() = 0.0
 
-    @Override
-    public final double maxValue() {
-        return 1;
-    }
+    override fun maxValue() = 1.0
 
 }

@@ -11,12 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.mrapp.apriori.metrics;
+package de.mrapp.apriori.metrics
 
-import de.mrapp.apriori.AssociationRule;
-import de.mrapp.apriori.Metric;
-import de.mrapp.util.Condition;
-import org.jetbrains.annotations.NotNull;
+import de.mrapp.apriori.AssociationRule
+import de.mrapp.apriori.Metric
 
 /**
  * A metric, which measures the support of an association rule. By definition, support measures the
@@ -25,22 +23,12 @@ import org.jetbrains.annotations.NotNull;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class Support implements Metric {
+class Support : Metric {
 
-    @Override
-    public final double evaluate(@NotNull final AssociationRule rule) {
-        Condition.INSTANCE.ensureNotNull(rule, "The rule may not be null");
-        return rule.getSupport();
-    }
+    override fun evaluate(rule: AssociationRule<*>) = rule.support
 
-    @Override
-    public final double minValue() {
-        return 0;
-    }
+    override fun minValue() = 0.0
 
-    @Override
-    public final double maxValue() {
-        return 1;
-    }
+    override fun maxValue() = 1.0
 
 }
