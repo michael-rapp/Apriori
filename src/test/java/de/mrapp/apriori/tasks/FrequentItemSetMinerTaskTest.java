@@ -55,7 +55,7 @@ public class FrequentItemSetMinerTaskTest extends AbstractDataTest {
         @NotNull
         @Override
         public Map<Integer, TransactionalItemSet<NamedItem>> findFrequentItemSets(
-                @NotNull final Iterable<Transaction<NamedItem>> iterable, final double minSupport) {
+                @NotNull final Iterable<? extends Transaction<NamedItem>> iterable, final double minSupport) {
             minSupports.add(minSupport);
             return new HashMap<>();
         }

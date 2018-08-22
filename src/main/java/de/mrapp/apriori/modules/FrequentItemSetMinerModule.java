@@ -61,7 +61,7 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
      */
     @NotNull
     private Pair<Collection<TransactionalItemSet<ItemType>>, Integer> generateInitialItemSets(
-            @NotNull final Iterable<Transaction<ItemType>> iterable) {
+            @NotNull final Iterable<? extends Transaction<ItemType>> iterable) {
         Map<Integer, TransactionalItemSet<ItemType>> itemSets = new HashMap<>();
         int transactionCount = 0;
 
@@ -219,7 +219,7 @@ public class FrequentItemSetMinerModule<ItemType extends Item> implements
     @NotNull
     @Override
     public final Map<Integer, TransactionalItemSet<ItemType>> findFrequentItemSets(
-            @NotNull final Iterable<Transaction<ItemType>> iterable, final double minSupport) {
+            @NotNull final Iterable<? extends Transaction<ItemType>> iterable, final double minSupport) {
         Condition.INSTANCE.ensureNotNull(iterable, "The iterable may not be null");
         Condition.INSTANCE.ensureAtLeast(minSupport, 0, "The minimum support must be at least 0");
         Condition.INSTANCE.ensureAtMaximum(minSupport, 1, "The minimum support must be at maximum 1");
