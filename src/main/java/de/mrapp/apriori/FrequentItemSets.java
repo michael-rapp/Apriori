@@ -109,13 +109,13 @@ public class FrequentItemSets<ItemType extends Item> extends
 
     @NotNull
     @Override
-    public final FrequentItemSets<ItemType> sort(@Nullable final Comparator<ItemSet> comparator) {
+    public final FrequentItemSets<ItemType> sort(@Nullable final Comparator<? super ItemSet> comparator) {
         return new FrequentItemSets<ItemType>(this, comparator);
     }
 
     @NotNull
     @Override
-    public final FrequentItemSets<ItemType> filter(@NotNull final Predicate<ItemSet> predicate) {
+    public final FrequentItemSets<ItemType> filter(@NotNull final Predicate<? super ItemSet> predicate) {
         Condition.INSTANCE.ensureNotNull(predicate, "The predicate may not be null");
         FrequentItemSets<ItemType> filteredFrequentItemSets = new FrequentItemSets<>(comparator());
 

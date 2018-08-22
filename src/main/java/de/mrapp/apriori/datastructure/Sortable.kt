@@ -33,6 +33,6 @@ interface Sortable<DataStructureType, T> {
      *
      * @return A new data structure, which contains the items in sorted order
      */
-    fun sort(comparator: Comparator<T>?): DataStructureType
+    fun sort(comparator: Comparator<in T>?): DataStructureType
 
 }

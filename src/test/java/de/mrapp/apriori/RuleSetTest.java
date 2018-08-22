@@ -76,15 +76,6 @@ public class RuleSetTest {
     }
 
     /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the constructor, which expects
-     * a collection and a comparator as parameters, if the collection is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorWithCollectionAndComparatorParametersThrowsException() {
-        new RuleSet<>(null, null);
-    }
-
-    /**
      * Tests the functionality of the method, which allows to sort the rules of a rule set.
      */
     @Test
@@ -138,41 +129,6 @@ public class RuleSetTest {
     }
 
     /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * filter the rules of a rule set, if the given predicate is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testFilterThrowsExceptionIfPredicateIsNull() {
-        new RuleSet<>(null).filter(null);
-    }
-
-    /**
-     * Tests the functionality of the clone-method.
-     */
-    @Test
-    public final void testClone() {
-        ItemSet<NamedItem> body1 = new ItemSet<>();
-        body1.add(new NamedItem("a"));
-        body1.setSupport(0.5);
-        ItemSet<NamedItem> head1 = new ItemSet<>();
-        head1.add(new NamedItem("b"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, head1, 0.5);
-        ItemSet<NamedItem> body2 = new ItemSet<>();
-        body2.add(new NamedItem("c"));
-        body2.setSupport(0.6);
-        ItemSet<NamedItem> head2 = new ItemSet<>();
-        head2.add(new NamedItem("d"));
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.5);
-        RuleSet<NamedItem> ruleSet1 = new RuleSet<>(Sorting.forAssociationRules());
-        ruleSet1.add(associationRule1);
-        ruleSet1.add(associationRule2);
-        RuleSet<NamedItem> ruleSet2 = ruleSet1.clone();
-        assertEquals(ruleSet1.size(), ruleSet2.size());
-        assertEquals(ruleSet1.first(), ruleSet2.first());
-        assertEquals(ruleSet1.last(), ruleSet2.last());
-    }
-
-    /**
      * Tests the functionality of the toString-method.
      */
     @Test
@@ -211,7 +167,7 @@ public class RuleSetTest {
      */
     @Test
     public final void testToStringIfEmpty() {
-        assertEquals("[]", new RuleSet<>(null).toString());
+        assertEquals("[]", new RuleSet<NamedItem>(null).toString());
     }
 
 }

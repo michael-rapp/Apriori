@@ -34,6 +34,6 @@ interface Filterable<DataStructureType, T> {
      *
      * @return A new data structure, which contains the filtered items
      */
-    fun filter(predicate: Predicate<T>): DataStructureType
+    fun filter(predicate: Predicate<in T>): DataStructureType
 
 }
