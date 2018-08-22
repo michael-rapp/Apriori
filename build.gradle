@@ -7,7 +7,7 @@ apply plugin: 'org.jetbrains.dokka'
 buildscript {
     ext.version_kotlin = '1.2.61'
     ext.version_dokka = '0.9.17'
-    ext.version_java_util = '[2.0.0,2.1.0)'
+    ext.version_java_util = '[2.0.1,2.1.0)'
 
     repositories {
         mavenCentral()
