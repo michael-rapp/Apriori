@@ -13,10 +13,8 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
-
-import static de.mrapp.util.Condition.ensureNotEmpty;
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * An implementation of the type {@link Item}, which is used for test purposes. Each item can
@@ -43,8 +41,8 @@ public class NamedItem implements Item {
      *             empty
      */
     public NamedItem(@NotNull final String name) {
-        ensureNotNull(name, "The name may not be null");
-        ensureNotEmpty(name, "The name may not be empty");
+        Condition.INSTANCE.ensureNotNull(name, "The name may not be null");
+        Condition.INSTANCE.ensureNotEmpty(name, "The name may not be empty");
         this.name = name;
     }
 

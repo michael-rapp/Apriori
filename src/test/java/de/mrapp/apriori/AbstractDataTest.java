@@ -13,6 +13,7 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -20,8 +21,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 
-import static de.mrapp.util.Condition.ensureNotEmpty;
-import static de.mrapp.util.Condition.ensureNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -112,8 +111,8 @@ public abstract class AbstractDataTest {
      */
     @NotNull
     protected final File getInputFile(@NotNull final String fileName) {
-        ensureNotNull(fileName, "The file name may not be null");
-        ensureNotEmpty(fileName, "The file name may not be null");
+        Condition.INSTANCE.ensureNotNull(fileName, "The file name may not be null");
+        Condition.INSTANCE.ensureNotEmpty(fileName, "The file name may not be null");
 
         try {
             URL url = getClass().getClassLoader().getResource(fileName);

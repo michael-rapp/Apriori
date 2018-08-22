@@ -13,6 +13,7 @@
  */
 package de.mrapp.apriori;
 
+import de.mrapp.util.Condition;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,6 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-
-import static de.mrapp.util.Condition.ensureNotEmpty;
-import static de.mrapp.util.Condition.ensureNotNull;
 
 /**
  * An iterator, which allows to iterate the transactions, which are contained by a text file.
@@ -50,8 +48,8 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
          *             neither be null, nor empty
          */
         public TransactionImplementation(@NotNull final String line) {
-            ensureNotNull(line, "The line may not be null");
-            ensureNotEmpty(line, "The line may not be empty");
+            Condition.INSTANCE.ensureNotNull(line, "The line may not be null");
+            Condition.INSTANCE.ensureNotEmpty(line, "The line may not be empty");
             this.line = line;
         }
 
@@ -82,8 +80,8 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
          *             line may neither be null, nor empty
          */
         LineIterator(@NotNull final String line) {
-            ensureNotNull(line, "The line may not be null");
-            ensureNotEmpty(line, "The line may not be empty");
+            Condition.INSTANCE.ensureNotNull(line, "The line may not be null");
+            Condition.INSTANCE.ensureNotEmpty(line, "The line may not be empty");
             this.tokenizer = new StringTokenizer(line);
         }
 
@@ -190,7 +188,7 @@ public class DataIterator implements Iterator<Transaction<NamedItem>> {
      *             {@link File}. The file may not be null
      */
     public DataIterator(@NotNull final File file) {
-        ensureNotNull(file, "The file may not be null");
+        Condition.INSTANCE.ensureNotNull(file, "The file may not be null");
         this.file = file;
         this.reader = null;
         this.nextLine = null;
