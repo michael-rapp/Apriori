@@ -24,10 +24,10 @@ import java.io.Serializable
  * occur in a transaction, the items, which are given in its head, do also occur with a certain
  * probability.
  *
- * @param ItemType   The type of the items, the association rule's body and head consist of
- * @property body    The body of the association rule
- * @property head    The head of the association rule
- * @property support The support of the association rule
+ * @param    ItemType The type of the items, the association rule's body and head consist of
+ * @property body     The body of the association rule
+ * @property head     The head of the association rule
+ * @property support  The support of the association rule
  * @author Michael Rapp
  * @since 1.0.0
  */
