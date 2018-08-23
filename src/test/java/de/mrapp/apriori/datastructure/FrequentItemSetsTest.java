@@ -98,12 +98,12 @@ public class FrequentItemSetsTest {
         itemSet2.add(new NamedItem("c"));
         itemSet2.setSupport(0.4);
         FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(
-                Sorting.forItemSets());
+                Sorting.Companion.forItemSets());
         frequentItemSets.add(itemSet1);
         frequentItemSets.add(itemSet2);
         assertEquals(itemSet1, frequentItemSets.first());
         assertEquals(itemSet2, frequentItemSets.last());
-        Sorting<ItemSet> sorting = Sorting.forItemSets().withOrder(Sorting.Order.ASCENDING);
+        Sorting<ItemSet<?>> sorting = Sorting.Companion.forItemSets().withOrder(Sorting.Order.ASCENDING);
         FrequentItemSets<NamedItem> sortedFrequentItemSets = frequentItemSets.sort(sorting);
         assertEquals(itemSet2, sortedFrequentItemSets.first());
         assertEquals(itemSet1, sortedFrequentItemSets.last());
@@ -123,7 +123,7 @@ public class FrequentItemSetsTest {
         itemSet2.add(new NamedItem("c"));
         itemSet2.setSupport(0.4);
         FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(
-                Sorting.forItemSets());
+                Sorting.Companion.forItemSets());
         frequentItemSets.add(itemSet1);
         frequentItemSets.add(itemSet2);
         assertEquals(itemSet1, frequentItemSets.first());

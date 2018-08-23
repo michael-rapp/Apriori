@@ -41,7 +41,7 @@ public class RuleSetTest {
      */
     @Test
     public final void testConstructorWithComparatorParameter() {
-        Comparator<AssociationRule> comparator = Sorting.forAssociationRules();
+        Comparator<AssociationRule<?>> comparator = Sorting.Companion.forAssociationRules();
         RuleSet<NamedItem> ruleSet = new RuleSet<>(comparator);
         assertTrue(ruleSet.isEmpty());
         assertEquals(0, ruleSet.size());
@@ -67,7 +67,7 @@ public class RuleSetTest {
         Collection<AssociationRule<NamedItem>> collection = new LinkedList<>();
         collection.add(associationRule1);
         collection.add(associationRule2);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(collection, Sorting.forAssociationRules());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(collection, Sorting.Companion.forAssociationRules());
         assertEquals(collection.size(), ruleSet.size());
         Iterator<AssociationRule<NamedItem>> iterator = ruleSet.iterator();
         assertEquals(associationRule2, iterator.next());
@@ -90,12 +90,12 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.forAssociationRules());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.Companion.forAssociationRules());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         assertEquals(associationRule1, ruleSet.first());
         assertEquals(associationRule2, ruleSet.last());
-        Sorting<AssociationRule> sorting = Sorting.forAssociationRules().withOrder(Order.ASCENDING);
+        Sorting<AssociationRule<?>> sorting = Sorting.Companion.forAssociationRules().withOrder(Order.ASCENDING);
         RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(sorting);
         assertEquals(associationRule2, sortedRuleSet.first());
         assertEquals(associationRule1, sortedRuleSet.last());
@@ -116,7 +116,7 @@ public class RuleSetTest {
                 0.4);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.5);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.forAssociationRules());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.Companion.forAssociationRules());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         assertEquals(associationRule1, ruleSet.first());
@@ -143,7 +143,7 @@ public class RuleSetTest {
                 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
                 0.7);
-        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.forAssociationRules());
+        RuleSet<NamedItem> ruleSet = new RuleSet<>(Sorting.Companion.forAssociationRules());
         ruleSet.add(associationRule1);
         ruleSet.add(associationRule2);
         DecimalFormat decimalFormat = new DecimalFormat();

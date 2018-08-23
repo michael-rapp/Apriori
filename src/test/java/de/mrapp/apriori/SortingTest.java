@@ -21,7 +21,7 @@ public class SortingTest {
         itemSet1.setSupport(0.5);
         ItemSet<NamedItem> itemSet2 = new ItemSet<>();
         itemSet2.setSupport(0.5);
-        Sorting<ItemSet> sorting = Sorting.forItemSets();
+        Sorting<ItemSet<?>> sorting = Sorting.Companion.forItemSets();
         assertEquals(0, sorting.compare(itemSet1, itemSet2));
         itemSet1.setSupport(0.6);
         assertEquals(-1, sorting.compare(itemSet1, itemSet2));
@@ -38,7 +38,7 @@ public class SortingTest {
         itemSet1.setSupport(0.5);
         ItemSet<NamedItem> itemSet2 = new ItemSet<>();
         itemSet2.setSupport(0.5);
-        Sorting<ItemSet> sorting = Sorting.forItemSets().withOrder(Sorting.Order.ASCENDING);
+        Sorting<ItemSet<?>> sorting = Sorting.Companion.forItemSets().withOrder(Sorting.Order.ASCENDING);
         assertEquals(0, sorting.compare(itemSet1, itemSet2));
         itemSet1.setSupport(0.6);
         assertEquals(1, sorting.compare(itemSet1, itemSet2));
@@ -52,7 +52,7 @@ public class SortingTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testSortingForItemSetsThrowsExceptionIfOrderIsNull() {
-        Sorting.forItemSets().withOrder(null);
+        Sorting.Companion.forItemSets().withOrder(null);
     }
 
     /**
@@ -64,7 +64,7 @@ public class SortingTest {
         itemSet1.setSupport(0.5);
         ItemSet<NamedItem> itemSet2 = new ItemSet<>();
         itemSet2.setSupport(0.5);
-        Sorting<ItemSet> sorting = Sorting.forItemSets().withTieBreaking((o1, o2) -> 1);
+        Sorting<ItemSet<?>> sorting = Sorting.Companion.forItemSets().withTieBreaking((o1, o2) -> 1);
         assertEquals(-1, sorting.compare(itemSet1, itemSet2));
     }
 
@@ -85,7 +85,7 @@ public class SortingTest {
         ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("d"));
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.25);
-        Sorting<AssociationRule> sorting = Sorting.forAssociationRules();
+        Sorting<AssociationRule<?>> sorting = Sorting.Companion.forAssociationRules();
         assertEquals(0, sorting.compare(associationRule1, associationRule2));
         associationRule1 = new AssociationRule<>(body1, head1, 0.5);
         assertEquals(-1, sorting.compare(associationRule1, associationRule2));
@@ -110,7 +110,7 @@ public class SortingTest {
         ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("d"));
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.25);
-        Sorting<AssociationRule> sorting = Sorting.forAssociationRules().withOrder(
+        Sorting<AssociationRule<?>> sorting = Sorting.Companion.forAssociationRules().withOrder(
                 Sorting.Order.ASCENDING);
         assertEquals(0, sorting.compare(associationRule1, associationRule2));
         associationRule1 = new AssociationRule<>(body1, head1, 0.5);
@@ -125,7 +125,7 @@ public class SortingTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testSortingForAssociationRulesThrowsExceptionIfOrderIsNull() {
-        Sorting.forAssociationRules().withOrder(null);
+        Sorting.Companion.forAssociationRules().withOrder(null);
     }
 
     /**
@@ -145,7 +145,7 @@ public class SortingTest {
         ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("d"));
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.25);
-        Sorting<AssociationRule> sorting = Sorting.forAssociationRules()
+        Sorting<AssociationRule<?>> sorting = Sorting.Companion.forAssociationRules()
                 .withTieBreaking((o1, o2) -> 1);
         assertEquals(-1, sorting.compare(associationRule1, associationRule2));
     }
@@ -167,7 +167,7 @@ public class SortingTest {
         ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("d"));
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.25);
-        Sorting<AssociationRule> sorting = Sorting.forAssociationRules().byOperator(new Support());
+        Sorting<AssociationRule<?>> sorting = Sorting.Companion.forAssociationRules().byOperator(new Support());
         assertEquals(0, sorting.compare(associationRule1, associationRule2));
         associationRule1 = new AssociationRule<>(body1, head1, 0.5);
         assertEquals(-1, sorting.compare(associationRule1, associationRule2));
