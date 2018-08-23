@@ -19,6 +19,7 @@ import de.mrapp.apriori.Apriori
  * An abstract base class for all tasks, which execute a module multiple times in order to
  * obtain the results, which are requested according to a specific configuration.
  *
+ * @property configuration The configuration that is used by the task
  * @author Michael Rapp
  * @since 1.0.0
  */
