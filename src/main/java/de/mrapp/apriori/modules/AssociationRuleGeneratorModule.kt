@@ -60,9 +60,9 @@ class AssociationRuleGeneratorModule<ItemType : Item> : AssociationRuleGenerator
                               body: ItemSet<ItemType>,
                               head: ItemSet<ItemType>?, minConfidence: Double) {
         for (item in body) {
-            val headItemSet = head?.clone() ?: ItemSet() // TODO Use copy() instead of clone()
+            val headItemSet = head?.let{ ItemSet(it) } ?: ItemSet()
             headItemSet.add(item)
-            val bodyItemSet = body.clone() // TODO Use copy() instead of clone()
+            val bodyItemSet = ItemSet(body)
             bodyItemSet.remove(item)
             bodyItemSet.support = frequentItemSets[bodyItemSet.hashCode()]!!.support
             headItemSet.support = frequentItemSets[headItemSet.hashCode()]!!.support
