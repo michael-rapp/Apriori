@@ -49,27 +49,6 @@ public class FrequentItemSetsTest {
     }
 
     /**
-     * Tests the functionality of the clone-method.
-     */
-    @Test
-    public final void testClone() {
-        FrequentItemSets<NamedItem> frequentItemSets1 = new FrequentItemSets<>(
-                Comparator.reverseOrder());
-        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
-        itemSet1.add(new NamedItem("a"));
-        itemSet1.setSupport(0.5);
-        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
-        itemSet2.add(new NamedItem("b"));
-        itemSet2.setSupport(0.6);
-        frequentItemSets1.add(itemSet1);
-        frequentItemSets1.add(itemSet2);
-        FrequentItemSets<NamedItem> frequentItemSets2 = frequentItemSets1.clone();
-        assertEquals(frequentItemSets1.size(), frequentItemSets2.size());
-        assertEquals(frequentItemSets1.first(), frequentItemSets2.first());
-        assertEquals(frequentItemSets1.last(), frequentItemSets2.last());
-    }
-
-    /**
      * Tests the functionality of the method, which allows to create a string, which contains
      * information about frequent item sets.
      */
@@ -92,7 +71,7 @@ public class FrequentItemSetsTest {
         assertEquals(
                 "[" + itemSet2 + " (support = " + support2 + "),\n" + itemSet1 + " (support = " +
                         support1 + ")]",
-                FrequentItemSets.formatFrequentItemSets(frequentItemSets));
+                FrequentItemSets.Companion.formatFrequentItemSets(frequentItemSets));
     }
 
     /**
@@ -103,7 +82,7 @@ public class FrequentItemSetsTest {
     public final void testFormatFrequentItemSetsIfEmpty() {
         FrequentItemSets<NamedItem> frequentItemSets = new FrequentItemSets<>(
                 Comparator.reverseOrder());
-        assertEquals("[]", FrequentItemSets.formatFrequentItemSets(frequentItemSets));
+        assertEquals("[]", FrequentItemSets.Companion.formatFrequentItemSets(frequentItemSets));
     }
 
     /**
@@ -153,15 +132,6 @@ public class FrequentItemSetsTest {
         FrequentItemSets<NamedItem> filteredFrequentItemSets = frequentItemSets.filter(filter);
         assertEquals(1, filteredFrequentItemSets.size());
         assertEquals(itemSet1, filteredFrequentItemSets.first());
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * filter frequent item sets, if the given predicate is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testFilterThrowsExceptionIfPredicateIsNull() {
-        new FrequentItemSets<>(null).filter(null);
     }
 
 }
