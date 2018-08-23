@@ -14,7 +14,6 @@
 package de.mrapp.apriori
 
 import de.mrapp.apriori.metrics.Confidence
-import de.mrapp.util.Condition
 import java.util.*
 
 /**
@@ -60,8 +59,10 @@ interface Sorting<T> : Comparator<T> {
     /**
      * An abstract base class for all sortings.
      *
-     * @param T           The type of the items, the sorting applies to
-     * @param SortingType The type of the sorting
+     * @param    T           The type of the items, the sorting applies to
+     * @param    SortingType The type of the sorting
+     * @property order       The order that is used for sorting
+     * @property tieBreaker  The tie-breaking strategy that is used
      */
     abstract class AbstractSorting<T, SortingType : Sorting<T>>(
             protected var order: Order = Order.DESCENDING,
@@ -74,7 +75,6 @@ interface Sorting<T> : Comparator<T> {
          * Sets the [order], which should be used for sorting.
          */
         fun withOrder(order: Order): SortingType {
-            Condition.ensureNotNull(order, "The order may not be null")
             this.order = order
             return self()
         }
