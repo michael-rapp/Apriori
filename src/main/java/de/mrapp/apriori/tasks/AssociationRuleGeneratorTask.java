@@ -32,8 +32,7 @@ import java.util.Map;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class AssociationRuleGeneratorTask<ItemType extends Item> extends
-        AbstractTask<ItemType> {
+public class AssociationRuleGeneratorTask<ItemType extends Item> extends AbstractTask {
 
     /**
      * The association rule generator, which is used by the task.

@@ -33,7 +33,7 @@ import java.util.Map;
  * @author Michael Rapp
  * @since 1.0.0
  */
-public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTask<ItemType> {
+public class FrequentItemSetMinerTask<ItemType extends Item> extends AbstractTask {
 
     /**
      * The frequent item set miner, which is used by the task.
