@@ -121,7 +121,7 @@ public class RuleSetTest {
         ruleSet.add(associationRule2);
         assertEquals(associationRule1, ruleSet.first());
         assertEquals(associationRule2, ruleSet.last());
-        Filter<AssociationRule> filter = Filter.forAssociationRules()
+        Filter<AssociationRule<?>> filter = Filter.Companion.forAssociationRules()
                 .byOperator(new Support(), 0.5);
         RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(filter);
         assertEquals(1, filteredRuleSet.size());

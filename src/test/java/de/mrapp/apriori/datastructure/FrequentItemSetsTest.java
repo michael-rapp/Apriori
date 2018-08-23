@@ -128,7 +128,7 @@ public class FrequentItemSetsTest {
         frequentItemSets.add(itemSet2);
         assertEquals(itemSet1, frequentItemSets.first());
         assertEquals(itemSet2, frequentItemSets.last());
-        Filter<ItemSet> filter = Filter.forItemSets().bySize(2);
+        Filter<ItemSet<?>> filter = Filter.Companion.forItemSets().bySize(2);
         FrequentItemSets<NamedItem> filteredFrequentItemSets = frequentItemSets.filter(filter);
         assertEquals(1, filteredFrequentItemSets.size());
         assertEquals(itemSet1, filteredFrequentItemSets.first());
