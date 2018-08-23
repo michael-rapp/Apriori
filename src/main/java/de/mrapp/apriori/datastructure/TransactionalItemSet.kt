@@ -32,7 +32,7 @@ class TransactionalItemSet<ItemType : Item> : ItemSet<ItemType> {
      * A map that contains the transactions, the item set occurs in. The transactions are
      * mapped to unique ids.
      */
-    var transactions: Map<Int, Transaction<ItemType>>
+    var transactions: MutableMap<Int, Transaction<ItemType>>
 
     /**
      * Creates an empty item set.
