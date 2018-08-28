@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -96,7 +95,7 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
 
     /**
      * Creates and returns a map, which contains the frequent item sets as returned by the method
-     * {@link FrequentItemSetMinerModule#findFrequentItemSets(Iterator, double)}.
+     * {@link FrequentItemSetMinerModule#findFrequentItemSets(Iterable, double)}.
      *
      * @param frequentItemSets The frequent item sets, which should be added to the map, as a
      *                         two-dimensional {@link String} array. The array may not be null
@@ -210,7 +209,7 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testGenerateAssociationRulesThrowsExceptionWhenIteratorIsNull() {
-        new AssociationRuleGeneratorModule<>().generateAssociationRules(null, 0.5);
+        new AssociationRuleGeneratorModule<NamedItem>().generateAssociationRules(null, 0.5);
     }
 
     /**
@@ -220,7 +219,7 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testGenerateAssociationRulesThrowsExceptionWhenMinConfidenceIsLessThanZero() {
-        new AssociationRuleGeneratorModule<>().generateAssociationRules(new HashMap<>(), -0.1);
+        new AssociationRuleGeneratorModule<NamedItem>().generateAssociationRules(new HashMap<>(), -0.1);
     }
 
     /**
@@ -230,7 +229,7 @@ public class AssociationRuleGeneratorModuleTest extends AbstractDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testGenerateAssociationRulesThrowsExceptionWhenMinConfidenceIsGreaterThanOne() {
-        new AssociationRuleGeneratorModule<>().generateAssociationRules(new HashMap<>(), 1.1);
+        new AssociationRuleGeneratorModule<NamedItem>().generateAssociationRules(new HashMap<>(), 1.1);
     }
 
 }
