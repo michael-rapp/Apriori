@@ -159,4 +159,19 @@ public class AssociationRuleTest {
         assertEquals(1, associationRule1.compareTo(associationRule2));
     }
 
+    /**
+     * Tests the functionality of the toString-method.
+     */
+    @Test
+    public final void testToString() {
+        ItemSet<NamedItem> body = new ItemSet<>();
+        body.add(new NamedItem("a"));
+        body.add(new NamedItem("b"));
+        ItemSet<NamedItem> head = new ItemSet<>();
+        head.add(new NamedItem("c"));
+        head.add(new NamedItem("d"));
+        AssociationRule<NamedItem> associationRule = new AssociationRule<>(body, head, 0.5);
+        assertEquals("[a, b] -> [c, d]", associationRule.toString());
+    }
+
 }

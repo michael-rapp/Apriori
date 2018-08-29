@@ -86,4 +86,6 @@ data class AssociationRule<ItemType : Item>(val body: ItemSet<ItemType>,
 
     override fun compareTo(other: AssociationRule<*>) = support.compareTo(other.support)
 
+    override fun toString() = "$body -> $head"
+
 }
