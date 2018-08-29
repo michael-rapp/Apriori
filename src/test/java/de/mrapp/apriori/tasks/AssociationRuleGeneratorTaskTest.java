@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Tests the functionality of the class {@link AssociationRuleGeneratorTask}.
@@ -67,11 +65,11 @@ public class AssociationRuleGeneratorTaskTest {
         double minConfidence = 0.5;
         double maxConfidence = 0.8;
         double confidenceDelta = 0.1;
-        Apriori.Configuration configuration = mock(Apriori.Configuration.class);
-        when(configuration.getRuleCount()).thenReturn(1);
-        when(configuration.getMinConfidence()).thenReturn(minConfidence);
-        when(configuration.getMaxConfidence()).thenReturn(maxConfidence);
-        when(configuration.getConfidenceDelta()).thenReturn(confidenceDelta);
+        Apriori.Configuration configuration = new Apriori.Configuration();
+        configuration.setRuleCount(1);
+        configuration.setMinConfidence(minConfidence);
+        configuration.setMaxConfidence(maxConfidence);
+        configuration.setConfidenceDelta(confidenceDelta);
         AssociationRuleGeneratorMock associationRuleGeneratorMock = new AssociationRuleGeneratorMock();
         AssociationRuleGeneratorTask<NamedItem> associationRuleGeneratorTask =
                 new AssociationRuleGeneratorTask<>(configuration, associationRuleGeneratorMock);
@@ -92,9 +90,9 @@ public class AssociationRuleGeneratorTaskTest {
     @Test
     public final void testGenerateAssociationRulesWhenRuleCountIsZero() {
         double minConfidence = 0.5;
-        Apriori.Configuration configuration = mock(Apriori.Configuration.class);
-        when(configuration.getRuleCount()).thenReturn(0);
-        when(configuration.getMinConfidence()).thenReturn(minConfidence);
+        Apriori.Configuration configuration = new Apriori.Configuration();
+        configuration.setRuleCount(0);
+        configuration.setMinConfidence(minConfidence);
         AssociationRuleGeneratorMock associationRuleGeneratorMock = new AssociationRuleGeneratorMock();
         AssociationRuleGeneratorTask<NamedItem> associationRuleGeneratorTask =
                 new AssociationRuleGeneratorTask<>(configuration, associationRuleGeneratorMock);

@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Tests the functionality of the class {@link FrequentItemSetMinerTask}.
@@ -65,11 +63,11 @@ public class FrequentItemSetMinerTaskTest extends AbstractDataTest {
         double minSupport = 0.5;
         double maxSupport = 0.8;
         double supportDelta = 0.1;
-        Apriori.Configuration configuration = mock(Apriori.Configuration.class);
-        when(configuration.getFrequentItemSetCount()).thenReturn(1);
-        when(configuration.getMinSupport()).thenReturn(minSupport);
-        when(configuration.getMaxSupport()).thenReturn(maxSupport);
-        when(configuration.getSupportDelta()).thenReturn(supportDelta);
+        Apriori.Configuration configuration = new Apriori.Configuration();
+        configuration.setFrequentItemSetCount(1);
+        configuration.setMinSupport(minSupport);
+        configuration.setMaxSupport(maxSupport);
+        configuration.setSupportDelta(supportDelta);
         FrequentItemSetMinerMock frequentItemSetMinerMock = new FrequentItemSetMinerMock();
         FrequentItemSetMinerTask<NamedItem> frequentItemSetMinerTask =
                 new FrequentItemSetMinerTask<>(configuration, frequentItemSetMinerMock);
@@ -91,9 +89,9 @@ public class FrequentItemSetMinerTaskTest extends AbstractDataTest {
     @Test
     public final void testFindFrequentItemSetsWhenFrequentItemSetCountIsZero() {
         double minSupport = 0.5;
-        Apriori.Configuration configuration = mock(Apriori.Configuration.class);
-        when(configuration.getFrequentItemSetCount()).thenReturn(0);
-        when(configuration.getMinSupport()).thenReturn(minSupport);
+        Apriori.Configuration configuration = new Apriori.Configuration();
+        configuration.setFrequentItemSetCount(0);
+        configuration.setMinSupport(minSupport);
         FrequentItemSetMinerMock frequentItemSetMinerMock = new FrequentItemSetMinerMock();
         FrequentItemSetMinerTask<NamedItem> frequentItemSetMinerTask =
                 new FrequentItemSetMinerTask<>(configuration, frequentItemSetMinerMock);
