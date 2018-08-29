@@ -42,7 +42,6 @@ dependencies {
     testCompile 'junit:junit:[4.0,5.0)'
     testCompile 'org.mockito:mockito-core:[2.8,2.9)'
     testCompile 'ch.qos.logback:logback-classic:[1.2,1.3)'
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$version_kotlin"
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
