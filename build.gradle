@@ -38,6 +38,7 @@ dependencies {
     implementation "com.github.michael-rapp:java-util:$version_java_util"
     compile 'org.jetbrains:annotations:[15.0,16.0)'
     compile 'org.slf4j:slf4j-api:[1.7,1.8)'
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$version_kotlin"
     testCompile 'junit:junit:[4.0,5.0)'
     testCompile 'org.mockito:mockito-core:[2.8,2.9)'
     testCompile 'ch.qos.logback:logback-classic:[1.2,1.3)'
