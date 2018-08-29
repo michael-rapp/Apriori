@@ -128,7 +128,7 @@ interface TieBreaker<T> : Comparator<T> {
          */
         fun preferSimple(): AssociationRuleTieBreaker {
             return AssociationRuleTieBreaker(Comparator { o1, o2 ->
-                (o1.body.size + o1.head.size).compareTo(o2.body.size + o2.head.size)
+                (o2.body.size + o2.head.size).compareTo(o1.body.size + o1.head.size)
             }, this)
         }
 
