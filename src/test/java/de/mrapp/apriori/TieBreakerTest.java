@@ -34,15 +34,14 @@ public class TieBreakerTest {
      */
     @Test
     public final void testDefaultTieBreakerForItemSets() {
-        ItemSet itemSet1 = mock(ItemSet.class);
-        ItemSet itemSet2 = mock(ItemSet.class);
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
         TieBreaker<ItemSet<?>> tieBreaker = TieBreaker.Companion.forItemSets();
         assertEquals(0, tieBreaker.compare(itemSet1, itemSet2));
     }
 
     /**
-     * Tests the functionality of the tie-breaking strategy for item sets, which prefers small item
-     * sets.
+     * Tests the functionality of the tie-breaking strategy for item sets, which prefers small item sets.
      */
     @Test
     public final void testTieBreakingForItemSetsPreferSmall() {
@@ -60,8 +59,7 @@ public class TieBreakerTest {
     }
 
     /**
-     * Tests the functionality of the tie-breaking strategy for item sets, which prefers large item
-     * sets.
+     * Tests the functionality of the tie-breaking strategy for item sets, which prefers large item sets.
      */
     @Test
     public final void testTieBreakingForItemSetsPreferLarge() {
@@ -83,20 +81,11 @@ public class TieBreakerTest {
      */
     @Test
     public final void testCustomTieBreakingForItemSets() {
-        ItemSet itemSet1 = mock(ItemSet.class);
-        ItemSet itemSet2 = mock(ItemSet.class);
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
         Comparator<ItemSet<?>> comparator = (o1, o2) -> 1;
         TieBreaker<ItemSet<?>> tieBreaker = TieBreaker.Companion.forItemSets().custom(comparator);
         assertEquals(1, tieBreaker.compare(itemSet1, itemSet2));
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the <code>custom</code>-method
-     * of a tie-breaking strategy for item sets, if the comparator is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testCustomTieBreakingForItemSetsThrowsExceptionIfFunctionIsNull() {
-        TieBreaker.Companion.forItemSets().custom(null);
     }
 
     /**
@@ -104,12 +93,11 @@ public class TieBreakerTest {
      */
     @Test
     public final void testMultipleTieBreakingStrategiesForItemSets() {
-        ItemSet itemSet1 = mock(ItemSet.class);
-        ItemSet itemSet2 = mock(ItemSet.class);
+        ItemSet<NamedItem> itemSet1 = new ItemSet<>();
+        ItemSet<NamedItem> itemSet2 = new ItemSet<>();
         Comparator<ItemSet<?>> comparator1 = (o1, o2) -> 0;
         Comparator<ItemSet<?>> comparator2 = (o1, o2) -> -1;
-        TieBreaker<ItemSet<?>> tieBreaker = TieBreaker.Companion.forItemSets().custom(comparator1)
-                .custom(comparator2);
+        TieBreaker<ItemSet<?>> tieBreaker = TieBreaker.Companion.forItemSets().custom(comparator1).custom(comparator2);
         assertEquals(-1, tieBreaker.compare(itemSet1, itemSet2));
     }
 
@@ -118,23 +106,21 @@ public class TieBreakerTest {
      */
     @Test
     public final void testDefaultTieBreakerForAssociationRules() {
-        AssociationRule associationRule1 = mock(AssociationRule.class);
-        AssociationRule associationRule2 = mock(AssociationRule.class);
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.0);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.0);
         TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules();
         assertEquals(0, tieBreaker.compare(associationRule1, associationRule2));
     }
 
     /**
-     * Tests the functionality of the tie-breaking strategy for association rules, which uses a
-     * specific operator.
+     * Tests the functionality of the tie-breaking strategy for association rules, which uses a specific operator.
      */
     @Test
     public final void testTieBreakingForAssociationRulesByOperator() {
-        AssociationRule associationRule1 = mock(AssociationRule.class);
-        AssociationRule associationRule2 = mock(AssociationRule.class);
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.0);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.0);
         Operator operator = mock(Operator.class);
-        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules()
-                .byOperator(operator);
+        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules().byOperator(operator);
         when(operator.evaluate(any(AssociationRule.class))).thenReturn(1.0, 0.0);
         assertEquals(1, tieBreaker.compare(associationRule1, associationRule2));
         when(operator.evaluate(any(AssociationRule.class))).thenReturn(0.5, 0.5);
@@ -144,17 +130,7 @@ public class TieBreakerTest {
     }
 
     /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the
-     * <code>byOperator</code>-method, if the operator is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testByOperatorThrowsExceptionIfOperatorIsNull() {
-        TieBreaker.Companion.forAssociationRules().byOperator(null);
-    }
-
-    /**
-     * Tests the functionality of the tie-breaking strategy for association rules, which prefers
-     * simple rules.
+     * Tests the functionality of the tie-breaking strategy for association rules, which prefers simple rules.
      */
     @Test
     public final void testTieBreakingForAssociationRulesPreferSimple() {
@@ -177,8 +153,7 @@ public class TieBreakerTest {
     }
 
     /**
-     * Tests the functionality of the tie-breaking strategy for association rules, which prefers
-     * simple rules.
+     * Tests the functionality of the tie-breaking strategy for association rules, which prefers simple rules.
      */
     @Test
     public final void testTieBreakingForAssociationRulesPreferComplex() {
@@ -190,8 +165,7 @@ public class TieBreakerTest {
         head2.add(new NamedItem("b"));
         AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, head1, 0.5);
         AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, head2, 0.5);
-        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules()
-                .preferComplex();
+        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules().preferComplex();
         assertEquals(-1, tieBreaker.compare(associationRule1, associationRule2));
         associationRule1 = new AssociationRule<>(body1, head1, 0.5);
         associationRule2 = new AssociationRule<>(body1, head1, 0.5);
@@ -202,20 +176,16 @@ public class TieBreakerTest {
     }
 
     /**
-     * Tests the functionality of the tie-breaking strategy for association rules, which prefers
-     * simple bodies.
+     * Tests the functionality of the tie-breaking strategy for association rules, which prefers simple bodies.
      */
     @Test
     public final void testTieBreakingPreferSimpleBody() {
         ItemSet<NamedItem> body1 = new ItemSet<>();
         ItemSet<NamedItem> body2 = new ItemSet<>();
         body2.add(new NamedItem("a"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.5);
-        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules()
-                .preferSimpleBody();
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(), 0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(), 0.5);
+        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules().preferSimpleBody();
         assertEquals(1, tieBreaker.compare(associationRule1, associationRule2));
         associationRule1 = new AssociationRule<>(body1, new ItemSet<>(), 0.5);
         associationRule2 = new AssociationRule<>(body1, new ItemSet<>(), 0.5);
@@ -226,20 +196,16 @@ public class TieBreakerTest {
     }
 
     /**
-     * Tests the functionality of the tie-breaking strategy for association rules, which prefers
-     * complex bodies.
+     * Tests the functionality of the tie-breaking strategy for association rules, which prefers complex bodies.
      */
     @Test
     public final void testTieBreakingForAssociationRulesPreferComplexBody() {
         ItemSet<NamedItem> body1 = new ItemSet<>();
         ItemSet<NamedItem> body2 = new ItemSet<>();
         body2.add(new NamedItem("a"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(),
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(),
-                0.5);
-        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules()
-                .preferComplexBody();
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(body1, new ItemSet<>(), 0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(body2, new ItemSet<>(), 0.5);
+        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules().preferComplexBody();
         assertEquals(-1, tieBreaker.compare(associationRule1, associationRule2));
         associationRule1 = new AssociationRule<>(body1, new ItemSet<>(), 0.5);
         associationRule2 = new AssociationRule<>(body1, new ItemSet<>(), 0.5);
@@ -258,12 +224,9 @@ public class TieBreakerTest {
         ItemSet<NamedItem> head1 = new ItemSet<>();
         ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("a"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(), head1,
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(), head2,
-                0.5);
-        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules()
-                .preferSimpleHead();
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(), head1, 0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(), head2, 0.5);
+        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules().preferSimpleHead();
         assertEquals(1, tieBreaker.compare(associationRule1, associationRule2));
         associationRule1 = new AssociationRule<>(new ItemSet<>(), head1, 0.5);
         associationRule2 = new AssociationRule<>(new ItemSet<>(), head1, 0.5);
@@ -281,12 +244,9 @@ public class TieBreakerTest {
         ItemSet<NamedItem> head1 = new ItemSet<>();
         ItemSet<NamedItem> head2 = new ItemSet<>();
         head2.add(new NamedItem("a"));
-        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(), head1,
-                0.5);
-        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(), head2,
-                0.5);
-        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules()
-                .preferComplexHead();
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(), head1, 0.5);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(), head2, 0.5);
+        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules().preferComplexHead();
         assertEquals(-1, tieBreaker.compare(associationRule1, associationRule2));
         associationRule1 = new AssociationRule<>(new ItemSet<>(), head1, 0.5);
         associationRule2 = new AssociationRule<>(new ItemSet<>(), head1, 0.5);
@@ -301,21 +261,11 @@ public class TieBreakerTest {
      */
     @Test
     public final void testCustomTieBreakingForAssociationRules() {
-        AssociationRule associationRule1 = mock(AssociationRule.class);
-        AssociationRule associationRule2 = mock(AssociationRule.class);
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.0);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.0);
         Comparator<AssociationRule<?>> comparator = (o1, o2) -> 1;
-        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules()
-                .custom(comparator);
+        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules().custom(comparator);
         assertEquals(1, tieBreaker.compare(associationRule1, associationRule2));
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the <code>custom</code>-method
-     * of a tie-breaking strategy for association rules, if the comparator is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testCustomTieBreakingForAssociationRulesThrowsExceptionIfFunctionIsNull() {
-        TieBreaker.Companion.forAssociationRules().custom(null);
     }
 
     /**
@@ -323,12 +273,12 @@ public class TieBreakerTest {
      */
     @Test
     public final void testMultipleTieBreakingStrategiesForAssociationRules() {
-        AssociationRule associationRule1 = mock(AssociationRule.class);
-        AssociationRule associationRule2 = mock(AssociationRule.class);
+        AssociationRule<NamedItem> associationRule1 = new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.0);
+        AssociationRule<NamedItem> associationRule2 = new AssociationRule<>(new ItemSet<>(), new ItemSet<>(), 0.0);
         Comparator<AssociationRule<?>> comparator1 = (o1, o2) -> 0;
         Comparator<AssociationRule<?>> comparator2 = (o1, o2) -> -1;
-        TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules()
-                .custom(comparator1).custom(comparator2);
+        TieBreaker<AssociationRule<?>> tieBreaker =
+                TieBreaker.Companion.forAssociationRules().custom(comparator1).custom(comparator2);
         assertEquals(-1, tieBreaker.compare(associationRule1, associationRule2));
     }
 
