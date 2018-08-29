@@ -113,15 +113,6 @@ public class FrequentItemSetMinerModuleTest extends AbstractDataTest {
 
     /**
      * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
-     * find frequent item sets, if the iterator, which is passed as a parameter, is null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public final void testFindFrequentItemSetsThrowsExceptionWhenIteratorIsNull() {
-        new FrequentItemSetMinerModule<>().findFrequentItemSets(null, 0.5);
-    }
-
-    /**
-     * Ensures, that an {@link IllegalArgumentException} is thrown by the method, which allows to
      * find frequent item sets, if the minimum support, which is passed as a parameter, is less than
      * 0.
      */
