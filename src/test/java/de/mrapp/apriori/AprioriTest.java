@@ -28,7 +28,6 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Tests the functionality of the class {@link Apriori}.
@@ -162,7 +161,7 @@ public class AprioriTest extends AbstractDataTest {
      */
     @Test
     public final void testConstructorWithConfigurationParameter() {
-        Apriori.Configuration configuration = mock(Apriori.Configuration.class);
+        Apriori.Configuration configuration = new Apriori.Configuration();
         Apriori<NamedItem> apriori = new Apriori<>(configuration);
         assertEquals(configuration, apriori.getConfiguration());
     }
@@ -173,7 +172,7 @@ public class AprioriTest extends AbstractDataTest {
      */
     @Test
     public final void testConstructorWithConfigurationAndTaskParameters() {
-        Apriori.Configuration configuration = mock(Apriori.Configuration.class);
+        Apriori.Configuration configuration = new Apriori.Configuration();
         Apriori<NamedItem> apriori = new Apriori<>(configuration, new FrequentItemSetMinerTask<>(configuration),
                 new AssociationRuleGeneratorTask<>(configuration));
         assertEquals(configuration, apriori.getConfiguration());
@@ -185,8 +184,8 @@ public class AprioriTest extends AbstractDataTest {
      */
     @Test
     public final void testExecuteWhenNotGeneratingRules() {
-        Apriori.Configuration configuration = mock(Apriori.Configuration.class);
-        when(configuration.getGenerateRules()).thenReturn(false);
+        Apriori.Configuration configuration = new Apriori.Configuration();
+        configuration.setGenerateRules(false);
         Map<Integer, TransactionalItemSet<NamedItem>> map = new HashMap<>();
         TransactionalItemSet<NamedItem> itemSet1 = new TransactionalItemSet<>();
         NamedItem item1 = new NamedItem("a");
@@ -226,8 +225,8 @@ public class AprioriTest extends AbstractDataTest {
      */
     @Test
     public final void testExecuteWhenGeneratingRules() {
-        Apriori.Configuration configuration = mock(Apriori.Configuration.class);
-        when(configuration.getGenerateRules()).thenReturn(true);
+        Apriori.Configuration configuration = new Apriori.Configuration();
+        configuration.setGenerateRules(true);
         Map<Integer, TransactionalItemSet<NamedItem>> map = new HashMap<>();
         TransactionalItemSet<NamedItem> itemSet1 = new TransactionalItemSet<>();
         NamedItem item1 = new NamedItem("a");
