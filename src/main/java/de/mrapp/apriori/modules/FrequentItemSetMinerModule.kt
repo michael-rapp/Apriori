@@ -133,43 +133,47 @@ class FrequentItemSetMinerModule<ItemType : Item> : FrequentItemSetMiner<ItemTyp
      */
     private fun combineItemSets(itemSets: List<TransactionalItemSet<ItemType>>,
                                 k: Int): Collection<TransactionalItemSet<ItemType>> {
-        val combinedItemSets = HashSet<TransactionalItemSet<ItemType>>(
-                (1..itemSets.size).reduce { sum, i -> sum + i}, 1f)
+        if (itemSets.isNotEmpty()) {
+            val combinedItemSets = HashSet<TransactionalItemSet<ItemType>>(
+                    (1..itemSets.size).reduce { sum, i -> sum + i }, 1f)
 
-        for (i in itemSets.indices) {
-            for (j in i + 1 until itemSets.size) {
-                val itemSet1 = itemSets[i]
-                val itemSet2 = itemSets[j]
-                val iterator1 = itemSet1.iterator()
-                val iterator2 = itemSet2.iterator()
-                var itemToAdd: ItemType? = null
-                var index = 0
+            for (i in itemSets.indices) {
+                for (j in i + 1 until itemSets.size) {
+                    val itemSet1 = itemSets[i]
+                    val itemSet2 = itemSets[j]
+                    val iterator1 = itemSet1.iterator()
+                    val iterator2 = itemSet2.iterator()
+                    var itemToAdd: ItemType? = null
+                    var index = 0
 
-                while (iterator1.hasNext() && iterator2.hasNext()) {
-                    val item2 = iterator2.next()
+                    while (iterator1.hasNext() && iterator2.hasNext()) {
+                        val item2 = iterator2.next()
 
-                    if (index < k - 1) {
-                        if (item2 != iterator1.next()) {
-                            itemToAdd = null
-                            break
+                        if (index < k - 1) {
+                            if (item2 != iterator1.next()) {
+                                itemToAdd = null
+                                break
+                            }
+                        } else {
+                            itemToAdd = item2
                         }
-                    } else {
-                        itemToAdd = item2
+
+                        index++
                     }
 
-                    index++
-                }
-
-                if (itemToAdd != null) {
-                    val combinedItemSet = TransactionalItemSet(itemSet1)
-                    combinedItemSet.add(itemToAdd)
-                    combinedItemSet.transactions.putAll(itemSet2.transactions)
-                    combinedItemSets.add(combinedItemSet)
+                    if (itemToAdd != null) {
+                        val combinedItemSet = TransactionalItemSet(itemSet1)
+                        combinedItemSet.add(itemToAdd)
+                        combinedItemSet.transactions.putAll(itemSet2.transactions)
+                        combinedItemSets.add(combinedItemSet)
+                    }
                 }
             }
+
+            return combinedItemSets
         }
 
-        return combinedItemSets
+        return emptySet()
     }
 
     /**
