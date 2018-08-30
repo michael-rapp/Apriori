@@ -23,7 +23,6 @@ import de.mrapp.util.datastructure.SortedArraySet
 import java.io.Serializable
 import java.text.DecimalFormat
 import java.util.*
-import java.util.function.Predicate
 
 /**
  * A rule set, which contains multiple association rules. The rules, which are contained by a rule
@@ -43,7 +42,8 @@ class RuleSet<ItemType : Item> : SortedArraySet<AssociationRule<ItemType>>,
      * @param comparator The comparator, which should be used to sort the set or null, if the
      *                   natural ordering should be used
      */
-    constructor(comparator: Comparator<in AssociationRule<ItemType>>?) : super(comparator)
+    @JvmOverloads
+    constructor(comparator: Comparator<in AssociationRule<ItemType>>? = null) : super(comparator)
 
     /**
      * Creates a new rule set.
@@ -60,11 +60,11 @@ class RuleSet<ItemType : Item> : SortedArraySet<AssociationRule<ItemType>>,
         return RuleSet(this, comparator)
     }
 
-    override fun filter(predicate: Predicate<in AssociationRule<*>>): RuleSet<ItemType> {
+    override fun filter(predicate: (AssociationRule<*>) -> Boolean): RuleSet<ItemType> {
         val filteredRuleSet = RuleSet(comparator())
 
         for (item in this) {
-            if (predicate.test(item)) {
+            if (predicate.invoke(item)) {
                 filteredRuleSet.add(item)
             }
         }
