@@ -1,5 +1,11 @@
 # Apriori - RELEASE NOTES
 
+## Version 2.0.0 (Aug. 30th 2018)
+
+A major release, which introduces the following changes:
+
+- Migrated the library to use the Kotlin programming language instead of Java.
+
 ## Version 1.3.0 (Dec. 13th 2017)
 
 A feature release, which introduces the following changes:
