@@ -53,8 +53,10 @@ class RuleSet<ItemType : Item> : SortedArraySet<AssociationRule<ItemType>>,
      * @param comparator The comparator, which should be used to sort the set or null, if the
      *                   natural ordering should be used
      */
+    @JvmOverloads
     constructor(rules: Collection<AssociationRule<ItemType>>,
-                comparator: Comparator<in AssociationRule<ItemType>>?) : super(rules, comparator)
+                comparator: Comparator<in AssociationRule<ItemType>>? = null) :
+            super(rules, comparator)
 
     override fun sort(comparator: Comparator<in AssociationRule<*>>?): RuleSet<ItemType> {
         return RuleSet(this, comparator)
