@@ -52,8 +52,8 @@ class AprioriTest : AbstractDataTest() {
         val maxSupport = 0.8
         val supportDelta = 0.2
         val frequentItemSetCount = 0
-        val apriori = Apriori.Builder<NamedItem>(minSupport).maxSupport(maxSupport).supportDelta(supportDelta)
-                .frequentItemSetCount(frequentItemSetCount).create()
+        val apriori = Apriori.Builder<NamedItem>(minSupport).maxSupport(maxSupport)
+                .supportDelta(supportDelta).frequentItemSetCount(frequentItemSetCount).create()
         val configuration = apriori.configuration
         assertEquals(minSupport, configuration.minSupport)
         assertEquals(maxSupport, configuration.maxSupport)
@@ -68,8 +68,8 @@ class AprioriTest : AbstractDataTest() {
         val maxSupport = 0.8
         val supportDelta = 0.2
         val frequentItemSetCount = 2
-        val apriori = Apriori.Builder<NamedItem>(frequentItemSetCount).minSupport(minSupport).maxSupport(maxSupport)
-                .supportDelta(supportDelta).create()
+        val apriori = Apriori.Builder<NamedItem>(frequentItemSetCount).minSupport(minSupport)
+                .maxSupport(maxSupport).supportDelta(supportDelta).create()
         val configuration = apriori.configuration
         assertEquals(minSupport, configuration.minSupport)
         assertEquals(maxSupport, configuration.maxSupport)
@@ -88,9 +88,10 @@ class AprioriTest : AbstractDataTest() {
         val maxConfidence = 0.8
         val confidenceDelta = 0.2
         val ruleCount = 0
-        val apriori = Apriori.Builder<NamedItem>(frequentItemSetCount).generateRules(minConfidence).minSupport(minSupport)
-                .maxSupport(maxSupport).supportDelta(supportDelta).frequentItemSetCount(frequentItemSetCount)
-                .maxConfidence(maxConfidence).confidenceDelta(confidenceDelta).ruleCount(ruleCount).create()
+        val apriori = Apriori.Builder<NamedItem>(frequentItemSetCount).generateRules(minConfidence)
+                .minSupport(minSupport).maxSupport(maxSupport).supportDelta(supportDelta)
+                .frequentItemSetCount(frequentItemSetCount).maxConfidence(maxConfidence)
+                .confidenceDelta(confidenceDelta).ruleCount(ruleCount).create()
         val configuration = apriori.configuration
         assertEquals(minSupport, configuration.minSupport)
         assertEquals(maxSupport, configuration.maxSupport)
@@ -113,10 +114,10 @@ class AprioriTest : AbstractDataTest() {
         val maxConfidence = 0.8
         val confidenceDelta = 0.2
         val ruleCount = 2
-        val apriori = Apriori.Builder<NamedItem>(frequentItemSetCount).generateRules(ruleCount).minSupport(minSupport)
-                .maxSupport(maxSupport).supportDelta(supportDelta).frequentItemSetCount(frequentItemSetCount)
-                .minConfidence(minConfidence).maxConfidence(maxConfidence).confidenceDelta(confidenceDelta)
-                .create()
+        val apriori = Apriori.Builder<NamedItem>(frequentItemSetCount).generateRules(ruleCount)
+                .minSupport(minSupport).maxSupport(maxSupport).supportDelta(supportDelta)
+                .frequentItemSetCount(frequentItemSetCount).minConfidence(minConfidence)
+                .maxConfidence(maxConfidence).confidenceDelta(confidenceDelta).create()
         val configuration = apriori.configuration
         assertEquals(minSupport, configuration.minSupport)
         assertEquals(maxSupport, configuration.maxSupport)
@@ -160,13 +161,16 @@ class AprioriTest : AbstractDataTest() {
         map[itemSet1.hashCode()] = itemSet1
         map[itemSet2.hashCode()] = itemSet2
         val frequentItemSetMiner = object : FrequentItemSetMiner<NamedItem> {
-            override fun findFrequentItemSets(iterable: Iterable<Transaction<NamedItem>>, minSupport: Double) = map
+            override fun findFrequentItemSets(iterable: Iterable<Transaction<NamedItem>>,
+                                              minSupport: Double) = map
         }
         val associationRuleGenerator = object : AssociationRuleGenerator<NamedItem> {
-            override fun generateAssociationRules(frequentItemSets: Map<Int, ItemSet<NamedItem>>, minConfidence: Double) = throw RuntimeException()
+            override fun generateAssociationRules(frequentItemSets: Map<Int, ItemSet<NamedItem>>,
+                                                  minConfidence: Double) = throw RuntimeException()
         }
         val frequentItemSetMinerTask = FrequentItemSetMinerTask(configuration, frequentItemSetMiner)
-        val associationRuleGeneratorTask = AssociationRuleGeneratorTask(configuration, associationRuleGenerator)
+        val associationRuleGeneratorTask = AssociationRuleGeneratorTask(configuration,
+                associationRuleGenerator)
         val file = getInputFile(AbstractDataTest.INPUT_FILE_1)
         val apriori = Apriori(configuration, frequentItemSetMinerTask, associationRuleGeneratorTask)
         val output = apriori.execute(Iterable { DataIterator(file) })
@@ -201,13 +205,16 @@ class AprioriTest : AbstractDataTest() {
         val associationRule = AssociationRule(ItemSet(), ItemSet<NamedItem>(), 0.5)
         ruleSet.add(associationRule)
         val frequentItemSetMiner = object : FrequentItemSetMiner<NamedItem> {
-            override fun findFrequentItemSets(iterable: Iterable<Transaction<NamedItem>>, minSupport: Double) = map
+            override fun findFrequentItemSets(iterable: Iterable<Transaction<NamedItem>>,
+                                              minSupport: Double) = map
         }
         val associationRuleGenerator = object : AssociationRuleGenerator<NamedItem> {
-            override fun generateAssociationRules(frequentItemSets: Map<Int, ItemSet<NamedItem>>, minConfidence: Double) = ruleSet
+            override fun generateAssociationRules(frequentItemSets: Map<Int, ItemSet<NamedItem>>,
+                                                  minConfidence: Double) = ruleSet
         }
         val frequentItemSetMinerTask = FrequentItemSetMinerTask(configuration, frequentItemSetMiner)
-        val associationRuleGeneratorTask = AssociationRuleGeneratorTask(configuration, associationRuleGenerator)
+        val associationRuleGeneratorTask = AssociationRuleGeneratorTask(configuration,
+                associationRuleGenerator)
         val file = getInputFile(AbstractDataTest.INPUT_FILE_1)
         val apriori = Apriori(configuration, frequentItemSetMinerTask, associationRuleGeneratorTask)
         val output = apriori.execute(Iterable { DataIterator(file) })

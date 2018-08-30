@@ -31,9 +31,10 @@ import java.io.Serializable
  * @author Michael Rapp
  * @since 1.0.0
  */
-data class AssociationRule<ItemType : Item>(val body: ItemSet<ItemType>,
-                                            val head: ItemSet<ItemType>,
-                                            val support: Double) : Comparable<AssociationRule<*>>, Serializable {
+data class AssociationRule<ItemType : Item>(
+        val body: ItemSet<ItemType>,
+        val head: ItemSet<ItemType>,
+        val support: Double) : Comparable<AssociationRule<*>>, Serializable {
 
     init {
         ensureAtLeast(support, 0.0, "The support must be at least 0")

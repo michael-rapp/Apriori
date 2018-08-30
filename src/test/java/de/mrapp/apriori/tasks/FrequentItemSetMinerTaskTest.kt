@@ -36,7 +36,8 @@ class FrequentItemSetMinerTaskTest : AbstractDataTest() {
         internal val minSupports = LinkedList<Double>()
 
         override fun findFrequentItemSets(
-                iterable: Iterable<Transaction<NamedItem>>, minSupport: Double): Map<Int, TransactionalItemSet<NamedItem>> {
+                iterable: Iterable<Transaction<NamedItem>>,
+                minSupport: Double): Map<Int, TransactionalItemSet<NamedItem>> {
             minSupports.add(minSupport)
             return HashMap()
         }
@@ -54,7 +55,8 @@ class FrequentItemSetMinerTaskTest : AbstractDataTest() {
         configuration.maxSupport = maxSupport
         configuration.supportDelta = supportDelta
         val frequentItemSetMinerMock = FrequentItemSetMinerMock()
-        val frequentItemSetMinerTask = FrequentItemSetMinerTask(configuration, frequentItemSetMinerMock)
+        val frequentItemSetMinerTask = FrequentItemSetMinerTask(configuration,
+                frequentItemSetMinerMock)
         val file = getInputFile(AbstractDataTest.INPUT_FILE_1)
         frequentItemSetMinerTask.findFrequentItemSets(Iterable { DataIterator(file) })
         assertEquals((Math.round((maxSupport - minSupport) / supportDelta) + 1).toFloat(),
@@ -74,7 +76,8 @@ class FrequentItemSetMinerTaskTest : AbstractDataTest() {
         configuration.frequentItemSetCount = 0
         configuration.minSupport = minSupport
         val frequentItemSetMinerMock = FrequentItemSetMinerMock()
-        val frequentItemSetMinerTask = FrequentItemSetMinerTask(configuration, frequentItemSetMinerMock)
+        val frequentItemSetMinerTask = FrequentItemSetMinerTask(configuration,
+                frequentItemSetMinerMock)
         val file = getInputFile(AbstractDataTest.INPUT_FILE_1)
         frequentItemSetMinerTask.findFrequentItemSets(Iterable { DataIterator(file) })
         assertEquals(1, frequentItemSetMinerMock.minSupports.size.toLong())

@@ -25,13 +25,35 @@ class DataIteratorTest : AbstractDataTest() {
 
     companion object {
 
-        private val DATA_1 = arrayOf(arrayOf("bread", "butter", "sugar"), arrayOf("coffee", "milk", "sugar"), arrayOf("bread", "coffee", "milk", "sugar"), arrayOf("coffee", "milk"))
+        private val DATA_1 = arrayOf(
+                arrayOf("bread", "butter", "sugar"),
+                arrayOf("coffee", "milk", "sugar"),
+                arrayOf("bread", "coffee", "milk", "sugar"),
+                arrayOf("coffee", "milk")
+        )
 
-        private val DATA_2 = arrayOf(arrayOf("beer", "chips", "wine"), arrayOf("beer", "chips"), arrayOf("pizza", "wine"), arrayOf("chips", "pizza"))
+        private val DATA_2 = arrayOf(
+                arrayOf("beer", "chips", "wine"),
+                arrayOf("beer", "chips"),
+                arrayOf("pizza", "wine"),
+                arrayOf("chips", "pizza")
+        )
 
-        private val DATA_3 = arrayOf(arrayOf("0", "1", "2", "3"), arrayOf("0", "1", "3", "4", "5"), arrayOf("0", "1", "4"), arrayOf("0", "1", "4"))
+        private val DATA_3 = arrayOf(
+                arrayOf("0", "1", "2", "3"),
+                arrayOf("0", "1", "3", "4", "5"),
+                arrayOf("0", "1", "4"),
+                arrayOf("0", "1", "4")
+        )
 
-        private val DATA_4 = arrayOf(arrayOf("0", "1", "2", "3"), arrayOf("0", "1", "2", "3"), arrayOf("0", "1", "3", "4", "5"), arrayOf("0", "1", "4"), arrayOf("0", "1", "4"))
+        private val DATA_4 = arrayOf(
+                arrayOf("0", "1", "2", "3"),
+                arrayOf("0", "1", "2", "3"),
+                arrayOf("0", "1", "3", "4", "5"),
+                arrayOf("0", "1", "4"),
+                arrayOf("0", "1", "4")
+        )
+
     }
 
     private fun testIterator(fileName: String, actualData: Array<Array<String>>) {

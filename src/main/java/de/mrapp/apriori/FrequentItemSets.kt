@@ -39,8 +39,8 @@ class FrequentItemSets<ItemType : Item> : SortedArraySet<ItemSet<ItemType>>,
          * which have been found by the algorithm.
          *
          * @param T                The type of the items that are contained by the item sets
-         * @param frequentItemSets A collection that contains the frequent item sets or null, if
-         *                         no frequent item sets have been found by the algorithm
+         * @param frequentItemSets A collection that contains the frequent item sets or null, if no
+         *                         frequent item sets have been found by the algorithm
          */
         fun <T> formatFrequentItemSets(frequentItemSets: Collection<ItemSet<T>>): String {
             val stringBuilder = StringBuilder()

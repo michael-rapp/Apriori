@@ -44,8 +44,8 @@ interface TieBreaker<T> : Comparator<T> {
      *
      * @param    T              The type of the items, the tie-breaking strategy applies to
      * @param    TieBreakerType The type of the tie-breaking strategy
-     * @property parent         The tie-breaking strategy, which is used for tie-breaking
-     *                          before applying this tie-breaking strategy
+     * @property parent         The tie-breaking strategy, which is used for tie-breaking before
+     *                          applying this tie-breaking strategy
      * @property comparator     The comparator, which specifies which one of two item sets or
      *                          association rules should be sorted before the other one when
      *                          performing tie-breaking

@@ -55,9 +55,8 @@ class FrequentItemSetsTest {
         val frequentItemSets = FrequentItemSets<NamedItem>(reverseOrder())
         frequentItemSets.add(itemSet1)
         frequentItemSets.add(itemSet2)
-        assertEquals(
-                "[" + itemSet2 + " (support = " + support2 + "),\n" + itemSet1 + " (support = " +
-                        support1 + ")]",
+        assertEquals("[" + itemSet2 + " (support = " + support2 + "),\n" + itemSet1 +
+                " (support = " + support1 + ")]",
                 FrequentItemSets.formatFrequentItemSets(frequentItemSets))
     }
 
@@ -76,8 +75,7 @@ class FrequentItemSetsTest {
         itemSet1.add(NamedItem("b"))
         itemSet2.add(NamedItem("c"))
         itemSet2.support = 0.4
-        val frequentItemSets = FrequentItemSets<NamedItem>(
-                Sorting.forItemSets())
+        val frequentItemSets = FrequentItemSets<NamedItem>(Sorting.forItemSets())
         frequentItemSets.add(itemSet1)
         frequentItemSets.add(itemSet2)
         assertEquals(itemSet1, frequentItemSets.first())
@@ -97,8 +95,7 @@ class FrequentItemSetsTest {
         itemSet1.add(NamedItem("b"))
         itemSet2.add(NamedItem("c"))
         itemSet2.support = 0.4
-        val frequentItemSets = FrequentItemSets<NamedItem>(
-                Sorting.forItemSets())
+        val frequentItemSets = FrequentItemSets<NamedItem>(Sorting.forItemSets())
         frequentItemSets.add(itemSet1)
         frequentItemSets.add(itemSet2)
         assertEquals(itemSet1, frequentItemSets.first())

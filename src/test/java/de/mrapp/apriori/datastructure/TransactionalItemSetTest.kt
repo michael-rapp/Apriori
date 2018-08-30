@@ -47,17 +47,14 @@ class TransactionalItemSetTest {
         transactionalItemSet1.support = 0.5
         transactionalItemSet1.add(item)
         transactionalItemSet1.transactions = transactions
-        val transactionalItemSet2 = TransactionalItemSet(
-                transactionalItemSet1)
+        val transactionalItemSet2 = TransactionalItemSet(transactionalItemSet1)
         assertEquals(transactionalItemSet1.support, transactionalItemSet2.support)
         assertEquals(transactionalItemSet1.size.toLong(), transactionalItemSet2.size.toLong())
         assertEquals(transactionalItemSet1.first(), transactionalItemSet2.first())
         assertEquals(transactionalItemSet1.transactions.size.toLong(),
                 transactionalItemSet2.transactions.size.toLong())
-        assertEquals(transactionalItemSet1.transactions[0],
-                transactionalItemSet2.transactions[0])
-        assertEquals(transactionalItemSet1.transactions[1],
-                transactionalItemSet2.transactions[1])
+        assertEquals(transactionalItemSet1.transactions[0], transactionalItemSet2.transactions[0])
+        assertEquals(transactionalItemSet1.transactions[1], transactionalItemSet2.transactions[1])
     }
 
     @Test

@@ -53,7 +53,8 @@ class AssociationRuleTest {
 
     @Test
     fun testCoversWithArrayParameter() {
-        val items = arrayOf(NamedItem("a"), NamedItem("c"), NamedItem("d"), NamedItem("e"), NamedItem("f"))
+        val items = arrayOf(NamedItem("a"), NamedItem("c"), NamedItem("d"), NamedItem("e"),
+                NamedItem("f"))
         val body = ItemSet<NamedItem>()
         body.add(NamedItem("a"))
         body.add(NamedItem("b"))

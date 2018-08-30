@@ -18,9 +18,9 @@ import java.io.Serializable
 /**
  * Defines the interface, an item, which is part of a [Transaction], must implement. The Apriori
  * algorithm relies on items to correctly implement the [Object.hashCode] and [Object.equals]
- * methods to be able to compare items to each other. Furthermore, the interface [Comparable]
- * must be implemented. This allows to sort items (e.g. by their names) in order to generate
- * candidates in an efficient way, when searching for frequent item sets.
+ * methods to be able to compare items to each other. Furthermore, the interface [Comparable] must
+ * be implemented. This allows to sort items (e.g. by their names) in order to generate candidates
+ * in an efficient way, when searching for frequent item sets.
  *
  * @author Michael Rapp
  * @since 1.0.0

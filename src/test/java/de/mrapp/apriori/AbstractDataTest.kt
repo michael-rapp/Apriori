@@ -36,19 +36,62 @@ abstract class AbstractDataTest {
 
         const val INPUT_FILE_4 = "data4.txt"
 
-        val FREQUENT_ITEM_SETS_1 = arrayOf(arrayOf("milk", "sugar"), arrayOf("coffee"), arrayOf("coffee", "milk", "sugar"), arrayOf("coffee", "sugar"), arrayOf("milk"), arrayOf("coffee", "milk"), arrayOf("bread"), arrayOf("bread", "sugar"), arrayOf("sugar"))
+        val FREQUENT_ITEM_SETS_1 = arrayOf(
+                arrayOf("milk", "sugar"),
+                arrayOf("coffee"),
+                arrayOf("coffee", "milk", "sugar"),
+                arrayOf("coffee", "sugar"),
+                arrayOf("milk"),
+                arrayOf("coffee", "milk"),
+                arrayOf("bread"),
+                arrayOf("bread", "sugar"),
+                arrayOf("sugar")
+        )
 
         val SUPPORTS_1 = doubleArrayOf(0.5, 0.75, 0.5, 0.5, 0.75, 0.75, 0.5, 0.5, 0.75)
 
-        val FREQUENT_ITEM_SETS_2 = arrayOf(arrayOf("beer"), arrayOf("wine"), arrayOf("beer", "wine"), arrayOf("chips", "pizza"), arrayOf("beer", "chips", "wine"), arrayOf("chips"), arrayOf("beer", "chips"), arrayOf("chips", "wine"), arrayOf("pizza"), arrayOf("pizza", "wine"))
+        val FREQUENT_ITEM_SETS_2 = arrayOf(
+                arrayOf("beer"),
+                arrayOf("wine"),
+                arrayOf("beer", "wine"),
+                arrayOf("chips", "pizza"),
+                arrayOf("beer", "chips", "wine"),
+                arrayOf("chips"),
+                arrayOf("beer", "chips"),
+                arrayOf("chips", "wine"),
+                arrayOf("pizza"),
+                arrayOf("pizza", "wine")
+        )
 
         val SUPPORTS_2 = doubleArrayOf(0.5, 0.5, 0.25, 0.25, 0.25, 0.75, 0.5, 0.25, 0.5, 0.25)
 
-        val FREQUENT_ITEM_SETS_3 = arrayOf(arrayOf("0", "3"), arrayOf("0", "1", "3"), arrayOf("3"), arrayOf("0", "4"), arrayOf("0", "1", "4"), arrayOf("4"), arrayOf("1", "4"), arrayOf("0"), arrayOf("0", "1"), arrayOf("1"))
+        val FREQUENT_ITEM_SETS_3 = arrayOf(
+                arrayOf("0", "3"),
+                arrayOf("0", "1", "3"),
+                arrayOf("3"),
+                arrayOf("0", "4"),
+                arrayOf("0", "1", "4"),
+                arrayOf("4"),
+                arrayOf("1", "4"),
+                arrayOf("0"),
+                arrayOf("0", "1"),
+                arrayOf("1")
+        )
 
         val SUPPORTS_3 = doubleArrayOf(0.5, 0.5, 0.5, 0.75, 0.75, 0.75, 0.75, 1.0, 1.0, 1.0)
 
-        val FREQUENT_ITEM_SETS_4 = arrayOf(arrayOf("0", "3"), arrayOf("0", "1", "3"), arrayOf("3"), arrayOf("0", "4"), arrayOf("0", "1", "4"), arrayOf("4"), arrayOf("1", "4"), arrayOf("0"), arrayOf("0", "1"), arrayOf("1"))
+        val FREQUENT_ITEM_SETS_4 = arrayOf(
+                arrayOf("0", "3"),
+                arrayOf("0", "1", "3"),
+                arrayOf("3"),
+                arrayOf("0", "4"),
+                arrayOf("0", "1", "4"),
+                arrayOf("4"),
+                arrayOf("1", "4"),
+                arrayOf("0"),
+                arrayOf("0", "1"),
+                arrayOf("1")
+        )
 
         val SUPPORTS_4 = doubleArrayOf(0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 1.0, 1.0, 1.0)
 

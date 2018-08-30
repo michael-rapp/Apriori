@@ -57,7 +57,8 @@ class AssociationRuleGeneratorTaskTest {
         configuration.maxConfidence = maxConfidence
         configuration.confidenceDelta = confidenceDelta
         val associationRuleGeneratorMock = AssociationRuleGeneratorMock()
-        val associationRuleGeneratorTask = AssociationRuleGeneratorTask(configuration, associationRuleGeneratorMock)
+        val associationRuleGeneratorTask = AssociationRuleGeneratorTask(configuration,
+                associationRuleGeneratorMock)
         associationRuleGeneratorTask.generateAssociationRules(HashMap())
         assertEquals((Math.round((maxConfidence - minConfidence) / confidenceDelta) + 1).toFloat(),
                 associationRuleGeneratorMock.minConfidences.size.toFloat())
@@ -76,7 +77,8 @@ class AssociationRuleGeneratorTaskTest {
         configuration.ruleCount = 0
         configuration.minConfidence = minConfidence
         val associationRuleGeneratorMock = AssociationRuleGeneratorMock()
-        val associationRuleGeneratorTask = AssociationRuleGeneratorTask(configuration, associationRuleGeneratorMock)
+        val associationRuleGeneratorTask = AssociationRuleGeneratorTask(configuration,
+                associationRuleGeneratorMock)
         associationRuleGeneratorTask.generateAssociationRules(HashMap())
         assertEquals(1, associationRuleGeneratorMock.minConfidences.size.toLong())
         assertEquals(minConfidence, associationRuleGeneratorMock.minConfidences[0])

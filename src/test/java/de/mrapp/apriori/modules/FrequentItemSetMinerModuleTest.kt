@@ -37,7 +37,6 @@ class FrequentItemSetMinerModuleTest : AbstractDataTest() {
         var frequentItemSetCount = 0
 
         for ((key, itemSet) in frequentItemSets) {
-
             for ((index, item) in itemSet.withIndex()) {
                 assertEquals(actualFrequentItemSets[frequentItemSetCount][index], item.name)
             }
@@ -52,34 +51,40 @@ class FrequentItemSetMinerModuleTest : AbstractDataTest() {
 
     @Test
     fun testFindFrequentItemSets1() {
-        testFindFrequentItemSets(AbstractDataTest.INPUT_FILE_1, 0.5, AbstractDataTest.FREQUENT_ITEM_SETS_1, AbstractDataTest.SUPPORTS_1)
+        testFindFrequentItemSets(AbstractDataTest.INPUT_FILE_1, 0.5,
+                AbstractDataTest.FREQUENT_ITEM_SETS_1, AbstractDataTest.SUPPORTS_1)
     }
 
     @Test
     fun testFindFrequentItemSets2() {
-        testFindFrequentItemSets(AbstractDataTest.INPUT_FILE_2, 0.25, AbstractDataTest.FREQUENT_ITEM_SETS_2, AbstractDataTest.SUPPORTS_2)
+        testFindFrequentItemSets(AbstractDataTest.INPUT_FILE_2, 0.25,
+                AbstractDataTest.FREQUENT_ITEM_SETS_2, AbstractDataTest.SUPPORTS_2)
     }
 
     @Test
     fun testFindFrequentItemSets3() {
-        testFindFrequentItemSets(AbstractDataTest.INPUT_FILE_3, 0.5, AbstractDataTest.FREQUENT_ITEM_SETS_3, AbstractDataTest.SUPPORTS_3)
+        testFindFrequentItemSets(AbstractDataTest.INPUT_FILE_3, 0.5,
+                AbstractDataTest.FREQUENT_ITEM_SETS_3, AbstractDataTest.SUPPORTS_3)
     }
 
     @Test
     fun testFindFrequentItemSets4() {
-        testFindFrequentItemSets(AbstractDataTest.INPUT_FILE_4, 0.5, AbstractDataTest.FREQUENT_ITEM_SETS_4, AbstractDataTest.SUPPORTS_4)
+        testFindFrequentItemSets(AbstractDataTest.INPUT_FILE_4, 0.5,
+                AbstractDataTest.FREQUENT_ITEM_SETS_4, AbstractDataTest.SUPPORTS_4)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun testFindFrequentItemSetsThrowsExceptionWhenMinSupportIsLessThanZero() {
         val inputFile = getInputFile(AbstractDataTest.INPUT_FILE_1)
-        FrequentItemSetMinerModule<NamedItem>().findFrequentItemSets(Iterable { DataIterator(inputFile) }, -0.1)
+        FrequentItemSetMinerModule<NamedItem>().findFrequentItemSets(
+                Iterable { DataIterator(inputFile) }, -0.1)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun testFindFrequentItemSetsThrowsExceptionWhenMinSupportIsGreaterThanOne() {
         val inputFile = getInputFile(AbstractDataTest.INPUT_FILE_1)
-        FrequentItemSetMinerModule<NamedItem>().findFrequentItemSets(Iterable { DataIterator(inputFile) }, 1.1)
+        FrequentItemSetMinerModule<NamedItem>().findFrequentItemSets(
+                Iterable { DataIterator(inputFile) }, 1.1)
     }
 
 }

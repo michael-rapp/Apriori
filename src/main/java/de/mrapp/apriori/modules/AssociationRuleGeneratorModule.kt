@@ -51,8 +51,8 @@ class AssociationRuleGeneratorModule<ItemType : Item> : AssociationRuleGenerator
 
     /**
      * Generates association rules from a specific [itemSet] by moving items from a rule's [body]
-     * to its [head]. This method is executed recursively until the resulting rule does not reach the
-     * minimum confidence anymore.
+     * to its [head]. This method is executed recursively until the resulting rule does not reach
+     * the minimum confidence anymore.
      */
     private fun generateRules(itemSet: ItemSet<ItemType>,
                               frequentItemSets: Map<Int, ItemSet<ItemType>>,
@@ -60,7 +60,7 @@ class AssociationRuleGeneratorModule<ItemType : Item> : AssociationRuleGenerator
                               body: ItemSet<ItemType>,
                               head: ItemSet<ItemType>?, minConfidence: Double) {
         for (item in body) {
-            val headItemSet = head?.let{ ItemSet(it) } ?: ItemSet()
+            val headItemSet = head?.let { ItemSet(it) } ?: ItemSet()
             headItemSet.add(item)
             val bodyItemSet = ItemSet(body)
             bodyItemSet.remove(item)

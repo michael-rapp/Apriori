@@ -14,8 +14,8 @@
 package de.mrapp.apriori
 
 /**
- * Defines the interface, a class, which allows to measure the "interestingly" of association
- * rules according to a certain metric, must implement.
+ * Defines the interface, a class, which allows to measure the "interestingly" of association rules
+ * according to a certain metric, must implement.
  *
  * @author Michael Rapp
  * @since 1.0.0

@@ -19,8 +19,8 @@ import de.mrapp.apriori.Transaction
 import java.util.*
 
 /**
- * An extension of the class [ItemSet], which allows to store the transactions, the item
- * set occurs in.
+ * An extension of the class [ItemSet], which allows to store the transactions, the item set occurs
+ * in.
  *
  * @param ItemType The type of the items, which are contained by the item set
  * @author Michael Rapp
@@ -29,8 +29,8 @@ import java.util.*
 class TransactionalItemSet<ItemType : Item> : ItemSet<ItemType> {
 
     /**
-     * A map that contains the transactions, the item set occurs in. The transactions are
-     * mapped to unique ids.
+     * A map that contains the transactions, the item set occurs in. The transactions are mapped to
+     * unique ids.
      */
     var transactions: MutableMap<Int, Transaction<ItemType>>
 

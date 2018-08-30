@@ -33,8 +33,8 @@ class DataIterator(private val file: File) : Iterator<Transaction<NamedItem>> {
     }
 
     /**
-     * An implementation of the interface [Transaction]. Each transaction corresponds to a
-     * single line of a text file.
+     * An implementation of the interface [Transaction]. Each transaction corresponds to a single
+     * line of a text file.
      *
      * @property line The line the transaction corresponds to
      */

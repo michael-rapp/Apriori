@@ -29,13 +29,14 @@ interface Filter<T> : Predicate<T> {
     companion object {
 
         /**
-         * Returns a filter, which applies to item sets. By default, no item sets are filtered at all.
+         * Returns a filter, which applies to item sets. By default, no item sets are filtered at
+         * all.
          */
         fun forItemSets() = ItemSetFilter(Predicate { _ -> true }, null)
 
         /**
-         * Returns a filter, which applies to association rules. By default, no association rules are
-         * filtered at all.
+         * Returns a filter, which applies to association rules. By default, no association rules
+         * are filtered at all.
          */
         fun forAssociationRules() = AssociationRuleFilter(Predicate { _ -> true }, null)
 
@@ -50,8 +51,9 @@ interface Filter<T> : Predicate<T> {
      * @property parent     The parent of the filter. When applied to an item, all parents of the
      *                      filter are tested
      */
-    abstract class AbstractFilter<T, FilterType : Filter<T>>(protected val predicate: Predicate<T>,
-                                                             protected val parent: FilterType? = null) : Filter<T>
+    abstract class AbstractFilter<T, FilterType : Filter<T>>(
+            protected val predicate: Predicate<T>,
+            protected val parent: FilterType? = null) : Filter<T>
 
     /**
      * A filter, which applies to item sets.
@@ -170,7 +172,6 @@ interface Filter<T> : Predicate<T> {
          * minimum size must be at least 0
          * @param maxSize The maximum size, which should be set, as an [Integer] value. The
          * maximum size must be at least the minimum size
-         * @return The filter, this method has been called upon, as an instance of the class [ ]. The filter may not be null
          */
         @JvmOverloads
         fun byHeadSize(minSize: Int, maxSize: Int = Integer.MAX_VALUE): AssociationRuleFilter {
