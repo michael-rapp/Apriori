@@ -14,7 +14,7 @@ This is a Kotlin library that provides an implementation of the [Apriori algorit
 * Association rules can be filtered to ensure that they reach a certain performance according to the support, confidence, lift, leverage or conviction metrics, as well as by the size of their head and body
 * It can easily be tested, if association rules cover specific items, i.e. that all items, which are contained in their body are also contained in a tested set of items
 
-Note that prior to version 2.0.0 this library was implemented using Java 8.
+Note that prior to version 2.0.0 this library was implemented using Java 8. As Kotlin is compatible with Java though, the library can still be used in Java projects.
 
 ## License Agreement
 
