@@ -180,7 +180,7 @@ All methods, which are provided by the library for configuring a `TieBreaker` fo
 |:-----:|:------:|
 | `preferSmall():ItemSetTieBreaker` | Prefers item sets, which contain few items |
 | `preferLarge():ItemSetTieBreaker` | Prefers item sets, which contain many items |
-| `custom(BiFunction):AssociationRuleTieBreaker` | Allows to specify a custom tie-breaking strategy. The given function must return 1, if the first item set should be preferred, -1, if the second one should be preferred, or 0, if no decision can be made |
+| `custom(Comparator):AssociationRuleTieBreaker` | Allows to specify a custom tie-breaking strategy. The given function must return 1, if the first item set should be preferred, -1, if the second one should be preferred, or 0, if no decision can be made |
 
 ### Filtering frequent item sets
 
@@ -380,7 +380,7 @@ A list of all pre-defined tie-breaking strategies, which are provided by the lib
 | `preferComplexBody():AssociationRuleTieBreaker` | Prefers rules, which contain many items in their body |
 | `preferSimpleHead():AssociationRuleTieBreaker` | Prefers rules, which contain few items in their head |
 | `preferComplexHead():AssociationRuleTieBreaker` | Prefers rules, which contain many items in their head |
-| `custom(BiFunction):AssociationRuleTieBreaker` | Allows to specify a custom tie-breaking strategy. The given function must return 1, if the first rule should be preferred, -1, if the second one should be preferred, or 0, if no decision can be made |
+| `custom(Comparator):AssociationRuleTieBreaker` | Allows to specify a custom tie-breaking strategy. The given function must return 1, if the first rule should be preferred, -1, if the second one should be preferred, or 0, if no decision can be made |
 
 ### Filtering association rules
 
@@ -402,9 +402,9 @@ The table below provides an overview of the different methods, which can be used
 
 | Method | Description | 
 |:-----:|:------:|
-| `byOperator(Operator,double,double):AssociationRuleFilter` | Filters the rules by their performance according to a specific operator. The method allows to specify a minimum (and optionally maximum) performance |
-| `bySize(int,int):AssociationRuleFilter` | Filters the rules by the number of items, which are contained in body and head. The method allows to specify a minimum (and optionally maximum) number of items |
-| `byBodySize(int,int):AssociationRuleFilter` | Filters the rules by the size of their body. The method allows to specify a minimum (and optionally maximum) size |
+| `byOperator(Operator,Double,Double):AssociationRuleFilter` | Filters the rules by their performance according to a specific operator. The method allows to specify a minimum (and optionally maximum) performance |
+| `bySize(Int,Int):AssociationRuleFilter` | Filters the rules by the number of items, which are contained in body and head. The method allows to specify a minimum (and optionally maximum) number of items |
+| `byBodySize(Int,Int):AssociationRuleFilter` | Filters the rules by the size of their body. The method allows to specify a minimum (and optionally maximum) size |
 | `byHeadSize():AssociationRuleFilter` | Filters the rules by the size of their head. The method allows to specify a minimum (and optionally maximum) size |
 
 ### Testing if an association rule "covers" items
