@@ -1,0 +1,133 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TieBreaker.AssociationRuleTieBreaker - Apriori</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="../index.html">TieBreaker</a>&nbsp;/&nbsp;<a href="./index.html">AssociationRuleTieBreaker</a><br/>
+<br/>
+<h1>AssociationRuleTieBreaker</h1>
+<code><span class="keyword">class </span><span class="identifier">AssociationRuleTieBreaker</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-abstract-tie-breaker/index.html"><span class="identifier">AbstractTieBreaker</span></a><span class="symbol">&lt;</span><a href="../../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a><span class="symbol">&gt;</span></code>
+<p>A tie-breaking strategy, which applies to association rules.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AssociationRuleTieBreaker</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker$<init>(java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))), de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker)/comparator">comparator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparator/index.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="../../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker$<init>(java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))), de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<p>A tie-breaking strategy, which applies to association rules.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="by-operator.html">byOperator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">byOperator</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker$byOperator(de.mrapp.apriori.Operator)/operator">operator</span><span class="symbol">:</span>&nbsp;<a href="../../-operator/index.html"><span class="identifier">Operator</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional criteria to the current tie-breaking strategy, which performs
+tie-breaking according to a specific <a href="by-operator.html#de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker$byOperator(de.mrapp.apriori.Operator)/operator">operator</a>. I.e., if an association rule reaches a
+greater performance according to the given operator, it is sorted before the other one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="custom.html">custom</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">custom</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker$custom(java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))))/comparator">comparator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparator/index.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="../../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional custom criteria to the current tie-breaking strategy. The given
+comparator must return 1, if the first association rule should be preferred, -1, if the
+second one should be preferred or 0, if no decision could be made.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="prefer-complex.html">preferComplex</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">preferComplex</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional criteria to the current tie-breaking strategy, which prefers complex
+association rules over simple ones. I.e., if an association rule contains more items than
+its counterpart in its body and head, it is sorted before the other one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="prefer-complex-body.html">preferComplexBody</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">preferComplexBody</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional criteria to the current tie-breaking strategy, which prefers complex
+bodies over simple ones. I.e., if an association rule contains more items than its
+counterpart in its body, it is sorted before the other one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="prefer-complex-head.html">preferComplexHead</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">preferComplexHead</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional criteria to the current tie-breaking strategy, which prefers complex
+heads over simple ones. I.e., if an association rule contains more items than its
+counterpart in its head, it is sorted before the other one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="prefer-simple.html">preferSimple</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">preferSimple</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional criteria to the current tie-breaking strategy, which prefers simple
+association rules over complex ones. I.e., if an association rule contains less items
+than its counterpart in its body and head, it is sorted before the other one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="prefer-simple-body.html">preferSimpleBody</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">preferSimpleBody</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional criteria to the current tie-breaking strategy, which prefers simple
+bodies over complex ones. I.e., if an association rule contains less items than its
+counterpart in its body, it is sorted before the other one.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="prefer-simple-head.html">preferSimpleHead</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">preferSimpleHead</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional criteria to the current tie-breaking strategy, which prefers simple
+heads over simple ones. I.e., if an association rule contains less items than its
+counterpart in its head, it is sorted before the other one.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-abstract-tie-breaker/compare.html">compare</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">compare</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.TieBreaker.AbstractTieBreaker$compare(de.mrapp.apriori.TieBreaker.AbstractTieBreaker.T, de.mrapp.apriori.TieBreaker.AbstractTieBreaker.T)/o1">o1</span><span class="symbol">:</span>&nbsp;<a href="../-abstract-tie-breaker/index.html#T"><span class="identifier">T</span></a><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.TieBreaker.AbstractTieBreaker$compare(de.mrapp.apriori.TieBreaker.AbstractTieBreaker.T, de.mrapp.apriori.TieBreaker.AbstractTieBreaker.T)/o2">o2</span><span class="symbol">:</span>&nbsp;<a href="../-abstract-tie-breaker/index.html#T"><span class="identifier">T</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

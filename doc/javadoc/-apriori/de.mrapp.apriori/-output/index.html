@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Output - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="./index.html">Output</a><br/>
+<br/>
+<h1>Output</h1>
+<code><span class="keyword">class </span><span class="identifier">Output</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>An output of the Apriori algorithm.</p>
+<h3>Parameters</h3>
+<p><a name="ItemType"></a>
+<code>ItemType</code> - The type of the items, which have been processed by the Apriori
+    algorithm</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Output</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Output$<init>(de.mrapp.apriori.Apriori.Configuration, kotlin.Long, kotlin.Long, de.mrapp.apriori.FrequentItemSets((de.mrapp.apriori.Output.ItemType)), de.mrapp.apriori.RuleSet((de.mrapp.apriori.Output.ItemType)))/configuration">configuration</span><span class="symbol">:</span>&nbsp;<a href="../-apriori/-configuration/index.html"><span class="identifier">Configuration</span></a><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.Output$<init>(de.mrapp.apriori.Apriori.Configuration, kotlin.Long, kotlin.Long, de.mrapp.apriori.FrequentItemSets((de.mrapp.apriori.Output.ItemType)), de.mrapp.apriori.RuleSet((de.mrapp.apriori.Output.ItemType)))/startTime">startTime</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.Output$<init>(de.mrapp.apriori.Apriori.Configuration, kotlin.Long, kotlin.Long, de.mrapp.apriori.FrequentItemSets((de.mrapp.apriori.Output.ItemType)), de.mrapp.apriori.RuleSet((de.mrapp.apriori.Output.ItemType)))/endTime">endTime</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.Output$<init>(de.mrapp.apriori.Apriori.Configuration, kotlin.Long, kotlin.Long, de.mrapp.apriori.FrequentItemSets((de.mrapp.apriori.Output.ItemType)), de.mrapp.apriori.RuleSet((de.mrapp.apriori.Output.ItemType)))/frequentItemSets">frequentItemSets</span><span class="symbol">:</span>&nbsp;<a href="../-frequent-item-sets/index.html"><span class="identifier">FrequentItemSets</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.Output$<init>(de.mrapp.apriori.Apriori.Configuration, kotlin.Long, kotlin.Long, de.mrapp.apriori.FrequentItemSets((de.mrapp.apriori.Output.ItemType)), de.mrapp.apriori.RuleSet((de.mrapp.apriori.Output.ItemType)))/ruleSet">ruleSet</span><span class="symbol">:</span>&nbsp;<a href="../-rule-set/index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span></code>
+<p>An output of the Apriori algorithm.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="configuration.html">configuration</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">configuration</span><span class="symbol">: </span><a href="../-apriori/-configuration/index.html"><span class="identifier">Configuration</span></a></code>
+<p>The configuration of the Apriori algorithm</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="end-time.html">endTime</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">endTime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The time, the Apriori algorithm terminated</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="frequent-item-sets.html">frequentItemSets</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">frequentItemSets</span><span class="symbol">: </span><a href="../-frequent-item-sets/index.html"><span class="identifier">FrequentItemSets</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>The frequent item sets that have been found by the Apriori algorithm</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="rule-set.html">ruleSet</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">ruleSet</span><span class="symbol">: </span><a href="../-rule-set/index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>The rule set that contains the association rules, which have been
+    generated by the Apriori algorithm or null, if the algorithm has not
+    been configured to generate any rules</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="runtime.html">runtime</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">runtime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The runtime of the Apriori algorithm in milliseconds.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="start-time.html">startTime</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">startTime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The time, the Apriori algorithm was started</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

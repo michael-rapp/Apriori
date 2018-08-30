@@ -1,0 +1,152 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>de.mrapp.apriori - Apriori</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">Apriori</a>&nbsp;/&nbsp;<a href="./index.html">de.mrapp.apriori</a><br/>
+<br/>
+<h2>Package de.mrapp.apriori</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-apriori/index.html">Apriori</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Apriori</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span></code>
+<p>An implementation of the Apriori algorithm for mining frequent item sets and (optionally)
+generating association rules. The algorithm processes a set of transactions, of which each one
+consists of multiple items.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-association-rule/index.html">AssociationRule</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">AssociationRule</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><a href="-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>An association rule of the form X -&amp;gt; Y, which consists of a body X and a head Y. Both, the
+body and the head of an association rule consist of one or several items. These item sets must be
+distinct. An association rule specifies, that if the items, which are contained by its body,
+occur in a transaction, the items, which are given in its head, do also occur with a certain
+probability.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-filter/index.html">Filter</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">Filter</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="-filter/index.html#T"><span class="identifier">T</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>A filter, which can be applied to item sets or association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-frequent-item-sets/index.html">FrequentItemSets</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">FrequentItemSets</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SortedArraySet</span><span class="symbol">&lt;</span><a href="-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><a href="-frequent-item-sets/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../de.mrapp.apriori.datastructure/-sortable/index.html"><span class="identifier">Sortable</span></a><span class="symbol">&lt;</span><a href="-frequent-item-sets/index.html"><span class="identifier">FrequentItemSets</span></a><span class="symbol">&lt;</span><a href="-frequent-item-sets/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../de.mrapp.apriori.datastructure/-filterable/index.html"><span class="identifier">Filterable</span></a><span class="symbol">&lt;</span><a href="-frequent-item-sets/index.html"><span class="identifier">FrequentItemSets</span></a><span class="symbol">&lt;</span><a href="-frequent-item-sets/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>A sorted set, which contains frequent item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-item.html">Item</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">Item</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><a href="-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Defines the interface, an item, which is part of a <a href="-transaction.html">Transaction</a>, must implement. The Apriori
+algorithm relies on items to correctly implement the <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html#hashCode()">Object.hashCode</a> and <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html#equals(java.lang.Object)">Object.equals</a>
+methods to be able to compare items to each other. Furthermore, the interface <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html">Comparable</a> must
+be implemented. This allows to sort items (e.g. by their names) in order to generate candidates
+in an efficient way, when searching for frequent item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-item-set/index.html">ItemSet</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ItemSet</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedSet.html"><span class="identifier">SortedSet</span></a><span class="symbol">&lt;</span><a href="-item-set/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><a href="-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><a href="-item-set/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>An item set, which may contain several items. An item set may not contain duplicates. The
+contained items are ordered according to the implementation of their <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/compare-to.html">Comparable.compareTo</a>
+method.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-metric/index.html">Metric</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">Metric</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-operator/index.html"><span class="identifier">Operator</span></a></code>
+<p>Defines the interface, a class, which allows to measure the "interestingly" of association rules
+according to a certain metric, must implement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-operator/index.html">Operator</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">Operator</span></code>
+<p>Defines the interface, a class, which allows to calculate heuristic values of association rules,
+must implement. This applies to metrics, which measure the "interestingly" of rules, as well as
+to meta-heuristics, which average the results of multiple metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-output/index.html">Output</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Output</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>An output of the Apriori algorithm.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-rule-set/index.html">RuleSet</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">RuleSet</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SortedArraySet</span><span class="symbol">&lt;</span><a href="-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><a href="-rule-set/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../de.mrapp.apriori.datastructure/-sortable/index.html"><span class="identifier">Sortable</span></a><span class="symbol">&lt;</span><a href="-rule-set/index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="-rule-set/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../de.mrapp.apriori.datastructure/-filterable/index.html"><span class="identifier">Filterable</span></a><span class="symbol">&lt;</span><a href="-rule-set/index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="-rule-set/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>A rule set, which contains multiple association rules. The rules, which are contained by a rule
+set, are unordered by default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-sorting/index.html">Sorting</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">Sorting</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="-sorting/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>A sorting, which specifies how item sets or association rules should be sorted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-tie-breaker/index.html">TieBreaker</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">TieBreaker</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparator/index.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="-tie-breaker/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>A tie-breaking strategy, which allows to decide, which one of two item sets or association rules
+should be sorted before the other one, if their heuristic values are equal.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-transaction.html">Transaction</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">Transaction</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html"><span class="identifier">Iterable</span></a><span class="symbol">&lt;</span><a href="-transaction.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Defines the interface, a transaction, which consists of multiple items, must implement. The
+Apriori algorithm processes a set of transactions in order to find frequent item sets.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

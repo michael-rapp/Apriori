@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Apriori.RuleGeneratorBuilder - Apriori</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="../index.html">Apriori</a>&nbsp;/&nbsp;<a href="./index.html">RuleGeneratorBuilder</a><br/>
+<br/>
+<h1>RuleGeneratorBuilder</h1>
+<code><span class="keyword">class </span><span class="identifier">RuleGeneratorBuilder</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-abstract-builder/index.html"><span class="identifier">AbstractBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>A builder that allows to configure and create instances of the class <a href="../index.html">Apriori</a>, which are
+configured to generate association rules.</p>
+<h3>Parameters</h3>
+<p><a name="ItemType"></a>
+<code>ItemType</code> - The type of the items, which are processed by the algorithm</p>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-abstract-builder/configuration.html">configuration</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">configuration</span><span class="symbol">: </span><a href="../-configuration/index.html"><span class="identifier">Configuration</span></a></code>
+<p>The configuration that is configured by the builder.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="confidence-delta.html">confidenceDelta</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">confidenceDelta</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori.RuleGeneratorBuilder$confidenceDelta(kotlin.Double)/confidenceDelta">confidenceDelta</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleGeneratorBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sets the value, the minimum confidence should be decreased by after each iteration, when
+trying to generate a specific number of association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="frequent-item-set-count.html">frequentItemSetCount</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">frequentItemSetCount</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori.RuleGeneratorBuilder$frequentItemSetCount(kotlin.Int)/frequentItemSetCount">frequentItemSetCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleGeneratorBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sets the number of of frequent item sets, the Apriori algorithm should try to find.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="max-confidence.html">maxConfidence</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">maxConfidence</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori.RuleGeneratorBuilder$maxConfidence(kotlin.Double)/maxConfidence">maxConfidence</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleGeneratorBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sets the minimum confidence that should initially be used, when trying to generate a
+specific number of association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="max-support.html">maxSupport</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">maxSupport</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori.RuleGeneratorBuilder$maxSupport(kotlin.Double)/maxSupport">maxSupport</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleGeneratorBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sets the minimum support that should initially be used, when trying to find a specific
+number of frequent item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="min-confidence.html">minConfidence</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">minConfidence</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori.RuleGeneratorBuilder$minConfidence(kotlin.Double)/minConfidence">minConfidence</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleGeneratorBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sets the minimum confidence that must at least be reached by association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="min-support.html">minSupport</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">minSupport</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori.RuleGeneratorBuilder$minSupport(kotlin.Double)/minSupport">minSupport</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleGeneratorBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sets the minimum support that must at least be reached by an item set to be considered
+frequent.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="rule-count.html">ruleCount</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ruleCount</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori.RuleGeneratorBuilder$ruleCount(kotlin.Int)/ruleCount">ruleCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleGeneratorBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sets the number of association rule, the Apriori algorithm should try to generate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="support-delta.html">supportDelta</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">supportDelta</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori.RuleGeneratorBuilder$supportDelta(kotlin.Double)/supportDelta">supportDelta</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleGeneratorBuilder</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sets the value, the minimum support should be decreased by after each iteration, when
+trying to find a specific number of frequent item sets.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-abstract-builder/create.html">create</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">create</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../index.html"><span class="identifier">Apriori</span></a><span class="symbol">&lt;</span><a href="../-abstract-builder/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Creates and returns the Apriori algorithm, which has been configured by the builder.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

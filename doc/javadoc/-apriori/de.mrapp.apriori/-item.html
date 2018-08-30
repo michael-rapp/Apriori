@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Item - Apriori</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">Apriori</a>&nbsp;/&nbsp;<a href="index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="./-item.html">Item</a><br/>
+<br/>
+<h1>Item</h1>
+<code><span class="keyword">interface </span><span class="identifier">Item</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><a href="./-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Defines the interface, an item, which is part of a <a href="-transaction.html">Transaction</a>, must implement. The Apriori
+algorithm relies on items to correctly implement the <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html#hashCode()">Object.hashCode</a> and <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html#equals(java.lang.Object)">Object.equals</a>
+methods to be able to compare items to each other. Furthermore, the interface <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html">Comparable</a> must
+be implemented. This allows to sort items (e.g. by their names) in order to generate candidates
+in an efficient way, when searching for frequent item sets.</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.0.0</p>
+</BODY>
+</HTML>

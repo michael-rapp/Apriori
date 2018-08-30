@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AssociationRuleGenerator.generateAssociationRules - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori.modules</a>&nbsp;/&nbsp;<a href="index.html">AssociationRuleGenerator</a>&nbsp;/&nbsp;<a href="./generate-association-rules.html">generateAssociationRules</a><br/>
+<br/>
+<h1>generateAssociationRules</h1>
+<a name="de.mrapp.apriori.modules.AssociationRuleGenerator$generateAssociationRules(kotlin.collections.Map((kotlin.Int, de.mrapp.apriori.ItemSet((de.mrapp.apriori.modules.AssociationRuleGenerator.ItemType)))), kotlin.Double)"></a>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">generateAssociationRules</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.modules.AssociationRuleGenerator$generateAssociationRules(kotlin.collections.Map((kotlin.Int, de.mrapp.apriori.ItemSet((de.mrapp.apriori.modules.AssociationRuleGenerator.ItemType)))), kotlin.Double)/frequentItemSets">frequentItemSets</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="../../de.mrapp.apriori/-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.modules.AssociationRuleGenerator$generateAssociationRules(kotlin.collections.Map((kotlin.Int, de.mrapp.apriori.ItemSet((de.mrapp.apriori.modules.AssociationRuleGenerator.ItemType)))), kotlin.Double)/minConfidence">minConfidence</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../de.mrapp.apriori/-rule-set/index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Generates association rules from frequent item sets.</p>
+<h3>Parameters</h3>
+<p><a name="frequentItemSets"></a>
+<code>frequentItemSets</code> - A map, which contains all available frequent item sets. The map must
+    store the frequent item sets as values and their hash codes as the
+    corresponding keys</p>
+<p><a name="minConfidence"></a>
+<code>minConfidence</code> - The minimum confidence, which must at least be reached by association
+    rules. The confidence must be at least 0 and at maximum 1</p>
+<p><strong>Return</strong><br/>
+A rule set, which contains the association rules, which have been generated</p>
+</BODY>
+</HTML>

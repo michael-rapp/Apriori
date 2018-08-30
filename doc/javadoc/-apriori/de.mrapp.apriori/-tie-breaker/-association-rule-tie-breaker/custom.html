@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TieBreaker.AssociationRuleTieBreaker.custom - Apriori</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="../index.html">TieBreaker</a>&nbsp;/&nbsp;<a href="index.html">AssociationRuleTieBreaker</a>&nbsp;/&nbsp;<a href="./custom.html">custom</a><br/>
+<br/>
+<h1>custom</h1>
+<a name="de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker$custom(java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))))"></a>
+<code><span class="keyword">fun </span><span class="identifier">custom</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.TieBreaker.AssociationRuleTieBreaker$custom(java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))))/comparator">comparator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparator/index.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="../../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Adds an additional custom criteria to the current tie-breaking strategy. The given
+comparator must return 1, if the first association rule should be preferred, -1, if the
+second one should be preferred or 0, if no decision could be made.</p>
+<h3>Parameters</h3>
+<p><a name="comparator"></a>
+<code>comparator</code> - The comparator, which specifies which one of two item sets or
+    association rules should be sorted before the other one when performing
+    tie-breaking</p>
+</BODY>
+</HTML>

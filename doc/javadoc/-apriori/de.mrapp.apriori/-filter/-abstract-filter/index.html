@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Filter.AbstractFilter - Apriori</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="../index.html">Filter</a>&nbsp;/&nbsp;<a href="./index.html">AbstractFilter</a><br/>
+<br/>
+<h1>AbstractFilter</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AbstractFilter</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">FilterType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../index.html"><span class="identifier">Filter</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../index.html"><span class="identifier">Filter</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract base class for all filters.</p>
+<h3>Parameters</h3>
+<p><a name="T"></a>
+<code>T</code> - The type of the items, the filter applies to</p>
+<p><a name="FilterType"></a>
+<code>FilterType</code> - The type of the filter</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AbstractFilter</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Filter.AbstractFilter$<init>(java.util.function.Predicate((de.mrapp.apriori.Filter.AbstractFilter.T)), de.mrapp.apriori.Filter.AbstractFilter.FilterType)/predicate">predicate</span><span class="symbol">:</span>&nbsp;<span class="identifier">Predicate</span><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.Filter.AbstractFilter$<init>(java.util.function.Predicate((de.mrapp.apriori.Filter.AbstractFilter.T)), de.mrapp.apriori.Filter.AbstractFilter.FilterType)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="index.html#FilterType"><span class="identifier">FilterType</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<p>An abstract base class for all filters.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="parent.html">parent</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">parent</span><span class="symbol">: </span><a href="index.html#FilterType"><span class="identifier">FilterType</span></a><span class="symbol">?</span></code>
+<p>The parent of the filter. When applied to an item, all parents of the
+    filter are tested</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="predicate.html">predicate</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">predicate</span><span class="symbol">: </span><span class="identifier">Predicate</span><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>The predicate that should be used to test items</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-association-rule-filter/index.html">AssociationRuleFilter</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">AssociationRuleFilter</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">AbstractFilter</span></a><span class="symbol">&lt;</span><a href="../../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../-association-rule-filter/index.html"><span class="identifier">AssociationRuleFilter</span></a><span class="symbol">&gt;</span></code>
+<p>A filter, which applies to association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-item-set-filter/index.html">ItemSetFilter</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ItemSetFilter</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">AbstractFilter</span></a><span class="symbol">&lt;</span><a href="../../-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../-item-set-filter/index.html"><span class="identifier">ItemSetFilter</span></a><span class="symbol">&gt;</span></code>
+<p>A filter, which applies to item sets.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

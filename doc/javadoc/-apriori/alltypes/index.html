@@ -1,0 +1,267 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>alltypes - Apriori</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<h3>All Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.tasks/-abstract-task/index.html">de.mrapp.apriori.tasks.AbstractTask</a></td>
+<td>
+<p>An abstract base class for all tasks, which execute a module multiple times in order to obtain
+the results, which are requested according to a specific configuration.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-apriori/index.html">de.mrapp.apriori.Apriori</a></td>
+<td>
+<p>An implementation of the Apriori algorithm for mining frequent item sets and (optionally)
+generating association rules. The algorithm processes a set of transactions, of which each one
+consists of multiple items.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.operators/-arithmetic-mean/index.html">de.mrapp.apriori.operators.ArithmeticMean</a></td>
+<td>
+<p>An operator, which allows to average the heuristic values, which are calculated by applying
+multiple metrics to a rule, according to the arithmetic mean operation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-association-rule/index.html">de.mrapp.apriori.AssociationRule</a></td>
+<td>
+<p>An association rule of the form X -&amp;gt; Y, which consists of a body X and a head Y. Both, the
+body and the head of an association rule consist of one or several items. These item sets must be
+distinct. An association rule specifies, that if the items, which are contained by its body,
+occur in a transaction, the items, which are given in its head, do also occur with a certain
+probability.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.modules/-association-rule-generator/index.html">de.mrapp.apriori.modules.AssociationRuleGenerator</a></td>
+<td>
+<p>Defines the interface, a class, which allows to generate association rules, must implement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.modules/-association-rule-generator-module/index.html">de.mrapp.apriori.modules.AssociationRuleGeneratorModule</a></td>
+<td>
+<p>A module, which allows to generate association rules from frequent item sets. An association rule
+specifies, that if certain items occur in a transaction, other items do also occur with a certain
+probability. Among all possible association rules, which can be generated from the frequent item
+sets, only those, whose "interestingly" according to the confidence metric is greater or equal
+than a specific threshold, are taken into account.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.tasks/-association-rule-generator-task/index.html">de.mrapp.apriori.tasks.AssociationRuleGeneratorTask</a></td>
+<td>
+<p>A task, which tries to generate a specific number of association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.metrics/-confidence/index.html">de.mrapp.apriori.metrics.Confidence</a></td>
+<td>
+<p>A metric, which measures the confidence of an association rule. By definition, confidence
+measures the percentage of transactions for which the head of the rule is true, among all
+transaction for which the body is true.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.metrics/-conviction/index.html">de.mrapp.apriori.metrics.Conviction</a></td>
+<td>
+<p>A metric, which measures the conviction of an association rule. By definition, conviction is the
+ratio of the expected frequency that a rule makes an incorrect prediction, if body and head were
+independent, over the frequency of incorrect predictions. For example, a conviction of 1.2
+states, that the items, which are contained in the body and head of a rule, occur together 1.2
+times as often as if the association between head and body was purely random.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-filter/index.html">de.mrapp.apriori.Filter</a></td>
+<td>
+<p>A filter, which can be applied to item sets or association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.datastructure/-filterable/index.html">de.mrapp.apriori.datastructure.Filterable</a></td>
+<td>
+<p>Defines the interface, a data structure, which is filterable using a predicate function or
+<a href="../de.mrapp.apriori/-filter/index.html">Filter</a> instance, must implement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.modules/-frequent-item-set-miner/index.html">de.mrapp.apriori.modules.FrequentItemSetMiner</a></td>
+<td>
+<p>Defines the interface, a class, which allows to find frequent item sets, must implement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.modules/-frequent-item-set-miner-module/index.html">de.mrapp.apriori.modules.FrequentItemSetMinerModule</a></td>
+<td>
+<p>A module, which allows to find all frequent item sets, which occur in a data set. The data set
+must contain multiple transactions of which each one consists of multiple items. Item sets are
+considered frequent, if their support is greater or equal than a specific threshold.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.tasks/-frequent-item-set-miner-task/index.html">de.mrapp.apriori.tasks.FrequentItemSetMinerTask</a></td>
+<td>
+<p>A task, which tries to find a specific number of frequent item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-frequent-item-sets/index.html">de.mrapp.apriori.FrequentItemSets</a></td>
+<td>
+<p>A sorted set, which contains frequent item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.operators/-harmonic-mean/index.html">de.mrapp.apriori.operators.HarmonicMean</a></td>
+<td>
+<p>An operator, which allows to average the heuristic values, which are calculated by applying
+multiple metrics to a rule, according to the harmonic mean operation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-item.html">de.mrapp.apriori.Item</a></td>
+<td>
+<p>Defines the interface, an item, which is part of a <a href="../de.mrapp.apriori/-transaction.html">Transaction</a>, must implement. The Apriori
+algorithm relies on items to correctly implement the <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html#hashCode()">Object.hashCode</a> and <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html#equals(java.lang.Object)">Object.equals</a>
+methods to be able to compare items to each other. Furthermore, the interface <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html">Comparable</a> must
+be implemented. This allows to sort items (e.g. by their names) in order to generate candidates
+in an efficient way, when searching for frequent item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-item-set/index.html">de.mrapp.apriori.ItemSet</a></td>
+<td>
+<p>An item set, which may contain several items. An item set may not contain duplicates. The
+contained items are ordered according to the implementation of their <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/compare-to.html">Comparable.compareTo</a>
+method.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.metrics/-leverage/index.html">de.mrapp.apriori.metrics.Leverage</a></td>
+<td>
+<p>A metric, which measures the leverage of an association rule. By definition, leverage is the
+difference between the rule's support and the expected support for the body and head, if they
+were independent. Furthermore, the leverage of a rule is a lower bound for its support. As a
+consequence, in contrast to optimizing confidence or lift, optimizing the leverage of a rule
+guarantees a certain minimum support.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.metrics/-lift/index.html">de.mrapp.apriori.metrics.Lift</a></td>
+<td>
+<p>A metric, which measures the lift of an association rule (also referred to as "interest"). By
+definition, lift is calculated as the ratio of the rule's confidence over a priori expectation
+for the rule's head.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-metric/index.html">de.mrapp.apriori.Metric</a></td>
+<td>
+<p>Defines the interface, a class, which allows to measure the "interestingly" of association rules
+according to a certain metric, must implement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-operator/index.html">de.mrapp.apriori.Operator</a></td>
+<td>
+<p>Defines the interface, a class, which allows to calculate heuristic values of association rules,
+must implement. This applies to metrics, which measure the "interestingly" of rules, as well as
+to meta-heuristics, which average the results of multiple metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-output/index.html">de.mrapp.apriori.Output</a></td>
+<td>
+<p>An output of the Apriori algorithm.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-rule-set/index.html">de.mrapp.apriori.RuleSet</a></td>
+<td>
+<p>A rule set, which contains multiple association rules. The rules, which are contained by a rule
+set, are unordered by default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.datastructure/-sortable/index.html">de.mrapp.apriori.datastructure.Sortable</a></td>
+<td>
+<p>Defines the interface, a data structure, which is sortable using <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html">Comparable</a> or <a href="../de.mrapp.apriori/-sorting/index.html">Sorting</a>
+instances, must implement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-sorting/index.html">de.mrapp.apriori.Sorting</a></td>
+<td>
+<p>A sorting, which specifies how item sets or association rules should be sorted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.metrics/-support/index.html">de.mrapp.apriori.metrics.Support</a></td>
+<td>
+<p>A metric, which measures the support of an association rule. By definition, support measures the
+percentage of transactions for which the body and head of the rule is true.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-tie-breaker/index.html">de.mrapp.apriori.TieBreaker</a></td>
+<td>
+<p>A tie-breaking strategy, which allows to decide, which one of two item sets or association rules
+should be sorted before the other one, if their heuristic values are equal.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori/-transaction.html">de.mrapp.apriori.Transaction</a></td>
+<td>
+<p>Defines the interface, a transaction, which consists of multiple items, must implement. The
+Apriori algorithm processes a set of transactions in order to find frequent item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../de.mrapp.apriori.datastructure/-transactional-item-set/index.html">de.mrapp.apriori.datastructure.TransactionalItemSet</a></td>
+<td>
+<p>An extension of the class <a href="../de.mrapp.apriori/-item-set/index.html">ItemSet</a>, which allows to store the transactions, the item set occurs
+in.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

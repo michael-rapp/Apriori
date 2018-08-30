@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Metric - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="./index.html">Metric</a><br/>
+<br/>
+<h1>Metric</h1>
+<code><span class="keyword">interface </span><span class="identifier">Metric</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-operator/index.html"><span class="identifier">Operator</span></a></code>
+<p>Defines the interface, a class, which allows to measure the "interestingly" of association rules
+according to a certain metric, must implement.</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.0.0</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="max-value.html">maxValue</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">maxValue</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>Returns the maximum heuristic value of the metric.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="min-value.html">minValue</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">minValue</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>Returns the minimum heuristic value of the metric.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-operator/evaluate.html">evaluate</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">evaluate</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Operator$evaluate(de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))/rule">rule</span><span class="symbol">:</span>&nbsp;<a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>Calculates the heuristic value of a specific <a href="../-operator/evaluate.html#de.mrapp.apriori.Operator$evaluate(de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))/rule">rule</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../de.mrapp.apriori.metrics/-confidence/index.html">Confidence</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Confidence</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Metric</span></a></code>
+<p>A metric, which measures the confidence of an association rule. By definition, confidence
+measures the percentage of transactions for which the head of the rule is true, among all
+transaction for which the body is true.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../de.mrapp.apriori.metrics/-conviction/index.html">Conviction</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Conviction</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Metric</span></a></code>
+<p>A metric, which measures the conviction of an association rule. By definition, conviction is the
+ratio of the expected frequency that a rule makes an incorrect prediction, if body and head were
+independent, over the frequency of incorrect predictions. For example, a conviction of 1.2
+states, that the items, which are contained in the body and head of a rule, occur together 1.2
+times as often as if the association between head and body was purely random.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../de.mrapp.apriori.metrics/-leverage/index.html">Leverage</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Leverage</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Metric</span></a></code>
+<p>A metric, which measures the leverage of an association rule. By definition, leverage is the
+difference between the rule's support and the expected support for the body and head, if they
+were independent. Furthermore, the leverage of a rule is a lower bound for its support. As a
+consequence, in contrast to optimizing confidence or lift, optimizing the leverage of a rule
+guarantees a certain minimum support.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../de.mrapp.apriori.metrics/-lift/index.html">Lift</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Lift</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Metric</span></a></code>
+<p>A metric, which measures the lift of an association rule (also referred to as "interest"). By
+definition, lift is calculated as the ratio of the rule's confidence over a priori expectation
+for the rule's head.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../de.mrapp.apriori.metrics/-support/index.html">Support</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Support</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Metric</span></a></code>
+<p>A metric, which measures the support of an association rule. By definition, support measures the
+percentage of transactions for which the body and head of the rule is true.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

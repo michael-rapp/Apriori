@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Sorting - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="./index.html">Sorting</a><br/>
+<br/>
+<h1>Sorting</h1>
+<code><span class="keyword">interface </span><span class="identifier">Sorting</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>A sorting, which specifies how item sets or association rules should be sorted.</p>
+<h3>Parameters</h3>
+<p><a name="T"></a>
+<code>T</code> - The type of the items, the sorting applies to</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.2.0</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-abstract-sorting/index.html">AbstractSorting</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AbstractSorting</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">SortingType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Sorting</span></a><span class="symbol">&lt;</span><a href="-abstract-sorting/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Sorting</span></a><span class="symbol">&lt;</span><a href="-abstract-sorting/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract base class for all sortings.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-association-rule-sorting/index.html">AssociationRuleSorting</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">AssociationRuleSorting</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-abstract-sorting/index.html"><span class="identifier">AbstractSorting</span></a><span class="symbol">&lt;</span><a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="-association-rule-sorting/index.html"><span class="identifier">AssociationRuleSorting</span></a><span class="symbol">&gt;</span></code>
+<p>A sorting, which applies to association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-item-set-sorting/index.html">ItemSetSorting</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ItemSetSorting</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-abstract-sorting/index.html"><span class="identifier">AbstractSorting</span></a><span class="symbol">&lt;</span><a href="../-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="-item-set-sorting/index.html"><span class="identifier">ItemSetSorting</span></a><span class="symbol">&gt;</span></code>
+<p>A sorting, which applies to item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-order/index.html">Order</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Order</span></code>
+<p>Contains all possible orders, which can be used for sorting.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="for-association-rules.html">forAssociationRules</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">forAssociationRules</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-association-rule-sorting/index.html"><span class="identifier">AssociationRuleSorting</span></a></code>
+<p>Creates and returns a sorting for association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="for-item-sets.html">forItemSets</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">forItemSets</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-item-set-sorting/index.html"><span class="identifier">ItemSetSorting</span></a></code>
+<p>Creates and returns a sorting for item sets.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-abstract-sorting/index.html">AbstractSorting</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AbstractSorting</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">SortingType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Sorting</span></a><span class="symbol">&lt;</span><a href="-abstract-sorting/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Sorting</span></a><span class="symbol">&lt;</span><a href="-abstract-sorting/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract base class for all sortings.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

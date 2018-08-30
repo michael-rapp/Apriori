@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>FrequentItemSetMinerModule.<init> - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori.modules</a>&nbsp;/&nbsp;<a href="index.html">FrequentItemSetMinerModule</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
+<br/>
+<h1>&lt;init&gt;</h1>
+<a name="de.mrapp.apriori.modules.FrequentItemSetMinerModule$&lt;init&gt;()"></a>
+<code><span class="identifier">FrequentItemSetMinerModule</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>A module, which allows to find all frequent item sets, which occur in a data set. The data set
+must contain multiple transactions of which each one consists of multiple items. Item sets are
+considered frequent, if their support is greater or equal than a specific threshold.</p>
+<p>In order to search for frequent item sets efficiently, the algorithm exploits the
+anti-monotonicity property of the support metric, which states, that an item set can only be
+frequent, if all of its subsets are frequent as well. The other way around, the supersets of an
+infrequent item set are also infrequent. Furthermore, the items must be sortable (e.g. by their
+names) in order to generate possible candidates in an efficient way.</p>
+<p><strong>Parameters</strong><br/>
+</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.0.0</p>
+</BODY>
+</HTML>

@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Apriori - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="./index.html">Apriori</a><br/>
+<br/>
+<h1>Apriori</h1>
+<code><span class="keyword">class </span><span class="identifier">Apriori</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span></code>
+<p>An implementation of the Apriori algorithm for mining frequent item sets and (optionally)
+generating association rules. The algorithm processes a set of transactions, of which each one
+consists of multiple items.</p>
+<h3>Parameters</h3>
+<p><a name="ItemType"></a>
+<code>ItemType</code> - The type of the items, which are processed by the
+    algorithm</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-abstract-builder/index.html">AbstractBuilder</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AbstractBuilder</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract base class for all builders that allow to configure and create instances of the
+class <a href="./index.html">Apriori</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-builder/index.html">Builder</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Builder</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-abstract-builder/index.html"><span class="identifier">AbstractBuilder</span></a><span class="symbol">&lt;</span><a href="-builder/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>A builder that allows to configure and create instances of the class <a href="./index.html">Apriori</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-configuration/index.html">Configuration</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Configuration</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>The configuration of the Apriori algorithm.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-rule-generator-builder/index.html">RuleGeneratorBuilder</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">RuleGeneratorBuilder</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-abstract-builder/index.html"><span class="identifier">AbstractBuilder</span></a><span class="symbol">&lt;</span><a href="-rule-generator-builder/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>A builder that allows to configure and create instances of the class <a href="./index.html">Apriori</a>, which are
+configured to generate association rules.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="configuration.html">configuration</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">configuration</span><span class="symbol">: </span><a href="-configuration/index.html"><span class="identifier">Configuration</span></a></code>
+<p>The configuration that is used by the algorithm</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="execute.html">execute</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">execute</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Apriori$execute(kotlin.collections.Iterable((de.mrapp.apriori.Transaction((de.mrapp.apriori.Apriori.ItemType)))))/iterable">iterable</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html"><span class="identifier">Iterable</span></a><span class="symbol">&lt;</span><a href="../-transaction.html"><span class="identifier">Transaction</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-output/index.html"><span class="identifier">Output</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Executes the Apriori algorithm on a specific set of transactions in order to learn
+association rules, which specify frequent item sets.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

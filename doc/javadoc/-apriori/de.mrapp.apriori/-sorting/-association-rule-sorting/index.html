@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Sorting.AssociationRuleSorting - Apriori</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="../index.html">Sorting</a>&nbsp;/&nbsp;<a href="./index.html">AssociationRuleSorting</a><br/>
+<br/>
+<h1>AssociationRuleSorting</h1>
+<code><span class="keyword">class </span><span class="identifier">AssociationRuleSorting</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-abstract-sorting/index.html"><span class="identifier">AbstractSorting</span></a><span class="symbol">&lt;</span><a href="../../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="./index.html"><span class="identifier">AssociationRuleSorting</span></a><span class="symbol">&gt;</span></code>
+<p>A sorting, which applies to association rules.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AssociationRuleSorting</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Sorting.AssociationRuleSorting$<init>(de.mrapp.apriori.Operator)/operator">operator</span><span class="symbol">:</span>&nbsp;<a href="../../-operator/index.html"><span class="identifier">Operator</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<p>A sorting, which applies to association rules.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-abstract-sorting/order.html">order</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">order</span><span class="symbol">: </span><a href="../-order/index.html"><span class="identifier">Order</span></a></code>
+<p>The order that is used for sorting</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abstract-sorting/tie-breaker.html">tieBreaker</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">tieBreaker</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="../-abstract-sorting/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>The tie-breaking strategy that is used</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="by-operator.html">byOperator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">byOperator</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Sorting.AssociationRuleSorting$byOperator(de.mrapp.apriori.Operator)/operator">operator</span><span class="symbol">:</span>&nbsp;<a href="../../-operator/index.html"><span class="identifier">Operator</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AssociationRuleSorting</span></a></code>
+<p>Sets the <a href="by-operator.html#de.mrapp.apriori.Sorting.AssociationRuleSorting$byOperator(de.mrapp.apriori.Operator)/operator">operator</a>, the association rules should be sorted by.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="compare.html">compare</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">compare</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Sorting.AssociationRuleSorting$compare(de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)), de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))/o1">o1</span><span class="symbol">:</span>&nbsp;<a href="../../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.Sorting.AssociationRuleSorting$compare(de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)), de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))/o2">o2</span><span class="symbol">:</span>&nbsp;<a href="../../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-abstract-sorting/self.html">self</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">self</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-abstract-sorting/index.html#SortingType"><span class="identifier">SortingType</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abstract-sorting/with-order.html">withOrder</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">withOrder</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Sorting.AbstractSorting$withOrder(de.mrapp.apriori.Sorting.Order)/order">order</span><span class="symbol">:</span>&nbsp;<a href="../-order/index.html"><span class="identifier">Order</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-abstract-sorting/index.html#SortingType"><span class="identifier">SortingType</span></a></code>
+<p>Sets the <a href="../-abstract-sorting/with-order.html#de.mrapp.apriori.Sorting.AbstractSorting$withOrder(de.mrapp.apriori.Sorting.Order)/order">order</a>, which should be used for sorting.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abstract-sorting/with-tie-breaking.html">withTieBreaking</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">withTieBreaking</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.Sorting.AbstractSorting$withTieBreaking(java.util.Comparator((de.mrapp.apriori.Sorting.AbstractSorting.T)))/tieBreaker">tieBreaker</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="../-abstract-sorting/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-abstract-sorting/index.html#SortingType"><span class="identifier">SortingType</span></a></code>
+<p>Sets the <a href="../-abstract-sorting/with-tie-breaking.html#de.mrapp.apriori.Sorting.AbstractSorting$withTieBreaking(java.util.Comparator((de.mrapp.apriori.Sorting.AbstractSorting.T)))/tieBreaker">tieBreaker</a> that should be used.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

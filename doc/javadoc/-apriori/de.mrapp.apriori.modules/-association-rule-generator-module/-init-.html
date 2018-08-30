@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AssociationRuleGeneratorModule.<init> - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori.modules</a>&nbsp;/&nbsp;<a href="index.html">AssociationRuleGeneratorModule</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
+<br/>
+<h1>&lt;init&gt;</h1>
+<a name="de.mrapp.apriori.modules.AssociationRuleGeneratorModule$&lt;init&gt;()"></a>
+<code><span class="identifier">AssociationRuleGeneratorModule</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>A module, which allows to generate association rules from frequent item sets. An association rule
+specifies, that if certain items occur in a transaction, other items do also occur with a certain
+probability. Among all possible association rules, which can be generated from the frequent item
+sets, only those, whose "interestingly" according to the confidence metric is greater or equal
+than a specific threshold, are taken into account.</p>
+<p>In order to prune the search for association rules, the algorithm exploits the anti-monotonicity
+property of the confidence metric, which states, that the confidence of the rule A,B -&amp;gt; C is
+an upper bound to the confidence of a rule A -&amp;gt; B,C. Consequently, the algorithm starts by
+generating rules, which contain a single item in there heads. Based on those rules, which reach
+the minimum confidence, additional rules are created by moving items from their bodies to the
+heads. For each rule said process is continued until the minimum threshold cannot be reached
+anymore.</p>
+<p><strong>Parameters</strong><br/>
+</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.0.0</p>
+</BODY>
+</HTML>

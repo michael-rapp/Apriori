@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RuleSet - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="./index.html">RuleSet</a><br/>
+<br/>
+<h1>RuleSet</h1>
+<code><span class="keyword">class </span><span class="identifier">RuleSet</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SortedArraySet</span><span class="symbol">&lt;</span><a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../../de.mrapp.apriori.datastructure/-sortable/index.html"><span class="identifier">Sortable</span></a><span class="symbol">&lt;</span><a href="./index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../../de.mrapp.apriori.datastructure/-filterable/index.html"><span class="identifier">Filterable</span></a><span class="symbol">&lt;</span><a href="./index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>A rule set, which contains multiple association rules. The rules, which are contained by a rule
+set, are unordered by default.</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.0.0</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">RuleSet</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.RuleSet$<init>(java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.RuleSet.ItemType)))))/comparator">comparator</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><span class="keyword">in</span>&nbsp;<a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<p>Creates an empty rule set.</p>
+<code><span class="identifier">RuleSet</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.RuleSet$<init>(kotlin.collections.Collection((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.RuleSet.ItemType)))), java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.RuleSet.ItemType)))))/rules">rules</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/index.html"><span class="identifier">Collection</span></a><span class="symbol">&lt;</span><a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.RuleSet$<init>(kotlin.collections.Collection((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.RuleSet.ItemType)))), java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.RuleSet.ItemType)))))/comparator">comparator</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><span class="keyword">in</span>&nbsp;<a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<p>Creates a new rule set.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="filter.html">filter</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">filter</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.RuleSet$filter(kotlin.Function1((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)), kotlin.Boolean)))/predicate">predicate</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Filters the items, which are contained by the data structure. Only the items, which are
+accepted by the given function or <a href="../-filter/index.html">Filter</a> instance, are retained.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="sort.html">sort</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">sort</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.RuleSet$sort(java.util.Comparator((de.mrapp.apriori.AssociationRule((de.mrapp.apriori.Item)))))/comparator">comparator</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><span class="keyword">in</span>&nbsp;<a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Sorts the items, which are contained by the data structure using a specific <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html">Comparator</a> or
+<a href="../-sorting/index.html">Sorting</a>. If no <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html">Comparator</a> or <a href="../-sorting/index.html">Sorting</a> is specified, the natural ordering will be used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-string.html">toString</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

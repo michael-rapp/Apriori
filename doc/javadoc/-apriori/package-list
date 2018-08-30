@@ -1,0 +1,9 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+de.mrapp.apriori
+de.mrapp.apriori.datastructure
+de.mrapp.apriori.metrics
+de.mrapp.apriori.modules
+de.mrapp.apriori.operators
+de.mrapp.apriori.tasks

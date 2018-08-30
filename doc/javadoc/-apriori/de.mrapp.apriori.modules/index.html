@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>de.mrapp.apriori.modules - Apriori</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">Apriori</a>&nbsp;/&nbsp;<a href="./index.html">de.mrapp.apriori.modules</a><br/>
+<br/>
+<h2>Package de.mrapp.apriori.modules</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-association-rule-generator/index.html">AssociationRuleGenerator</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">AssociationRuleGenerator</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../de.mrapp.apriori/-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span></code>
+<p>Defines the interface, a class, which allows to generate association rules, must implement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-association-rule-generator-module/index.html">AssociationRuleGeneratorModule</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">AssociationRuleGeneratorModule</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../de.mrapp.apriori/-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-association-rule-generator/index.html"><span class="identifier">AssociationRuleGenerator</span></a><span class="symbol">&lt;</span><a href="-association-rule-generator-module/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>A module, which allows to generate association rules from frequent item sets. An association rule
+specifies, that if certain items occur in a transaction, other items do also occur with a certain
+probability. Among all possible association rules, which can be generated from the frequent item
+sets, only those, whose "interestingly" according to the confidence metric is greater or equal
+than a specific threshold, are taken into account.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-frequent-item-set-miner/index.html">FrequentItemSetMiner</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">FrequentItemSetMiner</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../de.mrapp.apriori/-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span></code>
+<p>Defines the interface, a class, which allows to find frequent item sets, must implement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-frequent-item-set-miner-module/index.html">FrequentItemSetMinerModule</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">FrequentItemSetMinerModule</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../de.mrapp.apriori/-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-frequent-item-set-miner/index.html"><span class="identifier">FrequentItemSetMiner</span></a><span class="symbol">&lt;</span><a href="-frequent-item-set-miner-module/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>A module, which allows to find all frequent item sets, which occur in a data set. The data set
+must contain multiple transactions of which each one consists of multiple items. Item sets are
+considered frequent, if their support is greater or equal than a specific threshold.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

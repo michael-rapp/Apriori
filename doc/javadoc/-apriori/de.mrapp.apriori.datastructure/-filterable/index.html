@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Filterable - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori.datastructure</a>&nbsp;/&nbsp;<a href="./index.html">Filterable</a><br/>
+<br/>
+<h1>Filterable</h1>
+<code><span class="keyword">interface </span><span class="identifier">Filterable</span><span class="symbol">&lt;</span><span class="identifier">DataStructureType</span><span class="symbol">, </span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Defines the interface, a data structure, which is filterable using a predicate function or
+<a href="../../de.mrapp.apriori/-filter/index.html">Filter</a> instance, must implement.</p>
+<h3>Parameters</h3>
+<p><a name="DataStructureType"></a>
+<code>DataStructureType</code> - The type of the data structure</p>
+<p><a name="T"></a>
+<code>T</code> - The type of the items, which are contained by the data structure</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.2.0</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="filter.html">filter</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">filter</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.datastructure.Filterable$filter(kotlin.Function1((de.mrapp.apriori.datastructure.Filterable.T, kotlin.Boolean)))/predicate">predicate</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#DataStructureType"><span class="identifier">DataStructureType</span></a></code>
+<p>Filters the items, which are contained by the data structure. Only the items, which are
+accepted by the given function or <a href="../../de.mrapp.apriori/-filter/index.html">Filter</a> instance, are retained.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../de.mrapp.apriori/-frequent-item-sets/index.html">FrequentItemSets</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">FrequentItemSets</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../de.mrapp.apriori/-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SortedArraySet</span><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-frequent-item-sets/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-sortable/index.html"><span class="identifier">Sortable</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-frequent-item-sets/index.html"><span class="identifier">FrequentItemSets</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-frequent-item-sets/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../../de.mrapp.apriori/-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">Filterable</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-frequent-item-sets/index.html"><span class="identifier">FrequentItemSets</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-frequent-item-sets/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../../de.mrapp.apriori/-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>A sorted set, which contains frequent item sets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../de.mrapp.apriori/-rule-set/index.html">RuleSet</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">RuleSet</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../de.mrapp.apriori/-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SortedArraySet</span><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-rule-set/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-sortable/index.html"><span class="identifier">Sortable</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-rule-set/index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-rule-set/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../../de.mrapp.apriori/-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">Filterable</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-rule-set/index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="../../de.mrapp.apriori/-rule-set/index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../../de.mrapp.apriori/-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>A rule set, which contains multiple association rules. The rules, which are contained by a rule
+set, are unordered by default.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

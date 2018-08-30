@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TieBreaker - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori</a>&nbsp;/&nbsp;<a href="./index.html">TieBreaker</a><br/>
+<br/>
+<h1>TieBreaker</h1>
+<code><span class="keyword">interface </span><span class="identifier">TieBreaker</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparator/index.html"><span class="identifier">Comparator</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>A tie-breaking strategy, which allows to decide, which one of two item sets or association rules
+should be sorted before the other one, if their heuristic values are equal.</p>
+<h3>Parameters</h3>
+<p><a name="T"></a>
+<code>T</code> - The type of the items, the tie-breaking strategy applies to</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.1.0</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-abstract-tie-breaker/index.html">AbstractTieBreaker</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AbstractTieBreaker</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">TieBreakerType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">TieBreaker</span></a><span class="symbol">&lt;</span><a href="-abstract-tie-breaker/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">TieBreaker</span></a><span class="symbol">&lt;</span><a href="-abstract-tie-breaker/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract base class for all tie-breaking strategies.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-association-rule-tie-breaker/index.html">AssociationRuleTieBreaker</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">AssociationRuleTieBreaker</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-abstract-tie-breaker/index.html"><span class="identifier">AbstractTieBreaker</span></a><span class="symbol">&lt;</span><a href="../-association-rule/index.html"><span class="identifier">AssociationRule</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="-association-rule-tie-breaker/index.html"><span class="identifier">AssociationRuleTieBreaker</span></a><span class="symbol">&gt;</span></code>
+<p>A tie-breaking strategy, which applies to association rules.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-item-set-tie-breaker/index.html">ItemSetTieBreaker</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ItemSetTieBreaker</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-abstract-tie-breaker/index.html"><span class="identifier">AbstractTieBreaker</span></a><span class="symbol">&lt;</span><a href="../-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="-item-set-tie-breaker/index.html"><span class="identifier">ItemSetTieBreaker</span></a><span class="symbol">&gt;</span></code>
+<p>A tie-breaking strategy, which applies to item sets.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="for-association-rules.html">forAssociationRules</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">forAssociationRules</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-association-rule-tie-breaker/index.html"><span class="identifier">AssociationRuleTieBreaker</span></a></code>
+<p>Creates and returns a tie-breaking strategy, which applies to association rules. By
+default, no tie-breaking is performed at all.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="for-item-sets.html">forItemSets</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">forItemSets</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-item-set-tie-breaker/index.html"><span class="identifier">ItemSetTieBreaker</span></a></code>
+<p>Creates and returns a tie-breaking strategy, which applies to item sets. By default, no
+tie-breaking is performed at all.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-abstract-tie-breaker/index.html">AbstractTieBreaker</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AbstractTieBreaker</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">TieBreakerType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">TieBreaker</span></a><span class="symbol">&lt;</span><a href="-abstract-tie-breaker/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">TieBreaker</span></a><span class="symbol">&lt;</span><a href="-abstract-tie-breaker/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract base class for all tie-breaking strategies.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

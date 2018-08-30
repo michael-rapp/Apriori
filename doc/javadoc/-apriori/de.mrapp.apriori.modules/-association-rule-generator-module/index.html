@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AssociationRuleGeneratorModule - Apriori</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Apriori</a>&nbsp;/&nbsp;<a href="../index.html">de.mrapp.apriori.modules</a>&nbsp;/&nbsp;<a href="./index.html">AssociationRuleGeneratorModule</a><br/>
+<br/>
+<h1>AssociationRuleGeneratorModule</h1>
+<code><span class="keyword">class </span><span class="identifier">AssociationRuleGeneratorModule</span><span class="symbol">&lt;</span><span class="identifier">ItemType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../de.mrapp.apriori/-item.html"><span class="identifier">Item</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-association-rule-generator/index.html"><span class="identifier">AssociationRuleGenerator</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>A module, which allows to generate association rules from frequent item sets. An association rule
+specifies, that if certain items occur in a transaction, other items do also occur with a certain
+probability. Among all possible association rules, which can be generated from the frequent item
+sets, only those, whose "interestingly" according to the confidence metric is greater or equal
+than a specific threshold, are taken into account.</p>
+<p>In order to prune the search for association rules, the algorithm exploits the anti-monotonicity
+property of the confidence metric, which states, that the confidence of the rule A,B -&amp;gt; C is
+an upper bound to the confidence of a rule A -&amp;gt; B,C. Consequently, the algorithm starts by
+generating rules, which contain a single item in there heads. Based on those rules, which reach
+the minimum confidence, additional rules are created by moving items from their bodies to the
+heads. For each rule said process is continued until the minimum threshold cannot be reached
+anymore.</p>
+<p><strong>Parameters</strong><br/>
+</p>
+<p><strong>Author</strong><br/>
+Michael Rapp</p>
+<p><strong>Since</strong><br/>
+1.0.0</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AssociationRuleGeneratorModule</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>A module, which allows to generate association rules from frequent item sets. An association rule
+specifies, that if certain items occur in a transaction, other items do also occur with a certain
+probability. Among all possible association rules, which can be generated from the frequent item
+sets, only those, whose "interestingly" according to the confidence metric is greater or equal
+than a specific threshold, are taken into account.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="generate-association-rules.html">generateAssociationRules</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">generateAssociationRules</span><span class="symbol">(</span><span class="identifier" id="de.mrapp.apriori.modules.AssociationRuleGeneratorModule$generateAssociationRules(kotlin.collections.Map((kotlin.Int, de.mrapp.apriori.ItemSet((de.mrapp.apriori.modules.AssociationRuleGeneratorModule.ItemType)))), kotlin.Double)/frequentItemSets">frequentItemSets</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="../../de.mrapp.apriori/-item-set/index.html"><span class="identifier">ItemSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="de.mrapp.apriori.modules.AssociationRuleGeneratorModule$generateAssociationRules(kotlin.collections.Map((kotlin.Int, de.mrapp.apriori.ItemSet((de.mrapp.apriori.modules.AssociationRuleGeneratorModule.ItemType)))), kotlin.Double)/minConfidence">minConfidence</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../de.mrapp.apriori/-rule-set/index.html"><span class="identifier">RuleSet</span></a><span class="symbol">&lt;</span><a href="index.html#ItemType"><span class="identifier">ItemType</span></a><span class="symbol">&gt;</span></code>
+<p>Generates association rules from frequent item sets.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
