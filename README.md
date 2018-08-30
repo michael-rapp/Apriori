@@ -93,6 +93,16 @@ As only one frequent item set is contained by S3, no more candidates can be crea
 
 To use the implementation of the Apriori algorithm, which is provided by this library, for finding frequent item sets, an instance of the class `Apriori` must be created. It can be configured by using the builder pattern as shown below. The generic type argument `NamedItem` corresponds to the class used in the library's JUnit tests as mentioned above. The iterator `DataIterator` can be found in the test resources as well. In order to use custom data sources, it must be replaced by an custom implementation. The value `0.5`, which is passed to the builder as a constructor argument, corresponds to the minimum support, which should be used by the algorithm as described in the example above.
 
+##### Kotlin
+```kotlin
+val minSupport = 0.5
+val apriori = Apriori.Builder<NamedItem>(minSupport).create()
+val iterable = Iterable { DataIterator(inputFile) }
+val output = apriori.execute(iterable)
+val frequentItemSets = output.frequentItemSets
+```
+
+##### Java
 ```java
 double minSupport = 0.5;
 Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(minSupport).create();
@@ -111,6 +121,14 @@ As an alternative to specifying a certain minimum support, the algorithm can be 
 
 In order to configure an instance of the class `Apriori` to try to find a specific number of frequent item sets, the following code can be used:
 
+##### Kotlin
+```kotlin
+val count = 5
+val apriori = Apriori.Builder<NamedItem>(count).supportDelta(0.1).maxSupport(1.0).minSupport(0.0).create()
+// ...
+```
+
+##### Java
 ```java
 int count = 5;
 Apriori<NamedItem> apriori = new Apriori.Builder<NamedItem>(count).supportDelta(0.1).maxSupport(1.0).minSupport(0.0).create();
@@ -123,8 +141,15 @@ The `count` variable, which is passed to the constructor of the builder in the e
 
 The item sets, which are contained by a `FrequentItemSets` instance can be sorted by their support using the `sort`-method. It expects an instance of the class `Sorting`, which specifies the sorting order, as a parameter. The following example shows, how a `Sorting` instance can be used to sort frequent item sets.
 
+##### Kotlin
+```kotlin
+val sorting = Sorting.forItemSets().withOrder(Sorting.Order.DESCENDING)
+val sortedFrequentItemSets = frequentItemSets.sort(sorting)
+```
+
+##### Java
 ```java
-Sorting<ItemSet> sorting = Sorting.forItemSets().withOrder(Order.DESCENDING);
+Sorting<ItemSet<?>> sorting = Sorting.Companion.forItemSets().withOrder(Sorting.Order.DESCENDING);
 FrequentItemSets<NamedItem> sortedFrequentItemSets = frequentItemSets.sort(sorting);
 ```
 
@@ -132,15 +157,21 @@ The following table provides an overview of the methods, which can be used to co
 
 | Method | Description | 
 |:-----:|:------:|
-| `withOrder(Order):ItemSetSorting` | Specifies, whether the item sets should be sorted in `Order.ASCENDING` or `Order.DESCENDING` order |
+| `withOrder(Sorting.Order):ItemSetSorting` | Specifies, whether the item sets should be sorted in `Sorting.Order.ASCENDING` or `Sorting.Order.DESCENDING` order |
 | `withTieBreaking(TieBreaker):ItemSetSorting` | Specifies the tie-breaking strategy, which should be applied, if two item sets reach the same support (see section below) |
 
 ### Tie-breaking frequent item sets
 
 If two or more item sets reach the same support, it cannot be decided, which one should be sorted before the other ones. To work around such undefined behavior, a tie-breaking strategy, which is represented by a `TieBreaker` instance, can be used. The following code illustrates, how such an instance can be configured.
 
+##### Kotlin
+```kotlin
+val tieBreaker = TieBreaker.forItemSets().preferLarge()
+```
+
+##### Java
 ```java
-TieBreaker<ItemSet> tieBreaker = TieBreaker.forItemSets().preferLarge();
+TieBreaker<ItemSet<?>> tieBreaker = TieBreaker.Companion.forItemSets().preferLarge();
 ```
 
 All methods, which are provided by the library for configuring a `TieBreaker` for tie-breaking item sets, can be seen in the table below.
@@ -155,8 +186,15 @@ All methods, which are provided by the library for configuring a `TieBreaker` fo
 
 In addition to sorting a `FrequentItemSets` instance, the item sets it contains can also be filtered. For this reason, a `filter`-method, which expects a `Filter` as a parameter, is provided. The filter is used to identify the item sets, which should be retained. In the following it is shown, how such a `Filter` can be configured and used to obtain a filtered copy of a `FrequentItemSets` instance. If multiple criterions are added to a filter, an item set is only retained, if it satisfies all of them.
 
+##### Kotlin
+```kotlin
+val filter = Filter.forItemSets().bySupport(0.5).bySize(2)
+val filteredFrequentItemSets = frequentItemSets.filter(filter)
+```
+
+##### Java
 ```java
-Filter<ItemSet> filter = Filter.forItemSets().bySupport(0.5).bySize(2);
+Filter<ItemSet<?>> filter = Filter.Companion.forItemSets().bySupport(0.5).bySize(2);
 FrequentItemSets<NamedItem> filteredFrequentItemSets = frequentItemSets.filter(filter);
 ```
 
@@ -164,8 +202,8 @@ The table, which is shown below, gives an overview of the different criterions, 
 
 | Method | Description | 
 |:-----:|:------:|
-| `bySupport(double,double):ItemSetFilter` | Filters the item sets by their support. The method allows to specify a minimum (and optionally maximum) support |
-| `bySize(int,int):ItemSetFilter` | Filters the item sets by their size. The method allows to specify a minimum (and optionally maximum) size |
+| `bySupport(Double,Double):ItemSetFilter` | Filters the item sets by their support. The method allows to specify a minimum (and optionally maximum) support |
+| `bySize(Int,Int):ItemSetFilter` | Filters the item sets by their size. The method allows to specify a minimum (and optionally maximum) size |
 
 ## Generating Association Rules
 
@@ -199,6 +237,17 @@ After testing all candidate rules, the algorithm results in the following rule s
 
 In order to configure the algorithm, which is provided by this library, to generate association rules, the builder pattern must be used as follows. As the generation of association rules requires to identify frequent item sets beforehand, the builder must be configured as shown above at first. In addition, the builder's `generateRules`-method can be used to specify, that association rules, which reach a certain minimum confidence, should be generated.
 
+##### Kotlin
+```kotlin
+val minSupport = 0.5
+val minConfidence = 1.0
+val apriori = Apriori.Builder<NamedItem>(minSupport).generateRules(minConfidence).create()
+val iterable = Iterable { DataIterator(inputFile) }
+val output = apriori.execute(iterable)
+val ruleSet = output.ruleSet
+```
+
+##### Java
 ```java
 double minSupport = 0.5;
 double minConfidence = 1.0;
@@ -218,6 +267,15 @@ In addition to generating all rules, which reach a certain minimum confidence, t
 
 The sample code below illustrates how a `Apriori` instance can be configured to try to generate a specific number of association rules:
 
+##### Kotlin
+```kotlin
+val minSupport = 0.5
+val ruleCount = 5
+val apriori = Apriori.Builder<NamedItem>(minSupport).generateRules(ruleCount).confidenceDelta(0.1).maxConfidence(1.0).minConfidence(0.0).create()
+// ...
+```
+
+##### Java
 ```java
 double minSupport = 0.5;
 int ruleCount = 5;
@@ -239,6 +297,16 @@ Leverage is a lower bound for support and high leverage implies, that the suppor
 
 To measure the support, confidence, lift, leverage or conviction of an `AssociationRule`, the following code can be used.
 
+##### Kotlin
+```kotlin
+val support = Support().evaluate(rule) // between 0 and 1
+val confidence = Confidence().evaluate(rule) // between 0 and 1
+val lift = Lift().evaluate(rule) // at minimum 0, may be greater than 1
+val leverage = Leverage().evaluate(rule) // at maximum 1, may be less than 0
+val conviction = Conviction().evaluate(rule) // at minimum 0, may be greater than 1
+```
+
+##### Java
 ```java
 double support = new Support().evaluate(rule); // between 0 and 1
 double confidence = new Confidence().evaluate(rule); // between 0 and 1
@@ -249,6 +317,14 @@ double conviction = new Conviction().evaluate(rule); // at minimum 0, may be gre
 
 If multiple metrics should be used for calculating the "interestingly" of a rule, they can be averaged by using the class `ArithmeticMean` or `HarmonicMean`. The code below shows, how these classes can be used.
 
+##### Kotlin
+```kotlin
+val operator = HarmonicMean().add(Leverage()).add(Lift())
+// use new HarmonicMean().add(new Leverage(), 1).add(new Lift(), 2) to weight metrics differently
+val performance = operator.evaluate(rule)
+```
+
+##### Java
 ```java
 Operator operator = new HarmonicMean().add(new Leverage()).add(new Lift());
 // use new HarmonicMean().add(new Leverage(), 1).add(new Lift(), 2) to weight metrics differently
@@ -259,8 +335,15 @@ double performance = operator.evaluate(rule);
 
 In order to sort the association rules, which are returned by the library's Apriori algorithm, the `sort`-method of the class `RuleSet` can be used. It returns a copy of the rule set, which contains the original rules in sorted order. The order is specified by an instance of the class `Sorting`. The following code illustrates, how such an instance can be configured using multiple criterions:
 
+##### Kotlin
+```kotlin
+val sorting = Sorting.forAssociationRules().withOrder(Sorting.Order.DESCENDING).byOperator(Confidence())
+val sortedRuleSet = ruleSet.sort(sorting)
+```
+
+##### Java
 ```java
-Sorting<AssociationRule> sorting = Sorting.forAssociationRules().withOrder(Order.DESCENDING).byOperator(new Confidence());
+Sorting<AssociationRule<?>> sorting = Sorting.Companion.forAssociationRules().withOrder(Sorting.Order.DESCENDING).byOperator(new Confidence());
 RuleSet<NamedItem> sortedRuleSet = ruleSet.sort(sorting);
 ```
 
@@ -268,7 +351,7 @@ The following table provides an overview of all methods, which can be used to co
 
 | Method | Description | 
 |:-----:|:------:|
-| `withOrder(Order):AssociationRuleSorting` | Specifies whether the association rules should be sorted in `Order.ASCENDING` or `Order.DESCENDING` order |
+| `withOrder(Sorting.Order):AssociationRuleSorting` | Specifies whether the association rules should be sorted in `Sorting.Order.ASCENDING` or `Sorting.Order.DESCENDING` order |
 | `withTieBreaking(TieBreaker):AssociationRuleSorting` | Specifies the tie-breaking strategy, which should be applied, if it can not be decided, which one of two association rules should be sorted before the other one (see section below) |
 | `byOperator(Operator):AssociationRuleSorting` | Sorts the association rules by their performance according to a specific operator. The operator may be of the type `Support`, `Confidence`, `Lift`, `Leverage` or `Conviction`. If a combination of multiple metrics should be used, they can be averaged by using `ArithmeticMean` or `HarmonicMean` instances |
 
@@ -276,8 +359,14 @@ The following table provides an overview of all methods, which can be used to co
 
 When sorting a `RuleSet` using a `Sorting` instance, different tie-breaking strategies can be applied. Tie-breaking refers to deciding which association rule should be considered to be more "interestingly", if it can not be decided which one of two rules should be sorted before the other one given the criterions of the `Sorting` instance. Several pre-defined tie-breaking strategies are provided by the library and can be added to a `TieBreaker` by calling the corresponding method. The following examples illustrates how a tie-breaking strategy for association rules can be configured. If multiple criterions are added to a `TieBreaker`, they are processed in the order they have been added.
 
+##### Kotlin
+```kotlin
+val tieBreaker = TieBreaker.forAssociationRules().byOperator(Support()).preferComplex()
+```
+
+##### Java
 ```java
-TieBreaker<AssociationRule> tieBreaker = TieBreaker.forAssociationRules().byOperator(new Support()).preferComplex();
+TieBreaker<AssociationRule<?>> tieBreaker = TieBreaker.Companion.forAssociationRules().byOperator(new Support()).preferComplex();
 ```
 
 A list of all pre-defined tie-breaking strategies, which are provided by the library, and the corresponding methods is given in the table below.
@@ -297,8 +386,15 @@ A list of all pre-defined tie-breaking strategies, which are provided by the lib
 
 In addition to sorting the rules of a `RuleSet`, they can also be filtered. For this reason, the class `RuleSet` does provide a `filter`-method. It expects an instance of the class `Filter` as a parameter and returns a new `RuleSet`, which only contains the rules, which are accepted by the given filter. If multiple criterions are added to a filter, all of them must be met by the rule to be accepted. The following code illustrates how `Filter` instances can be configured for filtering association rules.
 
+##### Kotlin
+```kotlin
+val filter = Filter.forAssociationRules().byOperator(Confidence(), 0.5).byBodySize(2)
+val filteredRuleSet = ruleSet.filter(filter)
+```
+
+##### Java
 ```java
-Filter<AssociationRule> filter = Filter.forAssociationRules().byOperator(new Confidence(), 0.5).byBodySize(2);
+Filter<AssociationRule<?>> filter = Filter.Companion.forAssociationRules().byOperator(new Confidence(), 0.5).byBodySize(2);
 RuleSet<NamedItem> filteredRuleSet = ruleSet.filter(filter);
 ```
 
