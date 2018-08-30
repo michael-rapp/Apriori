@@ -41,7 +41,7 @@ class AssociationRuleGeneratorTaskTest {
                 frequentItemSets: Map<Int, ItemSet<NamedItem>>,
                 minConfidence: Double): RuleSet<NamedItem> {
             minConfidences.add(minConfidence)
-            return RuleSet(null)
+            return RuleSet()
         }
 
     }
