@@ -32,7 +32,7 @@ class FilterTest {
         itemSet.add(NamedItem("b"))
         itemSet.add(NamedItem("c"))
         val filter = Filter.forItemSets()
-        assertTrue(filter.test(itemSet))
+        assertTrue(filter.invoke(itemSet))
     }
 
     /**
@@ -46,11 +46,11 @@ class FilterTest {
         itemSet.add(NamedItem("c"))
         itemSet.support = 0.5
         val filter = Filter.forItemSets().bySupport(0.3, 0.8)
-        assertTrue(filter.test(itemSet))
+        assertTrue(filter.invoke(itemSet))
         itemSet.support = 0.2
-        assertFalse(filter.test(itemSet))
+        assertFalse(filter.invoke(itemSet))
         itemSet.support = 0.9
-        assertFalse(filter.test(itemSet))
+        assertFalse(filter.invoke(itemSet))
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -79,11 +79,11 @@ class FilterTest {
         itemSet.add(NamedItem("a"))
         itemSet.support = 0.5
         val filter = Filter.forItemSets().bySize(2, 2)
-        assertFalse(filter.test(itemSet))
+        assertFalse(filter.invoke(itemSet))
         itemSet.add(NamedItem("b"))
-        assertTrue(filter.test(itemSet))
+        assertTrue(filter.invoke(itemSet))
         itemSet.add(NamedItem("c"))
-        assertFalse(filter.test(itemSet))
+        assertFalse(filter.invoke(itemSet))
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -104,7 +104,7 @@ class FilterTest {
         head.add(NamedItem("c"))
         val associationRule = AssociationRule(body, head, 0.5)
         val filter = Filter.forAssociationRules()
-        assertTrue(filter.test(associationRule))
+        assertTrue(filter.invoke(associationRule))
     }
 
     @Test
@@ -115,11 +115,11 @@ class FilterTest {
         head.add(NamedItem("b"))
         var associationRule = AssociationRule(body, head, 0.5)
         val filter = Filter.forAssociationRules().byOperator(Support(), 0.4, 0.6)
-        assertTrue(filter.test(associationRule))
+        assertTrue(filter.invoke(associationRule))
         associationRule = AssociationRule(body, head, 0.3)
-        assertFalse(filter.test(associationRule))
+        assertFalse(filter.invoke(associationRule))
         associationRule = AssociationRule(body, head, 0.7)
-        assertFalse(filter.test(associationRule))
+        assertFalse(filter.invoke(associationRule))
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -140,11 +140,11 @@ class FilterTest {
         head.add(NamedItem("b"))
         val associationRule = AssociationRule(body, head, 0.5)
         val filter = Filter.forAssociationRules().bySize(3, 3)
-        assertFalse(filter.test(associationRule))
+        assertFalse(filter.invoke(associationRule))
         body.add(NamedItem("c"))
-        assertTrue(filter.test(associationRule))
+        assertTrue(filter.invoke(associationRule))
         body.add(NamedItem("d"))
-        assertFalse(filter.test(associationRule))
+        assertFalse(filter.invoke(associationRule))
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -165,11 +165,11 @@ class FilterTest {
         head.add(NamedItem("b"))
         val associationRule = AssociationRule(body, head, 0.5)
         val filter = Filter.forAssociationRules().byBodySize(2, 2)
-        assertFalse(filter.test(associationRule))
+        assertFalse(filter.invoke(associationRule))
         body.add(NamedItem("c"))
-        assertTrue(filter.test(associationRule))
+        assertTrue(filter.invoke(associationRule))
         body.add(NamedItem("d"))
-        assertFalse(filter.test(associationRule))
+        assertFalse(filter.invoke(associationRule))
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -190,11 +190,11 @@ class FilterTest {
         head.add(NamedItem("b"))
         val associationRule = AssociationRule(body, head, 0.5)
         val filter = Filter.forAssociationRules().byHeadSize(2, 2)
-        assertFalse(filter.test(associationRule))
+        assertFalse(filter.invoke(associationRule))
         head.add(NamedItem("c"))
-        assertTrue(filter.test(associationRule))
+        assertTrue(filter.invoke(associationRule))
         head.add(NamedItem("d"))
-        assertFalse(filter.test(associationRule))
+        assertFalse(filter.invoke(associationRule))
     }
 
     @Test(expected = IllegalArgumentException::class)

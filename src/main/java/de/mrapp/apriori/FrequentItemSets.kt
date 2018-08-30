@@ -19,7 +19,6 @@ import de.mrapp.util.datastructure.SortedArraySet
 import java.io.Serializable
 import java.text.DecimalFormat
 import java.util.*
-import java.util.function.Predicate
 
 /**
  * A sorted set, which contains frequent item sets.
@@ -90,11 +89,11 @@ class FrequentItemSets<ItemType : Item> : SortedArraySet<ItemSet<ItemType>>,
         return FrequentItemSets(this, comparator)
     }
 
-    override fun filter(predicate: Predicate<in ItemSet<*>>): FrequentItemSets<ItemType> {
+    override fun filter(predicate: (ItemSet<*>) -> Boolean): FrequentItemSets<ItemType> {
         val filteredFrequentItemSets = FrequentItemSets(comparator())
 
         for (itemSet in this) {
-            if (predicate.test(itemSet)) {
+            if (predicate.invoke(itemSet)) {
                 filteredFrequentItemSets.add(itemSet)
             }
         }

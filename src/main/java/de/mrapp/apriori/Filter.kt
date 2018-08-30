@@ -24,7 +24,7 @@ import java.util.function.Predicate
  * @author Michael Rapp
  * @since 1.2.0
  */
-interface Filter<T> : Predicate<T> {
+interface Filter<T> : (T) -> Boolean {
 
     companion object {
 
@@ -94,8 +94,8 @@ interface Filter<T> : Predicate<T> {
             return ItemSetFilter(Predicate { x -> x.size in minSize..maxSize }, this)
         }
 
-        override fun test(t: ItemSet<*>): Boolean {
-            return predicate.test(t) && (parent?.test(t) ?: true)
+        override fun invoke(t: ItemSet<*>): Boolean {
+            return predicate.test(t) && (parent?.invoke(t) ?: true)
         }
 
     }
@@ -182,8 +182,8 @@ interface Filter<T> : Predicate<T> {
             }, this)
         }
 
-        override fun test(t: AssociationRule<*>): Boolean {
-            return predicate.test(t) && (parent?.test(t) ?: true)
+        override fun invoke(t: AssociationRule<*>): Boolean {
+            return predicate.test(t) && (parent?.invoke(t) ?: true)
         }
 
     }

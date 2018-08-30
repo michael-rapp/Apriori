@@ -15,11 +15,9 @@ package de.mrapp.apriori.datastructure
 
 import de.mrapp.apriori.Filter
 
-import java.util.function.Predicate
-
 /**
- * Defines the interface, a data structure, which is filterable using [Predicate] or [Filter]
- * instances, must implement.
+ * Defines the interface, a data structure, which is filterable using a predicate function or
+ * [Filter] instance, must implement.
  *
  * @param DataStructureType The type of the data structure
  * @param T                 The type of the items, which are contained by the data structure
@@ -30,10 +28,10 @@ interface Filterable<DataStructureType, T> {
 
     /**
      * Filters the items, which are contained by the data structure. Only the items, which are
-     * accepted by the given [Predicate] or [Filter], are retained.
+     * accepted by the given function or [Filter] instance, are retained.
      *
      * @return A new data structure, which contains the filtered items
      */
-    fun filter(predicate: Predicate<in T>): DataStructureType
+    fun filter(predicate: (T) -> Boolean): DataStructureType
 
 }
