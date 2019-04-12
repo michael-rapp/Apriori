@@ -28,7 +28,7 @@ Alternatively, the library can be added to your project as a Gradle dependency b
 
 ```groovy
 dependencies {
-    compile 'com.github.michael-rapp:apriori:2.0.0'
+    compile 'com.github.michael-rapp:apriori:2.0.1'
 }
 ```
 
@@ -38,7 +38,7 @@ When using Maven, the following dependency can be added to the `pom.xml`:
 <dependency>
     <groupId>com.github.michael-rapp</groupId>
     <artifactId>apriori</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 
