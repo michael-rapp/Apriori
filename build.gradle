@@ -38,7 +38,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version_kotlin"
-    implementation "com.github.michael-rapp:java-util:$version_java_util"
+    api "com.github.michael-rapp:java-util:$version_java_util"
     implementation "org.slf4j:slf4j-api:$version_slf4j"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$version_kotlin"
     testImplementation "org.mockito:mockito-core:$version_mockito"
