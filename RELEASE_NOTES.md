@@ -1,5 +1,12 @@
 # Apriori - RELEASE NOTES
 
+## Version 2.0.1 (Apr. 13th 2019)
+
+A minor release that introduces the following changes:
+
+- Updated Kotlin to version 1.3.21.
+- Updated Gradle configuration.
+
 ## Version 2.0.0 (Aug. 30th 2018)
 
 A major release, which introduces the following changes:
